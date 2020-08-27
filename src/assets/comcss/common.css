@@ -1,0 +1,212 @@
+/* 搜索及添加按钮的共同样式 */
+
+.cm-form-btn {
+  width: auto;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: 6px 50%;
+  background-color: #fff;
+  background-size: 25%;
+  outline: none;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-align: right;
+  padding: 5px 8px 5px 27px;
+  cursor: pointer;
+}
+
+/* 搜索按钮 */
+
+.cm-search-btn {
+  border: 1px solid #707070;
+  background-image: url("../../../static/img/cdIcon/search.png");
+}
+
+/* 添加按钮 */
+
+.cm-add-btn {
+  background-color: #0066ff !important;
+  color: #fff;
+  border: none;
+  background-size: 15%;
+  background-image: url("../../../static/img/cdIcon/add.png");
+}
+
+/* 表格内的查看，编辑，删除的共同样式 */
+
+.cm-table-btn {
+  width: 30px;
+  height: 30px;
+  background-size: 50%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 3px 0 5px;
+}
+
+/* 查看 */
+
+.cm-watch-btn {
+  background-color: #0066ff;
+  border: none;
+  background-image: url("../../../static/img/cdIcon/watch-light.png");
+}
+
+/* 编辑 */
+
+.cm-edit-btn-light {
+  background-color: #fff;
+  border: 1px solid #777;
+  background-image: url("../../../static/img/cdIcon/edit-dark.png");
+}
+
+.cm-edit-btn-dark {
+  background-color: #d0d0d0;
+  border: none;
+  background-image: url("../../../static/img/cdIcon/edit-light.png");
+}
+
+/* 删除 */
+
+.cm-delete-btn-light {
+  background-color: #fff;
+  border: 1px solid #777;
+  background-image: url("../../../static/img/cdIcon/del-dark.png");
+}
+
+.cm-delete-btn-dark {
+  background-color: #d0d0d0;
+  border: none;
+  background-image: url("../../../static/img/cdIcon/del-linght.png");
+}
+
+/* 其他按钮的共同样式 */
+
+.cm-btn {
+  padding: 8px 26px;
+  width: auto;
+  height: 35px;
+  cursor: pointer;
+}
+
+/* 深色按钮 */
+
+.deep {
+  background-color: #0280ff;
+  color: #fff;
+  outline: none;
+  border-radius: 3px;
+  border: none;
+}
+
+/* 无背景色按钮 */
+
+.isoutline {
+  background-color: #fff;
+  outline: none;
+  border-radius: 3px;
+  color: #0280ff;
+  border: 1px solid #0280ff;
+}
+
+/*解决element-ui表格表头与表格内容无法对齐问题*/
+
+body .el-table th.gutter {
+  display: table-cell !important;
+}
+/* 清楚浮动 */
+
+.clear-fix:after {
+  display: block;
+  width: 0;
+  height: 0;
+  content: "";
+  visibility: hidden;
+  clear: both;
+}
+
+/* 文本溢出用省略号显示 */
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+/* 统一按钮样式及间隔 */
+.common-btn-style {
+  width: 88px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 !important;
+  vertical-align: middle;
+}
+.margin-left-btn {
+  margin-left: 12px !important;
+}
+/* 统一设置右偏移 */
+.item-right {
+  float: right;
+}
+
+/* 带蓝条的标题 */
+.item-block-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: #585858;
+}
+.item-block-title > .item-block-title-mark {
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 10px;
+  height: 30px;
+  background: #0066ff;
+  vertical-align: middle;
+}
+.item-block-title > .item-block-title-font {
+  color: #000;
+}
+.item-block-title > .icons {
+  color: #0066ff;
+  font-size: 20px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+/* 间距 */
+.paddingTop {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/* 重置padding */
+.refreshContainer {
+  padding: 0 !important;
+}
+.item-block-content {
+  overflow: hidden;
+}
+
+/* 同一表格 */
+.el-table {
+  font-size: 14px !important;
+  color: #585858 !important;
+}
+.el-table thead {
+  font-size: 14px !important;
+  color: #777 !important;
+  font-family: 'microsoft yahei';
+}
+.el-table thead tr th .cell {
+  font-weight: 500!important;
+}
+
+/* 强制margin为0 */
+.margin-zero {
+  margin:0!important;
+}

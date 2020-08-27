@@ -1,0 +1,285 @@
+<template>
+  <div class="aia-content">
+    <!-- 筛选 -->
+    <el-form :inline="true" :model="sourceModel" label-width="80px">
+      <el-form-item>
+        <el-select
+          v-model="sourceModel.sourceValue"
+          clearable
+          placeholder="请选择来源"
+        >
+          <el-option
+            v-for="item in source"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input
+          v-model="sourceModel.webAdress"
+          clearable
+          placeholder="请输入地址"
+          style="width: 200px"
+        />
+      </el-form-item>
+      <el-form-item class="search-source">
+        <el-button icon="el-icon-search" class="search-icon" @click.stop="search">搜索</el-button>
+      </el-form-item>
+      <el-form-item class="add-source">
+        <el-button type="primary" icon="el-icon-plus" @click="addSource">新增</el-button>
+      </el-form-item>
+    </el-form>
+    <!-- 表格数据 -->
+    <el-table :data="tableData" stripe style="width: 100%">
+      <el-table-column prop="name" label="名称" />
+      <el-table-column prop="platform" label="来源" />
+      <el-table-column prop="address" label="地址" />
+      <el-table-column prop="status" label="状态">
+        <template v-slot="scope">
+          <div>
+            <i 
+              :class="scope.row.status === '1' ? 'el-icon-success' : 'el-icon-error'"
+              :style="{color: scope.row.status === '1' ? 'green' : 'red', fontSize: '20px'}"></i>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="operation" label="操作">
+        <template v-slot="scope">
+          <div class="task-btn-box">
+            <el-link type="primary" :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
+            <el-link type="primary" :underline="false" @click.stop="handleDelete(scope.row)">删除</el-link>
+            <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+              <span class="special" @click.stop="handleEdit(scope.row)">
+                <icon-svg icon-class="bianji" />
+              </span>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+              <span class="special" @click.stop="handleDelete(scope.row)">
+                <icon-svg icon-class="shanchu" />
+              </span>
+            </el-tooltip> -->
+          </div>
+        </template>
+      </el-table-column>
+      <template slot="empty">
+        <div class="blank-page">
+          <div class="img-content">
+            <img src="../../../../../static/img/blank-page.png" alt />
+          </div>
+          <p class="empty-text">暂无相关数据</p>
+        </div>
+      </template>
+    </el-table>
+    <!-- 分页 -->
+    <el-pagination
+      v-if="totalSize"
+      :current-page.sync="page.current"
+      :page-size.sync="page.size"
+      :page-sizes="[10, 20, 30]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalSize"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      style="text-align:center;margin-top:92px"
+    />
+    <!-- 删除提示 -->
+    <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+      <div style="text-align: center">
+        <i class="el-icon-warning" /> 确认删除？
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="medium" class="nomal-button" @click="confirmDeleteDialogVisible = false">取消</el-button>
+        <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import axios from '@/api'
+export default {
+  data: () => ({
+    source: [
+      {
+        id: 1,
+        value: 'BPC',
+        label: 'BPC'
+      }, {
+        id: 2,
+        value: 'Dynatrace',
+        label: 'Dynatrace'
+      }, {
+        id: 3,
+        value: 'Prometheus',
+        label: 'Prometheus'
+      }
+    ],
+    tableData: [],
+    sourceModel: {
+      sourceValue: '',
+      webAdress: ''
+    },
+    confirmDeleteDialogVisible: false,
+    currentDeleteItemId: -1,
+    page: {
+      current: 1,
+      size: 10
+    },
+    totalSize: 0
+  }),
+  created() {
+    this.getMonitorList()
+  },
+  methods: {
+    getMonitorList () {
+      const params = {
+        current: this.page.current,
+        size: this.page.size,
+        platform: this.sourceModel.sourceValue,
+        address: this.sourceModel.webAdress
+      }
+      axios.getMonitorList(params).then(res => {
+        if (res.data.success) {
+          this.tableData = res.data.data.records
+          this.totalSize = Number(res.data.data.total)
+        } else {
+          this.$notify({
+            title: '提示',
+            type: 'error',
+            message: res.message
+          })
+        }
+      })
+    },
+    search() {
+      this.getMonitorList()
+    },
+    handleEdit(row) {
+      this.$router.push({
+        path: '/Aibms/BuinessConfiguration/addSource',
+        query: {
+          code: 8,
+          id: row.id
+        }
+      })
+    },
+    handleDelete(row) {
+      this.currentDeleteItemId = row.id
+      this.confirmDeleteDialogVisible = true
+    },
+    addSource() {
+      this.$router.push({
+        path: '/Aibms/BuinessConfiguration/addSource',
+        query: {
+          code: 8
+        }
+      })
+    },
+    // 分页
+    handleCurrentChange() {
+      this.getMonitorList()
+    },
+    // 表格每页数量
+    handleSizeChange() {
+      this.page.current = 1
+      this.getMonitorList()
+    },
+    confirmDelete() {
+      const id = this.currentDeleteItemId
+      axios.deleteMonitor(id).then(res => {
+        if (res.data.success) {
+          this.$notify.success({
+            title: '提示',
+            message: res.data.message
+          })
+          this.getMonitorList()
+        } else {
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
+      })
+      this.confirmDeleteDialogVisible = false
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.aia-content {
+  position: relative;
+  width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  .search-source {
+    &:focus {
+      background: none;
+    }
+  }
+  .add-source {
+    position: absolute;
+    right: 0;
+  }
+  .search-icon {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    &:focus {
+      color: #fff;
+      background: transparent;
+    }
+    &:active {
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+  }
+  .task-btn-box {
+    text-align: center;
+    .el-link {
+      color: #fff;
+    }
+    // span {
+    //   display: inline-block;
+    //   background: #fff;
+    //   border: 1px solid #0066ff;
+    //   line-height: 24px;
+    //   padding: 0 4px;
+    //   border-radius: 5px;
+    //   color: #0066ff;
+    //   font-size: 14px;
+    //   margin-right: 12px;
+    //   cursor: pointer;
+    //   margin: 5px 0;
+    //   &:hover {
+    //     background: #0066ff;
+    //   }
+    //   &:active {
+    //     background: #0066ff;
+    //     color: #fff;
+    //   }
+    // }
+  }
+  .blank-page {
+    .img-content {
+      height: 200px;
+      padding-top: 15px;
+    }
+    .empty-text {
+      font-size: 18px;
+      height: 30px;
+      line-height: 30px;
+      margin-top: -30px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+  }
+}
+</style>

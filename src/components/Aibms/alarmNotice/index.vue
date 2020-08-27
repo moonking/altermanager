@@ -1,0 +1,358 @@
+<template>
+  <div class="aia-content">
+    <el-form :inline="true" :model="alarmModel">
+      <el-form-item>
+        <el-select v-model="alarmModel.systemValue" clearable placeholder="请选择业务系统">
+          <el-option
+            v-for="item in businessList"
+            :key="item.systemId"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="alarmModel.topologyValue" clearable placeholder="请选择拓扑层级">
+          <el-option
+            v-for="item in topologyList"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          v-model="alarmModel.alarmDate"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          @change="splitDate"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="alarmModel.labelValue" clearable placeholder="请选择标签">
+          <el-option
+            v-for="item in labelList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item class="search-button">
+        <el-button icon="el-icon-search" @click="search" class="search-icon">搜索</el-button>
+      </el-form-item>
+    </el-form>
+    <!-- 表格 -->
+    <el-table
+      stripe
+      ref="filterTable"
+      :data="tableData"
+      @row-click="noticeDetail"
+      style="width: 100%"
+    >
+      <el-table-column prop="level" label="级别" :filters="levelFilters" :filter-method="filterLevel">
+        <template slot="header">
+          级别
+          <icon-svg icon-class="loudou" class="gray-icon-color header-icon" />
+        </template>
+        <template v-slot="scope">
+          <span>{{ scope.row.level }}</span>
+          <icon-svg icon-class="bj" :class="scope.row.level | iconLevelFilter" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="platform" label="来源" />
+      <el-table-column prop="alarmAddress" label="告警对象" />
+      <el-table-column prop="alarmType" label="类型" />
+      <el-table-column prop="startTime" label="开始时间" width="230"  />
+      <el-table-column label="状态" width="90">
+        <template v-slot="scope">
+          <span>{{ scope.row.status === "1" ? '已收到' : '-' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="交易追踪">
+        <template v-slot="scope">
+          <el-link :underline="false" @click.stop="hadleTrack(scope.row)">交易</el-link>
+        </template>
+      </el-table-column>
+      <template slot="empty">
+        <div class="blank-page">
+          <div class="img-content">
+            <img src="../../../../static/img/blank-page.png" alt />
+          </div>
+          <p class="empty-text">暂无相关数据</p>
+        </div>
+      </template>
+    </el-table>
+    <!-- 分页 -->
+    <el-pagination
+      v-if="totalSize"
+      :current-page.sync="page.current"
+      :page-size.sync="page.size"
+      :page-sizes="[10, 20, 30]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalSize"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      style="text-align:center;margin-top:92px"
+    />
+  </div>
+</template>
+
+<script>
+import axios from '@/api'
+const iconMap = {
+  'S1': 's1-color',
+  'S2': 's2-color',
+  'S3': 's3-color',
+  'S4': 's4-color',
+  'S5': 's5-color'
+}
+export default {
+  filters: {
+    iconLevelFilter: level => iconMap[level]
+  },
+  data: () => ({
+    alarmModel: {
+      systemValue: '',
+      topologyValue: '',
+      alarmDate: [],
+      labelValue: ''
+    },
+    topologyList: [],
+    labelList: [
+      { value: '1', label: '交易类型' },
+      { value: '2', label: '应用' },
+      { value: '3', label: '服务' },
+      { value: '4', label: '进程' },
+      { value: '5', label: '主机' }
+    ],
+    tableData: [],
+    levelFilters: [
+      { text: 'S1', value: 'S1' },
+      { text: 'S2', value: 'S2' },
+      { text: 'S3', value: 'S3' },
+      { text: 'S4', value: 'S4' },
+      { text: 'S5', value: 'S5' }
+    ],
+    totalSize: 0,
+    page: {
+      current: 1,
+      size: 10
+    },
+    startTime: '',
+    endTime: '',
+    businessList: []
+  }),
+  created() {
+    this.getAlarmList() // 获取列表数据
+    this.getTopologyList()  // 获取拓扑下拉框
+    this.getlabelList() // 获取标签下拉框数据
+    this.getBusinessList() // 获取业务系统下拉框数据
+  },
+  methods: {
+    getBusinessList() {
+       const params = {
+        name: '',
+        ipAddress: '',
+        current: 1,
+        size: 1000
+      }
+      axios.getSystemList(params).then(res => {
+        if (res.data.success) {
+          this.businessList = res.data.data.result.records.map(item => ({name: item.name,systemId:item.systemId}))
+        } else {
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
+      })
+    },
+    getTopologyList() {
+      axios.getCiTypeListFirst('','').then(res => {
+        if (res.data.success) {
+          this.topologyList = res.data.data.result.map(item => item.name)
+        } else {
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
+      })
+    },
+    getlabelList() {
+      axios.getlabelList().then(res => {
+        if (res.data.success) {
+          this.labelList = res.data.data
+        } else {
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
+      })
+    },
+    getAlarmList() {
+      const params = {
+        system: this.alarmModel.systemValue,
+        topology: this.alarmModel.topologyValue,
+        label: this.alarmModel.labelValue,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        current: this.page.current,
+        size: this.page.size
+      }
+      axios.getNoticeList(params).then(res => {
+        if (res.data.success) {
+          this.tableData = res.data.data.records
+          this.totalSize = Number(res.data.data.total)
+        } else {
+          this.$notify({
+            title: '提示',
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      })
+    },
+    addZero: num => ('00' + num).substr(('00' + num).length - 2, 2),
+    dateFormat (date) {
+      const year = date.getFullYear()
+      const mouth = date.getMonth() + 1
+      const dates = date.getDate()
+      const hours = date.getHours()
+      const minutes = date.getMinutes()
+      const seconds = date.getSeconds()
+      return year + '-' + this.addZero(mouth) +
+        '-' + this.addZero(dates) + ' ' +
+        this.addZero(hours) + ':' +
+        this.addZero(minutes) + ':' +
+        this.addZero(seconds)
+    },
+    splitDate() {
+      this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[0]) : ''
+      this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[1]) : ''
+    },
+    // 分页
+    handleCurrentChange() {
+      this.getAlarmList()
+    },
+    // 表格每页数量
+    handleSizeChange() {
+      this.page.current = 1
+      this.getAlarmList()
+    },
+    search() {
+      this.getAlarmList()
+    },
+    hadleTrack(row) {
+      this.$router.push({
+        path: '/Aibms/Transaction',
+        query: {
+          code: 8
+        }
+      })
+    },
+    filterLevel: (value, row) => row.level === value,
+    noticeDetail (row) {
+      this.$router.push({
+        path: '/Aibms/alarmnoticeDetail',
+        query: {
+          code: 8,
+          id: row.id
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.aia-content {
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  box-sizing: border-box;
+  .search-button {
+    position: absolute;
+    right: -10px;
+    .el-button {
+      border: 1px solid #fff;
+      color: #fff;
+      &:hover {
+        border: 1px solid #fff;
+        color: #fff;
+        background: transparent;
+      }
+      &:focus {
+        color: #fff;
+        background: transparent;
+      }
+      &:active {
+        border: 1px solid #fff;
+        background: transparent;
+        color: #fff;
+      }
+    }
+  }
+  .el-link {
+    color: #fff!important;
+  }
+  .header-icon {
+    cursor: pointer;
+  }
+  .el-table--enable-row-hover .el-table__body tr:hover > td {
+    cursor: pointer !important;
+    background: #041C25;
+    opacity: 70%
+  }
+  .el-table__column-filter-trigger i {
+    display: none;
+  }
+  .search-icon {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      background: #0066ff;
+      border: 1px solid #0066ff;
+    }
+  }
+  .s1-color {
+    color: #ff0000 !important;
+    fill: #ff0000 !important;
+  }
+  .s2-color {
+    color: #ff9900 !important;
+    fill: #ff9900 !important;
+  }
+  .s3-color {
+    color: #ffcc00 !important;
+    fill: #ffcc00 !important;
+  }
+  .s4-color {
+    color: #ffff00 !important;
+    fill: #ffff00 !important;
+  }
+  .s5-color {
+    color: #ffff88 !important;
+    fill: #ffff88 !important;
+  }
+  .blank-page {
+    .img-content {
+      height: 200px;
+      padding-top: 15px;
+    }
+    .empty-text {
+      font-size: 18px;
+      height: 30px;
+      line-height: 30px;
+      margin-top: -30px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+  }
+}
+</style>

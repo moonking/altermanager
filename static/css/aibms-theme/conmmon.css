@@ -1,0 +1,238 @@
+.aibms-bg {
+    background: none !important;
+}
+.white-color {
+    color: #fff!important;
+}
+.non-border {
+    border: none !important;
+}
+.non-shadow {
+    box-shadow: none !important;
+}
+.aibms-color-bg {
+    background: rgba(4, 28, 37, .3)!important
+}
+.deep-aibms-color-bg {
+    background: rgba(4, 28, 37, .7)!important
+}
+.all-aibms-color-bg {
+    background: rgba(4, 28, 37, .8)!important
+}
+.aibms-bg .tablist li {
+    border: 1px solid #fff!important;
+    color: #fff;
+}
+.aibms-bg .tablist li:nth-of-type(1) {
+    border-right: none !important;
+}
+.aibms-bg .tablist li:nth-of-type(2) {
+    border-left: none !important;
+}
+.aibms-bg .active {
+    border: none !important;
+}
+.aibms-bg .table-area .el-table {
+    border: none !important;
+}
+.aibms-bg .userContainer > div,.tags {
+    box-shadow: none !important;
+}
+.tags-li {
+    border: 1px solid #fff!important;
+}
+.tags-li.active {
+    border: 1px solid #00A8E8!important;
+}
+.active-nav {
+    color: #00A8E8!important;
+}
+.nomal-button, .aibms-role .el-dropdown .el-button {
+    border: 1px solid #fff!important;
+    color: #fff!important;
+}
+.nomal-button:hover,.nomal-button:focus, .nomal-button:active,
+.aibms-role .el-dropdown .el-button:hover,
+.aibms-role .el-dropdown .el-button:focus,
+.aibms-role .el-dropdown .el-button:active {   
+    border: 1px solid #fff!important;
+    color: #fff!important;
+    background: transparent!important;
+}
+.el-table thead tr th {
+    background-color: rgba(4, 28, 37, .7)!important;
+}
+/* 新增角色页面 */
+.aibms-bg .headerTop {
+    background: none !important;
+    color: #fff!important;
+}
+.aibms-bg .el-form-item__content {
+    color: #fff!important;
+}
+
+/* 用户管理 */
+.aibms-user .userContainer > div .information {
+    height: 150px!important;
+}
+.aibms-user .el-dropdown {
+    color: #fff!important;
+}
+.aibms-user .userContainer > div .systempermissions {
+    height: 68px!important;
+    padding: 0 0 0 20px!important;
+}
+.aibms-user .userContainer > div .systempermissions .systype {
+    margin: 5px 0 5px 0 !important;
+}
+.aibms-user .userContainer > div {
+    background-color: rgba(4, 28, 37, .7)!important;
+    border: none!important;
+}
+.aibms-user .userContainer > div .information .imgbox .spanbox {
+    color: #fff;
+}
+.aibms-user .userContainer > div .systempermissions ul li {
+    margin-left: 0!important;
+}
+.aibms-user .userContainer > div .information .databox .ullist .userli span {
+    color: #fff;
+}
+.aibms-user .userContainer > div .systempermissions .systype {
+    color: #fff;
+}
+.aibms-user .userContainer > div .information {
+    border-bottom: 1px solid #041C25!important;
+}
+.aibms-user .userContainer > div .systempermissions ul li {
+    background: rgba(4, 28, 37)!important;
+    color: #fff !important;
+}
+.aibms-user .block {
+    text-align: center!important;
+    margin-top: 92px!important;
+}
+.aibms-user .userContainer > div .information .databox span {
+    margin-right: 1px !important;
+}
+.aibms-user .userContainer > div .information .databox .ullist .editicon {
+    width: 20px;
+    height: 20px;
+    line-height: 24px;
+}
+/* 角色管理 */
+.aibms-role .task-btn-box span {
+    background: none!important;
+    border: 1px solid #fff!important;
+}
+.aibms-role .task-btn-box span:hover {
+    background: #00A8E8!important;
+    border: 1px solid #00A8E8!important;
+}
+/* 权限管理 */
+.aibms-permissions .el-row .custom-box-title {
+    color: #fff;
+}
+.aibms-permissions .customBox {
+    border: none !important;
+}
+.aibms-permissions .customBox .table-area .el-table {
+    border: none !important;
+}
+/* license信息 */
+.aibms-license .el-tag {
+    background-color: #041C25!important;
+    border-color: #041C25!important;
+    color: #fff;
+}
+/* 资源配置管理 */
+.aibms-color-bg .item-block-title > .item-block-title-font {
+    color: #fff!important;
+}
+.item-block-title > .item-block-title-mark {
+    background: #00A8E8!important;
+}
+.aibms-table table tr td {
+    color:#fff!important;
+}
+/* ci列表 */
+.aibms-ci-list .content-wrapper .tablist li {
+    color: #fff!important;
+    background-color: transparent!important;
+    border-color: #fff!important;
+}
+.aibms-ci-list .content-wrapper .tablist li.active {
+    background-color: #00A8E8!important;
+    border-color: #00A8E8!important;
+}
+/* 创建ci */
+.deep-aibms-color-bg .el-menu-vertical-demo {
+    background-color: #041C25!important;
+}
+.deep-aibms-color-bg .el-submenu__title:focus,
+.deep-aibms-color-bg .el-submenu__title:hover,
+.deep-aibms-color-bg .el-submenu.is-active .el-submenu__title,
+.deep-aibms-color-bg .el-submenu__title *,
+.deep-aibms-color-bg .el-menu-item.is-active{
+    color: #fff!important
+}
+.aibms-dialog .dialog-detail {
+    background-color: #041C25!important;
+}
+.aibms-dialog .get-title,
+.aibms-dialog .form-item label {
+    color: #fff!important
+}
+/* ci */
+.aibms-ci .left-side-title {
+    background: rgba(4, 28, 37, .8)!important;
+    color: #fff!important
+}
+.aibms-ci .left-side,.aibms-ci .tree-block-item {
+    color: #fff!important
+}
+.aibms-ci .el-message-box {
+    background-color: #041C25!important;
+}
+.aibms-ci .upload-demo .el-upload--text {
+    background-color: transparent!important;
+}
+/* aibms ci模板 */
+.aibms-template .templateWrapper1 > div > p {
+    background-color: rgba(4, 28, 37, .8)!important
+}
+.aibms-template .content-wrapper .left-side .tree-wrapper .tree-block-title,
+.aibms-template .content-wrapper .left-side .tree-wrapper .tree-block-item {
+    color: #fff!important
+}
+
+/* 自动化运维 */
+.button-group {
+    border: 1px solid #fff!important;
+    color: #fff!important;
+    background: transparent!important;
+}
+.button-group:hover,
+.button-group:focus,
+.button-group:active {
+    border: 1px solid #00A8E8!important;
+    background: #00A8E8!important;
+}
+
+/* 自动化运维 */
+.aibms-auto .key-item.actives {
+    background: #00A8E8!important;
+    border: 1px solid #00A8E8!important; 
+}
+.aibms-auto .key-item {
+    background: transparent!important;
+    border: 1px solid #fff!important;
+    color: #fff!important;
+}
+.item-block-title > .icons {
+    color: #00A8E8!important;
+}
+/* 打开 仓库 */
+.aibms-warehouse .el-tree {
+    background-color: rgba(4, 28, 37, .3)!important
+}

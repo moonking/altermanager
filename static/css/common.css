@@ -1,0 +1,163 @@
+/* 搜索及添加按钮的共同样式 */
+
+.cm-form-btn {
+    width: auto;
+    height: 33px;
+    background-repeat: no-repeat;
+    background-position: 6px center;
+    background-color: #fff;
+    background-size: 25%;
+    outline: none;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-align: right;
+    padding: 5px 14px 5px 33px;
+    cursor: pointer;
+}
+
+
+/* 搜索按钮 */
+
+.cm-search-btn {
+    border: 1px solid #707070;
+    background-image: url("../img/cdIcon/search.png");
+}
+
+
+/* 添加按钮 */
+
+.cm-add-btn {
+    background-color: #0280FF !important;
+    color: #fff;
+    border: none;
+    background-image: url("../img/icon/icon_add.png");
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+}
+
+
+/* 表格内的查看，编辑，删除的共同样式 */
+
+.cm-table-btn {
+    width: 30px;
+    height: 30px;
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 3px 0 5px;
+}
+
+
+/* 查看 */
+
+.cm-watch-btn {
+    background-color: #0280FF;
+    border: none;
+    background-image: url("../img/cdIcon/watch-light.png");
+}
+
+
+/* 编辑 */
+
+.cm-edit-btn-light {
+    background-color: #fff;
+    border: 1px solid #777;
+    background-image: url("../img/cdIcon/edit-dark.png");
+}
+
+.cm-edit-btn-dark {
+    background-color: #D0D0D0;
+    border: none;
+    background-image: url("../img/cdIcon/edit-light.png");
+}
+
+
+/* 删除 */
+
+.cm-delete-btn-light {
+    background-color: #fff;
+    border: 1px solid #777;
+    background-image: url("../img/cdIcon/del-dark.png")
+}
+
+.cm-delete-btn-dark {
+    background-color: #D0D0D0;
+    border: none;
+    background-image: url("../img/cdIcon/del-linght.png");
+}
+
+
+/* 其他按钮的共同样式 */
+
+.cm-btn {
+    padding: 8px 26px;
+    width: auto;
+    height: 35px;
+    cursor: pointer;
+}
+
+
+/* 深色按钮 */
+
+.deep {
+    background-color: #0280FF;
+    color: #fff;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+}
+
+
+/* 无背景色按钮 */
+
+.isoutline {
+    background-color: #fff;
+    outline: none;
+    border-radius: 3px;
+    color: #0280FF;
+    border: 1px solid #0280FF;
+}
+
+.mark-icon::before {
+    content: "|";
+    width: 4px;
+    padding: 3px 2px;
+    color: #0280FF;
+    background-color: #0280FF;
+    border-radius: 4px;
+    margin-right: 36px;
+}
+
+
+/*解决element-ui表格表头与表格内容无法对齐问题*/
+
+body .el-table th.gutter {
+    display: table-cell!important;
+}
+
+
+/* 清楚浮动 */
+
+.clear-fix:after {
+    display: block;
+    width: 0;
+    height: 0;
+    content: '';
+    visibility: hidden;
+    clear: both;
+}
+
+
+/* 文本溢出用省略号显示 */
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
