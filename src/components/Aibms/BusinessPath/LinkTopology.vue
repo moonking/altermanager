@@ -9,7 +9,10 @@
       <div class="level-label">主机</div>
     </div>
     <div class="topology-graph-container">
-      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+      <div class="bgs">
+        <div v-for="item in 5" :key="item" class="level-bg"></div>
+      </div>
+      <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
         <template v-slot:tooltip="tooltip">
           <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
         </template>
@@ -80,37 +83,53 @@ export default {
         ],
         // 边集
         edges: [
-          // { source: 'nodeA1', target: 'nodeB1' },
-          // { source: 'nodeA1', target: 'nodeB2' },
+          { source: 'nodeA1', target: 'nodeB1' },
+          { source: 'nodeA1', target: 'nodeB2' },
 
-          // { source: 'nodeA2', target: 'nodeB3' },
+          { source: 'nodeA2', target: 'nodeB3' },
 
-          // { source: 'nodeB1', target: 'nodeC1' },
-          // { source: 'nodeB1', target: 'nodeC2' },
+          { source: 'nodeB1', target: 'nodeC1' },
+          { source: 'nodeB1', target: 'nodeC2' },
 
-          // { source: 'nodeB2', target: 'nodeC3' },
-          // { source: 'nodeB2', target: 'nodeC4' },
+          { source: 'nodeB2', target: 'nodeC3' },
+          { source: 'nodeB2', target: 'nodeC4' },
 
-          // { source: 'nodeB3', target: 'nodeC5' },
-          // { source: 'nodeB3', target: 'nodeC6' },
-          // { source: 'nodeB3', target: 'nodeC7' },
-          // { source: 'nodeB3', target: 'nodeC8' },
+          { source: 'nodeB3', target: 'nodeC5' },
+          { source: 'nodeB3', target: 'nodeC6' },
+          { source: 'nodeB3', target: 'nodeC7' },
+          { source: 'nodeB3', target: 'nodeC8' },
+          { source: 'nodeB3', target: 'nodeC9' },
+          { source: 'nodeB3', target: 'nodeC10' },
+          { source: 'nodeB3', target: 'nodeC11' },
+          { source: 'nodeB3', target: 'nodeC12' },
+          { source: 'nodeB3', target: 'nodeC13' },
+          { source: 'nodeB3', target: 'nodeC14' },
+          { source: 'nodeB3', target: 'nodeC15' },
+          { source: 'nodeB3', target: 'nodeC16' },
+          { source: 'nodeB3', target: 'nodeC17' },
+          { source: 'nodeB3', target: 'nodeC18' },
+          { source: 'nodeB3', target: 'nodeC19' },
+          { source: 'nodeB3', target: 'nodeC20' },
+          { source: 'nodeB3', target: 'nodeC21' },
+          { source: 'nodeB3', target: 'nodeC22' },
+          { source: 'nodeB3', target: 'nodeC23' },
+          { source: 'nodeB3', target: 'nodeC24' },
 
-          // { source: 'nodeC1', target: 'nodeD1' },
-          // { source: 'nodeC1', target: 'nodeD2' },
+          { source: 'nodeC1', target: 'nodeD1' },
+          { source: 'nodeC1', target: 'nodeD2' },
 
-          // { source: 'nodeC2', target: 'nodeD3' },
-          // { source: 'nodeC2', target: 'nodeD4' },
+          { source: 'nodeC2', target: 'nodeD3' },
+          { source: 'nodeC2', target: 'nodeD4' },
 
-          // { source: 'nodeC3', target: 'nodeD5' },
+          { source: 'nodeC3', target: 'nodeD5' },
 
-          // { source: 'nodeD1', target: 'nodeE1' },
-          // { source: 'nodeD1', target: 'nodeE2' },
-          // { source: 'nodeD1', target: 'nodeE3' },
+          { source: 'nodeD1', target: 'nodeE1' },
+          { source: 'nodeD1', target: 'nodeE2' },
+          { source: 'nodeD1', target: 'nodeE3' },
 
-          // { source: 'nodeD2', target: 'nodeE4' },
+          { source: 'nodeD2', target: 'nodeE4' },
 
-          // { source: 'nodeD4', target: 'nodeE5' }
+          { source: 'nodeD4', target: 'nodeE5' }
         ]
       },
       nodeLevelPlugin: [
@@ -126,23 +145,23 @@ export default {
         // width: width,
         // height: height,
         defaultEdge: {
-          type: 'line',
+          type: 'cubic-vertical',
           color: '#000',
           style: {
-            stroke: '#0078D7',
+            stroke: '#fff',
             lineAppendWidth: 20,
             // startArrow: true,
-            endArrow: {
-              // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
-              path: 'M 0,0 L 8,4 L 8,-4 Z',
-              // 箭头的偏移量，负值代表向 x 轴正方向移动
-              // d: -10,
-              // v3.4.1 后支持各样式属性
-              fill: '#0078D7',
-              stroke: '#0078D7',
-              opacity: 0.8
-              // ...
-            }
+            // endArrow: {
+            //   // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
+            //   path: 'M 0,0 L 8,4 L 8,-4 Z',
+            //   // 箭头的偏移量，负值代表向 x 轴正方向移动
+            //   // d: -10,
+            //   // v3.4.1 后支持各样式属性
+            //   fill: '#0078D7',
+            //   stroke: '#0078D7',
+            //   opacity: 0.8
+            //   // ...
+            // }
           },
           labelCfg: {
             refY: 10,
@@ -182,10 +201,10 @@ export default {
         },
         defaultNode: {
           type: 'iconfontNode',
-          fontColor: '#fff',
+          fontColor: '#1890ff',
           style: {
-            stroke: '#1AC1FF',
-            fill: '#00A8E8'
+            stroke: '#fff',
+            fill: '#fff'
           },
           labelCfg: {
             style: {
@@ -446,13 +465,33 @@ export default {
   padding: 0 10px;
   box-sizing: border-box;
 }
+.level-label:nth-child(odd) {
+  background-color: #1212255c;
+}
 .topology-graph-container {
   flex: 1 1 auto;
   height: 606px;
   /* overflow: hidden; */
+
+  position: relative;
 }
 .editor {
   width: 100%;
   height: 100%;
+}
+.bgs {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+.level-bg {
+  width: 100%;
+  height: 20%;
+}
+.level-bg:nth-child(odd) {
+  background-color: #1212255c;
 }
 </style>

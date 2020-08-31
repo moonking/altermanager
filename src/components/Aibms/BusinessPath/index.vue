@@ -2,7 +2,7 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
-      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+      <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
         <template v-slot:tooltip="tooltip">
           <business-path-tooltip :alerts="tooltip.editorInfo"></business-path-tooltip>
         </template>
