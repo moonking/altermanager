@@ -37,14 +37,14 @@ export default {
         // 点集
         nodes: [
           // 主机
-          { id: 'nodeA1', text: '\ue60e', level: 1 },
+          { id: 'nodeA1', text: '\ue60e', level: 1, status: 'warning' },
           { id: 'nodeA2', text: '\ue60e', level: 1 },
           // 进程
           { id: 'nodeB1', text: '\ue6d8', level: 2 },
           { id: 'nodeB2', text: '\ue6d8', level: 2 },
           { id: 'nodeB3', text: '\ue6d8', level: 2 },
           // 服务
-          { id: 'nodeC1', text: '\ue663', level: 3 },
+          { id: 'nodeC1', text: '\ue663', level: 3, status: 'warning' },
           { id: 'nodeC2', text: '\ue663', level: 3 },
           { id: 'nodeC3', text: '\ue663', level: 3 },
           { id: 'nodeC4', text: '\ue663', level: 3 },
@@ -52,7 +52,7 @@ export default {
           { id: 'nodeC6', text: '\ue663', level: 3 },
           { id: 'nodeC7', text: '\ue663', level: 3 },
           { id: 'nodeC8', text: '\ue663', level: 3 },
-          { id: 'nodeC9', text: '\ue663', level: 3 },
+          { id: 'nodeC9', text: '\ue663', level: 3, status: 'warning' },
           { id: 'nodeC10', text: '\ue663', level: 3 },
           { id: 'nodeC11', text: '\ue663', level: 3 },
           { id: 'nodeC12', text: '\ue663', level: 3 },
@@ -79,7 +79,7 @@ export default {
           { id: 'nodeE2', text: '\ue605', level: 5 },
           { id: 'nodeE3', text: '\ue605', level: 5 },
           { id: 'nodeE4', text: '\ue605', level: 5 },
-          { id: 'nodeE5', text: '\ue605', level: 5 }
+          { id: 'nodeE5', text: '\ue605', level: 5, status: 'error' }
         ],
         // 边集
         edges: [
@@ -203,8 +203,12 @@ export default {
           type: 'iconfontNode',
           fontColor: '#1890ff',
           style: {
-            stroke: '#fff',
+            stroke: 'transparent',
             fill: '#fff'
+          },
+          colors: {
+            warning: { fill: 'orange', fontColor: '#fff' },
+            error: { fill: 'red', fontColor: '#fff' }
           },
           labelCfg: {
             style: {

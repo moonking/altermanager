@@ -153,6 +153,10 @@ export default {
           style: {
             stroke: '#1AC1FF',
             fill: '#00A8E8'
+          },
+          colors: {
+            warning: 'orange',
+            error: 'red'
           }
           // labelCfg: {
           //   style: {
