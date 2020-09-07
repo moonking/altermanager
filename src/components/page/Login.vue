@@ -78,7 +78,7 @@ export default {
         })
       } else {
         axios.userlogin(username, password, kaptcha).then(res => {
-          // console.log(res);
+          console.log(res);
           var loginData = res.data
           if (loginData.data.kaptcha) {
             this.kaptchaShow = true
@@ -95,6 +95,8 @@ export default {
             localStorage.setItem('userId', loginData.data.user.userId)
             localStorage.setItem('verify', JSON.stringify(loginData.data.verify))
             localStorage.setItem('allowList', JSON.stringify(this.parseVerify(loginData.data.verify)))
+            localStorage.setItem('sessionId', loginData.data.sessionId)
+            // localStorage.setItem('shiroCookie', )
             // const verify = {
             //   code: 200,
             //   message: '已授权',

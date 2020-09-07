@@ -29,6 +29,7 @@ service.interceptors.request.use(config => {
   }
   if (localStorage.getItem('token')) {
     config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    config.headers['sessionId'] = localStorage.getItem('sessionId')
   }
   // config.headers["Authorization"] =
   //   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNTUwODI5OTgyLCJpYXQiOjE1NTAyMjUxODJ9.fYZl_ShWh4ht-yWXdDKJZQVh0yyJL8-i2pMGS7cPodaezAQW6Y3wCmvJnxOTmc2E9Yd1apyxxIXPgnsJFIkbXg";
