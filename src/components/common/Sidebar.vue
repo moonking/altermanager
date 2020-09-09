@@ -764,6 +764,10 @@ export default {
             {
               index: '/Aibms/otherConfiguration/maintain?code=8',
               title: '维护窗口'
+            },
+            {
+              index: '/Aibms/otherConfiguration/timingList?code=8',
+              title: '定时任务'
             }
           ]
         }

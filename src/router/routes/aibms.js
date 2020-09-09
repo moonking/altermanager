@@ -75,6 +75,26 @@ let aibms = {
       }
     },
     {
+      path: '/Aibms/otherConfiguration/timingList',
+      component: resolve =>
+        require([
+          '@/components/Aibms/otherConfiguration/TimingList.vue'
+        ], resolve),
+      meta: {
+        title: '定时任务'
+      }
+    },
+    {
+      path: '/Aibms/otherConfiguration/timing/:status',
+      component: resolve =>
+        require([
+          '@/components/Aibms/otherConfiguration/Timing.vue'
+        ], resolve),
+      meta: {
+        title: '操作定时任务'
+      }
+    },
+    {
       path: '/Aibms/Transaction',
       component: resolve =>
         require([

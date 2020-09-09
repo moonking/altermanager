@@ -377,3 +377,46 @@ export function getMaintenanceDetail (id) {
     method: 'get'
   })
 }
+
+// 获取定时任务列表
+export function getTimingList (params) {
+  return request({
+    url: baserUrl + 'quartzJob/list',
+    method: 'POST',
+    data: params
+  })
+}
+
+// 新增定时任务
+export function addTimingTask (params) {
+  return request({
+    url: baserUrl + 'quartzJob/save',
+    method: 'POST',
+    data: params
+  })
+}
+
+// 新增定时任务
+export function updateTimingTask (params) {
+  return request({
+    url: baserUrl + 'quartzJob/update',
+    method: 'PUT',
+    data: params
+  })
+}
+
+// 删除定时任务
+export function deleteTimingTask (id) {
+  return request({
+    url: baserUrl + 'quartzJob/delete/' + id,
+    method: 'DELETE'
+  })
+}
+
+// 获取定时任务详情
+export function getTimingTaskDetail (id) {
+  return request({
+    url: baserUrl + 'quartzJob/detail/' + id,
+    method: 'GET'
+  })
+}
