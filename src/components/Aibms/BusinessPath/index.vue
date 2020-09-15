@@ -193,8 +193,8 @@ export default {
           // minNodeSpacing: 40,
           // workerEnabled: true
         },
-        fitView: true,
-        fitViewPadding: [10],
+        // fitView: true,
+        // fitViewPadding: [10],
         modes: {
           default: [
             // 'drag-canvas',

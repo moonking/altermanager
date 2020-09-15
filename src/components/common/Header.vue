@@ -247,56 +247,56 @@ export default {
         {
           label: '首页',
           link: '/',
-          bl:false
+          bl: false
         },
         {
           className: 'caizhitihuan',
           label: '基础管理',
           link: '/BasicManagement',
-          bl:true
+          bl: true
         },
         {
           className: 'dashujuzhichi',
           label: '资源配置管理',
           link: '/ResourceAllocation',
-          bl:true
+          bl: true
         },
         {
           className: 'dianshangshujuhutong',
           label: '持续交付',
           link: '/AutomatedRelease',
-          bl:false
+          bl: false
         },
 
         {
           className: 'zidonghuayunwei',
           label: '自动化运维',
           link: '/AutomaticOperation',
-          bl:false
+          bl: false
         },
         {
           className: 'hezuoyiyuan',
           label: '资源环境管理',
           link: '/ResourceManagement/vcenterManage',
-          bl:false
+          bl: false
         },
         {
           className: 'zidonghuaceshi',
           label: '自动化测试',
           link: '/AutomatedTesting',
-          bl:false
+          bl: false
         },
         {
           className: 'dapingmu',
           label: '大屏统一监控',
           link: '/ScreenMonitor',
-          bl:false
+          bl: false
         },
         {
           className: 'dapingmu',
-          label: 'Aibms',
+          label: 'AIBMS',
           link: '/Aibms',
-          bl:true
+          bl: true
         }
         // {
         //   imgsrc: require("static/img/header/7.png"),

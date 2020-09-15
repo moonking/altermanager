@@ -54,7 +54,7 @@
             <el-col :span="20">
               <el-checkbox-group v-model="typesForm.type" @change="handlecheckedClassChange">
                 <el-checkbox
-                  :disabled="status==='read' || item.level != ''"
+                  :disabled="status==='read'"
                   v-for="item in classList"
                   :label="item.code"
                   :key="item.code"
@@ -328,14 +328,14 @@
 </template>
 
 <script>
-import axios from "@/api";
+import axios from '@/api';
 export default {
-  data() {
+  data () {
     var validateMobile = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入手机号！"));
+      if (value === '') {
+        callback(new Error('请输入手机号！'));
       } else if (!/^1[3456789]\d{9}$/.test(value)) {
-        callback(new Error("请输入正确的手机号码！"));
+        callback(new Error('请输入正确的手机号码！'));
       } else {
         callback();
       }
@@ -344,25 +344,25 @@ export default {
       // 通知方式
       noticeList: [
         {
-          value: "message",
-          label: "短信通知"
+          value: 'message',
+          label: '短信通知'
         },
         {
-          value: "email",
-          label: "邮件通知"
+          value: 'email',
+          label: '邮件通知'
         }
       ],
       // 自定义from
       customFromList: [
         {
-          name: "",
+          name: '',
           checkList: [],
-          email: "",
-          phone: ""
+          email: '',
+          phone: ''
         }
       ],
       tabsList: [],
-      activeName: "",
+      activeName: '',
       // 通知人员==选择角色
       roleList: [],
       // 通知人员from
@@ -374,71 +374,71 @@ export default {
       tipsDialog: false,
       // 告警分类from
       typesForm: {
-        rulesName: "",
-        label: "",
+        rulesName: '',
+        label: '',
         type: []
       },
       // 告警规则from
       rulesForm: {
-        level: ""
+        level: ''
       },
       levelList: [
         {
-          value: "1",
-          label: "S1"
+          value: '1',
+          label: 'S1'
         },
         {
-          value: "2",
-          label: "S2"
+          value: '2',
+          label: 'S2'
         },
         {
-          value: "3",
-          label: "S3"
+          value: '3',
+          label: 'S3'
         },
         {
-          value: "4",
-          label: "S4"
+          value: '4',
+          label: 'S4'
         },
         {
-          value: "5",
-          label: "S5"
+          value: '5',
+          label: 'S5'
         }
       ],
       labelList: [
-        { label: "交易类型", value: "1" },
-        { label: "应用", value: "2" },
-        { label: "服务", value: "3" },
-        { label: "进程", value: "4" },
-        { label: "主机", value: "5" }
+        { label: '交易类型', value: '1' },
+        { label: '应用', value: '2' },
+        { label: '服务', value: '3' },
+        { label: '进程', value: '4' },
+        { label: '主机', value: '5' }
       ],
       rulesFormRules: {
-        level: [{ required: true, message: "请选择级别！", trigger: "change" }]
+        level: [{ required: true, message: '请选择级别！', trigger: 'change' }]
       },
       typesFormRules: {
         rulesName: [
-          { required: true, message: "请输入名称！", trigger: "blur" }
+          { required: true, message: '请输入名称！', trigger: 'blur' }
         ],
-        label: [{ required: true, message: "请选择标签！", trigger: "change" }],
+        label: [{ required: true, message: '请选择标签！', trigger: 'change' }],
         type: [
           {
-            type: "array",
+            type: 'array',
             required: true,
-            message: "请选择分类！",
-            trigger: "change"
+            message: '请选择分类！',
+            trigger: 'change'
           }
         ]
       },
       customRules: {
-        name: [{ required: true, message: "名称不能为空", trigger: "blur" }],
+        name: [{ required: true, message: '名称不能为空', trigger: 'blur' }],
         email: [
-          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
           {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            type: 'email',
+            message: '请输入正确的邮箱地址',
+            trigger: ['blur', 'change']
           }
         ],
-        phone: [{ required: true, validator: validateMobile, trigger: "blur" }]
+        phone: [{ required: true, validator: validateMobile, trigger: 'blur' }]
       },
       checkAll: false,
       classList: [],
@@ -459,8 +459,8 @@ export default {
       // 通知人员展示
       noticeInform: [],
       allNotice: [],
-      status: "",
-      ruleId: "",
+      status: '',
+      ruleId: '',
       classAllList: [],
       noticeId: 0,
       TemporaryAdd: [], // 临时添加的通知人员
@@ -468,46 +468,46 @@ export default {
     };
   },
   filters: {
-    filterNotice(objArray) {
+    filterNotice (objArray) {
       return objArray
-        .join(",")
-        .replace(/message/, "短信")
-        .replace(/email/, "邮件");
+        .join(',')
+        .replace(/message/, '短信')
+        .replace(/email/, '邮件');
     },
     iconLevelFilter: level => {
       const iconMap = {
-        1: "s1-color",
-        2: "s2-color",
-        3: "s3-color",
-        4: "s4-color",
-        5: "s5-color"
+        1: 's1-color',
+        2: 's2-color',
+        3: 's3-color',
+        4: 's4-color',
+        5: 's5-color'
       };
       return iconMap[level];
     }
   },
-  created() {
+  created () {
     this.init();
   },
   methods: {
     // 数据加载
-    init() {
+    init () {
       this.getSystemRole();
       this.status = this.$route.params.status;
-      if (this.status != "create") {
+      if (this.status != 'create') {
         this.ruleId = this.$route.query.ruleId;
         this.alarmRuleDetails();
         this.checkboxT();
       }
     },
-    showDialog() {
+    showDialog () {
       this.tipsDialog = true;
       this.$nextTick(() => {
-        this.chooseRole(); 
+        this.chooseRole();
         // this.echoCustom();
       });
     },
     // 回显自定义信息
-    echoCustom() {
+    echoCustom () {
       let customArray = [];
       this.noticeInform.forEach(item => {
         if (item.custom) {
@@ -517,33 +517,33 @@ export default {
       this.customFromList = customArray;
     },
     // 隐藏table全选框
-    hiddenCheck() {
+    hiddenCheck () {
       // var style =
       //   ".tips-dialog /deep/ thead .el-checkbox:nth-child(1) {display:none}";
       // var ele = document.createElement("style");
       // ele.innerHTML = style;
       // document.getElementsByTagName("head")[0].appendChild(ele);
       // console.log(document.getElementsByClassName("el-table_1_column_1")[0].childNodes)
-      if (this.status === "read") { 
-        if (document.getElementsByClassName("el-table-column--selection").length > 0) {
+      if (this.status === 'read') {
+        if (document.getElementsByClassName('el-table-column--selection').length > 0) {
           document.getElementsByClassName(
-            "el-table-column--selection"
-          )[0].childNodes[0].style.display = "none";  
+            'el-table-column--selection'
+          )[0].childNodes[0].style.display = 'none';
         }
       } else {
-        if (document.getElementsByClassName("el-table-column--selection").length > 0) {
+        if (document.getElementsByClassName('el-table-column--selection').length > 0) {
           document.getElementsByClassName(
-            "el-table-column--selection"
-          )[0].childNodes[0].style.display = "block";
+            'el-table-column--selection'
+          )[0].childNodes[0].style.display = 'block';
         }
       }
     },
     // 是否禁用table选框
-    checkboxT(row, index) {
-      return this.status !== "read";
+    checkboxT (row, index) {
+      return this.status !== 'read';
     },
     // 获取规则详情
-    alarmRuleDetails() {
+    alarmRuleDetails () {
       axios.alarmRuleDetails(this.ruleId).then(res => {
         if (res.data.code === 200) {
           this.chooseLabel();
@@ -558,11 +558,11 @@ export default {
           } = query
           this.typesForm.rulesName = name
           this.typesForm.label = label
-          this.typesForm.type = JSON.parse(categoryCode).categoryCode.split(",")
+          this.typesForm.type = JSON.parse(categoryCode).categoryCode.split(',')
           this.rulesForm.level = level
           this.noticeId = iD
           this.tipsForm.mode = notify[0].methodToInforme
-          if (notify[0].userList.length ) {
+          if (notify[0].userList.length) {
             this.tipsForm.role = notify[0].roles
             this.allNotice = notify[0].userList
             notify[0].userList.forEach(item => {
@@ -580,17 +580,17 @@ export default {
       });
     },
     // 展示通知人信息
-    getInform(item) {
+    getInform (item) {
       item.forEach(res => {
         this.noticeInform.push(res);
       });
     },
 
     // 分类勾选状态
-    classCheckStatus(type) {
+    classCheckStatus (type) {
       let bl = true;
       let num = 0;
-      let codeList = (this.classList.filter(item => item.level === '')).map(item => item.code)
+      let codeList = (this.classList.filter(item => item.level !== '')).map(item => item.code)
       codeList.forEach(item => {
         if (!type.includes(item)) {
           bl = false;
@@ -611,12 +611,12 @@ export default {
       }
     },
     // 选择标签--展示分类
-    chooseLabel() {
+    chooseLabel () {
       this.checkAll = false;
       this.isIndeterminate = false;
       let params = {
-        name: "",
-        sources: "",
+        name: '',
+        sources: '',
         label: this.typesForm.label,
         current: this.page.current,
         size: this.page.size
@@ -632,12 +632,12 @@ export default {
       });
     },
     // 获取用户列表
-    getUserList(item) {
+    getUserList (item) {
       let JobDto = {
         online: false,
-        condition: "", /// 姓名、手机、登录名
+        condition: '', /// 姓名、手机、登录名
         roleIds: [item.value], // 角色ID，多个用“,”隔开
-        userStatus: "", // 用户状态  0正常 1禁用 2锁定 3注销
+        userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
         current: item.tipsPage.current, // 当前页
         size: item.tipsPage.size // 每页显示条数
       };
@@ -665,13 +665,13 @@ export default {
       });
     },
     // 获取系统的角色
-    getSystemRole() {
+    getSystemRole () {
       axios.getSystemRole().then(res => {
         this.roleList = res.data.data.result;
       });
     },
     // 选择管理人员通知方式 邮件 / 短信
-    checkSmsEmail(scope) {
+    checkSmsEmail (scope) {
       // console.log(scope);
       let valArr = [];
       let TemporaryArray = [];
@@ -732,7 +732,7 @@ export default {
       });
     },
     // 保存历史的数据
-    SaveHdata() {
+    SaveHdata () {
       let objArray = [];
       let copyObjArray = [];
       let copyAllNotice = [];
@@ -775,7 +775,7 @@ export default {
       return objArray;
     },
     // 选择角色
-    chooseRole() {
+    chooseRole () {
       let array = this.SaveHdata();
       if (array.length > 0) {
         let resultArray = [];
@@ -789,9 +789,9 @@ export default {
           resultArray.push(
             axios.userList({
               online: false,
-              condition: "", /// 姓名、手机、登录名
+              condition: '', /// 姓名、手机、登录名
               roleIds: [item.value], // 角色ID，多个用“,”隔开
-              userStatus: "", // 用户状态  0正常 1禁用 2锁定 3注销
+              userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
               current: item.tipsPage.current, // 当前页
               size: item.tipsPage.size // 每页显示条数
             })
@@ -833,7 +833,7 @@ export default {
     },
 
     // 根据历史自动选中
-    AutoSelect() {
+    AutoSelect () {
       // console.log(this.tabsList, this.allNotice);
       this.tabsList.forEach((item, index) => {
         if (item.value === this.activeName) {
@@ -858,7 +858,7 @@ export default {
       this.hiddenCheck();
     },
     // 通知人员选中一个
-    chooseOne(val, row) {
+    chooseOne (val, row) {
       // console.log(val, row);
       let isSelect = false;
       let TemporaryArray = [];
@@ -869,7 +869,7 @@ export default {
       });
       if (isSelect) {
         row.isSelect = true;
-        row.checkList = ["email", "message"];
+        row.checkList = ['email', 'message'];
         // 对选择项做记录--选中添加
         this.allNotice.forEach(item => {
           if (this.activeName === item.value) {
@@ -913,7 +913,7 @@ export default {
       // console.log(this.allNotice);
     },
     // 通知人员全选
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       // console.log(val);
       let uncheckList = [];
       let TemporaryArray = [];
@@ -932,7 +932,7 @@ export default {
                 this.TemporaryCancel.push(row);
               }
             } else {
-              row.checkList = ["email", "message"];
+              row.checkList = ['email', 'message'];
               row.isSelect = true;
               if (this.TemporaryAdd.length > 0) {
                 TemporaryArray = this.TemporaryAdd.map(val => val.userId);
@@ -979,12 +979,12 @@ export default {
       }
       // console.log(this.allNotice);
     },
-    tableRowClassName(row) {
+    tableRowClassName (row) {
       // 设置row对象的index
       row.row.index = row.rowIndex;
     },
     // dialong radio切换
-    changeNotice() {
+    changeNotice () {
       if (this.tipsForm.mode === 1) {
         this.$nextTick(() => {
           if (this.allNotice.length > 0) {
@@ -1004,30 +1004,39 @@ export default {
       //   }
       // ];
     },
-    handleCheckAllChange(val) {
-      let activeOptions = this.classList.filter(item => item.level == "")
-      let copyType = val ? activeOptions.map(val => val.code) : []
-      let delList = []
-      let temporary = []
-      if (copyType.length === 0) {
-        delList = activeOptions.map(val => val.code)
-        this.typesForm.type.forEach(item => {
-          if (!delList.includes(item)) {
-            temporary.push(item)
-          }
-        });
-        this.typesForm.type = temporary
-      } else {
-        copyType.forEach(item => {
-          if (!this.typesForm.type.includes(item)) {
-            this.typesForm.type.push(item)
-          }
-        });
-      }
-      this.classCheckStatus(this.typesForm.type)
+    handleCheckAllChange (val) {
+      const { classList } = this
+      const codes = classList.map(val => val.code)
+      this.typesForm.type = val ? codes : []
+      this.isIndeterminate = false
+      // let activeOptions = this.classList.filter(item => item.level !== '')
+      // let copyType = val ? activeOptions.map(val => val.code) : []
+      // let delList = []
+      // let temporary = []
+      // if (copyType.length === 0) {
+      //   delList = activeOptions.map(val => val.code)
+      //   this.typesForm.type.forEach(item => {
+      //     if (!delList.includes(item)) {
+      //       temporary.push(item)
+      //     }
+      //   });
+      //   this.typesForm.type = temporary
+      // } else {
+      //   copyType.forEach(item => {
+      //     if (!this.typesForm.type.includes(item)) {
+      //       this.typesForm.type.push(item)
+      //     }
+      //   });
+      // }
+      // this.classCheckStatus(this.typesForm.type)
     },
-    handlecheckedClassChange(value) {
-      this.classCheckStatus(this.typesForm.type)
+    handlecheckedClassChange (value) {
+      console.log('value: ', value, ', length: ', value.length)
+      const { classList } = this
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === classList.length;
+      this.isIndeterminate = checkedCount > 0 && checkedCount < classList.length;
+      // this.classCheckStatus(this.typesForm.type)
     },
     // hisClassAllList() {
     //   if (this.typesForm.type.length > 0) {
@@ -1038,10 +1047,10 @@ export default {
     //   this.classAllList = new Set(this.classAllList)
     //   this.chooseLabel();
     // },
-    handleClick(tab) {
+    handleClick (tab) {
       this.AutoSelect();
     },
-    isActive(num) {
+    isActive (num) {
       if (num === 1) {
         if (this.$refs.typesForm) {
           this.$refs.typesForm.validate(valid => {
@@ -1049,9 +1058,9 @@ export default {
               this.active = num;
             } else {
               this.$notify({
-                title: "提示",
-                message: "请填写完整！",
-                type: "warning"
+                title: '提示',
+                message: '请填写完整！',
+                type: 'warning'
               });
             }
           });
@@ -1061,7 +1070,7 @@ export default {
       this.active = num;
     },
     // 新增告警规则
-    saveAlarm() {
+    saveAlarm () {
       let notifyPersonnel = [];
       notifyPersonnel = [
         {
@@ -1071,15 +1080,15 @@ export default {
         },
         {
           methodToInforme: 2,
-          roles: "",
+          roles: '',
           userList: this.customFromList
         }
       ];
       if (this.noticeInform.length === 0) {
         this.$notify({
-          title: "提示",
-          message: "请选择通知人员！",
-          type: "warning"
+          title: '提示',
+          message: '请选择通知人员！',
+          type: 'warning'
         });
         return;
       }
@@ -1091,71 +1100,71 @@ export default {
         level: this.rulesForm.level,
         notifyPersonnel: notifyPersonnel
       };
-      if (this.status === "create") {
+      if (this.status === 'create') {
         this.alarmRuleSave(params);
-      } else if (this.status === "edit") {
+      } else if (this.status === 'edit') {
         this.alarmRuleUpdate(params);
       }
     },
     // 编辑告警规则
-    alarmRuleUpdate(params) {
+    alarmRuleUpdate (params) {
       axios.alarmRuleUpdate(params).then(res => {
         if (res.data.code === 200) {
           this.$notify({
-            title: "提示",
-            message: "编辑成功！",
-            type: "success"
+            title: '提示',
+            message: '编辑成功！',
+            type: 'success'
           });
           this.$router.push({
-            path: "/Aibms/Bconfiguration/Alarmrules",
+            path: '/Aibms/Bconfiguration/Alarmrules',
             query: {
               code: 8
             }
           });
         } else if (res.data.code === 0) {
           this.$notify({
-            title: "提示",
+            title: '提示',
             message: res.data.message,
-            type: "error"
+            type: 'error'
           });
         }
       });
     },
     // 新增保存告警规则
-    alarmRuleSave(params) {
+    alarmRuleSave (params) {
       axios.alarmRuleSave(params).then(res => {
         if (res.data.code === 200) {
           this.$notify({
-            title: "提示",
-            message: "保存成功！",
-            type: "success"
+            title: '提示',
+            message: '保存成功！',
+            type: 'success'
           });
           this.$router.push({
-            path: "/Aibms/Bconfiguration/Alarmrules",
+            path: '/Aibms/Bconfiguration/Alarmrules',
             query: {
               code: 8
             }
           });
         } else if (res.data.code === 0) {
           this.$notify({
-            title: "提示",
+            title: '提示',
             message: res.data.message,
-            type: "error"
+            type: 'error'
           });
         }
       });
     },
     // dialog关闭
-    cancel() {
+    cancel () {
       this.$router.push({
-        path: "/Aibms/Bconfiguration/Alarmrules",
+        path: '/Aibms/Bconfiguration/Alarmrules',
         query: {
           code: 8
         }
       });
     },
     // dialog保存
-    saveTips() {
+    saveTips () {
       this.noticeInform = [];
       this.tabsList.forEach(item => {
         this.allNotice.forEach(res => {
@@ -1186,7 +1195,7 @@ export default {
         .then(() => {
           this.tipsDialog = false;
           this.customFromList.forEach(item => {
-            item.department = "-";
+            item.department = '-';
             item.custom = true;
             this.noticeInform.push(item);
           });
@@ -1199,7 +1208,7 @@ export default {
       this.TemporaryAdd = [];
     },
     // 对dialog操作做恢复
-    resetTips() {
+    resetTips () {
       // console.log(this.TemporaryCancel, this.TemporaryAdd);
       // console.log(this.tabsList, this.allNotice);
       this.tabsList.forEach(item => {
@@ -1212,7 +1221,7 @@ export default {
           if (this.TemporaryCancel.length > 0) {
             this.TemporaryCancel.forEach(arr => {
               if (arr.userId === row.userId) {
-                row.checkList = ["email", "message"];
+                row.checkList = ['email', 'message'];
                 row.isSelect = true;
               }
             });
@@ -1246,7 +1255,7 @@ export default {
       this.echoCustom();
     },
     // dialog关闭
-    handleDialogClose() {
+    handleDialogClose () {
       // 清除dialog数据
       this.resetTips();
       this.tipsDialog = false;
@@ -1259,36 +1268,36 @@ export default {
       // this.$refs.tipsForm.resetFields();
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       // this.hisClassAllList();
       this.chooseLabel();
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1;
       // this.hisClassAllList();
       this.chooseLabel();
     },
     // 通知人员分页
-    handleCurrentChangeTips(item) {
+    handleCurrentChangeTips (item) {
       this.getUserList(item);
     },
     // 表格每页数量
-    handleSizeChangeTips(item) {
+    handleSizeChangeTips (item) {
       item.tipsPage.current = 1;
       this.getUserList(item);
     },
     // 新增一条自定义通知人员
-    addCustom() {
+    addCustom () {
       this.customFromList.push({
-        name: "",
+        name: '',
         checkList: [],
-        email: "",
-        phone: ""
+        email: '',
+        phone: ''
       });
     },
     // 删除一条自定义通知人员
-    removeCustom(index) {
+    removeCustom (index) {
       if (this.customFromList.length === 1) return;
       this.customFromList.splice(index, 1);
     }

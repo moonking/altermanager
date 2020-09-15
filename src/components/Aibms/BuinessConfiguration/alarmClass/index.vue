@@ -47,7 +47,7 @@
           {{ scope.row.label | labelFilter }}
         </template>
       </el-table-column>
-      <el-table-column prop="sources" label="来源" />
+      <el-table-column prop="source" label="来源" />
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="task-btn-box">

@@ -31,9 +31,9 @@
       <!-- v-if="selectSource" -->
       <el-form-item style="width:12%">
         <el-select v-model="dataFrom" placeholder="选择数据来源" clearable>
-          <el-option label="手动添加" value="1"></el-option>
-          <el-option label="导入" value="2"></el-option>
-          <el-option label="服务器获取" value="3"></el-option>
+          <el-option label="Promtheus" value="1"></el-option>
+          <el-option label="Dynatrace" value="2"></el-option>
+          <el-option label="BPC" value="3"></el-option>
         </el-select>
       </el-form-item>
 

@@ -59,11 +59,11 @@ export default {
     sortList: [],
     readOnly: false
   }),
-  created() {  
+  created () {
     this.getMaintenanceDetail()
   },
   methods: {
-    getMaintenanceDetail() {
+    getMaintenanceDetail () {
       //  查看或编辑
       if (this.$route.query.id) {
         this.editId = this.$route.query.id
@@ -76,7 +76,7 @@ export default {
         axios.getMaintenanceDetail(this.$route.query.id).then(res => {
           if (res.data.success) {
             const resultData = res.data.data
-            const { systemList, startTime, endTime, categoryList,labels } = resultData
+            const { systemList, startTime, endTime, categoryList, labels } = resultData
             this.checkedTableData = systemList
             this.checkedLabels = labels
             this.startTime = startTime
@@ -93,10 +93,10 @@ export default {
         this.$route.meta.title = '新增维护窗口'
       }
     },
-    prev() {
+    prev () {
       this.active--
     },
-    next() {
+    next () {
       if (this.active === 0) {
         if (this.$refs.selectHost.hostList.length) {
           this.active++
@@ -113,7 +113,7 @@ export default {
         }
       }
     },
-    addOrEdit(methods) {
+    addOrEdit (methods) {
       const params = {
         id: this.editId,
         systemList: this.$refs.selectHost.hostList,
@@ -142,20 +142,20 @@ export default {
         }
       })
     },
-    save() {
+    save () {
       this.$refs.selectDate.$refs['dateFrom'].validate((valid) => {
-          if (valid) {
-            if (this.editId) {
-              this.addOrEdit(axios.updateMaintenance)
-            } else {
-              this.addOrEdit(axios.addMaintenance)
-            }
+        if (valid) {
+          if (this.editId) {
+            this.addOrEdit(axios.updateMaintenance)
           } else {
-            return false
+            this.addOrEdit(axios.addMaintenance)
           }
-        })    
+        } else {
+          return false
+        }
+      })
     },
-    cancel() {
+    cancel () {
       this.$router.replace({
         path: '/Aibms/otherConfiguration/maintain',
         query: { code: 8 }

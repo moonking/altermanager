@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <div class="ms-login">
-      <div class="ms-title">欢迎登录自动化运维平台</div>
+      <div class="ms-title">欢迎登录AI·BMS</div>
       <el-form ref="form" :model="form" label-width="60px" style="padding: 15px 40px 0 15px">
         <el-form-item label="用户名">
           <el-input v-model="form.loginName"></el-input>

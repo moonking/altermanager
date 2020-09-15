@@ -123,7 +123,7 @@
           </el-select>
           <div class="form-item-oparates" style="padding: 0 20px; font-size: 24px">
             <span class="form-item-oparate-item" @click="addNodeSelect"><i class="el-icon-circle-plus-outline white-color"></i></span>
-            <span class="form-item-oparate-item" @click="deleteNodeSelect"><i class="el-icon-remove-outline white-color"></i></span>
+            <span class="form-item-oparate-item" @click="deleteNodeSelect(system, index)"><i class="el-icon-remove-outline white-color"></i></span>
           </div>
         </div>
       </el-form-item>
@@ -320,7 +320,7 @@ export default {
       this.getSystemDetail(this.$route.query.id)
     }
     this.getHostList()
-    this.getSystemList()
+    if (this.$route.params.status !== 'edit') this.getSystemList()
   },
   methods: {
     handleCurrentPageChange (value) {
@@ -414,15 +414,15 @@ export default {
       systemList.forEach(system => {
         let flag = false
         callNodes.forEach(node => {
-          if (node.systemId === system.systemId) {
+          const id = node.systemId
+          if (id === system.systemId) {
             flag = true
           }
         })
-        // console.log(node.systemId)
-        if (flag) {
+        if (this.status === 'edit' && this.$route.query.id === system.systemId) {
           system.disabled = true
         } else {
-          system.disabled = false
+          system.disabled = flag
         }
       })
     },
@@ -442,6 +442,21 @@ export default {
             record.diabled = false
           })
           this.systemNodeList = records
+          const status = this.status
+          const id = this.$route.query.id
+          console.log('id: ', id)
+          if (status === 'edit') {
+            this.systemNodeList.forEach(system => {
+              if (id === system.systemId) {
+                system.disabled = true
+              }
+              this.callNodes.forEach(node => {
+                if (node.systemId === system.systemId) {
+                  system.disabled = true
+                }
+              })
+            })
+          }
         }
       })
     },
@@ -514,7 +529,14 @@ export default {
     addNodeSelect () {
       this.callNodes.push({systemId: ''})
     },
-    deleteNodeSelect (nodeId) {},
+    deleteNodeSelect (system, index) {
+      this.systemNodeList.forEach(sys => {
+        if (sys.systemId === system.systemId) {
+          sys.disabled = false
+        }
+      })
+      this.callNodes.splice(index, 1)
+    },
     // 确认新增业务系统
     addSystemclick (num) {
       let that = this
@@ -643,7 +665,9 @@ export default {
           })
           this.hostTableSelected = JSON.parse(data.hosts)
           this.sysdata = data
-          this.callNodes = callNodesData
+          if (callNodesData.length > 0) this.callNodes = callNodesData
+          
+          this.getSystemList()
         }
       })
     }

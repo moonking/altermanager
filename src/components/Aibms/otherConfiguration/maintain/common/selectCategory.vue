@@ -1,16 +1,16 @@
 <template>
   <div class="select-content">
     <el-form ref="classFrom" :model="classFrom" :rules="rules" label-width="100px">
-      <el-form-item label="选择标签：" prop="checkedLabelList">  
+      <el-form-item label="选择标签：" prop="checkedLabelList">
         <el-checkbox-group v-model="classFrom.checkedLabelList" @change="getNewLabelList">
           <el-checkbox
           v-for="item in labelList"
           :key="item.value"
-          :label="item.label"
+          :label="item.value"
           :disabled="readOnly"
           border
           >
-          {{ item.value }}
+          {{ item.label }}
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
@@ -59,7 +59,7 @@ export default {
     checkedLabels: {
       type: Array
     },
-     sortList: {
+    sortList: {
       type: Array
     },
     readOnly: {
@@ -69,7 +69,7 @@ export default {
     }
   },
   watch: {
-    checkedLabels(val, oldVal) {
+    checkedLabels (val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
           this.classFrom.checkedLabelList = val
@@ -77,7 +77,7 @@ export default {
         }
       }
     },
-    sortList(val, oldVal) {
+    sortList (val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
           this.checkedCategory = val.map(item => Number(item.iD))
@@ -114,11 +114,11 @@ export default {
     },
     checkedClass: ''
   }),
-  created() {
+  created () {
     // this.getlabelList()
   },
   methods: {
-    getlabelList() {
+    getlabelList () {
       axios.getlabelList().then(res => {
         if (res.data.success) {
           this.labelList = res.data.data
@@ -130,7 +130,7 @@ export default {
         }
       })
     },
-    getAlarmList() {
+    getAlarmList () {
       const params = {
         name: '',
         sources: '',
@@ -154,20 +154,20 @@ export default {
         }
       })
     },
-    getNewLabelList() {
+    getNewLabelList () {
       this.getAlarmList()
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getAlarmList()
     },
     // 全选
-    handleCheckAllChange(val) {
+    handleCheckAllChange (val) {
       let copyType = val ? this.categoryList.map(val => val.iD) : []
       let delList = []
       let temporary = []
@@ -189,18 +189,18 @@ export default {
       this.classCheckStatus(this.checkedCategory)
     },
     // 单选
-    handleCheckedCategoryChange(value) {
+    handleCheckedCategoryChange (value) {
       this.classCheckStatus(this.checkedCategory)
     },
-     // 分类勾选状态
-    classCheckStatus(type) {
+    // 分类勾选状态
+    classCheckStatus (type) {
       let bl = true
       let num = 0
       let alarmOptionList = this.categoryList.map(val => val.iD)
       // 用于第三个组件显示id对应的类型
-      const findId = this.categoryList.find(el => el.iD===type[0])
+      const findId = this.categoryList.find(el => el.iD === type[0])
       if (findId != undefined) {
-         this.checkedClass = findId.name
+        this.checkedClass = findId.name
       }
       alarmOptionList.forEach(item => {
         if (!type.includes(item)) {

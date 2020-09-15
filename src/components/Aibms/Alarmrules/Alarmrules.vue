@@ -73,7 +73,11 @@
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="rule-box" @click.stop="openRule(scope.row)">
-            <el-switch size="large" v-model="scope.row.enabledState"></el-switch>
+            <el-switch
+            size="large"
+            v-model="scope.row.enabledState"
+            :active-value="1"
+            :inactive-value="0"></el-switch>
           </div>
           <div class="task-btn-box">
             <el-link type="primary" :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
@@ -149,11 +153,11 @@ export default {
       }
     ],
     labelList: [
-      { label: '业务', value: '1' },
-      { label: '服务', value: '2' },
-      { label: '网络', value: '3' },
-      { label: '系统', value: '4' },
-      { label: '应用', value: '5' }
+      { label: '交易类型', value: '1' },
+      { label: '应用', value: '2' },
+      { label: '服务', value: '3' },
+      { label: '进程', value: '4' },
+      { label: '主机', value: '5' }
     ],
     searchFrom: {
       rulesName: '',
@@ -170,11 +174,11 @@ export default {
   filters: {
     labelFilter: label => {
       const labelMap = {
-        1: '业务',
-        2: '服务',
-        3: '网络',
-        4: '系统',
-        5: '应用'
+        1: '交易类型',
+        2: '应用',
+        3: '服务',
+        4: '进程',
+        5: '主机'
       };
       return labelMap[label]
     },
@@ -199,12 +203,12 @@ export default {
       return iconMap[level]
     }
   },
-  created() {
+  created () {
     this.AlarmrulesList()
   },
   methods: {
     // 告警规则列表
-    AlarmrulesList() {
+    AlarmrulesList () {
       let params = {
         name: this.searchFrom.rulesName || '',
         level: this.searchFrom.level || '',
@@ -219,10 +223,10 @@ export default {
         }
       })
     },
-    search() {
+    search () {
       this.AlarmrulesList()
     },
-    handleEdit(row) {
+    handleEdit (row) {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/edit',
         query: {
@@ -231,11 +235,11 @@ export default {
         }
       });
     },
-    handleDelete(row) {
+    handleDelete (row) {
       this.currentDeleteItemId = row.iD
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete() {
+    confirmDelete () {
       const id = this.currentDeleteItemId
       axios.alarmRuleDelete(id).then(res => {
         if (res.data.success) {
@@ -254,7 +258,7 @@ export default {
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
       })
     },
-    addRule() {
+    addRule () {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/create',
         query: {
@@ -262,7 +266,7 @@ export default {
         }
       });
     },
-    openRule(scope) {
+    openRule (scope) {
       let params = {
         ID: scope.iD,
         enabledState: scope.enabledState ? '1' : '0'
@@ -274,10 +278,11 @@ export default {
             message: scope.enabledState ? '规则已开启！' : '规则已关闭!',
             type: 'success'
           });
+          this.AlarmrulesList()
         }
       });
     },
-    ruleDeatil(row) {
+    ruleDeatil (row) {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/read',
         query: {
@@ -287,11 +292,11 @@ export default {
       });
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.AlarmrulesList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.AlarmrulesList()
     }

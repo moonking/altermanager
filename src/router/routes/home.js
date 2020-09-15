@@ -1,7 +1,7 @@
 let home = [
   {
     path: '/',
-    component: resolve => require(['@/components/common/index.vue'], resolve)
+    component: resolve => require(['@/components/BasicManagement/index.vue'], resolve)
   },
   {
     path: '/AutomaticOperation',
