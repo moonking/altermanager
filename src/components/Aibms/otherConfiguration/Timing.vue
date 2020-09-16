@@ -133,7 +133,7 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item>{{ str }}</el-form-item>
+          <el-form-item class="result-str">{{ str }}</el-form-item>
         </form>
         <form label-width="140" class="inline-form" v-if="radio === 2">
           <el-form-item>
@@ -160,7 +160,7 @@
               placeholder="选择时间"
             ></el-time-picker>
           </el-form-item>
-          <el-form-item>{{ onceStr }}</el-form-item>
+          <el-form-item class="result-str">{{ onceStr }}</el-form-item>
         </form>
       </el-form>
     </div>
@@ -1247,5 +1247,8 @@ export default {
 }
 .ml128 {
   margin-left: 128px;
+}
+.result-str {
+  color: #fff;
 }
 </style>

@@ -1,200 +1,103 @@
 <template>
   <div class="containBox aibms-role">
-    <el-tabs v-model="activeName2" class="tabs-list" type="card">
-      <el-tab-pane label="业务系统" class="tab-item aibms-color-bg" name="first">
-        <el-form
-          :inline="true"
-          v-model="formInline"
-          class="demo-form-inline"
-          style="padding:20px 20px 0"
-        >
-          <el-form-item>
-            <el-input type="text" placeholder="业务系统名称" clearable v-model="searchSystemName" />
-          </el-form-item>
+    <div>
+      <el-form
+        :inline="true"
+        v-model="formInline"
+        class="demo-form-inline">
+        <el-form-item>
+          <el-input type="text" placeholder="业务系统名称" clearable v-model="searchSystemName" />
+        </el-form-item>
 
-          <el-form-item class="item-right overHideMargin">
-            <el-button @click="allSystembtnde" icon="el-icon-close" class="nomal-button">批量删除</el-button>
-            <el-button
-              @click="checkAll"
-              v-if="delesteBtnSys"
-              class="cm-form-btn"
-            >删除</el-button>
-            <el-button
-              @click="cancleall"
-              v-if="cancleallBtn"
-              class="cm-form-btn"
-            >取消</el-button>
-            <el-button
-              icon="el-icon-search"
-              class=" nomal-button margin-left-btn"
-              @click="searchBtn"
-            >查找</el-button>
-            <el-button
-              type="primary"
-              icon="el-icon-plus"
-              class="margin-left-btn"
-              @click.prevent="addSystembtn"
-            >新增</el-button>
-          </el-form-item>
-          <el-form-item class="form-btn"></el-form-item>
-        </el-form>
-        <el-table
-          :data="systemListData"
-          stripe
-          class="table-css non-border"
-          style="width:96%;font-size:0.9rem"
-          :header-cell-style="{background:'#f5f5f5'}"
-          @selection-change="handleSelectionChange"
-          center="true"
-        >
-          <el-table-column type="selection" v-if="allSysDeleteShow" />
-          <el-table-column label="业务系统名称" prop="name" />
-          <el-table-column label="英文缩写" prop="englishAbridge" />
-          <el-table-column label="类型" prop="type" />
-          <!-- <el-table-column label="url" prop="url" />
-          <el-table-column label="代码库凭证" prop="vName" /> -->
-          <el-table-column label="负责人" prop="opsPerson" />
-          <!-- <el-table-column label="开发负责人" prop="devPerson" /> -->
-          <!-- <el-table-column label="描述" prop="remarks" /> -->
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <div class="task-btn-box">
-                <span class="special" @click="getSystemDetail(scope.row.systemId)">
-                  <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
-                    <icon-svg icon-class="bianji" class="whiteness-icon-color"/>
-                  </el-tooltip>
-                </span>
-                <span class="special" @click="showOpen3(scope.row.systemId)">
-                  <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                    <icon-svg icon-class="shanchu" class="whiteness-icon-color "/>
-                  </el-tooltip>
-                </span>
-              </div>
-              <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
-                <el-button
-                  class="cm-form-btn cm-edit-btn-light"
-                  :style="{backgroundSize: '40%', backgroundPosition: 'center'}"
-                  @click="getSystemDetail(scope.row.systemId)"
-                ></el-button>
-              </el-tooltip>
+        <el-form-item class="item-right overHideMargin">
+          <el-button @click="allSystembtnde" icon="el-icon-close" class="nomal-button">批量删除</el-button>
+          <el-button
+            @click="checkAll"
+            v-if="delesteBtnSys"
+            class="cm-form-btn"
+          >删除</el-button>
+          <el-button
+            @click="cancleall"
+            v-if="cancleallBtn"
+            class="cm-form-btn"
+          >取消</el-button>
+          <el-button
+            icon="el-icon-search"
+            class=" nomal-button margin-left-btn"
+            @click="searchBtn"
+          >查找</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            class="margin-left-btn"
+            @click.prevent="addSystembtn"
+          >新增</el-button>
+        </el-form-item>
+        <el-form-item class="form-btn"></el-form-item>
+      </el-form>
+      <el-table
+        :data="systemListData"
+        stripe
+        class="table-css non-border"
+        style="width:100%;font-size:0.9rem"
+        :header-cell-style="{background:'#f5f5f5'}"
+        @selection-change="handleSelectionChange"
+        center="true">
+        <el-table-column type="selection" v-if="allSysDeleteShow" />
+        <el-table-column label="业务系统名称" prop="name" />
+        <el-table-column label="英文缩写" prop="englishAbridge" />
+        <el-table-column label="类型" prop="type" />
+        <!-- <el-table-column label="url" prop="url" />
+        <el-table-column label="代码库凭证" prop="vName" /> -->
+        <el-table-column label="负责人" prop="opsPerson" />
+        <!-- <el-table-column label="开发负责人" prop="devPerson" /> -->
+        <!-- <el-table-column label="描述" prop="remarks" /> -->
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <div class="task-btn-box">
+              <span class="special" @click="getSystemDetail(scope.row.systemId)">
+                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+                  <icon-svg icon-class="bianji" class="whiteness-icon-color"/>
+                </el-tooltip>
+              </span>
+              <span class="special" @click="showOpen3(scope.row.systemId)">
+                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+                  <icon-svg icon-class="shanchu" class="whiteness-icon-color "/>
+                </el-tooltip>
+              </span>
+            </div>
+            <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+              <el-button
+                class="cm-form-btn cm-edit-btn-light"
+                :style="{backgroundSize: '40%', backgroundPosition: 'center'}"
+                @click="getSystemDetail(scope.row.systemId)"
+              ></el-button>
+            </el-tooltip>
 
-              <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                <el-button
-                  class="cm-form-btn cm-delete-btn-light"
-                  :style="{backgroundSize: '40%',backgroundPosition: 'center'}"
-                  @click="open3(scope.row.systemId)"
-                ></el-button>
-              </el-tooltip>-->
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="block">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currPage"
-            :page-sizes="[10,30,50]"
-            layout="prev, pager, next, sizes, total, jumper"
-            :total="total"
-            v-if="pageShow"
-            style="cursor: pointer;margin:10px"
-          ></el-pagination>
-        </div>
-        <div class="clear"></div>
-      </el-tab-pane>
-      <el-tab-pane label="环境" class="tab-item aibms-color-bg" name="second">
-        <el-form
-          :inline="true"
-          v-model="formInline"
-          class="demo-form-inline"
-          style="padding: 20px 20px 0px"
-        >
-          <el-form-item>
-            <el-input type="text" placeholder="环境名称" clearable v-model="name" />
-          </el-form-item>
-          <!-- <el-form-item>
-            <el-select placeholder="选择环境" clearable v-model="environmentType">
-              <el-option label="测试环境" value="1"></el-option>
-              <el-option label="预生产环境" value="2"></el-option>
-              <el-option label="生产环境" value="3"></el-option>
-            </el-select>
-          </el-form-item>-->
-          <el-form-item class="item-right overHideMargin">
-            <el-button @click="BatchDeletebtn" icon="el-icon-close" class="nomal-button">批量删除</el-button>
-            <el-button
-              @click="batchDelete(tableChecked)"
-              v-if="delesteBtn"
-              class="nomal-button"
-            >删除</el-button>
-            <el-button
-              @click="cancleall"
-              v-if="cancleallBtn"
-              class="nomal-button"
-            >取消</el-button>
-            <el-button
-              icon="el-icon-search"
-              class="nomal-button margin-left-btn"
-              @click="getEnvBtn"
-            >查找</el-button>
-            <el-button
-              type="primary"
-              icon="el-icon-plus"
-              class="margin-left-btn"
-              @click.prevent="addEnvironment"
-            >新增</el-button>
-          </el-form-item>
-        </el-form>
-        <el-table
-          :data="envListData"
-          stripe
-          style="width:96%;margin:auto;font-size:0.9rem;"
-          :header-cell-style="{background:'#f5f5f5'}"
-          @selection-change="handleSelectionChange"
-          center="true"
-        >
-          <el-table-column type="selection" v-if="BatchDeleteShow" />
-          <el-table-column label="环境名称" prop="name" />
-          <el-table-column label="环境类型" prop="environmentType">
-            <template slot-scope="scope">
-              <span>{{scope.row.environmentType===1 ? "测试环境" : scope.row.environmentType===2 ? "预生产环境" : "生产环境"}}</span>
-              <!-- <span v-if="scope.row.environmentType===2">预生产环境</span>
-              <span v-if="scope.row.environmentType===3">生产环境</span>-->
-            </template>
-          </el-table-column>
-          <el-table-column prop="remarks" label="描述" />
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <div class="task-btn-box">
-                <span class="special" @click="edit(scope.row.environmentId)">
-                  <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
-                    <icon-svg icon-class="bianji" class="whiteness-icon-color" />
-                  </el-tooltip>
-                </span>
-                <span class="special" @click="open2(scope.row.environmentId)">
-                  <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                    <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
-                  </el-tooltip>
-                </span>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="block">
-          <el-pagination
-            @size-change="handleSizeChangeenv"
-            @current-change="handleCurrentChangeenv"
-            :current-page="currPageenv"
-            :page-sizes="[10,30,50]"
-            layout="prev, pager, next, sizes, total, jumper"
-            :total="total1"
-            v-if="pageShow1"
-            style="cursor: pointer;margin-top:20px"
-          ></el-pagination>
-        </div>
-        <div class="clear"></div>
-      </el-tab-pane>
-      <el-tab-pane label="地区" class="tab-item aibms-color-bg" name="third"></el-tab-pane>
-    </el-tabs>
+            <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+              <el-button
+                class="cm-form-btn cm-delete-btn-light"
+                :style="{backgroundSize: '40%',backgroundPosition: 'center'}"
+                @click="open3(scope.row.systemId)"
+              ></el-button>
+            </el-tooltip>-->
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currPage"
+          :page-sizes="[10,30,50]"
+          layout="prev, pager, next, sizes, total, jumper"
+          :total="total"
+          v-if="pageShow"
+          style="cursor: pointer;margin:10px"
+        ></el-pagination>
+      </div>
+      <div class="clear"></div>
+    </div>
 
     <el-dialog center :visible.sync="dialogVisibleDelete" title="提示" width="300px">
       <div :style="{textAlign: 'center'}">

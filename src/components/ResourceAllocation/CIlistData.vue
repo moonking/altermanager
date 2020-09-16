@@ -68,7 +68,7 @@
       <!-- </el-form-item> -->
       <el-form-item class="item-right overHideMargin">
         <el-button icon="el-icon-search" class="nomal-button" @click.stop="search">查找</el-button>
-        <el-dropdown trigger="click">
+        <!-- <el-dropdown trigger="click">
           <el-button icon="el-icon-plus" class="margin-left-btn">
             新增
             <i class="el-icon-arrow-down el-icon--right"></i>
@@ -78,7 +78,7 @@
               <el-dropdown-item>导&nbsp;&nbsp;入</el-dropdown-item>
             </div>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown> -->
         <el-button
           type="primary"
           icon="el-icon-plus"
@@ -195,7 +195,7 @@
       >取消</el-button>
       <!-- <div class="divicon icons"> -->
       <div class="divicon">
-        <el-dropdown trigger="click">
+        <!-- <el-dropdown trigger="click">
           <el-button size="small" class="normal-button">
             导出为
             <i class="el-icon-arrow-down el-icon--right"></i>
@@ -211,7 +211,7 @@
               <div style="display: inline-block;" @click="getselect('2','3')">导出为PDF格式</div>
             </el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown> -->
         <!-- <div style="    display: inline-block;" @click="getselect('2','1')"> -->
         <!-- <span class="iconfont" title="导出为CSV格式">&#xe604;</span> -->
         <!-- <img src="../../../static/img/icon/CSV.svg" title="导出为CSV格式" style="cursor: pointer; width: 36px;"> -->

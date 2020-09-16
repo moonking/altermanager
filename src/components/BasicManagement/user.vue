@@ -214,6 +214,13 @@
         <el-form-item label=" 职位：">
           <el-input disabled="disabled" v-model="detailData.position" />
         </el-form-item>
+        <el-form-item label="默认用户：" prop="defaultUser">
+          <el-switch
+            size="large"
+            v-model="detailData.defaultUser"
+            :active-value="1"
+            :inactive-value="0"></el-switch>
+        </el-form-item>
         <el-form-item label="角色：">
           <span
             v-for="(item,index) in detailData.roleList"
@@ -276,6 +283,13 @@
         </el-form-item>
         <el-form-item label=" 职位：" prop="position">
           <el-input v-model="changeData.position" />
+        </el-form-item>
+        <el-form-item label="默认用户：" prop="defaultUser">
+          <el-switch
+            size="large"
+            v-model="changeData.defaultUser"
+            :active-value="1"
+            :inactive-value="0"></el-switch>
         </el-form-item>
         <el-form-item label="角色：" style="text-align: left;">
           <el-checkbox-group v-model="roleIdList">
@@ -367,6 +381,15 @@
         <div>
           <el-form-item label=" 职位：" prop="position" class="disinlne input">
             <el-input v-model="addUserList.position" />
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="默认用户：" prop="defaultUser">
+            <el-switch
+              size="large"
+              v-model="addUserList.defaultUser"
+              :active-value="1"
+              :inactive-value="0"></el-switch>
           </el-form-item>
         </div>
         <div>
@@ -713,90 +736,8 @@ export default {
           var photo = this.currentPic
           var position = this.addUserList.position
           var sex = this.addUserList.sex
-          // if (
-          //   this.addUserList.userStatus == undefined ||
-          //   this.addUserList.userStatus == ""
-          // ) {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请选中状态",
-          //     type: "warning"
-          //   });
-          // } else if (loginName == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入用户名",
-          //     type: "warning"
-          //   });
-          // } else if (password == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入密码",
-          //     type: "warning"
-          //   });
-          // } else if (name == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入真实姓名",
-          //     type: "warning"
-          //   });
-          // } else if (sex == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入性别",
-          //     type: "warning"
-          //   });
-          // } else if (mobile == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入电话号码",
-          //     type: "warning"
-          //   });
-          // } else if (email == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入邮箱",
-          //     type: "warning"
-          //   });
-          // } else if (position == "") {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入职位",
-          //     type: "warning"
-          //   });
-          // } else
-          // if (
-          //   !/^(?![0-9]+$)|(?![a-zA-Z]+$)[0-9A-Za-z_]{6,18}$/.test(loginName)
-          // ) {
-          //   this.$notify({
-          //     title: "提示",
-          //     message:
-          //       "用户名为6~18位字符，只能包含字母、数字及下划线，首位不能为下划线",
-          //     type: "warning"
-          //   });
-          // } else if (!/^[0-9A-Za-z]{6,16}$/.test(password)) {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "密码为6~16位字符，可包含数字、字母（区分大小写）",
-          //     type: "warning"
-          //   });
-          // } else if (!/^1[34578]\d{9}$/.test(mobile)) {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入正确的手机号码",
-          //     type: "warning"
-          //   });
-          // } else if (
-          //   !/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(
-          //     email
-          //   )
-          // ) {
-          //   this.$notify({
-          //     title: "提示",
-          //     message: "请输入正确的email",
-          //     type: "warning"
-          //   });
-          // } else {
+          var defaultUser = this.addUserList.defaultUser
+
           let JobDto = {
             email: email,
             loginName: loginName,
@@ -806,7 +747,8 @@ export default {
             photo: photo,
             position: position,
             sex: sex,
-            userStatus: userStatus
+            userStatus: userStatus,
+            defaultUser
           }
           axios.addUserData(this.roleIdList.join(','), JobDto)
             .then(res => {
@@ -935,88 +877,7 @@ export default {
       var photo = this.editCurrentPic
       var position = this.changeData.position
       var sex = this.changeData.sex
-      // if (!userStatus) {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请选中状态",
-      //     type: "warning"
-      //   });
-      // } else if (loginName == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入用户名",
-      //     type: "warning"
-      //   });
-      // } else if (password == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入密码",
-      //     type: "warning"
-      //   });
-      // } else if (name == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入真实姓名",
-      //     type: "warning"
-      //   });
-      // } else if (sex == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入性别",
-      //     type: "warning"
-      //   });
-      // } else if (mobile == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入电话号码",
-      //     type: "warning"
-      //   });
-      // } else if (email == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入邮箱",
-      //     type: "warning"
-      //   });
-      // } else if (position == "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入职位",
-      //     type: "warning"
-      //   });
-      // } else if (
-      //   !/^(?![0-9]+$)|(?![a-zA-Z]+$)[0-9A-Za-z_]{6,18}$/.test(loginName)
-      // ) {
-      //   this.$notify({
-      //     title: "提示",
-      //     message:
-      //       "用户名为6~18位字符，只能包含字母、数字及下划线，首位不能为下划线",
-      //     type: "warning"
-      //   });
-      // } else if (this.changeData.password != password) {
-      //   if (!/^[0-9A-Za-z]{6,16}$/.test(password)) {
-      //     this.$notify({
-      //       title: "提示",
-      //       message: "密码为6~16位字符，可包含数字、字母（区分大小写）",
-      //       type: "warning"
-      //     });
-      //   }
-      // } else if (!/^1[34578]\d{9}$/.test(mobile)) {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入正确的手机号码",
-      //     type: "warning"
-      //   });
-      // } else if (
-      //   !/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(
-      //     email
-      //   )
-      // ) {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: "请输入正确的email",
-      //     type: "warning"
-      //   });
-      // } else {
+      var defaultUser = this.changeData.defaultUser
       let JobDto = {
         userId: this.currenUser,
         email: email,
@@ -1027,7 +888,8 @@ export default {
         photo: photo,
         position: position,
         sex: sex,
-        userStatus: userStatus
+        userStatus: userStatus,
+        defaultUser
       }
       // 判断修改的用户是不是当前用户,如果是当前用户，则将他的头像图片再localstorage重置
       if (JobDto.userId === localStorage.getItem('userId')) {

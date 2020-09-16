@@ -4,9 +4,9 @@
  * @date 2019/6/28
  */
 module.exports = {
-  aiaUrl: 'http://111.231.165.249:8086/',
-  baserUrl: 'http://111.231.165.249:8086/',
-  CiBaseUrl: 'http://111.231.165.249:8087/',
+  aiaUrl: 'http://192.168.43.14:8086/',
+  baserUrl: 'http://192.168.43.14:8086/',
+  CiBaseUrl: 'http://192.168.43.14:8087/',
   // deliveryUrl: 'http://10.131.111.167:8075/test_delivery/',
   // devopsUrl: 'http://10.131.111.167:8075/test_devops/',
   // workflowUrl: 'http://10.131.111.167:8091/',

@@ -6,7 +6,7 @@
       <i class="el-icon-menu" />
     </div>
     <div class="logo">
-      <img src="../../assets/logo.jpg" />
+      <img src="../../assets/aia-logo.png" />
     </div>
     <ul class="mian_tab">
       <li
@@ -508,6 +508,12 @@ export default {
           localStorage.removeItem('userPhoto')
           localStorage.removeItem('token')
           this.$router.push('/login')
+        } else {
+          this.$notify({
+            title: '提示',
+            message: res.data.message,
+            type: 'error'
+          })
         }
       })
     },
@@ -722,7 +728,10 @@ body {
 .logo {
   height: 70px;
   line-height: 70px;
-  margin-top: 10px;
+}
+.logo>img {
+  height: 60px;
+  vertical-align: middle;
 }
 .password-input {
   position: relative;
@@ -745,7 +754,7 @@ body {
 
 .header .logo {
   float: left;
-  width: 10%;
+  width: 12%;
   line-height: 70px;
 }
 
@@ -821,7 +830,7 @@ body {
   list-style: none;
   display: inline-block;
   line-height: 70px;
-  width: 75%;
+  width: 73%;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
