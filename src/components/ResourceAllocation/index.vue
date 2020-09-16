@@ -1,6 +1,6 @@
 <template>
   <div class="bg aibms-color-bg">
-    <ul class="topBox">
+    <ul class="topBox clear-fix">
       <li>
         <img src="../../../static/img/ci/top6.png" alt srcset />
         <span>CI类型</span>
@@ -21,11 +21,11 @@
         <span>CI项</span>
         <p>{{citypeNum}}</p>
       </li>
-      <li>
+      <!-- <li>
         <img src="../../../static/img/ci/top10.png" alt srcset />
         <span>凭证</span>
         <p>{{configNum}}</p>
-      </li>
+      </li> -->
     </ul>
     <!-- 快捷入口 -->
     <div class="quickentry aibms-color-bg">
@@ -57,14 +57,14 @@
             <a>编辑CI类型</a>
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link to="/ResourceAllocation/Configuration?code=2">
             <a>凭证管理</a>
           </router-link>
-        </li>
+        </li> -->
         <li>
           <router-link to="/ResourceAllocation/OtherConfiguration?code=2">
-            <a>其他配置</a>
+            <a>业务系统</a>
           </router-link>
         </li>
         <li>
@@ -72,11 +72,11 @@
             <a>CI关系</a>
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link to="/ResourceAllocation/Template?code=2">
             <a>模块管理</a>
           </router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
     <!-- CI项录入统计 -->
@@ -95,11 +95,11 @@
               <div class="bg-purple white-color" style="background-color:transparent">
                 <p class="recordstyle">记录统计</p>
                 <ul class="recode">
-                  <li>
+                  <!-- <li>
                     <span class="circle"></span>
                     <span style="cirtitle">导入Excel</span>
                     <span class="recodeNum white-color">{{manuallyAdd}}条记录</span>
-                  </li>
+                  </li> -->
                   <!-- <li>
                     <span>导入CSV</span>
                     <span class="recodeNum">66条记录</span>
@@ -587,12 +587,12 @@ export default {
   width: 100%;
 }
 .topBox {
-  height: 150px;
+  /* height: 150px; */
 }
 .topBox li {
   float: left;
   display: inline;
-  width: 20%;
+  width: 25%;
   position: relative;
 }
 .topBox li img {

@@ -6,6 +6,7 @@
       :collapse="collapse"
       :unique-opened="true"
       :default-openeds="currentIndex"
+      :collapse-transition="false"
       @open="clickParent"
       router
     >
@@ -966,7 +967,6 @@ export default {
 .sidebar {
   display: block;
   position: absolute;
-  width: 200px;
   left: 0;
   top: 70px;
   bottom: 0;
@@ -1018,7 +1018,7 @@ export default {
   padding-left: 65px !important;
 }
 .el-menu--popup-right-start .el-menu-item {
-  color: #333 !important;
+  /* color: #333 !important; */
 }
 .el-submenu__title {
   padding: 0 !important;
@@ -1033,5 +1033,11 @@ export default {
 .nav-sub-icon {
   color: #fff;
   font-size: 16px;
+}
+</style>
+
+<style>
+.el-menu--popup {
+  background-color: #041c25e6 !important;
 }
 </style>

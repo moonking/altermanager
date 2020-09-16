@@ -147,7 +147,7 @@
       <!-- <el-button :type="bgColor == 1 ? 'primary' : ''" @click="checkChart">关系结构</el-button> -->
       <ul class="tablist">
         <li :class="{active:shows==1}" @click="checkBtn">基本信息</li>
-        <li :class="{active:shows==2}" @click="checkChart">关系结构</li>
+        <!-- <li :class="{active:shows==2}" @click="checkChart">关系结构</li> -->
       </ul>
       <!-- <el-button class="cm-form-btn cm-add-btn other" @click="addCidata()">新增ci项</el-button> -->
       <!-- <div @click="BatchDeletebtn" class="special"  style="border:1px solid #707070;height:30px;display:inline-block;padding:3px"> -->
@@ -357,7 +357,7 @@
           </el-dialog>
         </div>
       </div>
-      <div class="box-chart aibms-color-bg" v-if="!changeTab">
+      <!-- <div class="box-chart aibms-color-bg" v-if="!changeTab">
         <div class="box-title">
           <el-row
             class="aibms-color-bg white-color"
@@ -389,7 +389,7 @@
           </el-row>
         </div>
         <CIListchart :selectOption="selectOption" @clear="hanldeStatus" />
-      </div>
+      </div> -->
     </div>
     <el-dialog center :visible.sync="isSureBatch" title="批量删除" width="300px">
       <div :style="{textAlign: 'center'}">
