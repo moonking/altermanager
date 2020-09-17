@@ -31,7 +31,7 @@ let aibms = {
           '@/components/Aibms/Alarmrules/Alarmrules.vue'
         ], resolve),
       meta: {
-        title: '告警规则'
+        title: '告警规则列表'
       }
     },
     {
@@ -41,7 +41,7 @@ let aibms = {
           '@/components/Aibms/Alarmrules/addRules.vue'
         ], resolve),
       meta: {
-        title: '新增告警规则'
+        title: '告警规则'
       }
     },
     {

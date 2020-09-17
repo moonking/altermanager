@@ -1,6 +1,8 @@
 <template>
   <div class="aia-content">
     <div class="wrapper_pannel">
+      <div v-if="status === 'edit'" class="wrapper-title">编辑告警规则</div>
+      <div v-if="status === 'create'" class="wrapper-title">新增告警规则</div>
       <el-steps class="steps-alert" :active="active" align-center>
         <el-step title="告警分类" @click.native="isActive(0)" />
         <el-step title="告警规则" @click.native="isActive(1)" />
@@ -54,8 +56,8 @@
             <el-col :span="20">
               <el-checkbox-group v-model="typesForm.type" @change="handlecheckedClassChange">
                 <el-checkbox
-                  :disabled="status==='read'"
                   v-for="item in classList"
+                  :disabled="status==='read' || (status!=='read' && item.belongRule && !isOwner(item.code))"
                   :label="item.code"
                   :key="item.code"
                 >{{item.name}}</el-checkbox>
@@ -341,6 +343,7 @@ export default {
       }
     };
     return {
+      ownerTypes: [],
       // 通知方式
       noticeList: [
         {
@@ -542,11 +545,13 @@ export default {
     checkboxT (row, index) {
       return this.status !== 'read';
     },
+    isOwner (code) {
+      return this.ownerTypes.indexOf(code) !== -1
+    },
     // 获取规则详情
     alarmRuleDetails () {
       axios.alarmRuleDetails(this.ruleId).then(res => {
         if (res.data.code === 200) {
-          this.chooseLabel();
           let query = res.data.data;
           let notify = JSON.parse(query.notifyPersonnel)
           const {
@@ -559,8 +564,10 @@ export default {
           this.typesForm.rulesName = name
           this.typesForm.label = label
           this.typesForm.type = JSON.parse(categoryCode).categoryCode.split(',')
+          this.ownerTypes = JSON.parse(categoryCode).categoryCode.split(',')
           this.rulesForm.level = level
           this.noticeId = iD
+          this.chooseLabel();
           this.tipsForm.mode = notify[0].methodToInforme
           if (notify[0].userList.length) {
             this.tipsForm.role = notify[0].roles
@@ -585,7 +592,9 @@ export default {
         this.noticeInform.push(res);
       });
     },
-
+    getEnableClassList (classList) {
+      return classList.filter(item => (!item.belongRule || (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)))
+    },
     // 分类勾选状态
     classCheckStatus (type) {
       let bl = true;
@@ -625,8 +634,27 @@ export default {
         if (res.data.code === 200) {
           this.classList = res.data.data.records;
           this.totalSize = Number(res.data.data.total);
-          if (this.typesForm.type.length > 0) {
-            this.classCheckStatus(this.typesForm.type);
+
+          const enabledList = this.getEnableClassList(this.classList)
+          const checkeds = this.typesForm.type
+          let checkedsCount = 0
+          enabledList.forEach(item => {
+            if (checkeds.indexOf(item.code) !== -1) {
+              checkedsCount++
+            }
+          })
+          const enabledLength = enabledList.length
+          console.log('checkedsCount: ', checkedsCount)
+          console.log('enabledLength: ', enabledLength)
+          if (checkedsCount === enabledLength) {
+            this.checkAll = true
+            this.isIndeterminate = false
+          } else if (checkedsCount === 0) {
+            this.checkAll = false
+            this.isIndeterminate = false
+          } else if (checkedsCount > 0 && checkedsCount < enabledLength) {
+            this.checkAll = false
+            this.isIndeterminate = true
           }
         }
       });
@@ -1006,36 +1034,43 @@ export default {
     },
     handleCheckAllChange (val) {
       const { classList } = this
-      const codes = classList.map(val => val.code)
-      this.typesForm.type = val ? codes : []
+      const checked = this.typesForm.type
+      const codes = classList.filter(item => (!item.belongRule || (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1))).map(item => item.code)
+
+      const temp = JSON.parse(JSON.stringify(checked))
+      console.log(temp)
+      codes.forEach(code => {
+        if (val) {
+          // 已经选择
+          if (checked.indexOf(code) === -1) {
+            console.log('push')
+            temp.push(code)
+          }
+        } else {
+          // 已经选择
+          if (checked.indexOf(code) !== -1) {
+            temp.forEach((tempCode, index) => {
+              if (tempCode === code) {
+                temp.splice(index, 1)
+              }
+            })
+          }
+        }
+      })
+      this.typesForm.type = temp
       this.isIndeterminate = false
-      // let activeOptions = this.classList.filter(item => item.level !== '')
-      // let copyType = val ? activeOptions.map(val => val.code) : []
-      // let delList = []
-      // let temporary = []
-      // if (copyType.length === 0) {
-      //   delList = activeOptions.map(val => val.code)
-      //   this.typesForm.type.forEach(item => {
-      //     if (!delList.includes(item)) {
-      //       temporary.push(item)
-      //     }
-      //   });
-      //   this.typesForm.type = temporary
-      // } else {
-      //   copyType.forEach(item => {
-      //     if (!this.typesForm.type.includes(item)) {
-      //       this.typesForm.type.push(item)
-      //     }
-      //   });
-      // }
-      // this.classCheckStatus(this.typesForm.type)
     },
     handlecheckedClassChange (value) {
-      console.log('value: ', value, ', length: ', value.length)
-      const { classList } = this
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === classList.length;
-      this.isIndeterminate = checkedCount > 0 && checkedCount < classList.length;
+      const list = this.classList.filter(item => (!item.belongRule || (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)))
+      let allCheckeds = this.typesForm.type
+      let checkedCount = 0
+      list.forEach(item => {
+        if (allCheckeds.indexOf(item.code) !== -1) {
+          checkedCount++
+        }
+      })
+      this.checkAll = checkedCount === list.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < list.length
       // this.classCheckStatus(this.typesForm.type)
     },
     // hisClassAllList() {
@@ -1401,5 +1436,11 @@ export default {
 .aia-content /deep/ .el-dialog__header {
   padding: 20px 20px 10px;
   border-bottom: 1px solid #dcdcdc;
+}
+.wrapper-title {
+  font-size: 18px;
+  color: #fff;
+
+  padding-left: 20px;
 }
 </style>

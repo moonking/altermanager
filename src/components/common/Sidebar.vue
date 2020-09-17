@@ -342,7 +342,7 @@
         </template>
       </template>
     </el-menu>
-    <p style="margin-left:10px ;" v-if="!collapse">版本：Shepherd2.13.01</p>
+    <!-- <p style="margin-left:10px ;" v-if="!collapse">版本：Shepherd2.13.01</p> -->
   </div>
 </template>
 
