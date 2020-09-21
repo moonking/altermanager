@@ -2,7 +2,7 @@
   <div class="black-list">
     <el-form :model="form" label-width="80px" ref="form" :rules="formRules">
       <el-form-item label="业务系统" style="width: 240px;" required prop="system">
-        <el-select v-model="form.system" placeholder="请选择业务系统">
+        <el-select v-model="form.system" placeholder="请选择业务系统" @change="handleSelectChange">
           <el-option :label="system.name" :value="system.systemId" v-for="system in systemList" :key="system.systemId"></el-option>
         </el-select>
       </el-form-item>
@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item v-if="editStatus">
         <el-button type="primary" @click="onSubmit">保存</el-button>
-        <el-button @click="setEditStatus">取消</el-button>
+        <el-button @click="cancelEdit">取消</el-button>
       </el-form-item>
       <el-form-item v-else>
         <el-button type="primary" @click="setEditStatus">编辑</el-button>
@@ -42,8 +42,22 @@ export default {
     }
   },
   methods: {
+    handleSelectChange (val) {
+      this.getSystemBlackList(val)
+    },
+    cancelEdit () {
+      this.editStatus = false
+    },
     setEditStatus () {
       this.editStatus = true
+    },
+    getSystemBlackList (systemId) {
+      const id = systemId || this.form.system
+      axios.getSystemDetail(id).then(res => {
+        if (res.data.code === 200) {
+          this.form.blackList = res.data.data.result.blackList
+        }
+      })
     },
     getSystemList () {
       // {"name":"系统名称","englishAbridge":"英文缩写","current":"当前页","size":"每页显示条数"}
@@ -56,7 +70,11 @@ export default {
       axios.getSystemList(data).then(res => {
         console.log(res)
         if (res.data.code === 200) {
-          this.systemList = res.data.data.result.records
+          const systems = res.data.data.result.records
+          this.systemList = systems
+          // if (systems && systems.length > 0) {
+          //   this.form.system = systems[0]
+          // }
         }
       })
     },
@@ -68,8 +86,15 @@ export default {
             systemId: this.form.system,
             blackList: this.form.blackList
           }
-          axios.getEditSystemList(data).then(res => {
-            console.log(res)
+          axios.updateBlackList(data).then(res => {
+            if (res.data.code) {
+              this.$notify({
+                title: '提示',
+                message: res.data.message,
+                type: 'success'
+              })
+              this.editStatus = false
+            }
           })
         }
       })

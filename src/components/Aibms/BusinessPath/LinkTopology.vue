@@ -172,7 +172,7 @@ export default {
       ],
       sessionCfg: {
         transparentBg: true,
-        renderer: 'svg',
+        renderer: 'canvas',
         // width: width,
         // height: height,
         defaultEdge: {
@@ -254,7 +254,12 @@ export default {
         layout: {
           type: 'level-layout',
           level: 5,
-          nodeSpace: 6
+          nodeSpace: (node, count) => {
+            const base = 6
+            const baseCount = 30
+            const delta = baseCount / count
+            return delta > 1 ? delta * base * 3 : base
+          }
           // type: 'dagre',
           // align: 'DL',
           // rankdir: 'BT',
@@ -268,7 +273,7 @@ export default {
         modes: {
           default: [
             // 'drag-canvas',
-            'drag-node',
+            // 'drag-node',
             // 'brush-select',
             // 'click-select',
             // {

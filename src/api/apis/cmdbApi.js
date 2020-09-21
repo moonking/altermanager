@@ -745,3 +745,12 @@ export function getTopologySystems () {
     method: 'post'
   })
 }
+
+// 新增修改黑名单
+export function updateBlackList (data) {
+  return request({
+    url: CiBaseUrl + 'api/system/blackList',
+    method: 'put',
+    data
+  })
+}
