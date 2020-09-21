@@ -365,7 +365,7 @@ export default {
       const params = {
         current: 1,
         size: 1000000,
-        platform: 'Prometheus',
+        platform: '',
         address: ''
       }
       axios.getMonitorList(params).then(res => {

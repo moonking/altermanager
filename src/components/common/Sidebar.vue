@@ -713,8 +713,18 @@ export default {
       AIA: [
         {
           icon: 'sidebar-icon icon-zixitongyinyong ',
-          index: '/Aibms/businessPath?code=8',
-          title: '业务路径'
+          index: '0',
+          title: '业务路径',
+          subs: [
+            {
+              index: '/Aibms/businessPath?code=8',
+              title: '监控来源'
+            },
+            {
+              index: '/Aibms/blackList?code=8',
+              title: '黑名单'
+            }
+          ]
         },
         {
           icon: 'sidebar-icon icon-xitongyingyongfuwuqi',

@@ -203,6 +203,16 @@ let aibms = {
       meta: {
         title: '链路拓扑'
       }
+    },
+    {
+      path: '/Aibms/blackList',
+      component: resolve =>
+        require([
+          '@/components/Aibms/BlackList/index.vue'
+        ], resolve),
+      meta: {
+        title: '黑名单'
+      }
     }
   ]
 }
