@@ -635,27 +635,31 @@ export default {
           this.classList = res.data.data.records;
           this.totalSize = Number(res.data.data.total);
 
-          const enabledList = this.getEnableClassList(this.classList)
-          const checkeds = this.typesForm.type
-          let checkedsCount = 0
-          enabledList.forEach(item => {
-            if (checkeds.indexOf(item.code) !== -1) {
-              checkedsCount++
-            }
-          })
-          const enabledLength = enabledList.length
-          console.log('checkedsCount: ', checkedsCount)
-          console.log('enabledLength: ', enabledLength)
-          if (checkedsCount === enabledLength) {
-            this.checkAll = true
-            this.isIndeterminate = false
-          } else if (checkedsCount === 0) {
-            this.checkAll = false
-            this.isIndeterminate = false
-          } else if (checkedsCount > 0 && checkedsCount < enabledLength) {
-            this.checkAll = false
-            this.isIndeterminate = true
-          }
+          this.typesForm.type = []
+          this.checkAll = false
+          this.isIndeterminate = false
+
+          // const enabledList = this.getEnableClassList(this.classList)
+          // const checkeds = this.typesForm.type
+          // let checkedsCount = 0
+          // enabledList.forEach(item => {
+          //   if (checkeds.indexOf(item.code) !== -1) {
+          //     checkedsCount++
+          //   }
+          // })
+          // const enabledLength = enabledList.length
+          // console.log('checkedsCount: ', checkedsCount)
+          // console.log('enabledLength: ', enabledLength)
+          // if (checkedsCount === enabledLength) {
+          //   this.checkAll = true
+          //   this.isIndeterminate = false
+          // } else if (checkedsCount === 0) {
+          //   this.checkAll = false
+          //   this.isIndeterminate = false
+          // } else if (checkedsCount > 0 && checkedsCount < enabledLength) {
+          //   this.checkAll = false
+          //   this.isIndeterminate = true
+          // }
         }
       });
     },
@@ -1034,41 +1038,54 @@ export default {
     },
     handleCheckAllChange (val) {
       const { classList } = this
-      const checked = this.typesForm.type
+      // const checkedLength = this.typesForm.type.length
       const codes = classList.filter(item => (!item.belongRule || (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1))).map(item => item.code)
 
-      const temp = JSON.parse(JSON.stringify(checked))
-      console.log(temp)
-      codes.forEach(code => {
-        if (val) {
-          // 已经选择
-          if (checked.indexOf(code) === -1) {
-            console.log('push')
-            temp.push(code)
-          }
-        } else {
-          // 已经选择
-          if (checked.indexOf(code) !== -1) {
-            temp.forEach((tempCode, index) => {
-              if (tempCode === code) {
-                temp.splice(index, 1)
-              }
-            })
-          }
-        }
-      })
-      this.typesForm.type = temp
+      // const temp = JSON.parse(JSON.stringify(checked))
+      // console.log(temp)
+      // if (checkedLength === codes.length) {
+      //   this.checkAll = true
+      //   this.isIndeterminate = false
+      // } else if (checkedLength === 0) {
+      //   this.checkAll = false
+      //   this.isIndeterminate = false
+      // }
+      console.log('val: ', val)
+      this.typesForm.type = val ? codes : []
       this.isIndeterminate = false
+      // codes.forEach(code => {
+      //   if (val) {
+      //     // 已经选择
+      //     if (checked.indexOf(code) === -1) {
+      //       console.log('push')
+      //       temp.push(code)
+      //     }
+      //   } else {
+      //     // 已经选择
+      //     if (checked.indexOf(code) !== -1) {
+      //       temp.forEach((tempCode, index) => {
+      //         if (tempCode === code) {
+      //           temp.splice(index, 1)
+      //         }
+      //       })
+      //     }
+      //   }
+      // })
+      // this.typesForm.type = temp
+      // this.isIndeterminate = false
     },
     handlecheckedClassChange (value) {
       const list = this.classList.filter(item => (!item.belongRule || (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)))
-      let allCheckeds = this.typesForm.type
-      let checkedCount = 0
-      list.forEach(item => {
-        if (allCheckeds.indexOf(item.code) !== -1) {
-          checkedCount++
-        }
-      })
+      // let allCheckeds = this.typesForm.type
+      // let checkedCount = 0
+      // list.forEach(item => {
+      //   if (allCheckeds.indexOf(item.code) !== -1) {
+      //     checkedCount++
+      //   }
+      // })
+      const checkedCount = this.typesForm.type.length
+      console.log('checkedCount: ', checkedCount)
+      console.log('list.length: ', list.length)
       this.checkAll = checkedCount === list.length
       this.isIndeterminate = checkedCount > 0 && checkedCount < list.length
       // this.classCheckStatus(this.typesForm.type)

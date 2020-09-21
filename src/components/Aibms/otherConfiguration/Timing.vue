@@ -184,6 +184,7 @@ export default {
   name: 'crontabPage',
   data () {
     return {
+      code: '',
       name: '',
       url: '',
       taskType: '',
@@ -372,6 +373,7 @@ export default {
           // this.taskType = data.taskType
           this.name = data.name
           this.url = data.url
+          this.code = data.code
 
           this.taskItem = data.manageId
           this.handleCronExpr(
@@ -621,6 +623,7 @@ export default {
             this.saveCronTask(params) 
           } else {
             params.id = this.$route.query.manageId
+            params.code = this.code
             this.editCronTask(params)
           }
         } else {
@@ -652,6 +655,7 @@ export default {
               this.saveCronTask(params)
             } else {
               params.id = this.$route.query.manageId
+              params.code = this.code
               this.editCronTask(params)
             }
           } else {

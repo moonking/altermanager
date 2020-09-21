@@ -1,22 +1,51 @@
 <template>
   <div class="link-topology">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;">链路拓扑</p> -->
-    <div class="level-labels">
-      <div class="level-label">交易类型</div>
-      <div class="level-label">应用</div>
-      <div class="level-label">服务</div>
-      <div class="level-label">进程</div>
-      <div class="level-label">主机</div>
+    <div>
+      <el-input placeholder="请输入内容" v-model="blackListValue" class="input-with-select">
+        <el-select v-model="blackListType" slot="prepend" placeholder="请选择类型" style="width: 120px;">
+          <el-option label="交易类型" value="1"></el-option>
+          <el-option label="应用" value="2"></el-option>
+          <el-option label="服务" value="3"></el-option>
+          <el-option label="进程" value="4"></el-option>
+          <el-option label="主机" value="5"></el-option>
+        </el-select>
+        <el-button slot="append" icon="el-icon-search" @click="addBlackList"></el-button>
+      </el-input>
     </div>
-    <div class="topology-graph-container">
-      <div class="bgs">
-        <div v-for="item in 5" :key="item" class="level-bg"></div>
+    <div class="link-topology-wrapper">
+      <div class="level-labels">
+        <div class="level-label">
+          <p class="level-label-text"><i class="iconfont icon-jiaoyi"></i> 交易类型</p>
+          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+        </div>
+        <div class="level-label">
+          <p class="level-label-text"><i class="iconfont icon-yingyong"></i> 应用</p>
+          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+        </div>
+        <div class="level-label">
+          <p class="level-label-text"><i class="iconfont icon-quanqiu"></i> 服务</p>
+          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+        </div>
+        <div class="level-label">
+          <p class="level-label-text"><i class="iconfont icon-jincheng"></i> 进程</p>
+          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+        </div>
+        <div class="level-label">
+          <p class="level-label-text"><i class="iconfont icon-yunzhuji"></i> 主机</p>
+          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+        </div>
       </div>
-      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
-        <template v-slot:tooltip="tooltip">
-          <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
-        </template>
-      </graph-editor>
+      <div class="topology-graph-container">
+        <div class="bgs">
+          <div v-for="item in 5" :key="item" class="level-bg"></div>
+        </div>
+        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+          <template v-slot:tooltip="tooltip">
+            <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
+          </template>
+        </graph-editor>
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +61,8 @@ import axios from '@/api'
 export default {
   data () {
     return {
+      blackListType: 1,
+      blackListValue: '',
       mouseCfg: {zoom: true, move: {x: true, y: false}},
       tempData: {
         // 点集
@@ -141,15 +172,15 @@ export default {
       ],
       sessionCfg: {
         transparentBg: true,
-        renderer: 'canvas',
+        renderer: 'svg',
         // width: width,
         // height: height,
         defaultEdge: {
           type: 'cubic-vertical',
           color: '#000',
           style: {
-            stroke: '#fff',
-            lineAppendWidth: 20,
+            stroke: '#666',
+            lineAppendWidth: 20
             // startArrow: true,
             // endArrow: {
             //   // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
@@ -201,10 +232,13 @@ export default {
         },
         defaultNode: {
           type: 'iconfontNode',
-          fontColor: '#1890ff',
+          fontColor: '#ddd',
+          r: 12,
+          fontSize: 12,
           style: {
-            stroke: 'transparent',
-            fill: '#fff'
+            stroke: '#ddd',
+            lineWidth: 1,
+            fill: '#4c4c4c'
           },
           colors: {
             warning: { fill: 'orange', fontColor: '#fff' },
@@ -220,7 +254,7 @@ export default {
         layout: {
           type: 'level-layout',
           level: 5,
-          nodeSpace: 40
+          nodeSpace: 6
           // type: 'dagre',
           // align: 'DL',
           // rankdir: 'BT',
@@ -276,6 +310,32 @@ export default {
     }
   },
   methods: {
+    addBlackList () {
+      let value = this.blackListValue
+      const type = this.blackListType
+      const systemId = this.$route.query.systemId
+      if (!value || value === '') {
+        this.$notify({
+          title: '提示',
+          message: '黑名单不能为空',
+          type: 'error'
+        })
+        return
+      } else {
+        value = value.split(',')
+        value.forEach((val, index) => {
+          value[index] = val.trim()
+          // val = val.trim()
+        })
+      }
+      console.log(value)
+      axios.getEditSystemList({
+        type,
+        blackList: value
+      }, systemId).then(res => {
+        console.log(res)
+      })
+    },
     getData () {
       const route = this.$route
       const { query } = route
@@ -446,22 +506,32 @@ export default {
 
 <style scoped>
 .link-topology {
+  /* flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; */
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
+  /* background-color: green; */
+}
+.link-topology-wrapper {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  /* background-color: green; */
 }
 .level-labels {
-  width: 100px;
+  width: 140px;
   min-width: 100px;
-  height: 606px;
+  height: 806px;
 }
 .level-labels .level-label{
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 20%;
@@ -470,11 +540,21 @@ export default {
   box-sizing: border-box;
 }
 .level-label:nth-child(odd) {
-  background-color: #1212255c;
+  background-color: #242424;
+}
+.level-label:nth-child(even) {
+  background-color: #353535;
+}
+.level-label-text {
+  width: 100%;
+  text-align-last: left;
+  color: #cbcbcb;
+  margin-bottom: 6px;
+  padding-left: 10px;
 }
 .topology-graph-container {
   flex: 1 1 auto;
-  height: 606px;
+  height: 806px;
   /* overflow: hidden; */
 
   position: relative;
@@ -496,6 +576,9 @@ export default {
   height: 20%;
 }
 .level-bg:nth-child(odd) {
-  background-color: #1212255c;
+  background-color: #242424;
+}
+.level-bg:nth-child(even) {
+  background-color: #353535;
 }
 </style>

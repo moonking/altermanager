@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17286153",
+      "name": "编组",
+      "font_class": "bianzu",
+      "unicode": "e6c2",
+      "unicode_decimal": 59074
+    },
+    {
+      "icon_id": "16875162",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e6c0",
+      "unicode_decimal": 59072
+    },
+    {
+      "icon_id": "16875163",
+      "name": "人数",
+      "font_class": "renshu",
+      "unicode": "e6c1",
+      "unicode_decimal": 59073
+    },
+    {
+      "icon_id": "16875067",
+      "name": "方块",
+      "font_class": "fangkuai",
+      "unicode": "e6bf",
+      "unicode_decimal": 59071
+    },
+    {
+      "icon_id": "16875063",
+      "name": "服务",
+      "font_class": "fuwu",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "16872277",
+      "name": "主机 (2)",
+      "font_class": "zhuji2",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
       "icon_id": "4936457",
       "name": "desktop",
       "font_class": "desktop",
