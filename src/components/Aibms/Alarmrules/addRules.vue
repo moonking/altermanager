@@ -567,7 +567,7 @@ export default {
           this.ownerTypes = JSON.parse(categoryCode).categoryCode.split(',')
           this.rulesForm.level = level
           this.noticeId = iD
-          this.chooseLabel();
+          this.chooseLabel(true);
           this.tipsForm.mode = notify[0].methodToInforme
           if (notify[0].userList.length) {
             this.tipsForm.role = notify[0].roles
@@ -620,7 +620,7 @@ export default {
       }
     },
     // 选择标签--展示分类
-    chooseLabel () {
+    chooseLabel (first) {
       this.checkAll = false;
       this.isIndeterminate = false;
       let params = {
@@ -635,9 +635,12 @@ export default {
           this.classList = res.data.data.records;
           this.totalSize = Number(res.data.data.total);
 
-          this.typesForm.type = []
-          this.checkAll = false
-          this.isIndeterminate = false
+          if (!(first === true)) {
+            this.typesForm.type = []
+          }
+          const checkedLength = this.typesForm.type.length
+          this.checkAll = checkedLength === this.classList.length
+          this.isIndeterminate = !(checkedLength === 0 || checkedLength === this.classList.length)
 
           // const enabledList = this.getEnableClassList(this.classList)
           // const checkeds = this.typesForm.type

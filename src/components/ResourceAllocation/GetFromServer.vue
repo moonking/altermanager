@@ -117,9 +117,9 @@ export default {
       page: false,
       CiDataList: [],
       sourceType: [
-        { label: '服务器获取', value: '1' },
-        { label: 'zabbix', value: '2' },
-        { label: 'prometheus', value: '3' }
+        { label: 'Prometheus', value: '1' },
+        { label: 'Dynatrace', value: '2' },
+        { label: 'Bpc', value: '3' }
       ]
     }
   },
@@ -149,7 +149,7 @@ export default {
               }
             })
             if (item.lastRunStatus == 1) {
-              item.lastRunStatus = ''
+              item.lastRunStatus = '失败'
             } else if (item.lastRunStatus == 2) {
               item.lastRunStatus = '成功'
             }

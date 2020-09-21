@@ -2,7 +2,7 @@
   <div class="black-list">
     <el-form :model="form" label-width="80px" ref="form" :rules="formRules">
       <el-form-item label="业务系统" style="width: 240px;" required prop="system">
-        <el-select v-model="form.system" placeholder="请选择业务系统" :disabled="!editStatus">
+        <el-select v-model="form.system" placeholder="请选择业务系统">
           <el-option :label="system.name" :value="system.systemId" v-for="system in systemList" :key="system.systemId"></el-option>
         </el-select>
       </el-form-item>
@@ -64,7 +64,6 @@ export default {
       const form = this.$refs.form
       form.validate().then(res => {
         if (res) {
-          console.log('校验通过')
           const data = {
             systemId: this.form.system,
             blackList: this.form.blackList

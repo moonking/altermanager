@@ -1,7 +1,7 @@
 <template>
   <div class="link-topology">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;">链路拓扑</p> -->
-    <div>
+    <!-- <div>
       <el-input placeholder="请输入内容" v-model="blackListValue" class="input-with-select">
         <el-select v-model="blackListType" slot="prepend" placeholder="请选择类型" style="width: 120px;">
           <el-option label="交易类型" value="1"></el-option>
@@ -12,7 +12,7 @@
         </el-select>
         <el-button slot="append" icon="el-icon-search" @click="addBlackList"></el-button>
       </el-input>
-    </div>
+    </div> -->
     <div class="link-topology-wrapper">
       <div class="level-labels">
         <div class="level-label">

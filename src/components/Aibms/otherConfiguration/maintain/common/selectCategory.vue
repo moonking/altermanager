@@ -88,11 +88,11 @@ export default {
   },
   data: () => ({
     labelList: [
-      { value: '1', label: '交易类型' },
-      { value: '2', label: '应用' },
-      { value: '3', label: '服务' },
-      { value: '4', label: '进程' },
-      { value: '5', label: '主机' }
+      { value: 1, label: '交易类型' },
+      { value: 2, label: '应用' },
+      { value: 3, label: '服务' },
+      { value: 4, label: '进程' },
+      { value: 5, label: '主机' }
     ],
     checkAll: false,
     checkedCategory: [],
@@ -142,6 +142,14 @@ export default {
         if (res.data.success) {
           this.categoryList = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          const categoryTemp = this.categoryList.map(val => val.iD)
+          const temp = []
+          this.checkedCategory.forEach(item => {
+            if (categoryTemp.indexOf(item) !== -1) {
+              temp.push(item)
+            }
+          })
+          this.checkedCategory = temp
           if (this.checkedCategory.length) {
             this.classCheckStatus(this.checkedCategory)
           }
@@ -178,7 +186,7 @@ export default {
             temporary.push(item)
           }
         });
-        this.checkedCategory = temporary
+        // this.checkedCategory = temporary
       } else {
         copyType.forEach(item => {
           if (!this.checkedCategory.includes(item)) {
