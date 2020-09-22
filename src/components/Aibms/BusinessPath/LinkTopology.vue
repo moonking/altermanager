@@ -240,8 +240,11 @@ export default {
             fill: '#4c4c4c'
           },
           colors: {
-            warning: { fill: 'orange', fontColor: '#fff' },
-            error: { fill: 'red', fontColor: '#fff' }
+            s1: { fill: '#ff0000', fontColor: '#fff' },
+            s2: { fill: '#ff9900', fontColor: '#fff' },
+            s3: { fill: '#ffcc00', fontColor: '#fff' },
+            s4: { fill: '#ffff00', fontColor: '#fff' },
+            s5: { fill: '#ffff88', fontColor: '#fff' }
           },
           labelCfg: {
             style: {
@@ -386,24 +389,29 @@ export default {
             if (graph) {
               graph.setItemState(ciitemId, 'warning', false)
             }
-            node.status = 'warning'
+            // 挂载告警数据
             if (ciitemId === item.ciitemId) {
               alertNodes.push(ciitemId)
               node.alerts = item.alertData
+              node.status = item.level ? `s${item.level}` : 's1'
             }
           })
         })
-        alertNodes.forEach(nodeId => {
-          const { graph, topologyData } = me
-          // 设置节点为红色
-          if (graph) {
-            topologyData.forEach(node => {
-              if (node.alerts.length > 0) {
-                graph.setItemState(nodeId, 'warning', true)
-              }
-            })
-          }
-        })
+        const temp = JSON.parse(JSON.stringify(nodeList))
+        let normalNodes = temp.filter(node => node.alerts.length === 0)
+        let warningNodes = temp.filter(node => node.alerts.length > 0)
+        me.topologyData = warningNodes.concat(normalNodes)
+
+        // })
+        // const { graph, topologyData } = me
+        // 设置节点为红色
+        // if (graph) {
+        //   topologyData.forEach(node => {
+        //     if (node.alerts.length > 0) {
+        //       graph.setItemState(node.ciitemId, 'warning', true)
+        //     }
+        //   })
+        // }
       }
       ws.onclose = () => {
         console.log('拓扑图ws连接关闭！')
@@ -420,14 +428,15 @@ export default {
       let edges = []
       data.forEach(item => {
         // id: 'nodeA1', type: 'iconfontNode', text: '\ue60e'
-        let { ciitemId, cigroupName, linkRelationship } = item
+        let { ciitemId, cigroupName, linkRelationship, status } = item
         const level = this.levelMapping[cigroupName]
         const node = {
           id: ciitemId,
           type: 'iconfontNode',
           text: this.iconMapping[cigroupName],
           level: level,
-          businessData: item
+          businessData: item,
+          status
         }
         nodes.push(node)
 

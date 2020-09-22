@@ -72,8 +72,9 @@ export default {
   },
   methods: {
     getLevelColor (level) {
+      const { colorMap } = this
       level = level + ''
-      return this.colorMap[level]
+      return colorMap[level] || colorMap['1']
     }
   },
   computed: {
