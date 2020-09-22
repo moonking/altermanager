@@ -2,7 +2,7 @@
 let aibms = {
   path: '/Aibms',
   component: resolve => require(['@/components/common/Home.vue'], resolve),
-  meta: { title: 'Aibms' },
+  meta: { title: 'AIBMS' },
   children: [
     {
       path: '/Aibms',
