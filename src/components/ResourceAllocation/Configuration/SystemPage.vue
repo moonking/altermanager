@@ -143,8 +143,15 @@
       center
       :close-on-click-modal="false"
       :visible.sync="chooseHostDialogVisible"
-      width="730px">
+      width="760px">
       <el-form :inline="true" :model="hostDialogForm">
+        <el-form-item>
+          <el-select v-model="hostDialogForm.dataFrom" clearable size="small" placeholder="选择数据来源" clearable>
+            <el-option label="Promtheus" value="1"></el-option>
+            <el-option label="Dynatrace" value="2"></el-option>
+            <el-option label="BPC" value="3"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-input v-model="hostDialogForm.search" size="small" placeholder="请输入IP地址/主机名称"></el-input>
         </el-form-item>
@@ -247,7 +254,8 @@ export default {
       tempSelect: [],
       hostTableSelected: [],
       hostDialogForm: {
-        search: ''
+        search: '',
+        dataFrom: ''
       },
       // 选择主机对话框
       chooseHostDialogVisible: false,
@@ -394,7 +402,7 @@ export default {
       const data = {
         citypeId: '',
         current,
-        dataFrom: '',
+        dataFrom: this.hostDialogForm.dataFrom,
         environment: '',
         keyword: this.hostDialogForm.search,
         size,
@@ -666,7 +674,7 @@ export default {
           this.hostTableSelected = JSON.parse(data.hosts)
           this.sysdata = data
           if (callNodesData.length > 0) this.callNodes = callNodesData
-          
+
           this.getSystemList()
         }
       })

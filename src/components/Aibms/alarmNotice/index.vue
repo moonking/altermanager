@@ -146,15 +146,15 @@ export default {
     endTime: '',
     businessList: []
   }),
-  created() {
+  created () {
     this.getAlarmList() // 获取列表数据
-    this.getTopologyList()  // 获取拓扑下拉框
+    this.getTopologyList() // 获取拓扑下拉框
     this.getlabelList() // 获取标签下拉框数据
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
-    getBusinessList() {
-       const params = {
+    getBusinessList () {
+      const params = {
         name: '',
         ipAddress: '',
         current: 1,
@@ -162,7 +162,7 @@ export default {
       }
       axios.getSystemList(params).then(res => {
         if (res.data.success) {
-          this.businessList = res.data.data.result.records.map(item => ({name: item.name,systemId:item.systemId}))
+          this.businessList = res.data.data.result.records.map(item => ({name: item.name, systemId: item.systemId}))
         } else {
           this.$notify.error({
             title: '提示',
@@ -171,8 +171,8 @@ export default {
         }
       })
     },
-    getTopologyList() {
-      axios.getCiTypeListFirst('','').then(res => {
+    getTopologyList () {
+      axios.getCiTypeListFirst('', '').then(res => {
         if (res.data.success) {
           this.topologyList = res.data.data.result.map(item => item.name)
         } else {
@@ -183,7 +183,7 @@ export default {
         }
       })
     },
-    getlabelList() {
+    getlabelList () {
       axios.getlabelList().then(res => {
         if (res.data.success) {
           this.labelList = res.data.data
@@ -195,7 +195,7 @@ export default {
         }
       })
     },
-    getAlarmList() {
+    getAlarmList () {
       const params = {
         system: this.alarmModel.systemValue,
         topology: this.alarmModel.topologyValue,
@@ -232,23 +232,23 @@ export default {
         this.addZero(minutes) + ':' +
         this.addZero(seconds)
     },
-    splitDate() {
+    splitDate () {
       this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[0]) : ''
       this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[1]) : ''
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getAlarmList()
     },
-    search() {
+    search () {
       this.getAlarmList()
     },
-    hadleTrack(row) {
+    hadleTrack (row) {
       this.$router.push({
         path: '/Aibms/Transaction',
         query: {
@@ -262,7 +262,7 @@ export default {
         path: '/Aibms/alarmnoticeDetail',
         query: {
           code: 8,
-          id: row.id
+          id: row.code
         }
       })
     }

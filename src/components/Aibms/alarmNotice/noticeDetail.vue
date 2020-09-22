@@ -104,11 +104,11 @@ export default {
     tableData: [],
     alarmInfoList: []
   }),
-  created() {
+  created () {
     this.getNoticeDetail()
   },
   methods: {
-    getNoticeDetail() {
+    getNoticeDetail () {
       axios.getNoticeDetail(this.$route.query.id).then(res => {
         if (res.data.success) {
           const alarmDetail = res.data.data
@@ -137,10 +137,10 @@ export default {
         }
       })
     },
-    switchBlock(index) {
+    switchBlock (index) {
       return this.blockSwitch[index] = !this.blockSwitch[index]
     },
-    confirm() {
+    confirm () {
       if (this.alarmForm.status == '1') {
         const params = {
           id: this.$route.query.id,
@@ -220,7 +220,7 @@ export default {
               display: inline-block;
               width: 96px;
               margin: 3px 20px 0 3px;
-              box-shadow: 0px 0px 7px 0px rgba(255,255,255,0.9); 
+              box-shadow: 0px 0px 7px 0px rgba(255,255,255,0.9);
               color: #0066ff;
               background: #041C25;
               border-radius: 5px;

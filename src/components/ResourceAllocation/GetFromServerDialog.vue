@@ -153,7 +153,7 @@
             </el-col>
           </el-row>
         </div> -->
-        <div class="form-item">
+        <!-- <div class="form-item">
           <label for>执行方式：</label>
           <el-tabs v-model="data.runType" type="card" :gutter="20">
             <el-tab-pane
@@ -264,17 +264,7 @@
               </div>
             </el-tab-pane>
           </el-tabs>
-        </div>
-        <div class="form-item" v-if="key === 'detail'">
-          <label for>创建时间：</label>
-          <el-row :gutter="20">
-            <el-col :span="15">
-              <div class="grid-content bg-purple">
-                <el-input :disabled="!isEditAble" v-model="data.createDate" placeholder="请输入创建时间"></el-input>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
+        </div> -->
       </form>
       <div class="form-item dialog-btn" v-if="key != 'detail'">
         <el-col :span="20">
@@ -647,7 +637,7 @@ export default {
         this.isEditAble = false
       } else if (key === 'add') {
         this.data = {}
-        this.data.runType = '1'
+        // this.data.runType = '1'
       }
 
       if (key !== 'add') {

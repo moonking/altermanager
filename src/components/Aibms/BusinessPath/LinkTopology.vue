@@ -63,7 +63,7 @@ export default {
     return {
       blackListType: 1,
       blackListValue: '',
-      mouseCfg: {zoom: true, move: {x: true, y: false}},
+      mouseCfg: {zoom: false, move: {x: true, y: false}},
       tempData: {
         // 点集
         nodes: [
@@ -217,9 +217,8 @@ export default {
             stroke: 'red',
             strokeOpacity: 1
           },
-          warning: {
-            stroke: 'red',
-          }
+          warning: { fill: 'orange', fontColor: '#fff', 'iconfont-icon': { fill: '#fff' } },
+          error: { fill: 'red', fontColor: '#fff' }
         },
         edgeStateStyles: {
           hover: {
@@ -309,6 +308,13 @@ export default {
         '应用': 4,
         '交易类型': 5
       },
+      colorMap: {
+        '1': '#ff0000',
+        '2': '#ff9900',
+        '3': '#ffcc00',
+        '4': '#ffff00',
+        '5': '#ffff88'
+      },
       topologyData: [],
       ws: null,
       graph: null
@@ -380,6 +386,7 @@ export default {
             if (graph) {
               graph.setItemState(ciitemId, 'warning', false)
             }
+            node.status = 'warning'
             if (ciitemId === item.ciitemId) {
               alertNodes.push(ciitemId)
               node.alerts = item.alertData
@@ -414,11 +421,12 @@ export default {
       data.forEach(item => {
         // id: 'nodeA1', type: 'iconfontNode', text: '\ue60e'
         let { ciitemId, cigroupName, linkRelationship } = item
+        const level = this.levelMapping[cigroupName]
         const node = {
           id: ciitemId,
           type: 'iconfontNode',
           text: this.iconMapping[cigroupName],
-          level: this.levelMapping[cigroupName],
+          level: level,
           businessData: item
         }
         nodes.push(node)

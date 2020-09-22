@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <v-sidebar></v-sidebar>
+    <v-sidebar class="sidebar"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <v-tags></v-tags>
       <div class="content">
@@ -149,6 +149,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+/* .home-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.home-content-box {
+  flex: 1;
+} */
+</style>
 <style>
 .mian_box {
   width: 90%;

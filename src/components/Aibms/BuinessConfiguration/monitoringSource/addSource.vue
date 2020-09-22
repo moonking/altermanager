@@ -166,11 +166,11 @@ export default {
     apiTypes: [
       {
         label: 'ci项获取',
-        value: 'ci',
+        value: 'ci'
       },
       {
         label: '交易追踪trans获取',
-        value: 'trans',
+        value: 'trans'
       },
       {
         label: '告警信息获取',
@@ -193,7 +193,7 @@ export default {
       {
         label: 'DELETE',
         value: 'DELETE'
-      },
+      }
     ],
     labelPosition: 'right',
     source: [
@@ -244,7 +244,7 @@ export default {
       name: [
         { required: true, message: '请输入名称', trigger: 'blur' }
       ],
-      token:  [
+      token: [
         { required: true, message: '请输入token', trigger: 'blur' }
       ]
     },
@@ -264,7 +264,7 @@ export default {
     },
     userRadio: '1'
   }),
-  created() {
+  created () {
     if (this.$route.query.id) {
       this.editId = this.$route.query.id
       this.$route.meta.title = '编辑来源'
@@ -310,7 +310,7 @@ export default {
   },
   methods: {
     // 删除接口信息
-    removeDomain(item) {
+    removeDomain (item) {
       const index = this.InterfaceForm.domains.indexOf(item)
       if (this.InterfaceForm.domains.length > 1 && index !== -1) {
         if (item.value) {
@@ -321,38 +321,38 @@ export default {
         }
       }
     },
-    clearIcon() {
+    clearIcon () {
       if (this.rightOrError) {
         this.rightOrError = false
       }
     },
-    confirmDelete() {
+    confirmDelete () {
       this.InterfaceForm.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
     },
     // 新增接口信息
-    addDomain() {
+    addDomain () {
       this.rightOrError = false
       this.InterfaceForm.domains.push({
         key: Date.now()
       });
     },
     // 接口检测
-    handleCheck() {
+    handleCheck () {
       const params = {
         platform: this.form.source,
         address: this.form.webAddress,
-        username: this.form.account,
-        password: this.userRadio=='1'? this.form.password : this.form.token,
-        urls: this.InterfaceForm.domains.map(item => item.url)
+        token: this.form.token,
+        urls: this.InterfaceForm.domains
       }
-      if (params.urls.indexOf('') != -1) {
+      const urlList = this.InterfaceForm.domains.map(domain => domain.url)
+      if (urlList.indexOf('') !== -1) {
         this.$message({
           showClose: true,
           message: '检测接口信息不能有空值',
           type: 'warning'
         })
-      } else if (new Set(params.urls).size !== params.urls.length) {
+      } else if (new Set(urlList).size !== urlList.length) {
         this.$message({
           showClose: true,
           message: '检测接口信息存在重复信息',
@@ -373,6 +373,12 @@ export default {
               message: res.data.message
             })
           }
+        }).catch(err => {
+          this.$notify({
+            title: '提示',
+            type: 'error',
+            message: err
+          })
         })
       }
     },
@@ -388,7 +394,7 @@ export default {
       })
       return result
     },
-    addOrEdit(methods) {
+    addOrEdit (methods) {
       const urls = this.handleUrls(this.InterfaceForm.domains)
       console.log(urls)
       const params = {
@@ -424,7 +430,7 @@ export default {
       })
     },
     // 保存
-    handleSave() {
+    handleSave () {
       if (this.editId) {
         this.addOrEdit(axios.editMonitor)
       } else {
@@ -432,18 +438,18 @@ export default {
       }
     },
     // 离开页面
-    handleLeave() {
+    handleLeave () {
       this.$refs['form'].resetFields()
       this.$refs['InterfaceForm'].resetFields()
       this.$router.back()
     },
     // 获取接口详情
-    getInterFaceDetail(index) {
+    getInterFaceDetail (index) {
       this.centerDialogVisible = true
       this.interfaceTxt = this.statusList[index].text
     },
     // 取消，返回上级路由
-    handleCancel() {
+    handleCancel () {
       let objArr = Object.values(this.form)
       let foundValues = objArr.find(el => el != '')
       if (foundValues || this.InterfaceForm.domains[0].value) {
@@ -462,7 +468,7 @@ export default {
     const el = document.getElementById('api-items')
     const that = this
     const sortable = new Sortable.create(el, {
-      onUpdate:function(event){
+      onUpdate: function (event) {
         let newIndex = event.newIndex,
           oldIndex = event.oldIndex,
           $li = el.children[newIndex],
@@ -471,28 +477,23 @@ export default {
 
         // 先删除移动的节点
 
-        el.removeChild($li) 
+        el.removeChild($li)
 
         // 再插入移动的节点到原有节点，还原了移动的操作
 
-        if(newIndex > oldIndex) {
-
-          el.insertBefore($li,$oldLi)
-
+        if (newIndex > oldIndex) {
+          el.insertBefore($li, $oldLi)
         } else {
-
-          el.insertBefore($li,$oldLi.nextSibling)
-
+          el.insertBefore($li, $oldLi.nextSibling)
         }
 
         // 更新items数组
 
-        let item = that.InterfaceForm.domains.splice(oldIndex,1)
+        let item = that.InterfaceForm.domains.splice(oldIndex, 1)
 
-        that.InterfaceForm.domains.splice(newIndex,0,item[0])
+        that.InterfaceForm.domains.splice(newIndex, 0, item[0])
 
         // 下一个tick就会走patch更新
-
       }
     })
   }
@@ -519,7 +520,7 @@ export default {
         }
         .status-icon {
           position: absolute;
-          left: 245px;
+          left: 600px;
           top: 50%;
           transform: translateY(-50%);
         }

@@ -976,14 +976,16 @@ export default {
 @import "../../../static/fonticon/font_sideBar/iconfont.css";
 .sidebar {
   display: block;
+  min-width: 200px;
   position: absolute;
   left: 0;
   top: 70px;
   bottom: 0;
-  background: rgba(4, 28, 37, 0.4);
+  /* background: rgba(4, 28, 37, 0.4); */
 }
 .el-menu {
   border-right: 1px solid transparent;
+  background-color: rgba(4, 28, 37, 0.4);
 }
 .sidebar > ul {
   height: 95%;

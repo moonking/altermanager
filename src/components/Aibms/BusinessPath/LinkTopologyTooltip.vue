@@ -60,23 +60,20 @@ export default {
           level: 3,
           time: '09:11:09'
         }
-      ]
+      ],
+      colorMap: {
+        '1': '#ff0000',
+        '2': '#ff9900',
+        '3': '#ffcc00',
+        '4': '#ffff00',
+        '5': '#ffff88'
+      }
     }
   },
   methods: {
     getLevelColor (level) {
-      level = Number(level)
-      const level1Color = '#ff3333'
-      const level2Color = '#ffa433'
-      const level3Color = '#ffe633'
-      switch (level) {
-        case 1:
-          return level1Color
-        case 2:
-          return level2Color
-        case 3:
-          return level3Color
-      }
+      level = level + ''
+      return this.colorMap[level]
     }
   },
   computed: {
