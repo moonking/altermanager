@@ -58,6 +58,7 @@
 // import appSvg from '../../../../static/img/graph-icons/yingyong.svg'
 import LinkTopologyTooltip from './LinkTopologyTooltip'
 import axios from '@/api'
+import config from '@/config/index.js'
 export default {
   data () {
     return {
@@ -370,7 +371,7 @@ export default {
     initWebSocket () {
       const route = this.$route
       const { query } = route
-      const url = 'ws://111.231.165.249:8087/ws/topology/ciitem/' + query.systemId
+      const url = config.wsTopology + query.systemId
       const ws = new WebSocket(url)
       const me = this
       ws.onopen = () => {

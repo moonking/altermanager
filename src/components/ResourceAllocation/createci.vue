@@ -69,12 +69,10 @@
             <div class="myTab">
               <div
                 :class="{'click': activeName == 'first' ? true : false}"
-                @click="handleClick('first')"
-              >属性</div>
-              <div
+                @click="handleClick('first')">属性</div>
+              <!-- <div
                 :class="{'click': activeName == 'second' ? true : false}"
-                @click="handleClick('second')"
-              >关系</div>
+                @click="handleClick('second')">关系</div> -->
             </div>
             <div v-if="visible" class="myTab-content white-color">
               <el-row v-for="item in datalist" :key="item.id">
@@ -225,16 +223,6 @@
                           :required="data.required"
                         ></el-option>
                       </el-select>
-                      <!-- <el-cascader
-                        v-if="data.type == 'optionsInputEnv'"
-                            :options="options"
-                            v-model="envoptions"
-                            @active-item-change='envtablist'
-                            :required="data.required"
-                            style="width:100%"
-                            :disabled="isdisable == 1 ? true : false"
-                            @change="handleChange">
-                      </el-cascader>-->
                       <el-select
                         :clearable="true"
                         v-if="data.type == 'optionsInputEnv'"
@@ -271,7 +259,7 @@
                 </el-col>
               </el-row>
             </div>
-            <div v-if="!visible" class="last-box">
+            <!-- <div v-if="!visible" class="last-box">
               <el-row :gutter="8" style="border: 1px solid #e0e0e0;">
                 <el-col :span="17">
                   <app-chart
@@ -365,7 +353,7 @@
                   </div>
                 </el-col>
               </el-row>
-            </div>
+            </div> -->
           </el-row>
         </div>
       </el-col>

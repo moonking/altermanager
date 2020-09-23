@@ -1,36 +1,40 @@
 <template>
   <div class="aia-content">
     <!-- 筛选 -->
-    <el-form :inline="true" :model="sourceModel" label-width="80px">
-      <el-form-item>
-        <el-select
-          v-model="sourceModel.sourceValue"
-          clearable
-          placeholder="请选择来源"
-        >
-          <el-option
-            v-for="item in source"
-            :key="item.id"
-            :label="item.label"
-            :value="item.value"
+    <div class="search-bar">
+      <el-form :inline="true" :model="sourceModel" label-width="80px" class="search-inline-form">
+        <el-form-item>
+          <el-input
+            v-model="sourceModel.webAdress"
+            clearable
+            placeholder="请输入地址"
+            style="width: 200px"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-input
-          v-model="sourceModel.webAdress"
-          clearable
-          placeholder="请输入地址"
-          style="width: 200px"
-        />
-      </el-form-item>
-      <el-form-item class="search-source">
-        <el-button icon="el-icon-search" class="search-icon" @click.stop="search">搜索</el-button>
-      </el-form-item>
-      <el-form-item class="add-source">
-        <el-button type="primary" icon="el-icon-plus" @click="addSource">新增</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            v-model="sourceModel.sourceValue"
+            clearable
+            placeholder="请选择来源"
+          >
+            <el-option
+              v-for="item in source"
+              :key="item.id"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item class="search-source">
+          <el-button icon="el-icon-search" class="search-icon" @click.stop="search">搜索</el-button>
+        </el-form-item>
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-plus" @click="addSource">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表格数据 -->
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="name" label="名称" />
@@ -39,7 +43,7 @@
       <el-table-column prop="status" label="状态">
         <template v-slot="scope">
           <div>
-            <i 
+            <i
               :class="scope.row.status === '1' ? 'el-icon-success' : 'el-icon-error'"
               :style="{color: scope.row.status === '1' ? 'green' : 'red', fontSize: '20px'}"></i>
           </div>
@@ -129,7 +133,7 @@ export default {
     },
     totalSize: 0
   }),
-  created() {
+  created () {
     this.getMonitorList()
   },
   methods: {
@@ -153,10 +157,10 @@ export default {
         }
       })
     },
-    search() {
+    search () {
       this.getMonitorList()
     },
-    handleEdit(row) {
+    handleEdit (row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -165,11 +169,11 @@ export default {
         }
       })
     },
-    handleDelete(row) {
+    handleDelete (row) {
       this.currentDeleteItemId = row.id
       this.confirmDeleteDialogVisible = true
     },
-    addSource() {
+    addSource () {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -178,15 +182,15 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getMonitorList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getMonitorList()
     },
-    confirmDelete() {
+    confirmDelete () {
       const id = this.currentDeleteItemId
       axios.deleteMonitor(id).then(res => {
         if (res.data.success) {
@@ -218,10 +222,6 @@ export default {
     &:focus {
       background: none;
     }
-  }
-  .add-source {
-    position: absolute;
-    right: 0;
   }
   .search-icon {
     border: 1px solid #fff;
@@ -281,5 +281,17 @@ export default {
       color: #fff;
     }
   }
+}
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 100px;
 }
 </style>

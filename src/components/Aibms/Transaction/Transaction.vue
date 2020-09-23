@@ -1,40 +1,44 @@
 <template>
   <div class="aia-content">
     <!-- 筛选 -->
-    <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px">
-      <el-form-item>
-        <el-select clearable v-model="searchFrom.Bsystem" placeholder="请选择业务系统">
-          <el-option
-            v-for="item in systemList"
-            :key="item.systemId"
-            :label="item.name"
-            :value="item.name"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-select clearable v-model="searchFrom.Ttype" placeholder="请选择交易类型">
-          <el-option
-            v-for="item in typeList"
-            :key="item"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-date-picker
-          v-model="searchFrom.searchTime"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="请输入开始日期"
-          end-placeholder="请输入结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item class="search-form">
-        <el-button icon="el-icon-search" @click="search">搜索</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="search-bar">
+      <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" class="search-inline-form">
+        <el-form-item>
+          <el-select clearable v-model="searchFrom.Bsystem" placeholder="请选择业务系统">
+            <el-option
+              v-for="item in systemList"
+              :key="item.systemId"
+              :label="item.name"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select clearable v-model="searchFrom.Ttype" placeholder="请选择交易类型">
+            <el-option
+              v-for="item in typeList"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="searchFrom.searchTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="请输入开始日期"
+            end-placeholder="请输入结束日期"
+          ></el-date-picker>
+        </el-form-item>
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
+        <el-form-item class="search-form">
+          <el-button icon="el-icon-search" @click="search">搜索</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表格数据 -->
     <el-table
       :data="tableData"
@@ -138,7 +142,7 @@ export default {
       }
       axios.getSystemList(data).then(res => {
         if (res.data.success) {
-          this.systemList = res.data.data.result.records.map(item => ({name: item.name,systemId:item.systemId}))
+          this.systemList = res.data.data.result.records.map(item => ({name: item.name, systemId: item.systemId}))
         } else {
           this.$notify.error({
             title: '提示',
@@ -159,7 +163,6 @@ export default {
         }
       })
     },
-    getTraceTypeList () { },
     // 跳转Dynatrace
     goDynatrace (url) {
       window.open(url, '_blank');
@@ -235,8 +238,6 @@ export default {
   padding: 10px 10px;
   box-sizing: border-box;
   .search-form {
-    position: absolute;
-    right:0;
     .el-button {
       border: 1px solid #fff;
       color: #fff;
@@ -272,5 +273,17 @@ export default {
 }
 .aia-content /deep/ .el-table__row {
   cursor: pointer !important;
+}
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 100px;
 }
 </style>

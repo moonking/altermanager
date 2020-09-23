@@ -1,32 +1,36 @@
 <template>
   <div class="aia-content">
     <!-- 筛选 -->
-    <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px">
-      <el-form-item>
-        <el-input
-          v-model="searchFrom.ipAddress"
-          clearable
-          placeholder="请输入IP地址"
-          style="width: 200px"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-select clearable v-model="searchFrom.businessValue" placeholder="请选择业务系统">
-          <el-option
-            v-for="item in businessList"
-            :key="item"
-            :label="item"
-            :value="item"
+    <div class="search-bar">
+      <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" class="search-inline-form">
+        <el-form-item>
+          <el-input
+            v-model="searchFrom.ipAddress"
+            clearable
+            placeholder="请输入IP地址"
+            style="width: 200px"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item class="search-rule">
-        <el-button icon="el-icon-search" @click="search">搜索</el-button>
-      </el-form-item>
-      <el-form-item class="add-rule">
-        <el-button type="primary" icon="el-icon-plus" @click="addRule">新增</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+        <el-form-item>
+          <el-select clearable v-model="searchFrom.businessValue" placeholder="请选择业务系统">
+            <el-option
+              v-for="item in businessList"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item class="search-rule">
+          <el-button icon="el-icon-search" @click="search">搜索</el-button>
+        </el-form-item>
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-plus" @click="addRule">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表格数据 -->
     <el-table
       :data="tableData"
@@ -113,18 +117,18 @@ export default {
     totalSize: 0,
     currentDeleteItemId: -1
   }),
-  created() {
+  created () {
     this.getMaintenanceList()
     this.getBusinessList()
   },
   methods: {
     // 维护窗口列表
-    getMaintenanceList() {
+    getMaintenanceList () {
       const params = {
-      systemName: this.searchFrom.businessValue,
-      hostIp: this.searchFrom.ipAddress,
-      current: this.page.current,
-      size: this.page.size
+        systemName: this.searchFrom.businessValue,
+        hostIp: this.searchFrom.ipAddress,
+        current: this.page.current,
+        size: this.page.size
       }
       axios.getMaintenanceList(params).then(res => {
         if (res.data.success) {
@@ -139,7 +143,7 @@ export default {
       })
     },
     // 获取业务系统下拉框列表
-    getBusinessList() {
+    getBusinessList () {
       const params = {
         name: '',
         ipAddress: '',
@@ -157,10 +161,10 @@ export default {
         }
       })
     },
-    search() {
+    search () {
       this.getMaintenanceList()
     },
-    handleEdit(row) {
+    handleEdit (row) {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -169,7 +173,7 @@ export default {
         }
       });
     },
-    addRule() {
+    addRule () {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -177,7 +181,7 @@ export default {
         }
       });
     },
-    openRule(scope) {
+    openRule (scope) {
       const params = {
         id: scope.id,
         status: scope.status
@@ -197,7 +201,7 @@ export default {
         }
       })
     },
-    maintainDeatil(row) {
+    maintainDeatil (row) {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -208,19 +212,19 @@ export default {
       });
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getMaintenanceList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getMaintenanceList()
     },
-     handleDelete(row) {
+    handleDelete (row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete(){
+    confirmDelete () {
       const id = this.currentDeleteItemId
       axios.deleteMaintenance(id).then(res => {
         if (res.data.success) {
@@ -229,15 +233,15 @@ export default {
             message: '删除成功'
           })
         } else {
-            this.$notify.error({
-              title: '提示',
-              message: res.data.message
-            })
-          }
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
       }).finally(() => {
         this.getMaintenanceList()
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
-      }) 
+      })
     }
   }
 };
@@ -249,10 +253,6 @@ export default {
   width: 100%;
   padding: 10px 10px;
   box-sizing: border-box;
-  .add-rule {
-    position: absolute;
-    right: 0;
-  }
   .search-rule {
     .el-button {
       border: 1px solid #fff;
@@ -348,5 +348,17 @@ export default {
 }
 .aia-content /deep/ .el-table__row {
   cursor: pointer !important;
+}
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 100px;
 }
 </style>

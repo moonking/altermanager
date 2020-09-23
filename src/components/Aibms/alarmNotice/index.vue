@@ -1,50 +1,54 @@
 <template>
   <div class="aia-content">
-    <el-form :inline="true" :model="alarmModel">
-      <el-form-item>
-        <el-select v-model="alarmModel.systemValue" clearable placeholder="请选择业务系统">
-          <el-option
-            v-for="item in businessList"
-            :key="item.systemId"
-            :label="item.name"
-            :value="item.name"
+    <div class="search-bar">
+      <el-form :inline="true" :model="alarmModel" class="search-inline-form">
+        <el-form-item>
+          <el-select v-model="alarmModel.systemValue" clearable placeholder="请选择业务系统">
+            <el-option
+              v-for="item in businessList"
+              :key="item.systemId"
+              :label="item.name"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select v-model="alarmModel.topologyValue" clearable placeholder="请选择标签" style="width: 160px;">
+            <el-option
+              v-for="item in topologyList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="alarmModel.alarmDate"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="splitDate"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="alarmModel.topologyValue" clearable placeholder="请选择拓扑层级">
-          <el-option
-            v-for="item in topologyList"
-            :key="item"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-date-picker
-          v-model="alarmModel.alarmDate"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          @change="splitDate"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="alarmModel.labelValue" clearable placeholder="请选择标签">
-          <el-option
-            v-for="item in labelList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item class="search-button">
-        <el-button icon="el-icon-search" @click="search" class="search-icon">搜索</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+        <!-- <el-form-item>
+          <el-select v-model="alarmModel.labelValue" clearable placeholder="请选择标签">
+            <el-option
+              v-for="item in labelList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item> -->
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
+        <el-form-item class="search-button">
+          <el-button icon="el-icon-search" @click="search" class="search-icon">搜索</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表格 -->
     <el-table
       stripe
@@ -121,7 +125,13 @@ export default {
       alarmDate: [],
       labelValue: ''
     },
-    topologyList: [],
+    topologyList: [
+      { value: '1', label: '交易类型' },
+      { value: '2', label: '应用' },
+      { value: '3', label: '服务' },
+      { value: '4', label: '进程' },
+      { value: '5', label: '主机' }
+    ],
     labelList: [
       { value: '1', label: '交易类型' },
       { value: '2', label: '应用' },
@@ -148,8 +158,8 @@ export default {
   }),
   created () {
     this.getAlarmList() // 获取列表数据
-    this.getTopologyList() // 获取拓扑下拉框
-    this.getlabelList() // 获取标签下拉框数据
+    // this.getTopologyList() // 获取拓扑下拉框
+    // this.getlabelList() // 获取标签下拉框数据
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
@@ -277,8 +287,6 @@ export default {
   padding: 10px 0;
   box-sizing: border-box;
   .search-button {
-    position: absolute;
-    right: -10px;
     .el-button {
       border: 1px solid #fff;
       color: #fff;
@@ -354,5 +362,17 @@ export default {
       color: #fff;
     }
   }
+}
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 100px;
 }
 </style>

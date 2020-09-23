@@ -988,7 +988,7 @@ export default {
   background-color: rgba(4, 28, 37, 0.4);
 }
 .sidebar > ul {
-  height: 95%;
+  height: 100%;
 }
 .second-icon {
   width: 8px;

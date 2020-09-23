@@ -1,30 +1,34 @@
 <template>
   <div class="aia-content">
     <!-- 筛选 -->
-    <el-form :inline="true" :model="alarmModel" label-width="80px">
-      <el-form-item>
-        <el-input
-          v-model="alarmModel.name"
-          clearable
-          placeholder="请输入名称"
-          style="width: 200px"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-input
-          v-model="alarmModel.classification"
-          clearable
-          placeholder="请输入告警分类"
-          style="width: 200px"
-        />
-      </el-form-item>
-      <el-form-item class="search-source">
-        <el-button icon="el-icon-search" @click.stop="search">搜索</el-button>
-      </el-form-item>
-      <el-form-item class="add-source">
-        <el-button type="primary" icon="el-icon-plus" @click="addXClassification">新增</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="search-bar">
+      <el-form :inline="true" :model="alarmModel" label-width="80px">
+        <el-form-item>
+          <el-input
+            v-model="alarmModel.name"
+            clearable
+            placeholder="请输入名称"
+            style="width: 200px"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            v-model="alarmModel.classification"
+            clearable
+            placeholder="请输入告警分类"
+            style="width: 200px"
+          />
+        </el-form-item>
+        <el-form-item class="search-source">
+          <el-button icon="el-icon-search" @click.stop="search">搜索</el-button>
+        </el-form-item>
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-plus" @click="addXClassification">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表格数据 -->
     <el-table
       @row-click="alarmDetail"
@@ -99,12 +103,12 @@ export default {
     totalSize: 0,
     currentDeleteItemId: -1
   }),
-  created() {
+  created () {
     this.getUpgradeList()
   },
   methods: {
     // 获取列表数据
-    getUpgradeList() {
+    getUpgradeList () {
       const params = {
         name: this.alarmModel.name,
         sortName: this.alarmModel.classification,
@@ -125,16 +129,16 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getUpgradeList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getUpgradeList()
     },
     // 详情
-    alarmDetail(row) {
+    alarmDetail (row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -144,10 +148,10 @@ export default {
         }
       })
     },
-    search() {
+    search () {
       this.getUpgradeList()
     },
-    addXClassification() {
+    addXClassification () {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -155,7 +159,7 @@ export default {
         }
       })
     },
-    handleEdit(row) {
+    handleEdit (row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -164,11 +168,11 @@ export default {
         }
       })
     },
-    handleDelete(row) {
+    handleDelete (row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete() {
+    confirmDelete () {
       const id = this.currentDeleteItemId
       axios.deleteUpgrade(id).then(res => {
         if (res.data.success) {
@@ -197,10 +201,6 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  .add-source {
-    position: absolute;
-    right: 0;
-  }
   .search-source {
     .el-button {
       border: 1px solid #fff;
@@ -263,5 +263,17 @@ export default {
       margin-bottom: 10px;
     }
   }
+}
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 100px;
 }
 </style>
