@@ -8,8 +8,7 @@
           :label-position="labelPosition"
           label-width="100px"
           :rules="rules"
-          ref="form"
-        >
+          ref="form">
           <el-form-item label="名称：" prop="name">
             <el-input
               v-model="form.name"
@@ -69,7 +68,6 @@
               v-model="form.token"
               clearable
               style="width: 632px;"
-              maxlength="20"
               placeholder="请输入token"
             />
           </el-form-item>
@@ -77,7 +75,7 @@
       </div>
       <h3>
         接口信息
-        <span @click="handleCheck">
+        <span @click="handleCheck" v-if="!loadingStatus">
           <icon-svg icon-class="jiekou_jiance" class="check-interface" />检测
         </span>
       </h3>
@@ -116,18 +114,17 @@
             </el-input>
             <!-- 状态icon -->
             <i v-if="loadingStatus" class="status-icon el-icon-loading" />
-            <i
-              v-if="rightOrError"
-              :class="[
-              statusList[index].success ?
-              'el-icon-circle-check'
-              :'el-icon-circle-close'
-              ]"
-              class="status-icon"
-            />
+            <i v-else
+              :class="{
+              'el-icon-circle-check' : domain.checkStatus === 'success',
+              'el-icon-circle-close' : domain.checkStatus === 'failed',
+              }"
+              class="status-icon"/>
             <!-- 操作icon -->
-            <i class="el-icon-circle-plus-outline" @click="addDomain" />
-            <i class="el-icon-remove-outline" @click.prevent="removeDomain(domain)" />
+            <span v-if="!loadingStatus">
+              <i class="el-icon-circle-plus-outline" @click="addDomain" />
+              <i class="el-icon-remove-outline" @click.prevent="removeDomain(domain)" />
+            </span>
             <i
               v-if="rightOrError"
               class="el-icon-warning-outline white-color"
@@ -223,7 +220,8 @@ export default {
       domains: [{
         method: '',
         type: '',
-        url: ''
+        url: '',
+        checkStatus: ''
       }]
     },
     rules: {
@@ -339,13 +337,14 @@ export default {
     },
     // 接口检测
     handleCheck () {
-      const params = {
-        platform: this.form.source,
-        address: this.form.webAddress,
-        token: this.form.token,
-        urls: this.InterfaceForm.domains
-      }
-      const urlList = this.InterfaceForm.domains.map(domain => domain.url)
+      // const params = {
+      //   platform: this.form.source,
+      //   address: this.form.webAddress,
+      //   token: this.form.token,
+      //   urls: this.InterfaceForm.domains
+      // }
+      const domains = this.InterfaceForm.domains
+      const urlList = domains.map(domain => domain.url)
       if (urlList.indexOf('') !== -1) {
         this.$message({
           showClose: true,
@@ -361,19 +360,53 @@ export default {
       } else {
         this.rightOrError = false
         this.loadingStatus = true
-        axios.checkInterFace(params).then(res => {
-          this.loadingStatus = false
-          if (res.data.success) {
-            this.rightOrError = true
-            this.statusList = res.data.data
-          } else {
-            this.$notify({
-              title: '提示',
-              type: 'error',
-              message: res.data.message
-            })
+        // axios.checkInterFace(params).then(res => {
+        //   this.loadingStatus = false
+        //   const data = res.data.data
+        //   if (res.data.success) {
+        //     this.rightOrError = true
+        //     this.statusList = res.data.data
+        //     data.forEach(item => {
+        //       domains.forEach(domain => {
+        //         if (domain.url === item.key) {
+        //           domain.checkStatus = item.success ? 'success' : 'failed'
+        //         }
+        //       })
+        //     })
+        //   } else {
+        //     this.$notify({
+        //       title: '提示',
+        //       type: 'error',
+        //       message: res.data.message
+        //     })
+        //   }
+        // }).catch(err => {
+        //   this.loadingStatus = false
+        //   this.rightOrError = true
+        //   this.$notify({
+        //     title: '提示',
+        //     type: 'error',
+        //     message: err
+        //   })
+        // })
+        const apis = []
+        this.InterfaceForm.domains.forEach((domain, index) => {
+          const param = {
+            platform: this.form.source,
+            address: this.form.webAddress,
+            token: this.form.token,
+            urls: [this.InterfaceForm.domains[index]]
           }
+          apis.push(this.checkUrl(param))
+        })
+        Promise.all(apis).then(resList => {
+          this.loadingStatus = false
+          resList.forEach(res => {
+            this.handleResponse(res)
+          })
         }).catch(err => {
+          this.loadingStatus = false
+          this.rightOrError = true
           this.$notify({
             title: '提示',
             type: 'error',
@@ -381,6 +414,22 @@ export default {
           })
         })
       }
+    },
+    handleResponse (res) {
+      const domains = this.InterfaceForm.domains
+      const data = res.data.data
+      if (res.data.code === 200) {
+        data.forEach(item => {
+          domains.forEach(domain => {
+            if (domain.url === item.key) {
+              domain.checkStatus = item.success ? 'success' : 'failed'
+            }
+          })
+        })
+      }
+    },
+    checkUrl (params) {
+      return axios.checkInterFace(params)
     },
     handleUrls (urls) {
       const result = []

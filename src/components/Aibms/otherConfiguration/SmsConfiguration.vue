@@ -17,18 +17,21 @@
             :model="msgForm"
             label-width="100px"
             ref="smsForm"
+            inline
             label-position="right"
-            :rules="msgFormRules"
-          >
+            :rules="msgFormRules">
             <el-form-item label="URL：" prop="apiUrl">
               <el-input
                 clearable
                 v-model.trim="msgForm.apiUrl"
                 placeholder="请输入URL"
-                :style="{ width: '632px' }"
+                :style="{ width: '500px' }"
               />
             </el-form-item>
-            <el-form-item label="账号：" prop="accountNumber">
+            <!-- <el-form-item>
+              <el-button type="primary" @click="handleTest">测试</el-button>
+            </el-form-item> -->
+            <!-- <el-form-item label="账号：" prop="accountNumber">
               <el-input
                 maxlength="11"
                 clearable
@@ -46,7 +49,7 @@
                 placeholder="请输入密码"
                 :style="{ width: '632px' }"
               />
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
         </div>
       </div>
@@ -100,10 +103,24 @@
       </div>
 
       <div class="op-btns">
-        <el-button type="primary" @click="testMsg" :style="{ marginRight: '60px' }">测试</el-button>
+        <el-button type="primary" @click="handleTest" :style="{ marginRight: '60px' }">测试</el-button>
         <el-button type="primary" @click="submit" :style="{ marginRight: '60px' }">保存</el-button>
       </div>
     </div>
+    <el-dialog
+      title="测试短信"
+      :visible.sync="testDialogVisible"
+      width="30%">
+      <el-form :model="testForm" :rules="testFormRules" ref="testForm">
+        <el-form-item prop="receiver" label="手机号">
+          <el-input v-model="testForm.receiver" placeholder="请输入测试手机号"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="testDialogVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="testMsg" :loading="isTesting" size="small">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -136,9 +153,7 @@ export default {
       blockSwitch: { '1': true, '2': false },
       placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       msgForm: {
-        apiUrl: '',
-        accountNumber: '',
-        passWord: ''
+        apiUrl: ''
       },
       msgFormRules: {
         apiUrl: [{ required: true, message: '请输入url！', trigger: 'blur' }],
@@ -160,13 +175,31 @@ export default {
         ]
       },
       MsgText: { content: '' },
-      ID: ''
+      ID: '',
+      testForm: {
+        receiver: ''
+      },
+      testFormRules: {
+        receiver: [
+          {required: true, message: '手机号不能为空！', trigger: 'blur'},
+          {pattern: /^1[34578]\d{9}$/, message: '请输入合法的手机号', trigger: 'blur'}
+        ]
+      },
+      isTesting: false,
+      testDialogVisible: false
     };
   },
   created () {
     this.init();
   },
   methods: {
+    handleTest () {
+      this.$refs.smsForm.validate(valid => {
+        if (valid) {
+          this.testDialogVisible = true
+        }
+      })
+    },
     init () {
       Promise.all([
         axios.userList({
@@ -187,8 +220,6 @@ export default {
           }
           this.formatData(JSON.stringify(smsData.varible));
           this.msgForm.apiUrl = smsData.apiUrl || '';
-          this.msgForm.accountNumber = smsData.accountNumber || '';
-          this.msgForm.passWord = smsData.passWord || '';
           this.MsgText.content = smsData.smsContent || '';
           this.ID = smsData.iD || '';
         }
@@ -218,8 +249,6 @@ export default {
       let params = {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
-        accountNumber: this.msgForm.accountNumber,
-        passWord: this.msgForm.passWord,
         smsContent: this.MsgText.content
       };
       axios.FirstSmsSave(params).then(res => {
@@ -242,8 +271,6 @@ export default {
       let params = {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
-        accountNumber: this.msgForm.accountNumber,
-        passWord: this.msgForm.passWord,
         smsContent: this.MsgText.content
       };
       axios.smsSave(params).then(res => {
@@ -263,20 +290,24 @@ export default {
       });
     },
     testMsg () {
-      this.$refs.smsForm.validate(valid => {
+      this.$refs.testForm.validate(valid => {
         if (valid) {
           let params = {
-            ID: this.ID,
+            // ID: this.ID,
             apiUrl:
               this.msgForm.apiUrl ||
               'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0',
-            accountNumber: this.msgForm.accountNumber,
-            passWord: this.msgForm.passWord,
-            smsContent: this.MsgText.content || 'testMsg'
+            // accountNumber: this.msgForm.accountNumber,
+            // passWord: this.msgForm.passWord,
+            smsContent: this.MsgText.content || 'testMsg',
+            receiver: this.testForm.receiver
           };
+          this.isTesting = true
           axios.testSms(params).then(res => {
+            this.isTesting = false
             if (res.data.code === 200) {
               this.isSubmit = true;
+              this.testDialogVisible = false
               this.$notify({
                 title: '提示',
                 message: '测试通过！',
@@ -289,7 +320,9 @@ export default {
                 type: 'error'
               });
             }
-          });
+          }).catch(() => {
+            this.isTesting = false
+          })
         }
       });
     },

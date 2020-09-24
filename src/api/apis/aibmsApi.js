@@ -35,7 +35,7 @@ export function smsSave (data) {
 // 短信测试接口
 export function testSms (data) {
   return request({
-    url: baserUrl + 'api/dingDingSend',
+    url: baserUrl + 'api/test',
     method: 'post',
     data: data
   })

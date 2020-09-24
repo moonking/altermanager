@@ -1,5 +1,5 @@
 <template>
-  <div class="login-wrap">
+  <div class="login-wrap" @keydown.enter="submitForm">
     <div class="ms-login">
       <div class="ms-title">欢迎登录AI·BMS</div>
       <el-form ref="form" :model="form" label-width="60px" style="padding: 15px 40px 0 15px">

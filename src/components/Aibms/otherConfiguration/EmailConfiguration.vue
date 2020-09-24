@@ -74,7 +74,7 @@
           ></i>
         </div>
         <div class="block-content" style="overflow: visible;">
-          <div v-if="blockSwitch[2]">
+          <div v-show="blockSwitch[2]">
             <div class="button-var">
               <div>变量声明：点击这些变量,即可在输入框中使用</div>
             </div>
@@ -126,7 +126,7 @@
       <div class="op-btns">
         <el-button
           type="primary"
-          @click="testEmail"
+          @click="handleTest"
           :style="{ marginRight: '60px' }"
           >测试</el-button
         >
@@ -138,6 +138,20 @@
         >
       </div>
     </div>
+    <el-dialog
+      title="测试邮箱"
+      :visible.sync="testDialogVisible"
+      width="30%">
+      <el-form :model="testForm" :rules="testFormRules" ref="testForm">
+        <el-form-item prop="receiver" label="邮箱">
+          <el-input v-model="testForm.receiver" placeholder="请输入测试邮箱"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="testDialogVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="testEmail" :loading="isTesting" size="small">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -174,6 +188,17 @@ export default {
       }
     };
     return {
+      testForm: {
+        receiver: ''
+      },
+      testFormRules: {
+        receiver: [
+          {required: true, message: '手机号不能为空！', trigger: 'blur'},
+          {pattern: /^([0-9A-Za-z\-_\\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g, message: '请输入合法的邮箱！', trigger: 'blur'}
+        ]
+      },
+      testDialogVisible: false,
+      isTesting: false,
       StringList: [],
       clickThemeNum: -1,
       clickContentNum: -1,
@@ -203,9 +228,9 @@ export default {
         content: ''
       },
       configFormRules: {
-        theme: [{ required: true, validator: validateTheme, trigger: 'blur' }],
+        theme: [{ required: true, validator: validateTheme, trigger: 'change' }],
         content: [
-          { required: true, validator: validateContent, trigger: 'blur' }
+          { required: true, validator: validateContent, trigger: 'change' }
         ]
       },
       ThemeText: { content: '' },
@@ -216,6 +241,29 @@ export default {
     this.init();
   },
   methods: {
+    handleTest () {
+      Promise.all([
+        this.$refs.mailform.validate(),
+        this.$refs.configform.validate()
+      ]).then(res => {
+        if (res[0] && res[1]) {
+          this.testDialogVisible = true
+        } else {
+          this.$notify({
+            title: '提示',
+            type: 'error',
+            message: '配置或模板校验失败，请检查输入！'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+        this.$notify({
+          title: '提示',
+          type: 'error',
+          message: '配置或模板校验失败，请检查输入！'
+        })
+      })
+    },
     init () {
       Promise.all([
         axios.userList({
@@ -303,16 +351,21 @@ export default {
       });
     },
     testEmail () {
-      this.$refs.mailform.validate(valid => {
+      this.$refs.testForm.validate(valid => {
         if (valid) {
           let params = {
             hostIp: this.emailForm.ip,
             hostPost: this.emailForm.port,
             emailUser: this.emailForm.accountNumber,
-            emailPassword: this.emailForm.password
+            emailPassword: this.emailForm.password,
+            emailSubject: this.ThemeText.content,
+            emailContent: this.ContentText.content,
+            receiver: this.testForm.receiver
           };
+          this.isTesting = true
           axios.testEmailConfig(params).then(res => {
             console.log(res);
+            this.isTesting = false
             if (res.data.code === 200) {
               this.$notify({
                 title: '提示',
@@ -326,7 +379,9 @@ export default {
                 type: 'error'
               });
             }
-          });
+          }).catch(() => {
+            this.isTesting = false
+          })
         }
       });
     }
