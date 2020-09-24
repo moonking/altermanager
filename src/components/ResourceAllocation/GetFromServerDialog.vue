@@ -426,10 +426,10 @@ export default {
           message: '请选择选择环境',
           type: 'warning'
         })
-      } else if (data.name.length < 2 || data.name.length > 20) {
+      } else if (data.name.length < 2 || data.name.length > 40) {
         this.$notify({
           title: '提示',
-          message: '任务名称长度不能小于2,或低于20',
+          message: '任务名称长度不能小于2,或大于40',
           type: 'warning'
         })
       } else if (data.runType == 1) {

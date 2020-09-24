@@ -1,48 +1,54 @@
 <template>
   <div class="bg aibms-bg aibms-user aibms-role">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline" style="padding:20px 0 0 0">
-      <el-form-item>
-        <el-input v-model="formInline.user" placeholder="用户名/真实姓名/手机号码" />
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="formInline.role" placeholder="请选择角色" multiple>
-          <el-option
-            :label="item.name"
-            :value="item.roleId"
-            v-for="(item,index) in systemAllRoleList"
-            :key="index"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="formInline.status" placeholder="请选择状态">
-          <el-option label="正常" value="0" />
-          <el-option label="禁用" value="1"/>
-          <el-option label="锁定" value="2"/>
-          <el-option label="注销" value="3" />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-checkbox v-model="formInline.radio">在线</el-checkbox>
-      </el-form-item>
-      <el-form-item style="margin-left: 30px;">
-        <!-- <i class="el-icon-menu" style="font-size:30px" @click="formChange"></i>
-        <i class="el-icon-tickets" style="font-size:30px" @click="tableChange"></i>-->
-        <ul class="tablist">
-          <li :class="{active:shows==1}" @click="formChange">名片</li>
-          <li :class="{active:shows==2}" @click="tableChange">列表</li>
-        </ul>
-      </el-form-item>
-      <el-form-item class="item-right other-item-right margin-zero">
-        <el-button icon="el-icon-search" class="common-btn-style nomal-button" @click="onSearchBtn">查找</el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          class="common-btn-style margin-left-btn"
-          @click.prevent="addUserBtn"
-        >新增</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="search-bar">
+      <el-form :inline="true" :model="formInline" class="search-inline-form">
+        <el-form-item>
+          <el-input v-model="formInline.user" placeholder="用户名/真实姓名/手机号码" />
+        </el-form-item>
+        <el-form-item>
+          <el-select v-model="formInline.role" placeholder="请选择角色" multiple>
+            <el-option
+              :label="item.name"
+              :value="item.roleId"
+              v-for="(item,index) in systemAllRoleList"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select v-model="formInline.status" placeholder="请选择状态">
+            <el-option label="正常" value="0" />
+            <el-option label="禁用" value="1"/>
+            <el-option label="锁定" value="2"/>
+            <el-option label="注销" value="3" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-checkbox v-model="formInline.radio">在线</el-checkbox>
+        </el-form-item>
+        <el-form-item style="margin-left: 30px;">
+          <!-- <i class="el-icon-menu" style="font-size:30px" @click="formChange"></i>
+          <i class="el-icon-tickets" style="font-size:30px" @click="tableChange"></i>-->
+          <ul class="tablist">
+            <li :class="{active:shows==1}" @click="formChange">名片</li>
+            <li :class="{active:shows==2}" @click="tableChange">列表</li>
+          </ul>
+        </el-form-item>
+      </el-form>
+      <el-form  :inline="true" class="search-inline-btn">
+        <el-form-item>
+          <el-button icon="el-icon-search" class="common-btn-style nomal-button" @click="onSearchBtn">查找</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            class="common-btn-style margin-left-btn"
+            @click.prevent="addUserBtn"
+          >新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 表单 -->
     <div v-if="listForm">
       <div v-if="haveListData">
@@ -1341,4 +1347,17 @@ export default {
 // .spanx {
 //   color: red;
 // }
+</style>
+<style scoped>
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.search-inline-form {
+  flex: 1;
+}
+.search-inline-btn {
+  width: 230px;
+  vertical-align: middle;
+}
 </style>
