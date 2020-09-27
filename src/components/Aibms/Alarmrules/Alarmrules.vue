@@ -258,7 +258,8 @@ export default {
             message: res.data.message
           })
         }
-      }).finally(() => {
+        this.$refs.deleteDialog.confirmDeleteDialogVisible = false
+      }).catch(() => {
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
       })
     },

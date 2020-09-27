@@ -52,34 +52,34 @@
   </div>
 </template>
 <script>
-import axios from "@/api";
-import { statementTypes } from "./util";
+import axios from '@/api';
+import { statementTypes } from './util';
 export default {
-  name: "config-page",
-  data() {
+  name: 'config-page',
+  data () {
     return {
       // 控制是否展开
       openConfig: true,
       confData: {},
-      type: "",
+      type: '',
       // 保存原始的数据
       sourceData: [],
       operation: this.$route.query.operation
     };
   },
-  mounted() {
+  mounted () {
     this.type = this.$route.query.id;
     this.operation = this.$route.query.operation;
     this.getHighrisk(this.type);
   },
   methods: {
     // 确认按钮
-    confirmConfig() {
+    confirmConfig () {
       let jsonArray = [];
       for (let key of this.confData.statements) {
         let obj = {
           riskId: key.riskId,
-          keyword: "",
+          keyword: '',
           existConfig: false
         };
         let newObj = {};
@@ -100,59 +100,59 @@ export default {
           jsonArray.push(obj);
         }
       }
-      if (jsonArray.length ) {
+      if (jsonArray.length) {
         // 将改变的数据进行保存
         axios.statementConfig(jsonArray).then(res => {
           if (res.data.code === 200) {
             this.$router.push({
-              path: "/BasicManagement/Systemconfig/Highriskconf",
+              path: '/BasicManagement/Systemconfig/Highriskconf',
               query: {
                 code: 1
               }
             });
             this.$notify({
-              title: "提示",
-              type: "success",
-              message: "高危语句配置成功"
+              title: '提示',
+              type: 'success',
+              message: '高危语句配置成功'
             });
           } else {
             this.$notify({
-              title: "提示",
-              type: "error",
+              title: '提示',
+              type: 'error',
               message: res.data.message
             });
           }
         });
       } else {
         this.$router.push({
-          path: "/BasicManagement/Systemconfig/Highriskconf",
+          path: '/BasicManagement/Systemconfig/Highriskconf',
           query: {
             code: 1
           }
         });
         this.$notify({
-          title: "提示",
-          type: "warning",
-          message: "未进行配置操作!"
+          title: '提示',
+          type: 'warning',
+          message: '未进行配置操作!'
         });
       }
     },
     // 取消按钮
-    cancelPage() {
+    cancelPage () {
       this.$router.go(-1);
     },
     // 获取需要配置的数据库
-    getHighrisk(id) {
+    getHighrisk (id) {
       let params = {
         databaseType: id,
-        statementType: ""
+        statementType: ''
       };
       // 将查询的数据显示
       axios.dataBaseSearch(params).then(res => {
         if (res.data.code === 200) {
           this.sourceData = [];
           let obj = {
-            name: "",
+            name: '',
             statements: []
           };
           let data = res.data.data;
@@ -199,8 +199,8 @@ export default {
       });
     },
     // 选中项时回调
-    chooseStatement(item) {
-      if (this.operation !== "detail") {
+    chooseStatement (item) {
+      if (this.operation !== 'detail') {
         item.val = !item.val;
       }
     }
@@ -269,7 +269,7 @@ export default {
   }
   .activited {
     background: #0066ff;
-    border: 1px solid #0066ff!important; 
+    border: 1px solid #0066ff!important;
     color: #fff !important;
   }
   .notClick {

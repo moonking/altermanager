@@ -6,7 +6,7 @@
 module.exports = {
   aiaUrl: 'http://10.131.111.167:8075/local_bms/aia/',
   baserUrl: 'http://10.131.111.167:8075/local_bms/',
-  CiBaseUrl: 'http://10.131.111.167:8075/local_cmdb/',
+  CiBaseUrl: 'http://10.131.111.167:8075/local_cmdb/'
   // deliveryUrl: 'http://10.131.111.167:8075/local_delivery/',
   // devopsUrl: 'http://10.131.111.167:8075/local_devops/',
   // workflowUrl: 'http://10.131.111.167:8091/',

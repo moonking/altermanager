@@ -229,13 +229,13 @@ export default {
     totalSize: 0,
     editId: ''
   }),
-  created() {
+  created () {
     this.getClassList()
     this.getAlarmDetail()
   },
   methods: {
     // 获取详情数据
-    getAlarmDetail() {
+    getAlarmDetail () {
       //  查看或编辑
       if (this.$route.query.id) {
         this.editId = this.$route.query.id
@@ -272,7 +272,7 @@ export default {
       }
     },
     // 获取联想输入数据
-    getClassList() {
+    getClassList () {
       axios.geAlarmNameList().then(res => {
         if (res.data.success) {
           this.alarmList = res.data.data
@@ -286,7 +286,7 @@ export default {
       })
     },
     // 获取告警分类多选框数据
-    getAlarmList() {
+    getAlarmList () {
       // 新增和编辑状态下，调用不同接口
       if (!this.$route.query.id) {
         const params = {
@@ -295,9 +295,9 @@ export default {
           current: this.page.current,
           size: this.page.size,
           label: [],
-          level: this.form.alarmLevel,
+          level: this.form.alarmLevel
         }
-        this.addOrUpgradeSort(params,axios.getAlarmList)
+        this.addOrUpgradeSort(params, axios.getAlarmList)
       } else if (!this.readOnly) {
         const params = {
           id: this.$route.query.id,
@@ -306,11 +306,11 @@ export default {
           level: this.form.alarmLevel,
           size: this.page.size
         }
-        this.addOrUpgradeSort(params,axios.getUpgradeSort)
+        this.addOrUpgradeSort(params, axios.getUpgradeSort)
       }
     },
     // 获取新增和编辑数据
-    addOrUpgradeSort(params,methods) {
+    addOrUpgradeSort (params, methods) {
       methods(params).then(res => {
         if (res.data.success) {
           this.alarmOptions = res.data.data.records
@@ -328,27 +328,27 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getAlarmList()
     },
     // 联想输入
-    querySearch(queryString, cb) {
+    querySearch (queryString, cb) {
       const alarmClassList = this.alarmList
       const results = queryString ? alarmClassList.filter(this.createFilter(queryString)) : alarmClassList
       cb(results)
     },
-    createFilter(queryString) {
+    createFilter (queryString) {
       return (alarmList) => {
         return (alarmList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
     // 多选
-    handleCheckAllChange(val) {
+    handleCheckAllChange (val) {
       let activeOptions = this.alarmOptions.filter(item => item.active === true)
       let copyType = val ? activeOptions.map(item => item.name) : []
       let delList = []
@@ -370,11 +370,11 @@ export default {
       }
       this.classCheckStatus(this.checkedAlarms)
     },
-    handleCheckedAlarmsChange(value) {
+    handleCheckedAlarmsChange (value) {
       this.classCheckStatus(this.checkedAlarms)
     },
     // 分类勾选状态
-    classCheckStatus(type) {
+    classCheckStatus (type) {
       let bl = true
       let num = 0
       let alarmOptionList = (this.alarmOptions.filter(item => item.active === true)).map(item => item.name)
@@ -398,14 +398,14 @@ export default {
       }
     },
     // 搜索告警分类
-    search() {
+    search () {
       this.getAlarmList()
     },
-    confimAlarm() {
+    confimAlarm () {
       this.dialogFormVisible = false
       this.checkedAlarmList = this.checkedAlarms
     },
-    submitForm() {
+    submitForm () {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.checkedAlarms.length) {
@@ -422,7 +422,7 @@ export default {
         }
       })
     },
-    addOrEdit(methods) {
+    addOrEdit (methods) {
       const params = {
         id: this.editId,
         name: this.form.name,
@@ -454,13 +454,13 @@ export default {
         }
       })
     },
-    turnBack() {
+    turnBack () {
       this.$router.back()
     },
-    cancel() {
+    cancel () {
       this.dialogFormVisible = false
     },
-    openAlarmDialog() {
+    openAlarmDialog () {
       if (this.form.alarmLevel) {
         this.dialogFormVisible = true
         this.getAlarmList()
@@ -471,7 +471,7 @@ export default {
           type: 'warning'
         })
       }
-    },
+    }
   }
 }
 </script>

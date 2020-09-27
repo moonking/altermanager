@@ -507,7 +507,7 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-            color: '#fff'
+              color: '#fff'
             }
           },
           z: 10
@@ -516,7 +516,7 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-            color: '#fff'
+              color: '#fff'
             }
           },
           axisTick: {
@@ -585,9 +585,6 @@ export default {
 }
 .grid-content img {
   width: 100%;
-}
-.topBox {
-  /* height: 150px; */
 }
 .topBox li {
   float: left;
@@ -687,10 +684,6 @@ export default {
   /* position: absolute;
   top: 47%;
   right: 0px; */
-}
-.recode li .cirtitle {
-  /* position: absolute;
-  bottom: 5px; */
 }
 .el-table th {
   /* background-color: #22274d !important; */

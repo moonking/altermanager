@@ -77,7 +77,7 @@ export default {
 
           { source: 'nodeC2', target: 'nodeD3' },
           { source: 'nodeC2', target: 'nodeD4' },
-          
+
           { source: 'nodeC3', target: 'nodeD5' },
 
           { source: 'nodeD1', target: 'nodeE1' },
@@ -210,7 +210,7 @@ export default {
             //     return text
             //   }
             // },
-            'hover-node',
+            'hover-node'
             // 'select-edge',
             // 'hover-edge',
             // 'select-node',
@@ -380,7 +380,7 @@ export default {
             if (graph) {
               // systemList.forEach(node => {
               //   if (node.alerts.length > 0) {
-                  
+
               //   }
               // })
               graph.setItemState(systemId, 'warning', true)

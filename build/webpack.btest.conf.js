@@ -21,7 +21,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       usePostCSS: true
     })
   },
-  devtool: config.test.productionSourceMap ? config.test.devtool : false,
+  // devtool: config.test.productionSourceMap ? config.test.devtool : false,
+  devtool: 'source-map',
   output: {
     path: config.test.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
@@ -38,7 +39,8 @@ const webpackConfig = merge(baseWebpackConfig, {
           warnings: false
         }
       },
-      sourceMap: config.test.productionSourceMap,
+      sourceMap: true,
+      // sourceMap: config.test.productionSourceMap,
       parallel: true,
       cache:true
     }),

@@ -819,7 +819,7 @@ export default {
       this.currentDeleteItemId = userId
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete() {
+    confirmDelete () {
       const id = this.currentDeleteItemId
       axios.userDelete(id).then(res => {
         if (res.data.success) {
@@ -834,7 +834,8 @@ export default {
             message: res.data.message
           })
         }
-      }).finally(() => {
+        this.$refs.deleteDialog.confirmDeleteDialogVisible = false
+      }).catch(() => {
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
       })
     },

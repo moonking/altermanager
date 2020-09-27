@@ -14,11 +14,11 @@
 </style>
 <script>
 import vHead from './components/common/Header.vue'
-import { 
+import {
   websocketurl,
   devopswebsocketurl,
   aibmsWebsocketurl
-  } from './config'
+} from './config'
 export default {
   provide () {
     return {
@@ -40,23 +40,23 @@ export default {
   components: {
     vHead
   },
-  created() {
+  created () {
     // 页面刚进入时开启长连接
     // this.localSocket()
   },
-  mounted() {
+  mounted () {
     // this.$nextTick(() => {
     //   this.getAibmsWebsocket()
     // })
   },
   methods: {
-    reload() {
+    reload () {
       this.isRouterAlive = false
       this.$nextTick(function () {
         this.isRouterAlive = true
       })
     },
-    cleartime() {
+    cleartime () {
       if (this.number > 7 || this.devopsnumber > 7 || this.aibmsNum > 7) {
         let tit = ''
         if (this.number > 7) {
@@ -84,7 +84,7 @@ export default {
       }
     },
     // 连接 devops websocket
-    upwebsocket() {
+    upwebsocket () {
       this.$global.ws = new WebSocket(websocketurl)
       this.$global.setWs(this.$global.ws)
       this.$global.ws.onopen = () => {
@@ -99,7 +99,7 @@ export default {
       }
     },
     // 链接aibms websocket
-    upAibmsWebsocket() {
+    upAibmsWebsocket () {
       this.$global.wsAibms = new WebSocket(aibmsWebsocketurl)
       this.$global.setWsAibms(this.$global.wsAibms)
       this.$global.wsAibms.onopen = () => {
@@ -113,14 +113,14 @@ export default {
       }
     },
     // 接受aibms websocket数据
-    getAibmsWebsocket() {
+    getAibmsWebsocket () {
       const vm = this
       this.$global.wsAibms.onmessage = res => {
         const notify = this.$notify({
           title: '告警',
           dangerouslyUseHTMLString: true,
           message: '<p>有一条新告警产生，请前往<span style="color:#0066ff;cursor:pointer">查看</span></p>',
-          type: 'warning',
+          type: 'warning'
         })
         notify.$el.querySelector('span').onclick = () => {
           vm.getAlarmNoiceDetail(res.data)
@@ -128,7 +128,7 @@ export default {
         }
       }
     },
-    getAlarmNoiceDetail(id) {
+    getAlarmNoiceDetail (id) {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',
         query: {
@@ -137,7 +137,7 @@ export default {
         }
       })
     },
-    upwebsocketdev(type) {
+    upwebsocketdev (type) {
       if (!type) {
         setTimeout(() => {
           this.upwebsocket()
@@ -158,7 +158,7 @@ export default {
         }
       }
     },
-    localSocket() {
+    localSocket () {
       if ('WebSocket' in window) {
         this.upwebsocketdev()
         this.upAibmsWebsocket()
@@ -193,7 +193,7 @@ export default {
     }
   },
   watch: {
-    $route(e) {
+    $route (e) {
       //  console.log(this.$route);
       if (e.path == '/login' || e.path == '/err') {
         this.iSshow = false

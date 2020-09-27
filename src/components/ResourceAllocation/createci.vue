@@ -12,7 +12,7 @@
       </el-col>
       <el-col :span="10" class="search-wrapper item-right">
         <el-button icon="el-icon-search" type="primary" @click="searchCitype">查找</el-button>
-        <el-button 
+        <el-button
           class="margin-left-btn nomal-button"
           @click="getFromServer"
         >从服务端获取</el-button>

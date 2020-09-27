@@ -50,7 +50,7 @@ Vue.prototype.$global = {
   wsAibms: {},
   setWsAibms: function (newWs) {
     Vue.prototype.$global.wsAibms = newWs
-  }, 
+  }
 }
 const isProduction = process.env.NODE_ENV === 'production'
 const options = {

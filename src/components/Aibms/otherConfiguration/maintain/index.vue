@@ -238,7 +238,9 @@ export default {
             message: res.data.message
           })
         }
-      }).finally(() => {
+        this.getMaintenanceList()
+        this.$refs.deleteDialog.confirmDeleteDialogVisible = false
+      }).catch(() => {
         this.getMaintenanceList()
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
       })

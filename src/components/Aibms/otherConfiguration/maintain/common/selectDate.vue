@@ -86,10 +86,10 @@ export default {
         this.addZero(minutes) + ':' +
         this.addZero(seconds)
     },
-    splitDate() {
+    splitDate () {
       this.startTime = this.dateModel.daterange != null ? this.dateFormat(this.dateModel.daterange[0]) : ''
       this.endTime = this.dateModel.daterange != null ? this.dateFormat(this.dateModel.daterange[1]) : ''
-      console.log(this.mainHost,this.alarmType)
+      console.log(this.mainHost, this.alarmType)
     }
   }
 }

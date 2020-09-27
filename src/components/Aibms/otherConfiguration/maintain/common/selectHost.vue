@@ -8,7 +8,7 @@
           clearable
           placeholder="请输入IP地址"
           style="width: 200px"
-        />  
+        />
       </el-form-item>
       <el-form-item>
         <el-select clearable v-model="searchFrom.businessValue" placeholder="请选择业务系统">
@@ -70,19 +70,19 @@ export default {
       if (val.length) {
         if (this.$route.query.id) {
           this.hostList = val
-           setTimeout(() => {
-            this.$nextTick(()=>{           
+          setTimeout(() => {
+            this.$nextTick(() => {
               this.hostList.forEach(result => {
                 this.tableData.forEach((row, index) => {
                   if (row.systemId === result.systemId) {
-                    this.$refs.dataTable.toggleRowSelection(this.tableData[index],true)
+                    this.$refs.dataTable.toggleRowSelection(this.tableData[index], true)
                   }
                 })
               })
             })
-          },300)
+          }, 300)
           if (this.readOnly) {
-          this.tableData = val
+            this.tableData = val
           }
         }
       }
@@ -104,7 +104,7 @@ export default {
     checkedHostList: [],
     firstLoad: true
   }),
-  created() {
+  created () {
     if (this.$route.query.id) {
       if (!this.readOnly) {
         this.getHostTableData()
@@ -114,11 +114,11 @@ export default {
     }
   },
   methods: {
-    search() {
+    search () {
       this.getHostTableData()
     },
-    getHostTableData() {
-       const params = {
+    getHostTableData () {
+      const params = {
         name: this.searchFrom.businessValue,
         ipAddress: this.searchFrom.ipAddress,
         current: this.page.current,
@@ -141,18 +141,18 @@ export default {
         }
       })
     },
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       this.hostList = val
     },
     // 分页
-    handleCurrentChange() {
+    handleCurrentChange () {
       this.getHostTableData()
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange () {
       this.page.current = 1
       this.getHostTableData()
-    },
+    }
   }
 }
 </script>

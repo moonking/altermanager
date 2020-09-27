@@ -146,7 +146,7 @@
       width="760px">
       <el-form :inline="true" :model="hostDialogForm">
         <el-form-item>
-          <el-select v-model="hostDialogForm.dataFrom" clearable size="small" placeholder="选择数据来源" clearable>
+          <el-select v-model="hostDialogForm.dataFrom" clearable size="small" placeholder="选择数据来源">
             <el-option label="Promtheus" value="1"></el-option>
             <el-option label="Dynatrace" value="2"></el-option>
             <el-option label="BPC" value="3"></el-option>

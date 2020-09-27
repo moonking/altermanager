@@ -1029,9 +1029,6 @@ export default {
 .el-submenu .el-menu-item {
   padding-left: 65px !important;
 }
-.el-menu--popup-right-start .el-menu-item {
-  /* color: #333 !important; */
-}
 .el-submenu__title {
   padding: 0 !important;
 }

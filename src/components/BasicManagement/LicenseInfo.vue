@@ -110,7 +110,6 @@ export default {
     getModules () {
       let result = this.licenseInfo.allowModel
       return result ? result.split(',') : []
-      console.log(result)
     }
   }
 }

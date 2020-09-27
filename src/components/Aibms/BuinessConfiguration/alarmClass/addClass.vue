@@ -159,7 +159,7 @@ export default {
     selectValue: '',
     deleteId: -1
   }),
-  created() {
+  created () {
     if (this.$route.query.id) {
       // 查看（只读状态）
       if (this.$route.query.read) {
@@ -198,7 +198,7 @@ export default {
     }
   },
   methods: {
-    handleSave() {
+    handleSave () {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.editId) {
@@ -211,13 +211,13 @@ export default {
         }
       });
     },
-    getselectValue() {
+    getselectValue () {
       this.selectValue = this.$options.filters['valueFilter'](this.selectlabel)
     },
-    handleCancel() {
+    handleCancel () {
       this.$router.back()
     },
-    addOrEdit(methods) {
+    addOrEdit (methods) {
       const params = {
         id: this.editId,
         name: this.form.name,
@@ -252,11 +252,11 @@ export default {
         }
       });
     },
-    confirmDelete() {
+    confirmDelete () {
       this.form.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
     },
-    addDomain() {
+    addDomain () {
       this.form.domains.push({
         source: '',
         expression: '',
@@ -264,7 +264,7 @@ export default {
       });
     },
     // 删除动态信息
-    removeDomain(item) {
+    removeDomain (item) {
       const index = this.form.domains.indexOf(item);
       if (this.form.domains.length > 1 && index !== -1) {
         if (item.source || item.expression) {

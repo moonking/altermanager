@@ -622,9 +622,6 @@ export default {
             type: 'error'
           })
         })
-        .finally(()=>{
-          this.loading = false
-        })
     },
     // 查询实例列表
     _instanceList (isInit) {

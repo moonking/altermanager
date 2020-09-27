@@ -401,6 +401,7 @@ export default {
         })
         Promise.all(apis).then(resList => {
           this.loadingStatus = false
+          this.rightOrError = true
           resList.forEach(res => {
             this.handleResponse(res)
           })

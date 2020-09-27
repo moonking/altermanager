@@ -620,7 +620,7 @@ export default {
           }
           if (this.status === 'create') {
             params.id = 0
-            this.saveCronTask(params) 
+            this.saveCronTask(params)
           } else {
             params.id = this.$route.query.manageId
             params.code = this.code
