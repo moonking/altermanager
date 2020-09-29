@@ -51,7 +51,7 @@
         <el-form-item label="任务名称：">
           <el-input v-model="name" :style="{width: '460px'}"></el-input>
         </el-form-item>
-        <el-form-item label="请求地址：">
+        <el-form-item label="发起地址：">
           <el-input v-model="url" :style="{width: '460px'}"></el-input>
         </el-form-item>
         <el-form-item label="定时策略：">

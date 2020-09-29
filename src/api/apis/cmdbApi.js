@@ -754,3 +754,11 @@ export function updateBlackList (data) {
     data
   })
 }
+
+// 获取CI项黑名单列表
+export function getCIBlackList (citypeId) {
+  return request({
+    url: CiBaseUrl + 'api/blankCiitemList?citypeId=' + citypeId,
+    method: 'get'
+  })
+}

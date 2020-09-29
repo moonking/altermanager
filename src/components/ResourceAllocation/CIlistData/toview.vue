@@ -11,7 +11,7 @@
           <ul class="white-color">
             <li v-for="(pl,index) in item.extend" :key="index">
               <div style="float:left;width:40%; text-align: left">{{pl.label}}:</div>
-              <div style="float:left;width:60%; text-align: left">
+              <div style="float:left;width:60%; text-align: left" class="text-hidden">
                 <span v-if="pl.type == 'pwdInput' && pl.defaultValue != ''">*********</span>
                 <span v-else-if="pl.type == 'pwdInput' && pl.defaultValue == ''"></span>
                 <!-- <span
@@ -376,5 +376,10 @@ export default {
   .el-tabs__item {
   height: 0;
   line-height: 0;
+}
+.text-hidden {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 </style>

@@ -1,19 +1,53 @@
 <template>
   <div class="black-list">
     <el-form :model="form" label-width="80px" ref="form" :rules="formRules">
-      <el-form-item label="业务系统" style="width: 240px;" required prop="system">
-        <el-select v-model="form.system" placeholder="请选择业务系统" @change="handleSelectChange">
+      <el-form-item label="业务系统" required prop="system">
+        <el-select v-model="form.system" placeholder="请选择业务系统" @change="handleSelectChange" style="width: 380px;">
           <el-option :label="system.name" :value="system.systemId" v-for="system in systemList" :key="system.systemId"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="黑名单" style="width: 640px;">
-        <el-input
-          :disabled="!editStatus"
-          type="textarea"
-          :rows="6"
-          v-model="form.blackList"
-          placeholder="输入ci项名称，换行分割ci项"></el-input>
+      <el-form-item label="黑名单">
+        <div class="cilist-container">
+          <span v-for="item in checkedCIs" :key="item" class="ci-item">{{item}}
+            <i class="el-icon-delete" v-if="editStatus" @click="deleteCheckedCI(item)" style="cursor:pointer;"></i>
+          </span>
+          <div v-if="checkedCIs.length === 0" style="width: 200px;height: 40px;line-height: 40px;text-align:center;font-size: 14px;">黑名单为空</div>
+        </div>
       </el-form-item>
+      <el-form-item label="选择类型" prop="type" v-if="editStatus">
+        <el-select
+            clearable
+            v-model="form.type"
+            style="width: 380px;"
+            placeholder="请选择标签"
+            @change="handleTypeChange">
+            <el-option
+              v-for="item in ciTypeList"
+              :key="item.citypeId"
+              :label="item.name"
+              :value="item.citypeId"/>
+          </el-select>
+      </el-form-item>
+      <el-form-item label="选择CI项" prop="checkedCIs" v-if="editStatus">
+        <el-select
+          v-model="form.checkedCIs"
+          filterable
+          multiple
+          collapse-tags
+          placeholder="请选择"
+          @change="checkCIChange"
+          style="width: 380px;">
+          <el-option
+            v-for="item in ciList"
+            :key="item.ciitemId"
+            :label="item.name"
+            :value="item.name">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <!-- <el-form-item label="结果">
+        <div class="choose-result"></div>
+      </el-form-item> -->
       <el-form-item v-if="editStatus">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="cancelEdit">取消</el-button>
@@ -22,6 +56,15 @@
         <el-button type="primary" @click="setEditStatus">编辑</el-button>
       </el-form-item>
     </el-form>
+    <!-- <el-tabs v-model="activeTab" @click="handleTypeChange">
+      <el-tab-pane :label="item.name" :name="'tab' + index" v-for="(item, index) in ciTypeList" :key="item.citypeId">
+        <el-form>
+          <el-form-item>
+            <el-checkbox v-model="checked">备选项</el-checkbox>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs> -->
   </div>
 </template>
 
@@ -30,19 +73,64 @@ import axios from '@/api'
 export default {
   data () {
     return {
+      checkedCIs: [],
+      isIndeterminate: true,
+      checkAll: false,
       form: {
         system: '',
-        blackList: ''
+        type: '',
+        checkedCIs: []
       },
+      activeTab: '',
+      ciTypeList: [],
+      ciList: [],
       formRules: {
         system: [{required: true, message: '请选择业务系统', trigger: 'change'}]
+        // type: [{required: true, message: '请选择类型', trigger: 'change'}],
+        // checkedCIs: [{required: true, message: '请选择CI项', trigger: 'blur'}]
       },
+      labelList: [
+        { label: '交易类型', value: '1' },
+        { label: '应用', value: '2' },
+        { label: '服务', value: '3' },
+        { label: '进程', value: '4' },
+        { label: '主机', value: '5' }
+      ],
       systemList: [],
       editStatus: false
     }
   },
   methods: {
+    deleteCheckedCI (ci) {
+      const { checkedCIs } = this
+      checkedCIs.forEach((item, index) => {
+        if (ci === item) {
+          this.checkedCIs.splice(index, 1)
+        }
+      })
+    },
+    checkCIChange () {
+      const checks = this.form.checkedCIs
+      checks.forEach(item => {
+        if (this.checkedCIs.indexOf(item) === -1) {
+          console.log(true)
+          this.checkedCIs.push(item)
+        }
+      })
+    },
+    handleTypeChange () {
+      const chooseType = this.form.type
+      // const chooseType = this.activeTab
+      console.log('test')
+      axios.getCIBlackList(chooseType).then(res => {
+        if (res.data.code === 200) {
+          this.ciList = res.data.data
+        }
+      })
+    },
     handleSelectChange (val) {
+      this.form.type = ''
+      this.form.checkedCIs = []
       this.getSystemBlackList(val)
     },
     cancelEdit () {
@@ -54,8 +142,11 @@ export default {
     getSystemBlackList (systemId) {
       const id = systemId || this.form.system
       axios.getSystemDetail(id).then(res => {
-        if (res.data.code === 200) {
-          this.form.blackList = res.data.data.result.blackList
+        const {code, data} = res.data
+        if (code === 200 && data.result.blackList !== '') {
+          this.checkedCIs = data.result.blackList.split(',')
+        } else {
+          this.checkedCIs = []
         }
       })
     },
@@ -82,9 +173,10 @@ export default {
       const form = this.$refs.form
       form.validate().then(res => {
         if (res) {
+          const blackList = this.checkedCIs.join(',')
           const data = {
             systemId: this.form.system,
-            blackList: this.form.blackList
+            blackList
           }
           axios.updateBlackList(data).then(res => {
             if (res.data.code) {
@@ -94,14 +186,29 @@ export default {
                 type: 'success'
               })
               this.editStatus = false
+              this.form.type = ''
+              this.form.checkedCIs = []
             }
           })
+        }
+      })
+    },
+    getCITypeList () {
+      axios.getCiTList({
+        name: '',
+        templateId: '',
+        cigroupId: ''
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.ciTypeList = res.data.data.result
+          this.activeTab = this.ciTypeList[0].citypeId
         }
       })
     }
   },
   created () {
     this.getSystemList()
+    this.getCITypeList()
   }
 }
 </script>
@@ -109,5 +216,35 @@ export default {
 <style>
 .black-list {
   padding: 20px;
+}
+.choose-result {
+  width: 600px;
+  height: 200px;
+  background-color: #041c2566;
+}
+.cilist-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 900px;
+  max-height: 300px;
+  font-size: 12px;
+  color: #ddd;
+  padding-top: 12px;
+  overflow-y: auto;
+}
+.ci-item {
+  height: 20px;
+  line-height: 20px;
+  display: block;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  border-radius: 2px;
+  padding: 0 6px;
+  background-color: #041c2566;
+}
+.ci-item:hover {
+  background-color: #041c25e0;
+  cursor: default;
 }
 </style>

@@ -15,25 +15,25 @@
     </div> -->
     <div class="link-topology-wrapper">
       <div class="level-labels">
-        <div class="level-label">
+        <div :class="['level-label', { noData: levelCount[5] === 0 }]">
           <p class="level-label-text"><i class="iconfont icon-jiaoyi"></i> 交易类型</p>
-          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+          <p><i class="iconfont icon-bianzu"></i></p>
         </div>
-        <div class="level-label">
+        <div :class="['level-label', { noData: levelCount[4] === 0 }]">
           <p class="level-label-text"><i class="iconfont icon-yingyong"></i> 应用</p>
-          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+          <p><i class="iconfont icon-bianzu"></i></p>
         </div>
-        <div class="level-label">
+        <div :class="['level-label', { noData: levelCount[3] === 0 }]">
           <p class="level-label-text"><i class="iconfont icon-quanqiu"></i> 服务</p>
-          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+          <p><i class="iconfont icon-bianzu"></i></p>
         </div>
-        <div class="level-label">
+        <div :class="['level-label', { noData: levelCount[2] === 0 }]">
           <p class="level-label-text"><i class="iconfont icon-jincheng"></i> 进程</p>
-          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+          <p><i class="iconfont icon-bianzu"></i></p>
         </div>
-        <div class="level-label">
+        <div :class="['level-label', { noData: levelCount[1] === 0 }]">
           <p class="level-label-text"><i class="iconfont icon-yunzhuji"></i> 主机</p>
-          <p><i class="iconfont icon-bianzu" style="color:#cbcbcb;"></i></p>
+          <p><i class="iconfont icon-bianzu"></i></p>
         </div>
       </div>
       <div class="topology-graph-container">
@@ -62,6 +62,13 @@ import config from '@/config/index.js'
 export default {
   data () {
     return {
+      levelCount: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+      },
       blackListType: 1,
       blackListValue: '',
       mouseCfg: {zoom: false, move: {x: true, y: false}},
@@ -431,6 +438,7 @@ export default {
         // id: 'nodeA1', type: 'iconfontNode', text: '\ue60e'
         let { ciitemId, cigroupName, linkRelationship, status } = item
         const level = this.levelMapping[cigroupName]
+        this.levelCount[level]++
         const node = {
           id: ciitemId,
           type: 'iconfontNode',
@@ -558,7 +566,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 20%;
-  color: #fff;
+  color: #cbcbcb;
   padding: 0 10px;
   box-sizing: border-box;
 }
@@ -571,7 +579,6 @@ export default {
 .level-label-text {
   width: 100%;
   text-align-last: left;
-  color: #cbcbcb;
   margin-bottom: 6px;
   padding-left: 10px;
 }
@@ -603,5 +610,8 @@ export default {
 }
 .level-bg:nth-child(even) {
   background-color: #353535;
+}
+.level-labels .noData {
+  color: #797979 !important;
 }
 </style>
