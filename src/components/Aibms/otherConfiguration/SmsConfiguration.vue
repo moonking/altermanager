@@ -8,18 +8,22 @@
           <i
             class="icons el-icon-arrow-right"
             :style="{
-              transform: blockSwitch[1] ? 'rotate(90deg)' : 'rotate(0)'
+              transform: blockSwitch[1] ? 'rotate(90deg)' : 'rotate(0)',
             }"
           ></i>
         </div>
-        <div class="block-content" :style="{ height: blockSwitch[1] ? 'auto' : '0' }">
+        <div
+          class="block-content"
+          :style="{ height: blockSwitch[1] ? 'auto' : '0' }"
+        >
           <el-form
             :model="msgForm"
             label-width="100px"
             ref="smsForm"
             inline
             label-position="right"
-            :rules="msgFormRules">
+            :rules="msgFormRules"
+          >
             <el-form-item label="URL：" prop="apiUrl">
               <el-input
                 clearable
@@ -60,11 +64,11 @@
           <i
             class="icons el-icon-arrow-right"
             :style="{
-              transform: blockSwitch[2] ? 'rotate(90deg)' : 'rotate(0)'
+              transform: blockSwitch[2] ? 'rotate(90deg)' : 'rotate(0)',
             }"
           ></i>
         </div>
-        <div class="block-content" style="overflow: visible;">
+        <div class="block-content" style="overflow: visible">
           <div v-if="blockSwitch[2]">
             <div class="button-var">
               <div>变量声明：点击这些变量,即可在输入框中使用</div>
@@ -83,7 +87,8 @@
                     :key="index"
                     @click="chooseConfig(item, index)"
                     size="small"
-                  >{{ item.value }}:{{ item.name }}</el-button>
+                    >{{ item.value }}:{{ item.name }}</el-button
+                  >
                 </div>
               </el-form-item>
               <el-form-item label="内容：" prop="content">
@@ -103,32 +108,50 @@
       </div>
 
       <div class="op-btns">
-        <el-button type="primary" @click="handleTest" :style="{ marginRight: '60px' }">测试</el-button>
-        <el-button type="primary" @click="submit" :style="{ marginRight: '60px' }">保存</el-button>
+        <el-button
+          type="primary"
+          @click="handleTest"
+          :style="{ marginRight: '60px' }"
+          >测试</el-button
+        >
+        <el-button
+          type="primary"
+          @click="submit"
+          :style="{ marginRight: '60px' }"
+          >保存</el-button
+        >
       </div>
     </div>
-    <el-dialog
-      title="测试短信"
-      :visible.sync="testDialogVisible"
-      width="30%">
+    <el-dialog title="测试短信" :visible.sync="testDialogVisible" width="30%">
       <el-form :model="testForm" :rules="testFormRules" ref="testForm">
         <el-form-item prop="receiver" label="手机号">
-          <el-input v-model="testForm.receiver" placeholder="请输入测试手机号"></el-input>
+          <el-input
+            v-model="testForm.receiver"
+            placeholder="请输入测试手机号"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="testDialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="testMsg" :loading="isTesting" size="small">确 定</el-button>
+        <el-button @click="testDialogVisible = false" size="small"
+          >取 消</el-button
+        >
+        <el-button
+          type="primary"
+          @click="testMsg"
+          :loading="isTesting"
+          size="small"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import TempConfig from './TemplateConfig';
-import axios from '@/api';
+import TempConfig from "./TemplateConfig";
+import axios from "@/api";
 export default {
-  data () {
+  data() {
     // var validateMobile = (rule, value, callback) => {
     //   if (value === "") {
     //     callback(new Error("请输入手机号！"));
@@ -139,8 +162,8 @@ export default {
     //   }
     // };
     var validatecontent = (rule, value, callback) => {
-      if (this.MsgText.content === '') {
-        callback(new Error('请编写内容！'));
+      if (this.MsgText.content === "") {
+        callback(new Error("请编写内容！"));
       } else {
         callback();
       }
@@ -150,68 +173,74 @@ export default {
       isFirst: false,
       StringList: [],
       clickMsgNum: -1,
-      blockSwitch: { '1': true, '2': false },
-      placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
+      blockSwitch: { 1: true, 2: false },
+      placeholderMsg: "例如：您好，关于[[$DATE]]告警信息的邮件，请查阅",
       msgForm: {
-        apiUrl: ''
+        apiUrl: "",
       },
       msgFormRules: {
-        apiUrl: [{ required: true, message: '请输入url！', trigger: 'blur' }],
+        apiUrl: [{ required: true, message: "请输入url！", trigger: "blur" }],
         // accountNumber: [
         //   { required: true, validator: validateMobile, trigger: "blur" }
         // ],
         accountNumber: [
-          { required: true, message: '请输入账号！', trigger: 'blur' }
+          { required: true, message: "请输入账号！", trigger: "blur" },
         ],
-        passWord: [{ required: true, message: '请输入密码！', trigger: 'blur' }]
+        passWord: [
+          { required: true, message: "请输入密码！", trigger: "blur" },
+        ],
       },
       configForm: {
-        variable: '',
-        content: ''
+        variable: "",
+        content: "",
       },
       configFormRules: {
         content: [
-          { required: true, validator: validatecontent, trigger: 'blur' }
-        ]
+          { required: true, validator: validatecontent, trigger: "blur" },
+        ],
       },
-      MsgText: { content: '' },
-      ID: '',
+      MsgText: { content: "" },
+      ID: "",
       testForm: {
-        receiver: ''
+        receiver: "",
       },
       testFormRules: {
         receiver: [
-          {required: true, message: '手机号不能为空！', trigger: 'blur'},
-          {pattern: /^1[34578]\d{9}$/, message: '请输入合法的手机号', trigger: 'blur'}
-        ]
+          { required: true, message: "手机号不能为空！", trigger: "blur" },
+          {
+            pattern: /^1[34578]\d{9}$/,
+            message: "请输入合法的手机号",
+            trigger: "blur",
+          },
+        ],
       },
       isTesting: false,
-      testDialogVisible: false
+      testDialogVisible: false,
     };
   },
-  created () {
+  created() {
     this.init();
   },
   methods: {
-    handleTest () {
-      this.$refs.smsForm.validate(valid => {
+    handleTest() {
+      this.$refs.smsForm.validate((valid) => {
         if (valid) {
-          this.testDialogVisible = true
+          this.testDialogVisible = true;
         }
-      })
+      });
     },
-    init () {
+    init() {
       Promise.all([
         axios.userList({
           online: false,
-          condition: '', /// 姓名、手机、登录名
+          condition: "", /// 姓名、手机、登录名
           roleIds: [], // 角色ID，多个用“,”隔开
-          userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
+          userStatus: "", // 用户状态  0正常 1禁用 2锁定 3注销
           current: 1, // 当前页
-          size: 1000 // 每页显示条数
+          size: 1000, // 每页显示条数
         }),
-        axios.smsDetail()
-      ]).then(res => {
+        axios.smsDetail(),
+      ]).then((res) => {
         console.log(res[0]);
         if (res[1].data.code === 200) {
           let smsData = res[1].data.data;
@@ -219,125 +248,125 @@ export default {
             this.isFirst = true;
           }
           this.formatData(JSON.stringify(smsData.varible));
-          this.msgForm.apiUrl = smsData.apiUrl || '';
-          this.MsgText.content = smsData.smsContent || '';
-          this.ID = smsData.iD || '';
+          this.msgForm.apiUrl = smsData.apiUrl || "";
+          this.MsgText.content = smsData.smsContent || "";
+          this.ID = smsData.iD || "";
         }
       });
     },
-    chooseConfig (item, index) {
+    chooseConfig(item, index) {
       this.clickMsgNum = index;
     },
-    switchBlock (index) {
+    switchBlock(index) {
       return (this.blockSwitch[index] = !this.blockSwitch[index]);
     },
-    formatData (str) {
+    formatData(str) {
       let arr = [];
-      arr = str
-        .slice(1, -1)
-        .replace(/\"/g, '')
-        .split(',');
-      arr.forEach(item => {
-        let team = item.split(':');
+      arr = str.slice(1, -1).replace(/\"/g, "").split(",");
+      arr.forEach((item) => {
+        let team = item.split(":");
         this.StringList.push({
-          value: '$' + team[0],
-          name: team[1]
+          value: "$" + team[0],
+          name: team[1],
         });
       });
     },
-    FirstSaveMsg () {
+    FirstSaveMsg() {
       let params = {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
-        smsContent: this.MsgText.content
+        smsContent: this.MsgText.content,
       };
-      axios.FirstSmsSave(params).then(res => {
+      axios.FirstSmsSave(params).then((res) => {
         if (res.data.code === 200) {
           this.$notify({
-            title: '提示',
-            message: '保存成功！',
-            type: 'success'
+            title: "提示",
+            message: "保存成功！",
+            type: "success",
           });
         } else {
           this.$notify({
-            title: '提示',
+            title: "提示",
             message: res.data.message,
-            type: 'error'
+            type: "error",
           });
         }
       });
     },
-    saveMsg () {
+    saveMsg() {
       let params = {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
-        smsContent: this.MsgText.content
+        smsContent: this.MsgText.content,
       };
-      axios.smsSave(params).then(res => {
+      axios.smsSave(params).then((res) => {
         if (res.data.code === 200) {
           this.$notify({
-            title: '提示',
-            message: '保存成功！',
-            type: 'success'
+            title: "提示",
+            message: "保存成功！",
+            type: "success",
           });
         } else {
           this.$notify({
-            title: '提示',
+            title: "提示",
             message: res.data.message,
-            type: 'error'
+            type: "error",
           });
         }
       });
     },
-    testMsg () {
-      this.$refs.testForm.validate(valid => {
+    testMsg() {
+      this.$refs.testForm.validate((valid) => {
         if (valid) {
           let params = {
             // ID: this.ID,
             apiUrl:
               this.msgForm.apiUrl ||
-              'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0',
+              "https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0",
             // accountNumber: this.msgForm.accountNumber,
             // passWord: this.msgForm.passWord,
-            smsContent: this.MsgText.content || 'testMsg',
-            receiver: this.testForm.receiver
+            smsContent: this.MsgText.content || "testMsg",
+            receiver: this.testForm.receiver,
           };
-          this.isTesting = true
-          axios.testSms(params).then(res => {
-            this.isTesting = false
-            if (res.data.code === 200) {
-              this.isSubmit = true;
-              this.testDialogVisible = false
-              this.$notify({
-                title: '提示',
-                message: '测试通过！',
-                type: 'success'
-              });
-            } else {
-              this.$notify({
-                title: '提示',
-                message: '测试失败！',
-                type: 'error'
-              });
-            }
-          }).catch(() => {
-            this.isTesting = false
-          })
+          this.isTesting = true;
+          axios
+            .testSms(params)
+            .then((res) => {
+              this.isTesting = false;
+              if (res.data.code === 200) {
+                this.isSubmit = true;
+                this.testDialogVisible = false;
+                this.$notify({
+                  title: "提示",
+                  message: "测试通过！",
+                  type: "success",
+                });
+              } else {
+                this.$notify({
+                  title: "提示",
+                  message: "测试失败！",
+                  type: "error",
+                });
+              }
+            })
+            .catch(() => {
+              this.isTesting = false;
+            });
         }
       });
     },
-    submit () {
+    submit() {
       if (!this.isSubmit) {
         this.$notify({
-          title: '提示',
-          message: '请先通过短信测试！',
-          type: 'warning'
+          title: "提示",
+          message: "请先通过短信测试！",
+          type: "warning",
         });
       } else {
         Promise.all([
           this.$refs.smsForm.validate(),
-          this.$refs.configform.validate()
-        ]).then(res => {
+          this.$refs.configform.validate(),
+        ]).then((res) => {
           if (res[0] && res[1]) {
             if (this.isFirst) {
               this.FirstSaveMsg();
@@ -347,11 +376,11 @@ export default {
           }
         });
       }
-    }
+    },
   },
   components: {
-    TempConfig
-  }
+    TempConfig,
+  },
 };
 </script>
 
@@ -367,7 +396,7 @@ export default {
       .item-block-title {
         margin-bottom: 20px;
         .item-block-title-mark {
-          background: #00A8E8;
+          background: #00a8e8;
         }
         .item-block-title-font {
           color: #fff;
@@ -381,21 +410,23 @@ export default {
         .button-var {
           width: 60%;
           .el-button {
-            border: 1px solid #00A8E8;
+            margin-left: 0 !important;
+            margin-right: 10px !important;
+            border: 1px solid #00a8e8;
             color: #fff;
-            background: #00A8E8;
+            background: #00a8e8;
             &:hover {
-              border: 1px solid #00A8E8;
+              border: 1px solid #00a8e8;
               color: #fff;
-              background: #00A8E8;
+              background: #00a8e8;
             }
             &:focus {
               color: #fff;
-              background: #00A8E8;
+              background: #00a8e8;
             }
             &:active {
-              border: 1px solid #00A8E8;
-              background: #00A8E8;
+              border: 1px solid #00a8e8;
+              background: #00a8e8;
               color: #fff;
             }
           }
@@ -411,7 +442,7 @@ export default {
   }
 }
 .icons {
-  color: #00A8E8;
+  color: #00a8e8;
   font-size: 20px;
   vertical-align: middle;
   margin-left: 4px;
