@@ -260,9 +260,7 @@
             <el-table-column prop="citypeName" label="CI类型" />
             <el-table-column label="数据来源">
               <template slot-scope="scope">
-                <span v-if="scope.row.dataFrom==1">手动添加</span>
-                <span v-if="scope.row.dataFrom==2">导入</span>
-                <span v-if="scope.row.dataFrom==3">服务器获取</span>
+                <span>{{dataFromMap[scope.row.dataFrom]}}</span>
               </template>
             </el-table-column>
             <el-table-column label="环境">
@@ -478,7 +476,12 @@ export default {
 
       // 删除CI项弹框是否显示
       dialogVisibleDelete: false,
-      deleteCiId: ''
+      deleteCiId: '',
+      dataFromMap: {
+        '1': 'Prometheus',
+        '2': 'Dynatrace',
+        '3': 'Bpc'
+      }
     }
   },
   mounted () {

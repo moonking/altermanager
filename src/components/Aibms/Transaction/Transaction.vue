@@ -64,6 +64,7 @@
             :underline="false"
             type="primary"
             style="color: #fff"
+            v-if="scope.row.url !== ''"
             @click.stop="goDynatrace(scope.row.url)"
           >跳转Dynatrace</el-link>
         </template>
