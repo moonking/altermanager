@@ -61,7 +61,6 @@
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <el-link
-          v-if="scope.row.url"
             :underline="false"
             type="primary"
             style="color: #fff"
