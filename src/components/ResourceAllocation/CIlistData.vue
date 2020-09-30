@@ -997,8 +997,7 @@ export default {
   }
   .content-wrapper {
     position: relative;
-    .tablist {
-      width: 220px;
+    .tablist { 
       text-align: center;
       color: #a1a1a2;
       display: inline-block;

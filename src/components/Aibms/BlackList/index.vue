@@ -229,8 +229,7 @@ export default {
   width: 900px;
   max-height: 300px;
   font-size: 12px;
-  color: #ddd;
-  padding-top: 12px;
+  color: #ddd; 
   overflow-y: auto;
 }
 .ci-item {
