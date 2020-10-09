@@ -38,7 +38,11 @@
       style="width: 100%"
     >
       <el-table-column prop="name" label="名称" />
-      <el-table-column prop="desc" label="告警升级规则" />
+      <el-table-column label="告警升级规则">
+        <template v-slot="scope">
+          {{`${scope.row.categoryName}等告警分类在过去${scope.row.period}分钟内${scope.row.type}告警${scope.row.count}次，即升级为${scope.row.level}`}}
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="operation" label="操作" width="150">
         <template v-slot="scope">
           <div class="task-btn-box">
