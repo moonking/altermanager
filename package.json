@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "devtest": "webpack-dev-server --inline --progress --config build/webpack.devtest.conf.js",
-    "dev:devlop": "webpack-dev-server --inline --progress --config build/webpack.dev_lop.conf.js",
-    "build": "cross-env NODE_ENV=production node build/build.js",
+    "dev:develop": "webpack-dev-server --inline --progress --config build/webpack.dev_lop.conf.js",
+    "build-prod": "cross-env NODE_ENV=production node build/build.js",
     "build-test": "cross-env NODE_ENV=testing node build/build.js",
     "build-develop": "cross-env NODE_ENV=devlop node build/build.js",
     "start": "npm run dev",
