@@ -58,6 +58,7 @@
           <el-radio-group v-model="radio" :disabled="status === 'read' || taskType === '2'">
             <el-radio :label="1">周期性任务</el-radio>
             <el-radio :label="2">一次性任务</el-radio>
+            <!-- <el-radio :label="3">间隔性任务</el-radio> -->
           </el-radio-group>
         </el-form-item>
         <form label-width="140px" v-if="radio === 1">
@@ -94,6 +95,8 @@
               >
                 <el-option label="按周执行" value="1"></el-option>
                 <el-option label="按日执行" value="2"></el-option>
+                <!-- <el-option label="按时执行" value="3"></el-option>
+                <el-option label="按分钟执行" value="4"></el-option> -->
               </el-select>
               <el-input
                 class="input-item"
@@ -109,6 +112,20 @@
                 :disabled="status === 'read'"
                 placeholder="请输入日（1-31）,多选格式: 1,2,3"
               ></el-input>
+              <!-- <el-input
+                class="input-item"
+                v-if="excute == 2"
+                v-model="rangDay"
+                :disabled="status === 'read'"
+                placeholder="请输入小时（0-23）,多选格式: 0,1,2,3"
+              ></el-input>
+              <el-input
+                class="input-item"
+                v-if="excute == 2"
+                v-model="rangDay"
+                :disabled="status === 'read'"
+                placeholder="请输入小时（0-23）,多选格式: 0,1,2,3"
+              ></el-input> -->
             </div>
           </el-form-item>
           <el-form-item label="执行时间：">

@@ -241,10 +241,10 @@ export default {
       ],
       name: [
         { required: true, message: '请输入名称', trigger: 'blur' }
-      ],
-      token: [
-        { required: true, message: '请输入token', trigger: 'blur' }
       ]
+      // token: [
+      //   { required: true, message: '请输入token', trigger: 'blur' }
+      // ]
     },
     confirmDeleteDialogVisible: false,
     deleteId: -1,
@@ -419,6 +419,8 @@ export default {
     handleResponse (res) {
       const domains = this.InterfaceForm.domains
       const data = res.data.data
+      const list = this.statusList
+      this.statusList.concat(list, data)
       if (res.data.code === 200) {
         data.forEach(item => {
           domains.forEach(domain => {
