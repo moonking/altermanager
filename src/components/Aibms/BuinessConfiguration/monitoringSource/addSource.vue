@@ -128,7 +128,7 @@
             <i
               v-if="rightOrError"
               class="el-icon-warning-outline white-color"
-              @click="getInterFaceDetail(index)"
+              @click="getInterFaceDetail(domain.url)"
             />
           </el-form-item>
         </el-form>
@@ -420,7 +420,7 @@ export default {
       const domains = this.InterfaceForm.domains
       const data = res.data.data
       const list = this.statusList
-      this.statusList.concat(list, data)
+      this.statusList = list.concat(data)
       if (res.data.code === 200) {
         data.forEach(item => {
           domains.forEach(domain => {
@@ -496,9 +496,10 @@ export default {
       this.$router.back()
     },
     // 获取接口详情
-    getInterFaceDetail (index) {
+    getInterFaceDetail (url) {
       this.centerDialogVisible = true
-      this.interfaceTxt = this.statusList[index].text
+      const index = this.statusList.map(item => item.key).indexOf(url)
+      this.interfaceTxt = index !== -1 ? this.statusList[index].text : ''
     },
     // 取消，返回上级路由
     handleCancel () {

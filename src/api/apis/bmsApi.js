@@ -15,10 +15,10 @@ export function getapproverlist () {
 }
 
 // 用户登录
-export function userlogin (username, password, kaptcha) {
+export function userlogin (username, password, kaptcha, type) {
   return request({
     async: false,
-    url: baserUrl + 'api/login?loginName=' + username + '&password=' + password + '&kaptcha=' + kaptcha,
+    url: baserUrl + 'api/login?loginName=' + username + '&password=' + password + '&kaptcha=' + kaptcha + '&type=' + type,
     method: 'post',
     data: {}
   })

@@ -47,7 +47,7 @@
           </el-select>
         </el-form-item>
       </el-form> -->
-      <el-form label-width="140px" class="ml128">
+      <el-form label-width="140px">
         <el-form-item label="任务名称：">
           <el-input v-model="name" :style="{width: '460px'}"></el-input>
         </el-form-item>
@@ -58,7 +58,7 @@
           <el-radio-group v-model="radio" :disabled="status === 'read' || taskType === '2'">
             <el-radio :label="1">周期性任务</el-radio>
             <el-radio :label="2">一次性任务</el-radio>
-            <!-- <el-radio :label="3">间隔性任务</el-radio> -->
+            <el-radio :label="3">间隔性任务</el-radio>
           </el-radio-group>
         </el-form-item>
         <form label-width="140px" v-if="radio === 1">
@@ -152,7 +152,7 @@
           </el-form-item>
           <el-form-item class="result-str">{{ str }}</el-form-item>
         </form>
-        <form label-width="140" class="inline-form" v-if="radio === 2">
+        <form label-width="140" v-if="radio === 2">
           <el-form-item>
             <el-date-picker
               class="date-item"
@@ -179,6 +179,27 @@
           </el-form-item>
           <el-form-item class="result-str">{{ onceStr }}</el-form-item>
         </form>
+        <el-form-item v-if="radio === 3">
+          <el-form :model="intervalForm" label-width="140">
+            <el-form-item class="result-str">
+              从
+              <el-input v-model="intervalForm.startTime" type="number" style="width: 100px" @input="maxLimit"></el-input>
+              <el-select style="width: 100px" v-model="intervalForm.timeType">
+                <el-option label="秒" value="1"></el-option>
+                <el-option label="分钟" value="2"></el-option>
+                <el-option label="小时" value="3"></el-option>
+              </el-select>
+              开始，每
+              <el-input v-model="intervalForm.interval" type="number" style="width: 100px"></el-input>
+              <el-select style="width: 100px" v-model="intervalForm.timeType">
+                <el-option label="秒" value="1"></el-option>
+                <el-option label="分钟" value="2"></el-option>
+                <el-option label="小时" value="3"></el-option>
+              </el-select>
+              执行一次
+            </el-form-item>
+          </el-form>
+        </el-form-item>
       </el-form>
     </div>
 
@@ -230,7 +251,12 @@ export default {
       weekAlert: true,
       status: this.$route.params.status,
       taskList: [],
-      openController: true // 控制展开或收缩
+      openController: true, // 控制展开或收缩
+      intervalForm: {
+        startTime: 0,
+        timeType: '1',
+        interval: 0
+      }
     }
   },
   computed: {
@@ -342,6 +368,15 @@ export default {
     }
   },
   methods: {
+    maxLimit (val) {
+      const typeMaxCountMap = {
+        '1': 60,
+        '2': 60,
+        '3': 24
+      }
+      const time = typeMaxCountMap[this.intervalForm.timeType]
+      this.intervalForm.startTime = val > time ? time : val
+    },
     // 清空日期的选择
     handleClearDate (num) {
       if (num === 1) {
