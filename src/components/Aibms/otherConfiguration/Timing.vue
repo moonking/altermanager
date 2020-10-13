@@ -182,21 +182,27 @@
         <el-form-item v-if="radio === 3">
           <el-form :model="intervalForm" label-width="140">
             <el-form-item class="result-str">
-              从
+              <!-- 从
               <el-input v-model="intervalForm.startTime" type="number" style="width: 100px" @input="maxLimit"></el-input>
               <el-select style="width: 100px" v-model="intervalForm.timeType">
                 <el-option label="秒" value="1"></el-option>
                 <el-option label="分钟" value="2"></el-option>
                 <el-option label="小时" value="3"></el-option>
               </el-select>
-              开始，每
-              <el-input v-model="intervalForm.interval" type="number" style="width: 100px"></el-input>
-              <el-select style="width: 100px" v-model="intervalForm.timeType">
+              开始， -->
+              每
+              <el-input
+                v-model="intervalForm.interval"
+                type="number"
+                style="width: 100px"
+                min="0"
+                :disabled="status === 'read'"></el-input>
+              <!-- <el-select style="width: 100px" v-model="intervalForm.timeType">
                 <el-option label="秒" value="1"></el-option>
                 <el-option label="分钟" value="2"></el-option>
                 <el-option label="小时" value="3"></el-option>
-              </el-select>
-              执行一次
+              </el-select> -->
+              分钟执行一次
             </el-form-item>
           </el-form>
         </el-form-item>
@@ -499,6 +505,9 @@ export default {
           let minute = this.handleTime(cronArr[1])
           this.rangTime = `${hour}:${minute}`
         }
+      } else if (cronStrategy === 'interval') {
+        this.radio = 3
+        this.intervalForm.interval = cronArr[1].split('/')[1]
       }
     },
     // 一次执行的操作
@@ -640,7 +649,8 @@ export default {
     // 确认按钮保存操作
     confirmCrontab () {
       let cron = []
-      if (this.radio === 1) {
+      const radio = this.radio
+      if (radio === 1) {
         // 将存储好的cron需求元素合并成cron表达式
         if (this.alert && this.weekAlert) {
           if (this.cronObj.year) {
@@ -685,7 +695,7 @@ export default {
             message: '日期或周数不正确'
           })
         }
-      } else if (this.radio === 2) {
+      } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
           let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${
             this.onceTime
@@ -724,7 +734,30 @@ export default {
             message: '确保定时时间完整！'
           })
         }
+      } else if (radio === 3) {
+        const interval = this.intervalForm.interval
+        let cronStr = this.handleIntervalCron(interval)
+        let params = {
+          manageId: this.taskItem,
+          name: this.name,
+          url: this.url,
+          cronExpr: cronStr,
+          humanityTime: `每${interval}分钟执行一次`,
+          timePoint: '',
+          cronStrategy: 'interval'
+        }
+        if (this.status === 'create') {
+          params.id = 0
+          this.saveCronTask(params)
+        } else {
+          params.id = this.$route.query.manageId
+          params.code = this.code
+          this.editCronTask(params)
+        }
       }
+    },
+    handleIntervalCron (interval) {
+      return `0 0/${interval} * * * ?`
     },
     saveCronTask (params) {
       axios.addTimingTask(params).then(result => {

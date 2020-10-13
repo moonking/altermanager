@@ -6,19 +6,6 @@
           <el-form-item>
             <el-input v-model="search.name" placeholder="请输入发布任务名称" sortable clearable></el-input>
           </el-form-item>
-          <!-- <el-form-item>
-            <el-input v-model="search.jobName" placeholder="请输入任务流水线名称" sortable clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="search.taskStatus" placeholder="请选择发布状态" :clearable="true">
-              <el-option
-                v-for="system in statusList"
-                :label="system.name"
-                :value="system.systemId"
-                :key="system.systemId"
-              ></el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item class="item-right overHideMargin">
             <el-button icon="el-icon-search" class="common-btn-style" @click="searchTask">查找</el-button>
             <el-button
@@ -37,52 +24,8 @@
           style="width: 100%"
           :header-cell-style="{ background: '#f5f5f5' }"
         >
-          <!-- <el-table-column type="expand">
-            <template slot-scope="scope">
-              <el-form label-position="left" :inline="true">
-                <div class="tab_box" v-for="(item,index) in scope.row.jobList" :key="index">
-                  <el-form-item class="tab_box-item" label="任务流水线名称:">
-                    <span
-                      class="jobskip"
-                      @click="logDetailBtn(item.builedId,item.jobId,item.taskType)"
-                    >{{item.name }}</span>
-                  </el-form-item>
-                  <el-form-item class="tab_box-item" label="执行状态:">
-                    <span v-if="item.buildStatus==='FAILURE'">失败</span>
-                    <span v-if="!item.buildStatus || item.buildStatus === ' '">未发布</span>
-                    <span v-if="item.buildStatus==='building'">发布中</span>
-                    <span v-if="item.buildStatus==='SUCCESS'">成功</span>
-                  </el-form-item>
-                  <el-form-item class="tab_box-item" label="执行时间:">
-                    <span v-if="item.buildStatus!==''">{{item.duration }}</span>
-                    <span v-else>-</span>
-                  </el-form-item>
-                  <el-form-item label="执行阶段:">
-                    <span v-if="item.buildStatus!==''">{{ getRunPhase(item) }}</span>
-                    <span v-else>-</span>
-                  </el-form-item>
-                </div>
-              </el-form>
-            </template>
-          </el-table-column> -->
           <el-table-column label="任务名称" prop="name"></el-table-column>
           <el-table-column label="请求地址" prop="url"></el-table-column>
-          <!-- <el-table-column label="业务系统" prop="systemName"></el-table-column>
-          <el-table-column label="发布状态" min-width="100">
-            <template slot-scope="scope">
-              <el-popover
-                ref="popover1"
-                placement="top-start"
-                width="200"
-                trigger="hover"
-                content="定时任务执行失败！发布管理正在手动执行。"
-              ></el-popover>
-              <span v-if="scope.row.conflict === 'CONFLICT'" v-popover:popover1 class="error">执行冲突</span>
-              <span v-else>
-                <span>{{ scope.row.taskStatus | status }}</span>
-              </span>
-            </template>
-          </el-table-column> -->
           <el-table-column label="定时策略" prop="cronStrategy" :formatter="formatStrategy"></el-table-column>
           <el-table-column label="定时时间" prop="humanityTime"></el-table-column>
           <el-table-column label="操作" align="center" prop="operate" width="200px">
@@ -102,7 +45,6 @@
                   </el-tooltip>
                 </span>
                 <span
-                  v-if="scope.row.humanityTime"
                   class="special"
                   :class="scope.row.conflict === 'building' ? 'notClick' : ''"
                   @click=" scope.row.conflict !== 'building' && deleteJob(scope.row.iD,scope.row.applyStatus,scope.row.taskType)"
@@ -240,6 +182,8 @@ export default {
         return '周期性'
       } else if (row.cronStrategy === 'once') {
         return '一次性'
+      } else if (row.cronStrategy === 'interval') {
+        return '间隔性'
       } else {
         return '-'
       }
