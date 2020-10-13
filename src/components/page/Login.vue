@@ -2,7 +2,13 @@
   <div class="login-wrap" @keydown.enter="submitForm">
     <div class="ms-login">
       <div class="ms-title">欢迎登录AI·BMS</div>
-      <el-form ref="form" :model="form" label-width="60px" style="padding: 15px 40px 0 15px">
+      <el-form ref="form" :model="form" label-width="70px" style="padding: 15px 40px 0 15px">
+        <el-form-item label="登录方式">
+          <el-radio-group v-model="form.loginType">
+            <el-radio :label="'0'">普通登录</el-radio>
+            <el-radio :label="'1'">LDAP登录</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="用户名">
           <el-input v-model="form.loginName"></el-input>
         </el-form-item>
@@ -41,6 +47,7 @@ export default {
       noticeLock: false,
       kaptchaShow: false,
       form: {
+        loginType: '0',
         loginName: '',
         password: '',
         img_src: axios.baseurl() + 'kaptcha',
@@ -63,6 +70,7 @@ export default {
       let username = this.form.loginName
       let password = this.form.password
       let kaptcha = this.form.kaptcha
+      let loginType = this.form.loginType
       if (
         username == '' ||
         password == '' ||
@@ -77,7 +85,7 @@ export default {
           type: 'warning'
         })
       } else {
-        axios.userlogin(username, password, kaptcha).then(res => {
+        axios.userlogin(username, password, kaptcha, loginType).then(res => {
           console.log(res);
           var loginData = res.data
           if (loginData.data.kaptcha) {

@@ -103,7 +103,7 @@ export default {
       '8': {path: '/Aibms', name: 'Aibms'}
     }
     // 权限判断
-    let allowList = JSON.parse(localStorage.getItem('allowList'))
+    let allowList = JSON.parse(localStorage.getItem('allowList')) || []
     const newAllowList = ['/ResourceManagement', '/Aibms']
     const jurisdiction = [...allowList, ...newAllowList]
     const currentRoute = codeMapping[to.query.code]
