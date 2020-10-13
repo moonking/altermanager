@@ -1348,7 +1348,7 @@ export default {
             return err;
           });
       }
-      console.log(this.noticeInform)
+      console.log(this.noticeInform);
       this.TemporaryCancel = [];
       this.TemporaryAdd = [];
     },
