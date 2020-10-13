@@ -34,7 +34,7 @@
         <el-input v-model="sysdata.opsPerson" :disabled="status === 'watch'"></el-input>
       </el-form-item>
       <el-form-item label="关联CI项" prop="hosts">
-        <div @click="showChooseHostDialog"><i class="el-icon-link"></i> 已选择 {{hostTableSelected.length}} 个主机</div>
+        <div @click="showChooseHostDialog"><i class="el-icon-link"></i> 已选择 {{hostTableSelected.length}} 个 CI 项</div>
       </el-form-item>
       <!-- <el-form-item label="关联主机" prop="hosts">
         <div style="display: flex;">
@@ -229,11 +229,11 @@ export default {
       if (value === '') {
         callback(new Error('请输入名称!'))
       } else if (
-        !/^[0-9A-Za-z_\u4e00-\u9fa5]{2,10}$/.test(
+        !/^[0-9A-Za-z_\u4e00-\u9fa5]{2,26}$/.test(
           value
         )
       ) {
-        callback(new Error('请输入正确的名称!'))
+        callback(new Error('请输入合法的名称!包含2-26个由字母数字下划线或中文组成的字符串'))
       } else {
         callback()
       }
@@ -306,8 +306,9 @@ export default {
       },
       rules2: {
         name: [
-          { required: true, message: '请输入名称!', trigger: 'blur' },
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          // { required: true, message: '请输入名称!', trigger: 'blur' },
+          // { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          { required: true, validator: validatename, trigger: 'blur' }
         ],
         url: [{ required: true, validator: validateurl, trigger: 'blur' }],
         voucherId: [

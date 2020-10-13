@@ -90,7 +90,6 @@ router.beforeEach((to, from, next) => {
   // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
   // 全局判断从哪个页面进入
   Vue.prototype.fromUrl = from
-  const nextRoute = ['/']
   let id = localStorage.getItem('userId')
   let token = localStorage.getItem('token')
   let isLogin = false
@@ -101,18 +100,12 @@ router.beforeEach((to, from, next) => {
     isLogin = true
   }
   console.log('from: ', from, ' to: ', to, ', isLogin: ', isLogin)
-  //  if (id == null) {
-  //   isLogin = false;
-  // } else {
-  //   isLogin = true;
-  // }
-  // 未登录状态；当路由到nextRoute指定页时，跳转至login
-  // console.log(nextRoute.indexOf(to.path))
-  if (nextRoute.indexOf(to.path) >= 0) {
-    // 检测是否登录的页面
-    if (!isLogin) {
+  if (!isLogin) {
+    if (to.path !== '/login') {
       // 如果未登录（本地存储无用户数据），并且要跳到登录页面
       next('/login')
+    } else {
+      next()
     }
   }
   next()
