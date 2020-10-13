@@ -2,13 +2,12 @@
   <div class="login-wrap" @keydown.enter="submitForm">
     <div class="ms-login">
       <div class="ms-title">欢迎登录AI·BMS</div>
-      <el-form ref="form" :model="form" label-width="70px" style="padding: 15px 40px 0 15px">
-        <el-form-item label="登录方式">
-          <el-radio-group v-model="form.loginType">
-            <el-radio :label="'0'">普通登录</el-radio>
-            <el-radio :label="'1'">LDAP登录</el-radio>
-          </el-radio-group>
-        </el-form-item>
+      <el-form
+        ref="form"
+        :model="form"
+        label-width="70px"
+        style="padding: 15px 40px 0 15px"
+      >
         <el-form-item label="用户名">
           <el-input v-model="form.loginName"></el-input>
         </el-form-item>
@@ -16,80 +15,97 @@
           <el-input v-model="form.password" type="password"></el-input>
         </el-form-item>
         <el-form-item label="验证码" v-show="kaptchaShow">
-          <el-input v-model="form.kaptcha" style="width: 50%;display:block;float: left;"></el-input>
+          <el-input
+            v-model="form.kaptcha"
+            style="width: 50%; display: block; float: left"
+          ></el-input>
           <img
             :src="form.img_src"
             id="kaptcha"
             width="42%"
             height="100%"
-            style="float:right"
+            style="float: right"
             @click="changeImg"
-          >
+          />
+        </el-form-item>
+        <el-form-item label="登录方式">
+          <el-radio-group v-model="form.loginType">
+            <el-radio :label="'0'">普通登录</el-radio>
+            <el-radio :label="'1'">LDAP登录</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
-      <p class="notice" v-if="noticeError">您的密码已输入错误超过三次！若密码输入错误超过五次，您的账号将被锁定</p>
-      <p class="notice" v-if="noticeLock">您的账号已被锁定，当日无法登录平台，请联系管理员为您解锁</p>
+      <p class="notice" v-if="noticeError">
+        您的密码已输入错误超过三次！若密码输入错误超过五次，您的账号将被锁定
+      </p>
+      <p class="notice" v-if="noticeLock">
+        您的账号已被锁定，当日无法登录平台，请联系管理员为您解锁
+      </p>
       <div class="login-btn">
-        <el-button style="background:#0066ff;color:#fff" @click="submitForm()">登录</el-button>
+        <el-button
+          style="background: #0066ff; color: #fff"
+          @click="submitForm()"
+          >登录</el-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from '@/api';
+import axios from "@/api";
 // import Cookie from 'js-cookie';
 export default {
-  data () {
+  data() {
     return {
       dialogFormVisible: false,
       noticeError: false,
       noticeLock: false,
       kaptchaShow: false,
       form: {
-        loginType: '0',
-        loginName: '',
-        password: '',
-        img_src: axios.baseurl() + 'kaptcha',
-        kaptcha: ''
+        loginType: "0",
+        loginName: "",
+        password: "",
+        img_src: axios.baseurl() + "kaptcha",
+        kaptcha: "",
       },
       systemMapping: {
-        bms: '/BasicManagement',
-        cmdb: '/ResourceAllocation',
-        delivery: '/AutomatedRelease',
-        autotest: '/',
-        devops: '/AutomaticOperation',
-        monitoring: '/',
-        aiops: '/'
-      }
-    }
+        bms: "/BasicManagement",
+        cmdb: "/ResourceAllocation",
+        delivery: "/AutomatedRelease",
+        autotest: "/",
+        devops: "/AutomaticOperation",
+        monitoring: "/",
+        aiops: "/",
+      },
+    };
   },
 
   methods: {
-    submitForm () {
-      let username = this.form.loginName
-      let password = this.form.password
-      let kaptcha = this.form.kaptcha
-      let loginType = this.form.loginType
+    submitForm() {
+      let username = this.form.loginName;
+      let password = this.form.password;
+      let kaptcha = this.form.kaptcha;
+      let loginType = this.form.loginType;
       if (
-        username == '' ||
-        password == '' ||
+        username == "" ||
+        password == "" ||
         password == null ||
         username == null ||
         username == undefined ||
         password == undefined
       ) {
         this.$notify({
-          title: '提示',
-          message: '请输入账户名和密码',
-          type: 'warning'
-        })
+          title: "提示",
+          message: "请输入账户名和密码",
+          type: "warning",
+        });
       } else {
-        axios.userlogin(username, password, kaptcha, loginType).then(res => {
+        axios.userlogin(username, password, kaptcha, loginType).then((res) => {
           console.log(res);
-          var loginData = res.data
+          var loginData = res.data;
           if (loginData.data.kaptcha) {
-            this.kaptchaShow = true
+            this.kaptchaShow = true;
           }
           // if (loginData.code == 500) {
           //   this.$notify({
@@ -99,11 +115,17 @@ export default {
           //   });
           // }
           if (loginData.code == 200) {
-            localStorage.setItem('token', loginData.data.token)
-            localStorage.setItem('userId', loginData.data.user.userId)
-            localStorage.setItem('verify', JSON.stringify(loginData.data.verify))
-            localStorage.setItem('allowList', JSON.stringify(this.parseVerify(loginData.data.verify)))
-            localStorage.setItem('sessionId', loginData.data.sessionId)
+            localStorage.setItem("token", loginData.data.token);
+            localStorage.setItem("userId", loginData.data.user.userId);
+            localStorage.setItem(
+              "verify",
+              JSON.stringify(loginData.data.verify)
+            );
+            localStorage.setItem(
+              "allowList",
+              JSON.stringify(this.parseVerify(loginData.data.verify))
+            );
+            localStorage.setItem("sessionId", loginData.data.sessionId);
             // localStorage.setItem('shiroCookie', )
             // const verify = {
             //   code: 200,
@@ -113,42 +135,44 @@ export default {
             // }
             // localStorage.setItem('allowList',JSON.stringify(this.parseVerify(verify)))
             this.$router.push({
-              path: '/',
+              path: "/",
               query: {
-                userId: loginData.data.user.userId
-              }
-            })
+                userId: loginData.data.user.userId,
+              },
+            });
 
-            localStorage.setItem('userName', loginData.data.user.loginName)
-            localStorage.setItem('userPhoto', loginData.data.user.photo)
-            localStorage.setItem('bl', 'false')
+            localStorage.setItem("userName", loginData.data.user.loginName);
+            localStorage.setItem("userPhoto", loginData.data.user.photo);
+            localStorage.setItem("bl", "false");
           } else {
             this.$notify({
-              title: '提示',
+              title: "提示",
               message: loginData.message,
-              type: 'warning'
-            })
+              type: "warning",
+            });
           }
-        })
+        });
       }
     },
-    changeImg () {
+    changeImg() {
       this.form.img_src =
-        axios.baseurl() + 'kaptcha?' + Math.floor(Math.random() * 100)
+        axios.baseurl() + "kaptcha?" + Math.floor(Math.random() * 100);
     },
-    parseVerify (verify) {
-      if (!verify) { verify = {} }
-      const models = verify.models || []
-      let result = []
+    parseVerify(verify) {
+      if (!verify) {
+        verify = {};
+      }
+      const models = verify.models || [];
+      let result = [];
       if (models) {
         for (let i = 0; i < models.length; i++) {
-          result.push(this.systemMapping[models[i]])
+          result.push(this.systemMapping[models[i]]);
         }
       }
-      return result
-    }
+      return result;
+    },
   },
-  created () {
+  created() {
     // if (this.$route.path == "/login") {
     //   var lett = this;
     //   document.onkeydown = function(evt) {
@@ -164,10 +188,10 @@ export default {
     //   };
     // }
   },
-  mounted () {
-    this.changeImg()
-  }
-}
+  mounted() {
+    this.changeImg();
+  },
+};
 </script>
 
 <style scoped>
