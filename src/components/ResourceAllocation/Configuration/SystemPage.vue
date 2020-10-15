@@ -5,36 +5,55 @@
     </p>-->
     <div class="item-block-title" @click="sysController = !sysController">
       <div class="item-block-title-mark"></div>
-      <span
-        class="item-block-title-font"
-      >{{status === 'create' ? "新增业务系统" : status === 'edit' ? "编辑业务系统" : "查看业务系统"}}</span>
+      <span class="item-block-title-font">{{
+        status === 'create'
+          ? '新增业务系统'
+          : status === 'edit'
+          ? '编辑业务系统'
+          : '查看业务系统'
+      }}</span>
       <i
         class="icons el-icon-arrow-right"
-        :style="{transform: sysController ? 'rotate(90deg)' : 'rotate(0)'}"
+        :style="{ transform: sysController ? 'rotate(90deg)' : 'rotate(0)' }"
       ></i>
     </div>
     <el-form
       ref="form"
       label-width="120px"
-      :rules="status ==='create' ? rules : rules2"
+      :rules="status === 'create' ? rules : rules2"
       :model="sysdata"
       class="form-css item-block-content white-color"
-      :style="{height: sysController ? 'auto' : 0}"
+      :style="{ height: sysController ? 'auto' : 0 }"
     >
       <el-form-item label="名称" prop="name">
-        <el-input v-model="sysdata.name" :disabled="status === 'watch'"></el-input>
+        <el-input
+          v-model="sysdata.name"
+          :disabled="status === 'watch'"
+        ></el-input>
       </el-form-item>
       <el-form-item label="英文缩写" prop="englishAbridge">
-        <el-input v-model="sysdata.englishAbridge" :disabled="status === 'watch'"></el-input>
+        <el-input
+          v-model="sysdata.englishAbridge"
+          :disabled="status === 'watch'"
+        ></el-input>
       </el-form-item>
       <el-form-item label="节点类型" prop="type">
-        <el-input v-model="sysdata.type" :disabled="status === 'watch'"></el-input>
+        <el-input
+          v-model="sysdata.type"
+          :disabled="status === 'watch'"
+        ></el-input>
       </el-form-item>
       <el-form-item label="负责人" prop="opsPerson">
-        <el-input v-model="sysdata.opsPerson" :disabled="status === 'watch'"></el-input>
+        <el-input
+          v-model="sysdata.opsPerson"
+          :disabled="status === 'watch'"
+        ></el-input>
       </el-form-item>
       <el-form-item label="关联CI项" prop="hosts">
-        <div @click="showChooseHostDialog"><i class="el-icon-link"></i> 已选择 {{hostTableSelected.length}} 个 CI 项</div>
+        <div class="cursor" @click="showChooseHostDialog">
+          <i class="el-icon-link"></i> 已选择 {{ hostTableSelected.length }} 个
+          CI 项
+        </div>
       </el-form-item>
       <!-- <el-form-item label="关联主机" prop="hosts">
         <div style="display: flex;">
@@ -97,66 +116,102 @@
     </el-form>
     <div class="item-block-title">
       <div class="item-block-title-mark"></div>
-      <span
-        class="item-block-title-font"
-      >调用业务</span>
+      <span class="item-block-title-font">调用业务</span>
     </div>
-    <el-form
-      label-width="120px"
-      class="form-css item-block-content">
-      <el-form-item label="业务名称" v-for="(system, index) in callNodes" :key="index">
-        <div style="display: flex;">
+    <el-form label-width="120px" class="form-css item-block-content">
+      <el-form-item
+        label="业务名称"
+        v-for="(system, index) in callNodes"
+        :key="index"
+      >
+        <div style="display: flex">
           <el-select
             v-model="system.systemId"
             filterable
             placeholder="请选择"
             :disabled="status === 'watch'"
             @change="handeSelectSystemChange"
-            :style="{flex: '1'}">
+            :style="{ flex: '1' }"
+          >
             <el-option
               v-for="item in systemNodeList"
               :key="item.systemId"
               :label="item.name"
               :value="item.systemId"
-              :disabled="item.disabled">
+              :disabled="item.disabled"
+            >
             </el-option>
           </el-select>
-          <div class="form-item-oparates" style="padding: 0 20px; font-size: 24px">
-            <span class="form-item-oparate-item" @click="addNodeSelect"><i class="el-icon-circle-plus-outline white-color"></i></span>
-            <span class="form-item-oparate-item" @click="deleteNodeSelect(system, index)"><i class="el-icon-remove-outline white-color"></i></span>
+          <div
+            class="form-item-oparates"
+            style="padding: 0 20px; font-size: 24px"
+          >
+            <span class="form-item-oparate-item" @click="addNodeSelect"
+              ><i class="el-icon-circle-plus-outline white-color"></i
+            ></span>
+            <span
+              class="form-item-oparate-item"
+              @click="deleteNodeSelect(system, index)"
+              ><i class="el-icon-remove-outline white-color"></i
+            ></span>
           </div>
         </div>
       </el-form-item>
     </el-form>
     <div class="txtcenter">
-      <el-button v-if="status === 'create'" size="medium" type="primary" @click="addSystemclick">确认</el-button>
+      <el-button
+        v-if="status === 'create'"
+        size="medium"
+        type="primary"
+        @click="addSystemclick"
+        >确认</el-button
+      >
       <el-button
         v-if="status === 'edit'"
         size="medium"
         type="primary"
         @click="addSystemclick('2')"
-      >保存</el-button>
-      <el-button class="nomal-button" plain size="medium" @click="detaiAddenvBtn">取消</el-button>
+        >保存</el-button
+      >
+      <el-button
+        class="nomal-button"
+        plain
+        size="medium"
+        @click="detaiAddenvBtn"
+        >取消</el-button
+      >
     </div>
     <el-dialog
       title="选择主机"
       center
       :close-on-click-modal="false"
       :visible.sync="chooseHostDialogVisible"
-      width="760px">
+      width="760px"
+    >
       <el-form :inline="true" :model="hostDialogForm">
         <el-form-item>
-          <el-select v-model="hostDialogForm.dataFrom" clearable size="small" placeholder="选择数据来源">
+          <el-select
+            v-model="hostDialogForm.dataFrom"
+            clearable
+            size="small"
+            placeholder="选择数据来源"
+          >
             <el-option label="Promtheus" value="1"></el-option>
             <el-option label="Dynatrace" value="2"></el-option>
             <el-option label="BPC" value="3"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="hostDialogForm.search" size="small" placeholder="请输入IP地址/主机名称"></el-input>
+          <el-input
+            v-model="hostDialogForm.search"
+            size="small"
+            placeholder="请输入IP地址/主机名称"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" @click="searchHostList"><i class="el-icon-search"></i> 搜索</el-button>
+          <el-button size="small" @click="searchHostList"
+            ><i class="el-icon-search"></i> 搜索</el-button
+          >
         </el-form-item>
       </el-form>
       <el-table
@@ -167,20 +222,12 @@
         style="width: 100%"
         @select="handleTableSelect"
         @select-all="handleTableSelectAll"
-        @selection-change="handleTableSelectChange">
-        <el-table-column
-          type="selection"
-          width="55">
+        @selection-change="handleTableSelectChange"
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column prop="name" label="主机名称" width="280">
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="主机名称"
-          width="280">
-        </el-table-column>
-        <el-table-column
-          prop="ip"
-          label="IP地址"
-          width="120">
+        <el-table-column prop="ip" label="IP地址" width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.ip || '-' }}</span>
           </template>
@@ -195,14 +242,19 @@
         :page-size="dialogPager.size"
         layout="total, prev, pager, next, sizes, jumper"
         :total="dialogPager.total"
-        style="margin-top: 10px">
+        style="margin-top: 10px"
+      >
       </el-pagination>
       <!-- <p>
         <span v-for="item in tempSelect" :key="item.ciitemId">{{item.name}}, </span>
       </p> -->
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" type="primary" @click="handleChooseHost">确 定</el-button>
-        <el-button size="small" @click="chooseHostDialogVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="handleChooseHost"
+          >确 定</el-button
+        >
+        <el-button size="small" @click="chooseHostDialogVisible = false"
+          >取 消</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -211,7 +263,7 @@
 import axios from '@/api';
 export default {
   name: 'systemPage',
-  data () {
+  data() {
     var validateurl = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入Url'))
@@ -323,7 +375,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.getVoucherData()
     if (this.$route.query.id) {
       this.getSystemDetail(this.$route.query.id)
@@ -332,16 +384,16 @@ export default {
     if (this.$route.params.status !== 'edit') this.getSystemList()
   },
   methods: {
-    handleCurrentPageChange (value) {
+    handleCurrentPageChange(value) {
       this.dialogPager.current = value
       this.searchHostList()
     },
-    handlePageSizeChange (value) {
+    handlePageSizeChange(value) {
       this.dialogPager.current = 1
       this.dialogPager.size = value
       this.searchHostList()
     },
-    handleChooseHost () {
+    handleChooseHost() {
       // 获取选中row
       console.log(this.hostList)
       this.hostTableSelected = JSON.parse(JSON.stringify(this.tempSelect))
@@ -349,7 +401,7 @@ export default {
       this.tempSelect = []
       this.chooseHostDialogVisible = false
     },
-    handleTableSelect (selection, row) {
+    handleTableSelect(selection, row) {
       let checked = false
       selection.forEach(item => {
         if (item.ciitemId === row.ciitemId) {
@@ -369,7 +421,7 @@ export default {
       console.log('selection: ', selection)
       console.log('row: ', row)
     },
-    handleTableSelectAll (selection) {
+    handleTableSelectAll(selection) {
       // 取消全选
       if (selection.length === 0) {
         const result = []
@@ -395,11 +447,11 @@ export default {
       }
       console.log('all: ', selection)
     },
-    handleTableSelectChange (selection) {
+    handleTableSelectChange(selection) {
       // console.log('change: ', selection)
     },
-    searchHostList () {
-      const {current, size} = this.dialogPager
+    searchHostList() {
+      const { current, size } = this.dialogPager
       const data = {
         citypeId: '',
         current,
@@ -411,13 +463,13 @@ export default {
       }
       this.getHostList(data)
     },
-    showChooseHostDialog () {
+    showChooseHostDialog() {
       this.chooseHostDialogVisible = true
       this.tempSelect = JSON.parse(JSON.stringify(this.hostTableSelected))
       this.setTableSelectStatus()
     },
     // 禁用已经选择了的系统
-    handeSelectSystemChange () {
+    handeSelectSystemChange() {
       const callNodes = this.callNodes
       const systemList = this.systemNodeList
       systemList.forEach(system => {
@@ -436,7 +488,7 @@ export default {
       })
     },
     // 获取系统节点列表
-    getSystemList () {
+    getSystemList() {
       const data = {
         name: '',
         current: 1,
@@ -469,7 +521,7 @@ export default {
         }
       })
     },
-    setTableSelectStatus () {
+    setTableSelectStatus() {
       this.hostList.forEach(row => {
         let isContain = false
         this.tempSelect.forEach(item => {
@@ -486,7 +538,7 @@ export default {
       })
     },
     // 获取主机列表
-    getHostList (data) {
+    getHostList(data) {
       data = data || {
         citypeId: '',
         current: 1,
@@ -532,13 +584,13 @@ export default {
         this.setTableSelectStatus()
       })
     },
-    isValidIp (ip) {
+    isValidIp(ip) {
       return /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/.test(ip)
     },
-    addNodeSelect () {
-      this.callNodes.push({systemId: ''})
+    addNodeSelect() {
+      this.callNodes.push({ systemId: '' })
     },
-    deleteNodeSelect (system, index) {
+    deleteNodeSelect(system, index) {
       this.systemNodeList.forEach(sys => {
         if (sys.systemId === system.systemId) {
           sys.disabled = false
@@ -547,7 +599,7 @@ export default {
       this.callNodes.splice(index, 1)
     },
     // 确认新增业务系统
-    addSystemclick (num) {
+    addSystemclick(num) {
       let that = this
       const nodes = this.callNodes
       const nodesData = []
@@ -642,7 +694,7 @@ export default {
       })
     },
     //  取消新增业务系统
-    detaiAddenvBtn () {
+    detaiAddenvBtn() {
       this.$router.push({
         path: '/ResourceAllocation/OtherConfiguration',
         query: {
@@ -651,7 +703,7 @@ export default {
       })
     },
     // 下拉框凭证
-    getVoucherData () {
+    getVoucherData() {
       var name = ''
       var voucherType = '2'
       let that = this
@@ -662,7 +714,7 @@ export default {
       })
     },
     // 获取业务系统详情
-    getSystemDetail (systemId) {
+    getSystemDetail(systemId) {
       axios.getSystemDetail(systemId).then(res => {
         if (res.data.code === 200) {
           let data = res.data.data.result
@@ -670,7 +722,7 @@ export default {
           let callNodesData = []
           const callNodes = JSON.parse(data.callNodes)
           callNodes.forEach(node => {
-            callNodesData.push({systemId: node.systemId})
+            callNodesData.push({ systemId: node.systemId })
           })
           this.hostTableSelected = JSON.parse(data.hosts)
           this.sysdata = data
@@ -686,11 +738,11 @@ export default {
 <style scoped lang="scss">
 .systemPage {
   margin: 10px;
-  padding: 10px!important;
+  padding: 10px !important;
   .item-block-title {
     margin-bottom: 20px;
     .icons {
-      color: #00A8E8
+      color: #00a8e8;
     }
   }
   .form-css {
@@ -716,7 +768,8 @@ export default {
   box-sizing: border-box;
   position: relative;
 }
-.header-host-name, .header-host-ip {
+.header-host-name,
+.header-host-ip {
   display: block;
 }
 .header-host-name {
@@ -729,4 +782,5 @@ export default {
   color: #1890ff;
   cursor: pointer;
 }
+
 </style>

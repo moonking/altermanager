@@ -3,7 +3,7 @@
     <!-- 筛选 -->
     <div class="search-bar">
       <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" class="search-inline-form">
-        <el-form-item>
+        <!-- <el-form-item>
           <el-select clearable v-model="searchFrom.Bsystem" placeholder="请选择业务系统">
             <el-option
               v-for="item in systemList"
@@ -12,7 +12,7 @@
               :value="item.name"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-select clearable v-model="searchFrom.Ttype" placeholder="请选择交易类型">
             <el-option

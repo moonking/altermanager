@@ -7,19 +7,42 @@
           <span class="item-block-title-font">告警信息</span>
           <i
             class="icons el-icon-arrow-right"
-            :style="{transform: blockSwitch[1] ? 'rotate(90deg)' : 'rotate(0)'}"
+            :style="{
+              transform: blockSwitch[1] ? 'rotate(90deg)' : 'rotate(0)',
+            }"
           />
         </div>
-        <div class="block-content" v-show="blockSwitch[1]" style="overflow: visible;">
-          <el-form :model="alarmForm" label-width="100px" ref="alarmform" label-position="right">
+        <div
+          class="block-content"
+          v-show="blockSwitch[1]"
+          style="overflow: visible"
+        >
+          <el-form
+            :model="alarmForm"
+            label-width="100px"
+            ref="alarmform"
+            label-position="right"
+          >
             <el-form-item label="级别：">
-              <el-input v-model="alarmForm.level" :disabled="true" style="width:280px" />
+              <el-input
+                v-model="alarmForm.level"
+                :disabled="true"
+                style="width: 280px"
+              />
             </el-form-item>
             <el-form-item label="对象：">
-              <el-input v-model="alarmForm.object" :disabled="true" style="width:280px" />
+              <el-input
+                v-model="alarmForm.object"
+                :disabled="true"
+                style="width: 280px"
+              />
             </el-form-item>
             <el-form-item label="时间：">
-              <el-input v-model="alarmForm.date" :disabled="true" style="width:280px" />
+              <el-input
+                v-model="alarmForm.date"
+                :disabled="true"
+                style="width: 280px"
+              />
             </el-form-item>
             <el-form-item label="详情：">
               <el-input
@@ -34,7 +57,7 @@
               <el-select
                 v-model="alarmForm.status"
                 @change="confirm"
-                style="width:280px"
+                style="width: 280px"
                 placeholder="请确认您已接收告警"
                 :disabled="alarmForm.status == '1'"
               >
@@ -49,15 +72,17 @@
           <span class="item-block-title-font">通知信息</span>
           <i
             class="icons el-icon-arrow-right"
-            :style="{transform: blockSwitch[2] ? 'rotate(90deg)' : 'rotate(0)'}"
+            :style="{
+              transform: blockSwitch[2] ? 'rotate(90deg)' : 'rotate(0)',
+            }"
           />
         </div>
-        <div class="block-content notice-table" v-show="blockSwitch[2]" style="overflow: visible;">
-          <el-table
-            :data="tableData"
-            stripe
-            style="width: 100%"
-          >
+        <div
+          class="block-content notice-table"
+          v-show="blockSwitch[2]"
+          style="overflow: visible"
+        >
+          <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column prop="name" label="通知人" />
             <el-table-column prop="type" label="通知方式" />
             <el-table-column prop="status" label="通知状态" />
@@ -69,10 +94,16 @@
           <span class="item-block-title-font">去重记录</span>
           <i
             class="icons el-icon-arrow-right"
-            :style="{transform: blockSwitch[3] ? 'rotate(90deg)' : 'rotate(0)'}"
+            :style="{
+              transform: blockSwitch[3] ? 'rotate(90deg)' : 'rotate(0)',
+            }"
           />
         </div>
-        <div class="block-content" v-show="blockSwitch[3]" style="overflow: visible;">
+        <div
+          class="block-content"
+          v-show="blockSwitch[3]"
+          style="overflow: visible"
+        >
           <ul>
             <li v-for="item in alarmInfoList" :key="item.id">
               <p class="new-set-text">
@@ -104,11 +135,11 @@ export default {
     tableData: [],
     alarmInfoList: []
   }),
-  created () {
+  created() {
     this.getNoticeDetail()
   },
   methods: {
-    getNoticeDetail () {
+    getNoticeDetail() {
       axios.getNoticeDetail(this.$route.query.id).then(res => {
         if (res.data.success) {
           const alarmDetail = res.data.data
@@ -126,7 +157,7 @@ export default {
           this.alarmForm.date = startTime
           this.alarmForm.status = status == '0' ? '' : status
           this.alarmForm.detail = description
-          this.tableData = userList
+          this.tableData = userList || []
           this.alarmInfoList = alarmInfoList
         } else {
           this.$notify({
@@ -137,10 +168,11 @@ export default {
         }
       })
     },
-    switchBlock (index) {
+    switchBlock(index) {
+      // eslint-disable-next-line no-return-assign
       return this.blockSwitch[index] = !this.blockSwitch[index]
     },
-    confirm () {
+    confirm() {
       if (this.alarmForm.status == '1') {
         const params = {
           id: this.$route.query.id,
@@ -186,7 +218,7 @@ export default {
           font-weight: 500;
           color: #fff;
           &:before {
-            content: "";
+            content: '';
             position: absolute;
             z-index: 1;
             left: -18px;
@@ -211,7 +243,7 @@ export default {
             height: 30px;
             line-height: 30px;
             padding-bottom: 5px;
-            border-bottom: 1px solid #041C25;
+            border-bottom: 1px solid #041c25;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -220,9 +252,9 @@ export default {
               display: inline-block;
               width: 96px;
               margin: 3px 20px 0 3px;
-              box-shadow: 0px 0px 7px 0px rgba(255,255,255,0.9);
+              box-shadow: 0px 0px 7px 0px rgba(255, 255, 255, 0.9);
               color: #0066ff;
-              background: #041C25;
+              background: #041c25;
               border-radius: 5px;
               text-align: center;
             }

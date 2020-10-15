@@ -2,7 +2,7 @@
   <div class="bg aibms-ci-list aibms-role">
     <el-form type="flex" v-model="formInline" class="demo-form-inline">
       <!--一级菜单-->
-      <el-form-item style="width:13%">
+      <el-form-item style="width: 13%">
         <el-cascader
           placeholder="选择CI类型"
           expand-trigger="hover"
@@ -12,7 +12,7 @@
           clearable
         ></el-cascader>
       </el-form-item>
-      <el-form-item style="width:11%">
+      <el-form-item style="width: 11%">
         <el-select placeholder="选择业务组" v-model="systemId" clearable>
           <el-option
             :label="sys.name"
@@ -29,7 +29,7 @@
       </el-form-item>-->
 
       <!-- v-if="selectSource" -->
-      <el-form-item style="width:12%">
+      <el-form-item style="width: 12%">
         <el-select v-model="dataFrom" placeholder="选择数据来源" clearable>
           <el-option label="Promtheus" value="1"></el-option>
           <el-option label="Dynatrace" value="2"></el-option>
@@ -46,8 +46,13 @@
       </el-form-item>-->
 
       <!-- v-if="selectKeys" -->
-      <el-form-item style="width:15%">
-        <el-input type="text" placeholder="CI项名称/关键字" clearable v-model="keyword" />
+      <el-form-item style="width: 15%">
+        <el-input
+          type="text"
+          placeholder="CI项名称/关键字"
+          clearable
+          v-model="keyword"
+        />
       </el-form-item>
       <!-- <el-form-item style="width:7%">
         <el-button
@@ -67,7 +72,12 @@
       </el-select>-->
       <!-- </el-form-item> -->
       <el-form-item class="item-right overHideMargin">
-        <el-button icon="el-icon-search" class="nomal-button" @click.stop="search">查找</el-button>
+        <el-button
+          icon="el-icon-search"
+          class="nomal-button"
+          @click.stop="search"
+          >查找</el-button
+        >
         <!-- <el-dropdown trigger="click">
           <el-button icon="el-icon-plus" class="margin-left-btn">
             新增
@@ -84,7 +94,8 @@
           icon="el-icon-plus"
           class="margin-left-btn"
           @click.prevent="addCidata"
-        >新增ci项</el-button>
+          >新增ci项</el-button
+        >
       </el-form-item>
       <!-- <el-form-item style="width:7%"> -->
       <!-- <el-select   @change="getFromExcel" placeholder="新增" clearable>
@@ -146,7 +157,7 @@
       <!-- <el-button :type="bgColor == 0 ? 'primary' : ''" @click="checkBtn">基本信息</el-button> -->
       <!-- <el-button :type="bgColor == 1 ? 'primary' : ''" @click="checkChart">关系结构</el-button> -->
       <ul class="tablist">
-        <li :class="{active:shows==1}" @click="checkBtn">基本信息</li>
+        <li :class="{ active: shows == 1 }" @click="checkBtn">基本信息</li>
         <!-- <li :class="{active:shows==2}" @click="checkChart">关系结构</li> -->
       </ul>
       <!-- <el-button class="cm-form-btn cm-add-btn other" @click="addCidata()">新增ci项</el-button> -->
@@ -168,7 +179,8 @@
         type="primary"
         size="small"
         icon="el-icon-close"
-      >批量删除</el-button>
+        >批量删除</el-button
+      >
       <!-- <span
         class="cm-form-btn cm-delete-btn-light other"
         @click="BatchDeletebtn"
@@ -184,15 +196,19 @@
         @click="batchDelete(tableChecked)"
         v-if="delesteBtn"
         class="cm-form-btn"
-        :style="{padding: '5px 8px'}"
-      >删除</el-button>
+        :style="{ padding: '5px 8px' }"
+        >删除</el-button
+      >
 
       <el-button
         v-if="delesteBtn"
         class="cm-form-btn"
-        :style="{padding: '5px 8px'}"
-        @click="delesteBtn = false,BatchDeleteShow = false,delesteBtn = false"
-      >取消</el-button>
+        :style="{ padding: '5px 8px' }"
+        @click="
+          ;(delesteBtn = false), (BatchDeleteShow = false), (delesteBtn = false)
+        "
+        >取消</el-button
+      >
       <!-- <div class="divicon icons"> -->
       <div class="divicon">
         <!-- <el-dropdown trigger="click">
@@ -226,7 +242,14 @@
         <!-- </div> -->
       </div>
 
-      <div style="width: 160px;  display: inline-block; position: relative;  left: 1%;">
+      <div
+        style="
+          width: 160px;
+          display: inline-block;
+          position: relative;
+          left: 1%;
+        "
+      >
         <!-- <el-select
           id="sel"
           @change="getselect('2')"
@@ -243,7 +266,7 @@
           ></el-option>
         </el-select>-->
       </div>
-      <div class="list-box" style="margin-top:20px">
+      <div class="list-box" style="margin-top: 20px">
         <div v-if="changeTab">
           <el-table
             :data="CiDataList"
@@ -260,50 +283,76 @@
             <el-table-column prop="citypeName" label="CI类型" />
             <el-table-column label="数据来源">
               <template slot-scope="scope">
-                <span>{{dataFromMap[scope.row.dataFrom]}}</span>
+                <span>{{ dataFromMap[scope.row.dataFrom] }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="环境">
+            <!-- <el-table-column label="环境">
               <template slot-scope="scope">
-                <span>{{scope.row.Envname}}</span>
+                <span>{{ scope.row.Envname }}</span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="业务系统">
               <template slot-scope="scope">
-                <span>{{scope.row.sName}}</span>
+                <span>{{ scope.row.sName }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="关键字">
+            <!-- <el-table-column label="关键字">
               <template slot-scope="scope">
-                <div v-if="scope.row.keywords ==''">
+                <div v-if="scope.row.keywords == ''">
                   <span>无</span>
                 </div>
-                <div v-if="scope.row.keywords !=''">
-                  <!-- <span v-for="(item,index) in results" :key="index" v-html="item.defaultValue"></span> -->
+                <div v-if="scope.row.keywords != ''">
                   <span
-                    v-for="(item,index) in scope.row.keywords"
+                    v-for="(item, index) in scope.row.keywords"
                     :key="index"
-                    v-html="item.label+':' +item.defaultValue + '</br>'"
+                    v-html="item.label + ':' + item.defaultValue + '</br>'"
                   ></span>
                 </div>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="操作" align="center" width="200px">
               <template slot-scope="scope">
                 <div class="task-btn-box">
                   <span class="special" @click="toview(scope.row.ciitemId)">
-                    <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
-                      <icon-svg icon-class="chakan" class="whiteness-icon-color " />
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="查看详情"
+                      placement="top-start"
+                    >
+                      <icon-svg
+                        icon-class="chakan"
+                        class="whiteness-icon-color"
+                      />
                     </el-tooltip>
                   </span>
                   <span class="special" @click="edit(scope.row.ciitemId)">
-                    <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
-                      <icon-svg icon-class="bianji" class="whiteness-icon-color " />
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="编辑"
+                      placement="top-start"
+                    >
+                      <icon-svg
+                        icon-class="bianji"
+                        class="whiteness-icon-color"
+                      />
                     </el-tooltip>
                   </span>
-                  <span class="special" @click="showOpen2(scope.row.ciitemId,'1')">
-                    <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                      <icon-svg icon-class="shanchu" class="whiteness-icon-color " />
+                  <span
+                    class="special"
+                    @click="showOpen2(scope.row.ciitemId, '1')"
+                  >
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="删除"
+                      placement="top-start"
+                    >
+                      <icon-svg
+                        icon-class="shanchu"
+                        class="whiteness-icon-color"
+                      />
                     </el-tooltip>
                   </span>
                 </div>
@@ -337,20 +386,22 @@
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="currPage"
-              :page-sizes="[10,30,50]"
+              :page-sizes="[10, 30, 50]"
               layout="prev, pager, next, sizes, total, jumper"
               :total="total"
               v-if="page"
             ></el-pagination>
           </div>
           <el-dialog :visible.sync="centerDialogVisible" width="25%" center>
-            <div style="width:100%;text-align:center">
+            <div style="width: 100%; text-align: center">
               <h3>确认删除</h3>
             </div>
 
             <span slot="footer" class="dialog-footer">
               <el-button @click="centerDialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="deleteData(item.ciitemId)">确 定</el-button>
+              <el-button type="primary" @click="deleteData(item.ciitemId)"
+                >确 定</el-button
+              >
             </span>
           </el-dialog>
         </div>
@@ -389,22 +440,38 @@
         <CIListchart :selectOption="selectOption" @clear="hanldeStatus" />
       </div> -->
     </div>
-    <el-dialog center :visible.sync="isSureBatch" title="批量删除" width="300px">
-      <div :style="{textAlign: 'center'}">
+    <el-dialog
+      center
+      :visible.sync="isSureBatch"
+      title="批量删除"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
         <i class="el-icon-warning"></i>&nbsp;&nbsp;确定要删除这些CI项吗？
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button size="mini" @click="isSureBatch = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="sureBatch">确 定</el-button>
+        <el-button type="primary" size="mini" @click="sureBatch"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
-    <el-dialog center :visible.sync="dialogVisibleDelete" title="提示" width="300px">
-      <div :style="{textAlign: 'center'}">
+    <el-dialog
+      center
+      :visible.sync="dialogVisibleDelete"
+      title="提示"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
         <i class="el-icon-warning"></i>&nbsp;&nbsp;确定要删除该CI项吗？
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogVisibleDelete = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="deleteCI">确 定</el-button>
+        <el-button size="mini" @click="dialogVisibleDelete = false"
+          >取 消</el-button
+        >
+        <el-button type="primary" size="mini" @click="deleteCI"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -414,7 +481,7 @@ import axios from '@/api'
 import CIListchart from './CIListchart.vue'
 import Bus from '../common/bus.js'
 export default {
-  data () {
+  data() {
     return {
       isSureBatch: false,
       shows: 1,
@@ -484,7 +551,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getCiDataList()
     this.getCiTypeList()
   },
@@ -497,11 +564,11 @@ export default {
   },
   methods: {
     // 查询按钮状态控制
-    hanldeStatus (val) {
+    hanldeStatus(val) {
       this.canClick = val
     },
     // 选择层数
-    handleEnter () {
+    handleEnter() {
       this.canClick = false
       let params = {
         level: this.level,
@@ -514,7 +581,7 @@ export default {
       Bus.$emit('drawAgin', params)
     },
     // 所有业务组
-    getAllSystem () {
+    getAllSystem() {
       let name = ''
       axios.getcigroupSystablist(name).then(res => {
         if (res.data.data.result) {
@@ -523,7 +590,7 @@ export default {
       })
     },
     // 拉聚焦
-    visiblesel (val) {
+    visiblesel(val) {
       if (!val) {
         this.copyid = this.sshid
       } else if (val) {
@@ -531,7 +598,7 @@ export default {
       }
     },
     // 下拉选中
-    getselect (n, b) {
+    getselect(n, b) {
       if (n == '2') {
         if (b == '2') {
           if (!this.selectedOptions2[1]) {
@@ -566,13 +633,13 @@ export default {
     },
 
     // 按钮切换
-    checkBtn () {
+    checkBtn() {
       // this.bgColor = 0
       this.shows = 1
       this.changeTab = true
       this.getCiDataList()
     },
-    checkChart () {
+    checkChart() {
       // this.bgColor = 1
       this.shows = 2
       this.changeTab = false
@@ -598,12 +665,12 @@ export default {
       }
     },
     // 新增
-    addCidata () {
+    addCidata() {
       this.$router.push({
         path: '/ResourceAllocation/creatci?code=2'
       })
     }, // 点击编辑
-    edit (id) {
+    edit(id) {
       let ciitemId = id
 
       this.$router.push({
@@ -612,7 +679,7 @@ export default {
       })
     },
     // 点击查看
-    toview (id) {
+    toview(id) {
       let ciitemId = id
 
       this.$router.push({
@@ -620,7 +687,7 @@ export default {
         query: { ciitemId: ciitemId }
       })
     },
-    showOpen2 (id, index) {
+    showOpen2(id, index) {
       this.dialogVisibleDelete = true
       this.deleteCiId = id
     },
@@ -663,7 +730,7 @@ export default {
     // },
 
     // 删除
-    deleteCI () {
+    deleteCI() {
       axios.CiDataDelete(this.deleteCiId).then(res => {
         if (res) {
           if (res.data.code === 200) {
@@ -690,7 +757,7 @@ export default {
     },
 
     // 批量删除
-    BatchDeletebtn () {
+    BatchDeletebtn() {
       if (this.tableChecked.length === 0) {
         this.$notify({
           title: '提示',
@@ -703,13 +770,13 @@ export default {
       // this.BatchDeleteShow = true;
       // this.delesteBtn = true;
     },
-    sureBatch () {
+    sureBatch() {
       this.batchDelete(this.tableChecked)
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.tableChecked = val
     },
-    batchDelete (rows) {
+    batchDelete(rows) {
       var ids = []
       rows.forEach(element => {
         ids.push(element.ciitemId)
@@ -751,17 +818,17 @@ export default {
           })
       }
     },
-    handleChange (value) {
+    handleChange(value) {
       this.citypeId = value[1]
     },
     // 分页
 
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getCiDataList()
     },
     // 分页
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       this.current = val
 
       this.size = 10
@@ -769,7 +836,7 @@ export default {
     },
 
     // 获取ci类型列表
-    getCiTypeList () {
+    getCiTypeList() {
       var name = ''
       let templateId = ''
       var newoptions = []
@@ -805,7 +872,7 @@ export default {
       })
     },
     // 环境下拉
-    getenvtablist () {
+    getenvtablist() {
       this.EnvtablistData = []
       let data = {
         environmentType: '',
@@ -843,14 +910,14 @@ export default {
       //       this.options.push({label:item.label,value:item.value,children:[]})
       //     })
     },
-    getFromExcel () {
+    getFromExcel() {
       this.$router.push({
         path: '/ResourceAllocation/Excel',
         query: { code: 2 }
       })
     },
     // 获取列表
-    getCiDataList (searchPage) {
+    getCiDataList(searchPage) {
       if (searchPage) {
         this.current = searchPage
       }
@@ -887,7 +954,7 @@ export default {
       })
     },
     // 高亮显示
-    changeColor (resultsList) {
+    changeColor(resultsList) {
       resultsList.map((item, index) => {
         if (this.keyword && this.keyword.length > 0) {
           // 匹配关键字正则
@@ -912,7 +979,7 @@ export default {
       this.results = []
       this.results = resultsList
     },
-    brightenKeyword (val, keyword) {
+    brightenKeyword(val, keyword) {
       val = val + ''
       if (val.indexOf(keyword) !== -1 && keyword !== '') {
         return val.replace(
@@ -924,7 +991,7 @@ export default {
       }
     },
     // 搜索
-    search () {
+    search() {
       this.CiDataList = []
       var searchPage = 1
       this.getCiDataList(searchPage)
@@ -952,7 +1019,7 @@ export default {
     }
   },
   watch: {},
-  created () {
+  created() {
     this.getAllSystem()
     // var lett = this;
     // document.onkeydown = function(evt) {
@@ -967,7 +1034,7 @@ export default {
     //   }
     // };
   },
-  destroyed () {
+  destroyed() {
     Bus.$off('drawAgin')
   }
 }
@@ -997,7 +1064,7 @@ export default {
   }
   .content-wrapper {
     position: relative;
-    .tablist { 
+    .tablist {
       text-align: center;
       color: #a1a1a2;
       display: inline-block;
@@ -1123,21 +1190,21 @@ export default {
     /* box-shadow: 1px 1px #aaa; */
   }
   @font-face {
-    font-family: "iconfont";
-    src: url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.eot");
-    src: url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.eot?#iefix")
-        format("embedded-opentype"),
-      url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.woff2")
-        format("woff2"),
-      url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.woff")
-        format("woff"),
-      url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.ttf")
-        format("truetype"),
-      url("../../../static/fonticon/font_qf3tvk3arrs/iconfont.svg#iconfont")
-        format("svg");
+    font-family: 'iconfont';
+    src: url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.eot');
+    src: url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.eot?#iefix')
+        format('embedded-opentype'),
+      url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.woff2')
+        format('woff2'),
+      url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.woff')
+        format('woff'),
+      url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.ttf')
+        format('truetype'),
+      url('../../../static/fonticon/font_qf3tvk3arrs/iconfont.svg#iconfont')
+        format('svg');
   }
   .iconfont {
-    font-family: "iconfont" !important;
+    font-family: 'iconfont' !important;
     font-size: 26px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;

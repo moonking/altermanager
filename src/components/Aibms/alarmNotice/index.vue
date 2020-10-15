@@ -3,7 +3,11 @@
     <div class="search-bar">
       <el-form :inline="true" :model="alarmModel" class="search-inline-form">
         <el-form-item>
-          <el-select v-model="alarmModel.systemValue" clearable placeholder="请选择业务系统">
+          <el-select
+            v-model="alarmModel.systemValue"
+            clearable
+            placeholder="请选择业务系统"
+          >
             <el-option
               v-for="item in businessList"
               :key="item.systemId"
@@ -13,7 +17,12 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="alarmModel.topologyValue" clearable placeholder="请选择标签" style="width: 160px;">
+          <el-select
+            v-model="alarmModel.topologyValue"
+            clearable
+            placeholder="请选择标签"
+            style="width: 160px"
+          >
             <el-option
               v-for="item in topologyList"
               :key="item.value"
@@ -45,7 +54,9 @@
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item class="search-button">
-          <el-button icon="el-icon-search" @click="search" class="search-icon">搜索</el-button>
+          <el-button icon="el-icon-search" @click="search" class="search-icon"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -57,28 +68,41 @@
       @row-click="noticeDetail"
       style="width: 100%"
     >
-      <el-table-column prop="level" label="级别" :filters="levelFilters" :filter-method="filterLevel">
+      <el-table-column
+        prop="level"
+        label="级别"
+        :filters="levelFilters"
+        :filter-method="filterLevel"
+      >
         <template slot="header">
           级别
           <icon-svg icon-class="loudou" class="gray-icon-color header-icon" />
         </template>
         <template v-slot="scope">
           <span>{{ scope.row.level }}</span>
-          <icon-svg icon-class="bj" :class="scope.row.level | iconLevelFilter" />
+          <icon-svg
+            icon-class="bj"
+            :class="scope.row.level | iconLevelFilter"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="platform" label="来源" />
       <el-table-column prop="alarmAddress" label="告警对象" />
       <el-table-column prop="alarmType" label="类型" />
-      <el-table-column prop="startTime" label="开始时间" width="230"  />
+      <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">
         <template v-slot="scope">
-          <span>{{ scope.row.status === "1" ? '已收到' : '-' }}</span>
+          <span>{{ scope.row.status === '1' ? '已收到' : '-' }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="交易追踪">
         <template v-slot="scope">
-          <el-link :underline="false" @click.stop="hadleTrack(scope.row)">交易</el-link>
+          <el-link
+            v-if="scope.row.platform === 'BPC'"
+            :underline="false"
+            @click.stop="hadleTrack(scope.row)"
+            >交易</el-link
+          >
         </template>
       </el-table-column>
       <template slot="empty">
@@ -100,7 +124,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      style="text-align: center; margin-top: 92px"
     />
   </div>
 </template>
@@ -156,14 +180,14 @@ export default {
     endTime: '',
     businessList: []
   }),
-  created () {
+  created() {
     this.getAlarmList() // 获取列表数据
     // this.getTopologyList() // 获取拓扑下拉框
     // this.getlabelList() // 获取标签下拉框数据
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
-    getBusinessList () {
+    getBusinessList() {
       const params = {
         name: '',
         ipAddress: '',
@@ -172,7 +196,7 @@ export default {
       }
       axios.getSystemList(params).then(res => {
         if (res.data.success) {
-          this.businessList = res.data.data.result.records.map(item => ({name: item.name, systemId: item.systemId}))
+          this.businessList = res.data.data.result.records.map(item => ({ name: item.name, systemId: item.systemId }))
         } else {
           this.$notify.error({
             title: '提示',
@@ -181,7 +205,7 @@ export default {
         }
       })
     },
-    getTopologyList () {
+    getTopologyList() {
       axios.getCiTypeListFirst('', '').then(res => {
         if (res.data.success) {
           this.topologyList = res.data.data.result.map(item => item.name)
@@ -193,7 +217,7 @@ export default {
         }
       })
     },
-    getlabelList () {
+    getlabelList() {
       axios.getlabelList().then(res => {
         if (res.data.success) {
           this.labelList = res.data.data
@@ -205,7 +229,7 @@ export default {
         }
       })
     },
-    getAlarmList () {
+    getAlarmList() {
       const params = {
         system: this.alarmModel.systemValue,
         topology: this.alarmModel.topologyValue,
@@ -229,7 +253,7 @@ export default {
       })
     },
     addZero: num => ('00' + num).substr(('00' + num).length - 2, 2),
-    dateFormat (date) {
+    dateFormat(date) {
       const year = date.getFullYear()
       const mouth = date.getMonth() + 1
       const dates = date.getDate()
@@ -242,23 +266,24 @@ export default {
         this.addZero(minutes) + ':' +
         this.addZero(seconds)
     },
-    splitDate () {
+    splitDate() {
       this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[0]) : ''
       this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[1]) : ''
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getAlarmList()
     },
-    search () {
+    search() {
       this.getAlarmList()
     },
-    hadleTrack (row) {
+    hadleTrack(row) {
+      console.log(row)
       this.$router.push({
         path: '/Aibms/Transaction',
         query: {
@@ -267,7 +292,7 @@ export default {
       })
     },
     filterLevel: (value, row) => row.level === value,
-    noticeDetail (row) {
+    noticeDetail(row) {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',
         query: {
@@ -307,15 +332,15 @@ export default {
     }
   }
   .el-link {
-    color: #fff!important;
+    color: #fff !important;
   }
   .header-icon {
     cursor: pointer;
   }
   .el-table--enable-row-hover .el-table__body tr:hover > td {
     cursor: pointer !important;
-    background: #041C25;
-    opacity: 70%
+    background: #041c25;
+    opacity: 70%;
   }
   .el-table__column-filter-trigger i {
     display: none;
