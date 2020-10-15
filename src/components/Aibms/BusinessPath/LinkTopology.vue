@@ -220,7 +220,7 @@ export default {
             strokeOpacity: 1
           },
           selected: {
-            stroke: 'red',
+            stroke: '#1890ff',
             strokeOpacity: 1
           },
           active: {
@@ -507,50 +507,71 @@ export default {
         const state = 'selected'
         const item = e.item
         const { graph } = this
+
+        // 置空已经选择的节点状态
+        const nodes = graph.getNodes()
+        // const prevHighlightNode = this.prevHighlightNode
+        // if (prevHighlightNode) {
+
+        // }
+        nodes.forEach(node => {
+          if (node.hasState(state)) {
+            graph.setItemState(item, state, false)
+            this.triggleHighlightItem(item, false, graph)
+          }
+        })
         if (item.hasState(state)) {
           graph.setItemState(item, state, false)
-          this.triggleHighlightItem(item, false)
+          this.triggleHighlightItem(item, false, graph)
         } else {
           graph.setItemState(item, state, true)
-          this.triggleHighlightItem(item, true)
+          this.triggleHighlightItem(item, true, graph)
         }
       })
     },
-    triggleHighlightItems (item, highlight) {
+    triggleHighlightItem (item, highlight, graph) {
       const isNode = item.getType() === 'node'
-      const lineDash = [4, 2, 1, 2]
       if (isNode) {
         const edges = item.getInEdges()
         edges.forEach(edge => {
-          const group = edge.getContainer()
-          const shape = group.get('children')[0]
-          let index = 0;
-          // Define the animation
-          if (highlight) {
-            shape.animate(
-              () => {
-                index++;
-                if (index > 9) {
-                  index = 0
-                }
-                const res = {
-                  lineDash,
-                  lineDashOffset: -index
-                }
-                // returns the modified configurations here, lineDash and lineDashOffset here
-                return res
-              },
-              {
-                repeat: true, // whether executes the animation repeatly
-                duration: 3000 // the duration for executing once
-              }
-            )
-          } else {
-            shape.stopAnimate();
-            // 清空 lineDash
-            shape.attr('lineDash', null);
-          }
+          this.triggerAnimateEdge(edge, highlight)
+          const source = edge.getSource()
+          graph.setItemState(source, 'selected', true)
+          this.triggleHighlightItem(source, highlight, graph)
         })
+      }
+    },
+    triggerAnimateEdge (edge, animate) {
+      const lineDash = [4, 2, 1, 2]
+      const group = edge.getContainer()
+      const shape = group.get('children')[0]
+      let index = 0;
+      // Define the animation
+      if (animate) {
+        shape.animate(
+          () => {
+            index++;
+            if (index > 9) {
+              index = 0
+            }
+            const res = {
+              stroke: '#1890ff',
+              lineDash,
+              lineDashOffset: -index
+            }
+            // returns the modified configurations here, lineDash and lineDashOffset here
+            return res
+          },
+          {
+            repeat: true, // whether executes the animation repeatly
+            duration: 3000 // the duration for executing once
+          }
+        )
+      } else {
+        shape.stopAnimate();
+        // 清空 lineDash
+        shape.attr('lineDash', null);
+        shape.attr('stroke', '#666');
       }
     }
   },
