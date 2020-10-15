@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     alerts (value) {
-      console.log('value: ', value)
+      // console.log('value: ', value)
     }
   },
   data () {

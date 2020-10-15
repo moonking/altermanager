@@ -23,6 +23,16 @@
           </el-select>
         </el-form-item>
         <el-form-item>
+          <el-select v-model="alarmModel.origin" clearable placeholder="请选择来源" style="width: 160px;">
+            <el-option
+              v-for="item in originList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
           <el-date-picker
             v-model="alarmModel.alarmDate"
             type="datetimerange"
@@ -71,16 +81,16 @@
       <el-table-column prop="alarmAddress" label="告警对象" />
       <el-table-column prop="alarmType" label="类型" />
       <el-table-column prop="startTime" label="开始时间" width="230"  />
-      <el-table-column label="状态" width="90">
+      <!-- <el-table-column label="状态" width="90">
         <template v-slot="scope">
           <span>{{ scope.row.status === "1" ? '已收到' : '-' }}</span>
         </template>
-      </el-table-column>
-      <el-table-column align="center" label="交易追踪">
+      </el-table-column> -->
+      <!-- <el-table-column align="center" label="交易追踪">
         <template v-slot="scope">
           <el-link :underline="false" @click.stop="hadleTrack(scope.row)">交易</el-link>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <template slot="empty">
         <div class="blank-page">
           <div class="img-content">
@@ -119,9 +129,25 @@ export default {
     iconLevelFilter: level => iconMap[level]
   },
   data: () => ({
+    originList: [
+      {
+        id: 1,
+        value: 'BPC',
+        label: 'BPC'
+      }, {
+        id: 2,
+        value: 'Dynatrace',
+        label: 'Dynatrace'
+      }, {
+        id: 3,
+        value: 'Prometheus',
+        label: 'Prometheus'
+      }
+    ],
     alarmModel: {
       systemValue: '',
       topologyValue: '',
+      origin: '',
       alarmDate: [],
       labelValue: ''
     },
@@ -209,6 +235,7 @@ export default {
       const params = {
         system: this.alarmModel.systemValue,
         topology: this.alarmModel.topologyValue,
+        platform: this.alarmModel.origin,
         label: this.alarmModel.labelValue,
         startTime: this.startTime,
         endTime: this.endTime,
