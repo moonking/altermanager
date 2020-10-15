@@ -2,7 +2,15 @@
   <div class="contentBoxcitype aibms-ci">
     <div
       id="invisibleCover"
-      v-show="islabelName || singleLineInput || multiLineInput || pwdInput || numInput || selectInput || dateInput"
+      v-show="
+        islabelName ||
+        singleLineInput ||
+        multiLineInput ||
+        pwdInput ||
+        numInput ||
+        selectInput ||
+        dateInput
+      "
       @click="closeForm()"
     ></div>
     <div class="left-side all-aibms-color-bg">
@@ -11,33 +19,62 @@
         <span>管理CI类型</span>
         <i class="el-icon-arrow-right left-arrow-icon"></i>
       </div>
-      <div class="tree-wrapper" v-for="ciType in CITypeItems" :key="ciType.itemTpyeId">
+      <div
+        class="tree-wrapper"
+        v-for="ciType in CITypeItems"
+        :key="ciType.itemTpyeId"
+      >
         <div class="tree-block">
-          <div class="tree-block-title" @click="clickCIType(ciType.cigroupId)" :title="ciType.name">
-            <i class="el-icon-caret-bottom iconStyle" v-show="ciType.ifShow"></i>
-            <i class="el-icon-caret-right iconStyle" v-show="!ciType.ifShow"></i>
+          <div
+            class="tree-block-title"
+            @click="clickCIType(ciType.cigroupId)"
+            :title="ciType.name"
+          >
+            <i
+              class="el-icon-caret-bottom iconStyle"
+              v-show="ciType.ifShow"
+            ></i>
+            <i
+              class="el-icon-caret-right iconStyle"
+              v-show="!ciType.ifShow"
+            ></i>
             <p
-              style="display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 100px;"
-            >{{ciType.name}}</p>
+              style="
+                display: inline-block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 100px;
+              "
+            >
+              {{ ciType.name }}
+            </p>
           </div>
           <el-collapse-transition>
             <div v-show="ciType.ifShow">
               <div
-                style="display: flex;"
-                :class="{highLigtht:item.addHighLight}"
+                style="display: flex"
+                :class="{ highLigtht: item.addHighLight }"
                 :title="item.name"
                 class="tree-block-item"
-                v-for="(item,index) in ciType.citypeList"
+                v-for="(item, index) in ciType.citypeList"
                 :key="index"
-                @click="getCITypeItemDetail(item.citypeId,item)"
+                @click="getCITypeItemDetail(item.citypeId, item)"
               >
                 <img
-                  style="width:16px;height: 16px;align-items: center;"
-                  :src="'../../../'+item.icon"
+                  style="width: 16px; height: 16px; align-items: center"
+                  :src="'../../../' + item.icon"
                 />
                 <p
-                  style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 90px;"
-                >{{'&nbsp;&nbsp;'+item.name}}</p>
+                  style="
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 90px;
+                  "
+                >
+                  {{ '&nbsp;&nbsp;' + item.name }}
+                </p>
               </div>
             </div>
           </el-collapse-transition>
@@ -46,11 +83,25 @@
     </div>
     <div class="right-content">
       <div class="search-form">
-        <el-input clearable class="search-input" v-model="searchSubarea" placeholder="CI类型名称"></el-input>
-        <el-button icon="el-icon-search" class="nomal-button item-right" @click="fuzzySearch">查找</el-button>
+        <el-input
+          clearable
+          class="search-input"
+          v-model="searchSubarea"
+          placeholder="CI类型名称"
+        ></el-input>
+        <el-button
+          icon="el-icon-search"
+          class="nomal-button item-right"
+          @click="fuzzySearch"
+          >查找</el-button
+        >
       </div>
       <div class="tabs-wrapper noborder all-aibms-color-bg">
-        <el-tabs v-model="activeName" @tab-click="handleClick" v-if="currentType.name">
+        <el-tabs
+          v-model="activeName"
+          @tab-click="handleClick"
+          v-if="currentType.name"
+        >
           <el-tab-pane label="类型属性" name="first"></el-tab-pane>
           <el-tab-pane label="类型关系" name="second"></el-tab-pane>
 
@@ -69,18 +120,23 @@
                         class="demo-dynamic"
                       >
                         <div
-                          v-for="(domain1,domainIndex1) in subareaLabelName.extend"
-                          :key="domainIndex1+domain1.label"
+                          v-for="(domain1,
+                          domainIndex1) in subareaLabelName.extend"
+                          :key="domainIndex1 + domain1.label"
                         >
                           <el-form-item :label="domain1.label">
                             <el-col :span="20">
                               <el-input
-                                v-if="domain1.type == 'singleLineInput' || domain1.type == 'optionsInputSys' || domain1.type == 'optionsInputEnv'"
+                                v-if="
+                                  domain1.type == 'singleLineInput' ||
+                                  domain1.type == 'optionsInputSys' ||
+                                  domain1.type == 'optionsInputEnv'
+                                "
                                 v-model="domain1.defaultValue"
                                 disabled
                               ></el-input>
                               <el-select
-                                style="width: 100%;"
+                                style="width: 100%"
                                 v-if="domain1.type == 'credentialsSelect'"
                                 v-model="domain1.defaultValue"
                                 placeholder="请选择"
@@ -106,7 +162,10 @@
                                 class="delicon"
                               >
                                 <!-- <img src="../../../static/img/del_icon.png" alt> -->
-                                <icon-svg icon-class="lajitong" class="template-icon-size" />
+                                <icon-svg
+                                  icon-class="lajitong"
+                                  class="template-icon-size"
+                                />
                               </div>
                             </el-col>
                           </el-form-item>
@@ -120,19 +179,25 @@
                 <draggable v-model="subareaGroups" @end="onEnd">
                   <transition-group>
                     <div
-                      v-for="(subarea,subareaIndex) in subareaGroups"
-                      :key="subareaIndex+subarea.title"
+                      v-for="(subarea, subareaIndex) in subareaGroups"
+                      :key="subareaIndex + subarea.title"
                     >
                       <div class="subarea">
                         <div class="subareaHeader">
-                          {{subarea.title}}
+                          {{ subarea.title }}
                           <!-- <i
                             class="el-icon-delete deleteSubarea"
                             @click="clickDeletSubarea(subareaIndex)"
                           ></i>-->
-                          <div @click="clickDeletSubarea(subareaIndex)" class="delicon">
+                          <div
+                            @click="clickDeletSubarea(subareaIndex)"
+                            class="delicon"
+                          >
                             <!-- <img src="../../../static/img/del_icon.png" alt /> -->
-                            <icon-svg icon-class="lajitong" class="template-icon-size" />
+                            <icon-svg
+                              icon-class="lajitong"
+                              class="template-icon-size"
+                            />
                           </div>
                         </div>
                         <div class="subareaContent">
@@ -146,16 +211,22 @@
                             <draggable v-model="subarea.extend" @end="onEnd">
                               <transition-group>
                                 <div
-                                  v-for="(domain,domainIndex) in subarea.extend"
-                                  :key="domainIndex+domain.label"
+                                  v-for="(domain,
+                                  domainIndex) in subarea.extend"
+                                  :key="domainIndex + domain.label"
                                 >
-                                  <el-form-item :label="domain.label" :key="domain.key">
+                                  <el-form-item
+                                    :label="domain.label"
+                                    :key="domain.key"
+                                  >
                                     <el-col :span="20">
                                       <el-select
                                         :clearable="true"
-                                        style="width: 100%;"
+                                        style="width: 100%"
                                         aria-placeholder="请选择凭证"
-                                        v-if="domain.type == 'credentialsSelect'"
+                                        v-if="
+                                          domain.type == 'credentialsSelect'
+                                        "
                                         v-model="domain.defaultValue"
                                         placeholder="请选择"
                                         @change="changeCredential"
@@ -171,7 +242,13 @@
                                       <el-input
                                         v-model="domain.defaultValue"
                                         v-else
-                                        @focus="getDomian(domain,domainIndex,subareaIndex)"
+                                        @focus="
+                                          getDomian(
+                                            domain,
+                                            domainIndex,
+                                            subareaIndex
+                                          )
+                                        "
                                       ></el-input>
                                     </el-col>
                                     <el-col :span="4">
@@ -180,11 +257,16 @@
                                         @click.prevent="removeDomain(domain,subareaIndex)"
                                       ></i>-->
                                       <div
-                                        @click.prevent="removeDomain(domain,subareaIndex)"
+                                        @click.prevent="
+                                          removeDomain(domain, subareaIndex)
+                                        "
                                         class="delicon"
                                       >
                                         <!-- <img src="../../../static/img/del_icon.png" alt /> -->
-                                        <icon-svg icon-class="lajitong" class="template-icon-size" />
+                                        <icon-svg
+                                          icon-class="lajitong"
+                                          class="template-icon-size"
+                                        />
                                       </div>
                                     </el-col>
                                   </el-form-item>
@@ -198,20 +280,22 @@
                   </transition-group>
                 </draggable>
               </div>
-              <div class="btnGroup" v-if="noneChange" style="margin-bottom: 40px;">
+              <div
+                class="btnGroup"
+                v-if="noneChange"
+                style="margin-bottom: 40px"
+              >
                 <el-row>
                   <el-col :span="6" :offset="2">
-                    <el-button
-                      type="primary"
-                      @click="clickSubmit"
-                    >确定</el-button>
+                    <el-button type="primary" @click="clickSubmit"
+                      >确定</el-button
+                    >
                   </el-col>
 
                   <el-col :span="6" :offset="6">
-                    <el-button
-                      class="nomal-button"
-                      @click="cancleChange"
-                    >取消</el-button>
+                    <el-button class="nomal-button" @click="cancleChange"
+                      >取消</el-button
+                    >
                   </el-col>
                 </el-row>
               </div>
@@ -220,16 +304,24 @@
               <div class="type-tempalte">
                 <div class="type-tempalte-title">
                   <span
-                    style="font-size: 28px;line-height: 80px;display: inline-block;padding-left: 23px;float: left;"
-                  >模板</span>
+                    style="
+                      font-size: 28px;
+                      line-height: 80px;
+                      display: inline-block;
+                      padding-left: 23px;
+                      float: left;
+                    "
+                    >模板</span
+                  >
                   <span
-                    style="font-size: 12px;
-					  							line-height: 80px;
-					  							display: inline-block;
-					  							float: right;
-					  							padding-right: 18px;
-					  							margin-right: 23px;
-					  							"
+                    style="
+                      font-size: 12px;
+                      line-height: 80px;
+                      display: inline-block;
+                      float: right;
+                      padding-right: 18px;
+                      margin-right: 23px;
+                    "
                   >
                     基本信息
                     <icon-svg icon-class="duo" class="whiteness-icon-color" />
@@ -238,20 +330,26 @@
                 <div class="type-tempalte-content">
                   <div class="addAttribute">添加属性</div>
                   <div
-                    style="width: 95%;margin:auto;margin-top: 15px;"
+                    style="width: 95%; margin: auto; margin-top: 15px"
                     @click="clickAttributeInput($event)"
                   >
                     <el-row class="inputGroup">
                       <el-col :span="12">
                         <div class="addSubarea">
-                          <div class="addSubareaBtn" @click="clickAddSubArea($event)">
+                          <div
+                            class="addSubareaBtn"
+                            @click="clickAddSubArea($event)"
+                          >
                             <el-button type="text">新增分区</el-button>
                           </div>
                         </div>
                       </el-col>
                       <el-col :span="12">
                         <div class="addSubarea">
-                          <div class="addSubareaBtn" @click="clickAddCredentials($event)">
+                          <div
+                            class="addSubareaBtn"
+                            @click="clickAddCredentials($event)"
+                          >
                             <el-button type="text">凭证属性</el-button>
                           </div>
                         </div>
@@ -261,7 +359,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text1.png');"
+                          style="
+                            background-image: url('../../../static/img/text1.png');
+                          "
                         >
                           <p class="inputTypeName">单行文本框 +</p>
                         </div>
@@ -269,7 +369,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text2.png');"
+                          style="
+                            background-image: url('../../../static/img/text2.png');
+                          "
                         >
                           <p class="inputTypeName">多行文本框 +</p>
                         </div>
@@ -279,7 +381,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text3.png');"
+                          style="
+                            background-image: url('../../../static/img/text3.png');
+                          "
                         >
                           <p class="inputTypeName">密码框 +</p>
                         </div>
@@ -287,7 +391,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text4.png');"
+                          style="
+                            background-image: url('../../../static/img/text4.png');
+                          "
                         >
                           <p class="inputTypeName">数字框 +</p>
                         </div>
@@ -297,7 +403,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text5.png');"
+                          style="
+                            background-image: url('../../../static/img/text5.png');
+                          "
                         >
                           <p class="inputTypeName">选择框 +</p>
                         </div>
@@ -305,7 +413,9 @@
                       <el-col :span="12">
                         <div
                           class="inputType"
-                          style="background-image: url('../../../static/img/text6.png');"
+                          style="
+                            background-image: url('../../../static/img/text6.png');
+                          "
                         >
                           <p class="inputTypeName">时间日期 +</p>
                         </div>
@@ -317,10 +427,15 @@
             </el-col>
           </el-row>
 
-          <el-row :gutter="6" v-else style="border: 1px solid #e0e0e0;" class="row-content">
+          <el-row
+            :gutter="6"
+            v-else
+            style="border: 1px solid #e0e0e0"
+            class="row-content"
+          >
             <el-col :span="17" @click.stop="clearAll">
               <app-chart
-                style="width: 100%;height: 600px;"
+                style="width: 100%; height: 600px"
                 :nodeTypeId="nodeTypeId"
                 :chartType="chartType"
                 @editType="editType"
@@ -331,10 +446,13 @@
               <div class="top-btn">
                 <span
                   @click="addNewPre"
-                  style="border-right: 1px solid #00A8E8"
-                  :class="{'active': selectTab }"
-                >新增上层结构</span>
-                <span @click="addNewNex" :class="{'active': !selectTab}">新增下层结构</span>
+                  style="border-right: 1px solid #00a8e8"
+                  :class="{ active: selectTab }"
+                  >新增上层结构</span
+                >
+                <span @click="addNewNex" :class="{ active: !selectTab }"
+                  >新增下层结构</span
+                >
               </div>
               <div class="top-content">
                 <el-form>
@@ -351,11 +469,17 @@
                             v-for="tag in gxTagsList"
                             :key="tag.lab"
                             @click="getgxTag(tag.val)"
-                          >{{tag.val}}</li>
+                          >
+                            {{ tag.val }}
+                          </li>
                         </ul>
                       </div>
-                      <div slot="reference" class="box-font" @click="clickRelation">
-                        <p class="font-styles" v-if="gxTag">{{gxTag}}</p>
+                      <div
+                        slot="reference"
+                        class="box-font"
+                        @click="clickRelation"
+                      >
+                        <p class="font-styles" v-if="gxTag">{{ gxTag }}</p>
                         <p class="font-styles" v-else>选择关系</p>
                       </div>
                     </el-popover>
@@ -373,11 +497,17 @@
                             v-for="tag in tjTagsList"
                             :key="tag.lab"
                             @click="gettjTag(tag.val)"
-                          >{{tag.val}}</li>
+                          >
+                            {{ tag.val }}
+                          </li>
                         </ul>
                       </div>
-                      <div slot="reference" class="box-font" @click="clickCondition">
-                        <p class="font-styles" v-if="tjTag">{{tjTag}}</p>
+                      <div
+                        slot="reference"
+                        class="box-font"
+                        @click="clickCondition"
+                      >
+                        <p class="font-styles" v-if="tjTag">{{ tjTag }}</p>
                         <p class="font-styles" v-else>选择对应条件</p>
                       </div>
                     </el-popover>
@@ -398,16 +528,18 @@
                         ></el-tree>
                       </div>
                       <div slot="reference" class="box-font" @click="clickBox">
-                        <p class="font-styles" v-if="typeTag">{{typeTag}}</p>
+                        <p class="font-styles" v-if="typeTag">{{ typeTag }}</p>
                         <p class="font-styles" v-else>选择CI类型</p>
                       </div>
                     </el-popover>
                   </el-form-item>
                 </el-form>
               </div>
-              <div style="text-align: center;">
+              <div style="text-align: center">
                 <el-button type="primary" @click="confirm">确认</el-button>
-                <el-button class="nomal-button" @click="cancleTag">取消</el-button>
+                <el-button class="nomal-button" @click="cancleTag"
+                  >取消</el-button
+                >
               </div>
             </el-col>
           </el-row>
@@ -435,12 +567,14 @@
       <div class="editSubarea" v-show="singleLineInput">
         <div class="editTitle">编辑--单行文本框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;">
+          <el-form ref="form" :model="form" style="width: 85%; margin: auto">
             <div class="attributeItem">
-              <p>
-                <span style="color: red">*</span>字段名
-              </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <p><span style="color: red">*</span>字段名</p>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>默认值</p>
@@ -450,12 +584,30 @@
               <p>验证规则</p>
               <el-select style="width: 100%" v-model="form.rules">
                 <el-option label="无" value="0"></el-option>
-                <el-option label="URL" :value="JSON.stringify(urlRule)"></el-option>
-                <el-option label="IP地址" :value="JSON.stringify(IpRule)"></el-option>
-                <el-option label="子网掩码" :value="JSON.stringify(maskRule)"></el-option>
-                <el-option label="端口号" :value="JSON.stringify(portRule)"></el-option>
-                <el-option label="Email" :value="JSON.stringify(EmailRule)"></el-option>
-                <el-option label="手机号码" :value="JSON.stringify(phoneRule)"></el-option>
+                <el-option
+                  label="URL"
+                  :value="JSON.stringify(urlRule)"
+                ></el-option>
+                <el-option
+                  label="IP地址"
+                  :value="JSON.stringify(IpRule)"
+                ></el-option>
+                <el-option
+                  label="子网掩码"
+                  :value="JSON.stringify(maskRule)"
+                ></el-option>
+                <el-option
+                  label="端口号"
+                  :value="JSON.stringify(portRule)"
+                ></el-option>
+                <el-option
+                  label="Email"
+                  :value="JSON.stringify(EmailRule)"
+                ></el-option>
+                <el-option
+                  label="手机号码"
+                  :value="JSON.stringify(phoneRule)"
+                ></el-option>
               </el-select>
             </div>
             <div class="attributeItem">
@@ -463,7 +615,9 @@
               <el-input
                 @keyup.native="proving"
                 v-model="form.minLength"
-                :disabled="form.rules === '' ? false : form.rules === '0' ? false : true"
+                :disabled="
+                  form.rules === '' ? false : form.rules === '0' ? false : true
+                "
               ></el-input>
             </div>
             <div class="attributeItem">
@@ -471,27 +625,35 @@
               <el-input
                 @keyup.native="proving"
                 v-model="form.maxLength"
-                :disabled="form.rules === '' ? false : form.rules === '0' ? false : true"
+                :disabled="
+                  form.rules === '' ? false : form.rules === '0' ? false : true
+                "
               ></el-input>
             </div>
             <div class="attributeItem">
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
-            <p style="font-size: 12px;color: red" v-show="isErrorInput">最大文本长度和最小文本长度冲突</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
+            <p style="font-size: 12px; color: red" v-show="isErrorInput">
+              最大文本长度和最小文本长度冲突
+            </p>
           </el-form>
         </div>
       </div>
       <div class="editSubarea" v-show="multiLineInput">
         <div class="editTitle">编辑--多行文本框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;">
+          <el-form ref="form" :model="form" style="width: 85%; margin: auto">
             <div class="attributeItem">
-              <p>
-                <span style="color: red">*</span>字段名
-              </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <p><span style="color: red">*</span>字段名</p>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>默认值</p>
@@ -507,30 +669,42 @@
             </div>
             <div class="attributeItem">
               <p>最小文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.minLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.minLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>最大文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.maxLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.maxLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
-            <p style="font-size: 12px;color: red" v-show="isErrorInput">最大文本长度和最小文本长度冲突</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
+            <p style="font-size: 12px; color: red" v-show="isErrorInput">
+              最大文本长度和最小文本长度冲突
+            </p>
           </el-form>
         </div>
       </div>
       <div class="editSubarea" v-show="pwdInput">
         <div class="editTitle">编辑--密码框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;">
+          <el-form ref="form" :model="form" style="width: 85%; margin: auto">
             <div class="attributeItem">
-              <p>
-                <span style="color: red">*</span>字段名
-              </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <p><span style="color: red">*</span>字段名</p>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>默认值</p>
@@ -540,38 +714,62 @@
               <p>验证器</p>
               <el-select style="width: 100%" v-model="form.verifier">
                 <el-option label="无" value="0"></el-option>
-                <el-option label="数字与字母组合" :value="JSON.stringify(dateAndCode)"></el-option>
-                <el-option label="数字或字母组合" :value="JSON.stringify(dateOrCode)"></el-option>
-                <el-option label="纯数字" :value="JSON.stringify(onlyDate)"></el-option>
-                <el-option label="纯字母" :value="JSON.stringify(onlyCode)"></el-option>
+                <el-option
+                  label="数字与字母组合"
+                  :value="JSON.stringify(dateAndCode)"
+                ></el-option>
+                <el-option
+                  label="数字或字母组合"
+                  :value="JSON.stringify(dateOrCode)"
+                ></el-option>
+                <el-option
+                  label="纯数字"
+                  :value="JSON.stringify(onlyDate)"
+                ></el-option>
+                <el-option
+                  label="纯字母"
+                  :value="JSON.stringify(onlyCode)"
+                ></el-option>
               </el-select>
             </div>
             <div class="attributeItem">
               <p>最小文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.minLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.minLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>最大文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.maxLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.maxLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
-            <p style="font-size: 12px;color: red" v-show="isErrorInput">最大文本长度和最小文本长度冲突</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
+            <p style="font-size: 12px; color: red" v-show="isErrorInput">
+              最大文本长度和最小文本长度冲突
+            </p>
           </el-form>
         </div>
       </div>
       <div class="editSubarea" v-show="numInput">
         <div class="editTitle">编辑--数字框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;">
+          <el-form ref="form" :model="form" style="width: 85%; margin: auto">
             <div class="attributeItem">
-              <p>
-                <span style="color: red">*</span>字段名
-              </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <p><span style="color: red">*</span>字段名</p>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>默认值</p>
@@ -585,37 +783,62 @@
               <p>验证规则</p>
               <el-select style="width: 100%" v-model="form.rules">
                 <el-option label="无" value="0"></el-option>
-                <el-option label="非负数" :value="JSON.stringify(nonnegativeRule)"></el-option>
-                <el-option label="正整数" :value="JSON.stringify(positiveRule)"></el-option>
+                <el-option
+                  label="非负数"
+                  :value="JSON.stringify(nonnegativeRule)"
+                ></el-option>
+                <el-option
+                  label="正整数"
+                  :value="JSON.stringify(positiveRule)"
+                ></el-option>
               </el-select>
             </div>
             <div class="attributeItem">
               <p>最小文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.minLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.minLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>最大文本长度</p>
-              <el-input @keyup.native="proving" v-model="form.maxLength"></el-input>
+              <el-input
+                @keyup.native="proving"
+                v-model="form.maxLength"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
-            <p style="font-size: 12px;color: red" v-show="isErrorInput">最大文本长度和最小文本长度冲突</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
+            <p style="font-size: 12px; color: red" v-show="isErrorInput">
+              最大文本长度和最小文本长度冲突
+            </p>
           </el-form>
         </div>
       </div>
       <div class="editSubarea" v-show="selectInput">
         <div class="editTitle">编辑--选择框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;" @submit.native.prevent>
+          <el-form
+            ref="form"
+            :model="form"
+            style="width: 85%; margin: auto"
+            @submit.native.prevent
+          >
             <div class="attributeItem">
               <p>
                 <span style="color: red">*</span>
                 字段名
               </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>
@@ -624,12 +847,13 @@
               </p>
               <el-button
                 size="mini"
-                v-for="(item,index) in form.defined"
+                v-for="(item, index) in form.defined"
                 @click="deleteItem(index)"
                 :key="index"
-              >{{item}}</el-button>
+                >{{ item }}</el-button
+              >
               <el-input
-                style="margin-top: 8px;"
+                style="margin-top: 8px"
                 placeholder="输入后，点击回车"
                 v-model="definedItem"
                 @keyup.enter.native="addDefined()"
@@ -640,19 +864,23 @@
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <!-- <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox> -->
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
           </el-form>
         </div>
       </div>
       <div class="editSubarea" v-show="dateInput">
         <div class="editTitle">编辑--时间日期框属性</div>
         <div class="subareaForm">
-          <el-form ref="form" :model="form" style="width: 85%;margin: auto;">
+          <el-form ref="form" :model="form" style="width: 85%; margin: auto">
             <div class="attributeItem">
-              <p>
-                <span style="color: red">*</span>字段名
-              </p>
-              <el-input class="inputSize" v-model="form.label" maxlength="20"></el-input>
+              <p><span style="color: red">*</span>字段名</p>
+              <el-input
+                class="inputSize"
+                v-model="form.label"
+                maxlength="20"
+              ></el-input>
             </div>
             <div class="attributeItem">
               <p>默认值</p>
@@ -665,18 +893,29 @@
               ></el-date-picker>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="仅日期" v-model="form.dateOnly" name="type"></el-checkbox>
+              <el-checkbox
+                label="仅日期"
+                v-model="form.dateOnly"
+                name="type"
+              ></el-checkbox>
               <br />
               <el-checkbox label="必填" v-model="form.required"></el-checkbox>
               <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
-            <p style="font-size: 12px;color: red" v-show="isRequiredInput">必填项不能为空</p>
+            <p style="font-size: 12px; color: red" v-show="isRequiredInput">
+              必填项不能为空
+            </p>
           </el-form>
         </div>
       </div>
     </div>
 
-    <el-dialog title="编辑CI类型关系" :visible.sync="dialogFormVisible" center width="40%">
+    <el-dialog
+      title="编辑CI类型关系"
+      :visible.sync="dialogFormVisible"
+      center
+      width="40%"
+    >
       <el-row>
         <el-col :span="12" :offset="6">
           <el-form :model="form">
@@ -693,7 +932,8 @@
                   :key="gx.lab"
                   :label="gx.val"
                   :value="gx.val"
-                >{{gx.val}}</el-option>
+                  >{{ gx.val }}</el-option
+                >
               </el-select>
             </el-form-item>
             <el-form-item label="条件" label-width="120">
@@ -703,7 +943,8 @@
                   :key="tj.lab"
                   :label="tj.val"
                   :value="tj.val"
-                >{{tj.val}}</el-option>
+                  >{{ tj.val }}</el-option
+                >
               </el-select>
             </el-form-item>
             <el-form-item label="层级" label-width="120">
@@ -723,7 +964,7 @@
   </div>
 </template>
 <script>
-import axios from '@/api';
+import axios from '@/api'
 // import { initFileds, checkModification } from "../../utils/reload.js";
 import draggable from 'vuedraggable'
 import chart from './CIchart.vue'
@@ -739,7 +980,7 @@ export default {
     draggable: draggable,
     'app-chart': chart
   },
-  data () {
+  data() {
     return {
       visible: true,
       isbl: false,
@@ -882,20 +1123,26 @@ export default {
         {
           lab: 'gx-7',
           val: '安装'
-        }],
-      tjTagsList: [{
-        lab: 'tj-1',
-        val: '一对一'
-      }, {
-        lab: 'tj-2',
-        val: '一对多'
-      }, {
-        lab: 'tj-3',
-        val: '多对一'
-      }, {
-        lab: 'tj-4',
-        val: '多对多'
-      }],
+        }
+      ],
+      tjTagsList: [
+        {
+          lab: 'tj-1',
+          val: '一对一'
+        },
+        {
+          lab: 'tj-2',
+          val: '一对多'
+        },
+        {
+          lab: 'tj-3',
+          val: '多对一'
+        },
+        {
+          lab: 'tj-4',
+          val: '多对多'
+        }
+      ],
       typeTagsList: [],
       gxTag: '',
       tjTag: '',
@@ -911,19 +1158,24 @@ export default {
       nodeList: [],
       nodeTypeId: '',
       chartType: '',
-      options: [{
-        value: '0',
-        label: 'SSH凭证'
-      }, {
-        value: '1',
-        label: '应用系统凭证'
-      }, {
-        value: '3',
-        label: '数据库凭证'
-      }, {
-        value: '2',
-        label: '代码库凭证'
-      }],
+      options: [
+        {
+          value: '0',
+          label: 'SSH凭证'
+        },
+        {
+          value: '1',
+          label: '应用系统凭证'
+        },
+        {
+          value: '3',
+          label: '数据库凭证'
+        },
+        {
+          value: '2',
+          label: '代码库凭证'
+        }
+      ],
       dialogFormVisible: false,
       curLabel: '',
       curRelation: '',
@@ -937,7 +1189,7 @@ export default {
     }
   },
   watch: {
-    visible () {
+    visible() {
       if (this.visible) {
         onbeforeunload()
       } else {
@@ -945,13 +1197,13 @@ export default {
       }
     }
   },
-  created () { },
-  beforeDestroy () {
+  created() { },
+  beforeDestroy() {
     Bus.$off('getNewSource')
     // Bus.$off("deletetype");
   },
   methods: {
-    handleDeleteType (val) {
+    handleDeleteType(val) {
       //  if(_this.currentType.citypeId != val){
       //   let idx = 0;
       //   JSON.parse(_this.currentType.relation).connect.map((item,index) => {
@@ -962,13 +1214,13 @@ export default {
       //   JSON.parse(_this.currentType.relation).connect.splice(idx,1);
       // }
     },
-    editType (val) {
+    editType(val) {
       if (this.currentType.citypeId != val) {
-        axios.ciTypeDetail(this.currentType.citypeId).then(res => {
+        axios.ciTypeDetail(this.currentType.citypeId).then((res) => {
           if (res) {
             if (res.data.success) {
               this.currentType = res.data.data.result
-              JSON.parse(this.currentType.relation).connect.forEach(item => {
+              JSON.parse(this.currentType.relation).connect.forEach((item) => {
                 if (item.citypeId == val) {
                   this.curLabel = item.label
                   this.curRelation = item.relation
@@ -994,20 +1246,20 @@ export default {
       }
     },
 
-    handleNodeClick (data) {
+    handleNodeClick(data) {
       this.checkType = data
       this.visibed = false
       this.typeTag = data.name
     },
-    handleCancle () {
+    handleCancle() {
       this.dialogFormVisible = false
     },
-    handleConfirm () {
+    handleConfirm() {
       // axios.ciTypeDetail(citypeId).then(result => {
       //   let param = result.data.data.result;
       //   if(param.relation){}
       // })
-      axios.ciTypeDetail(this.nodeTypeId).then(res => {
+      axios.ciTypeDetail(this.nodeTypeId).then((res) => {
         if (res) {
           this.currentType = res.data.data.result
 
@@ -1028,24 +1280,32 @@ export default {
             data.connect.splice(idx, 1)
             data.connect.push(this.editCitype)
             let params = {
-              'citypeId': this.currentType.citypeId,
-              'icon': this.currentType.icon,
-              'name': this.currentType.name,
-              'relation': data
+              citypeId: this.currentType.citypeId,
+              icon: this.currentType.icon,
+              name: this.currentType.name,
+              relation: data
             }
-            axios.updateCiTypeDetail(params, this.currentType.citypeId).then(result => {
-              if (result.data.success) {
-                Bus.$emit('getNewSource', this.currentType.citypeId)
-                this.dialogFormVisible = false
-                this.updateSource(this.editCitype.citypeId, this.curLabel, this.curRelation, this.currentType.citypeId, this.curTag)
-              } else {
-                this.$notify({
-                  title: '提示',
-                  message: '添加类型失败',
-                  type: 'warning'
-                })
-              }
-            })
+            axios
+              .updateCiTypeDetail(params, this.currentType.citypeId)
+              .then((result) => {
+                if (result.data.success) {
+                  Bus.$emit('getNewSource', this.currentType.citypeId)
+                  this.dialogFormVisible = false
+                  this.updateSource(
+                    this.editCitype.citypeId,
+                    this.curLabel,
+                    this.curRelation,
+                    this.currentType.citypeId,
+                    this.curTag
+                  )
+                } else {
+                  this.$notify({
+                    title: '提示',
+                    message: '添加类型失败',
+                    type: 'warning'
+                  })
+                }
+              })
           }
         } else {
           this.$notify({
@@ -1055,13 +1315,13 @@ export default {
         }
       })
     },
-    updateSource (id, label, relation, source, curTag) {
-      axios.ciTypeDetail(id).then(res => {
+    updateSource(id, label, relation, source, curTag) {
+      axios.ciTypeDetail(id).then((res) => {
         if (res) {
           if (res.data.success) {
             let data = res.data.data.result
             let curData = JSON.parse(data.relation)
-            curData.connect.forEach(item => {
+            curData.connect.forEach((item) => {
               if (item.citypeId == source) {
                 item.label = label
                 item.relation = relation
@@ -1073,12 +1333,12 @@ export default {
               }
             })
             let params = {
-              'citypeId': id,
-              'icon': data.icon,
-              'name': data.name,
-              'relation': curData
+              citypeId: id,
+              icon: data.icon,
+              name: data.name,
+              relation: curData
             }
-            axios.updateCiTypeDetail(params, id).then(result => {
+            axios.updateCiTypeDetail(params, id).then((result) => {
               if (result) {
                 if (result.data.success) {
                   // console.log('修改成功');
@@ -1105,19 +1365,19 @@ export default {
         }
       })
     },
-    clickRelation () {
+    clickRelation() {
       this.visibedRelation = !this.visibedRelation
     },
-    clickCondition () {
+    clickCondition() {
       this.visibedCondition = !this.visibedCondition
     },
-    clickBox () {
+    clickBox() {
       this.visibed = !this.visibed
     },
     // 确认
-    confirm () {
+    confirm() {
       let count = 0
-      axios.ciTypeDetail(this.nodeTypeId).then(res => {
+      axios.ciTypeDetail(this.nodeTypeId).then((res) => {
         console.log('xxx')
         if (res) {
           console.log('yyy')
@@ -1130,7 +1390,7 @@ export default {
                     if (this.checkType.citypeId) {
                       let data = JSON.parse(this.currentType.relation)
                       if (data.connect) {
-                        data.connect.forEach(item => {
+                        data.connect.forEach((item) => {
                           if (item.citypeId == this.checkType.citypeId) {
                             count += 1
                           }
@@ -1211,7 +1471,7 @@ export default {
               connectArr.push(part)
               connObj.connect = connectArr
 
-              axios.editCItypeRelation(connObj).then(result => {
+              axios.editCItypeRelation(connObj).then((result) => {
                 if (result.data.success) {
                   this.updateRelation(this.checkType, this.gxTag, this.tjTag)
                   this.gxTag = ''
@@ -1219,7 +1479,7 @@ export default {
                   this.checkType = ''
                   this.typeTag = ''
                   Bus.$emit('getNewSource', this.currentType.citypeId)
-                  axios.ciTypeDetail(this.currentType.citypeId).then(res => {
+                  axios.ciTypeDetail(this.currentType.citypeId).then((res) => {
                     if (res) {
                       this.currentType = res.data.data.result
                     }
@@ -1249,7 +1509,7 @@ export default {
     },
 
     // 保存关系
-    saveRelation (data) {
+    saveRelation(data) {
       let part = {}
       if (this.operation == 'up') {
         part = {
@@ -1281,7 +1541,7 @@ export default {
 
       // this.getRelationList(this.currentType.citypeId)
 
-      axios.editCItypeRelation(data).then(result => {
+      axios.editCItypeRelation(data).then((result) => {
         if (result) {
           if (result.data.success) {
             this.updateRelation(this.checkType, this.gxTag, this.tjTag)
@@ -1302,8 +1562,8 @@ export default {
     },
 
     // 关联项
-    updateRelation (checkVal, label, relation) {
-      axios.ciTypeDetail(checkVal.citypeId).then(res => {
+    updateRelation(checkVal, label, relation) {
+      axios.ciTypeDetail(checkVal.citypeId).then((res) => {
         if (res) {
           if (res.data.success) {
             let curData = res.data.data.result
@@ -1320,7 +1580,7 @@ export default {
               }
               if (data.connect) {
                 let count = 0
-                data.connect.forEach(item => {
+                data.connect.forEach((item) => {
                   if (item.citypeId == this.currentType.citypeId) {
                     count += 1
                   }
@@ -1343,11 +1603,13 @@ export default {
                     name: checkVal.name,
                     relation: data
                   }
-                  axios.updateCiTypeDetail(params, checkVal.citypeId).then(result => {
-                    if (result.data.success) {
-                      // console.log('关系更新1')
-                    }
-                  })
+                  axios
+                    .updateCiTypeDetail(params, checkVal.citypeId)
+                    .then((result) => {
+                      if (result.data.success) {
+                        // console.log('关系更新1')
+                      }
+                    })
                 } else {
                   // this.$notify({
                   //   title: "提示",
@@ -1375,11 +1637,13 @@ export default {
                   name: checkVal.name,
                   relation: data
                 }
-                axios.updateCiTypeDetail(params, checkVal.citypeId).then(result => {
-                  if (result.data.success) {
-                    // console.log('关系更新2')
-                  }
-                })
+                axios
+                  .updateCiTypeDetail(params, checkVal.citypeId)
+                  .then((result) => {
+                    if (result.data.success) {
+                      // console.log('关系更新2')
+                    }
+                  })
               }
             } else {
               let updateObj = {
@@ -1415,11 +1679,13 @@ export default {
                 name: checkVal.name,
                 relation: updateObj
               }
-              axios.updateCiTypeDetail(params, checkVal.citypeId).then(result => {
-                if (result.data.success) {
-                  // console.log('关系更新3')
-                }
-              })
+              axios
+                .updateCiTypeDetail(params, checkVal.citypeId)
+                .then((result) => {
+                  if (result.data.success) {
+                    // console.log('关系更新3')
+                  }
+                })
             }
           }
         } else {
@@ -1432,44 +1698,44 @@ export default {
     },
 
     // 取消
-    cancleTag () {
+    cancleTag() {
       this.gxTag = ''
       this.tjTag = ''
       this.type = ''
     },
     // 点击每一条获取
-    gettjTag (value) {
+    gettjTag(value) {
       this.visibedCondition = !this.visibedCondition
       this.tjTag = value
     },
-    getgxTag (value) {
+    getgxTag(value) {
       this.visibedRelation = !this.visibedRelation
       this.gxTag = value
     },
-    gettypeTag (value) {
+    gettypeTag(value) {
       this.typeTag = value.name
       this.checkType = value
       this.visibed = false
     },
     // 获取CI类型列表
-    getAllType () {
+    getAllType() {
       this.typeTagsList = []
       let templateId = ''
       let name = ''
       // let cigroupId = "";
-      axios.getCIList(name, templateId).then(result => {
+      axios.getCIList(name, templateId).then((result) => {
         if (result) {
           if (result.data.success) {
             let data = result.data.data.result
             if (data) {
-              data.forEach(item => {
+              data.forEach((item) => {
                 if (item.citypeId != this.currentType.citypeId) {
                   let node = {
                     name: item.name,
                     children: []
                   }
                   if (item.citypeList) {
-                    item.citypeList.forEach(type => {
+                    item.citypeList.forEach((type) => {
                       if (type.citypeId != this.currentType.citypeId) {
                         node.children.push(type)
                       }
@@ -1489,33 +1755,33 @@ export default {
       })
     },
     // 新增上层
-    addNewPre () {
+    addNewPre() {
       this.selectTab = true
       this.operation = 'up'
     },
     // 新增下层
-    addNewNex () {
+    addNewNex() {
       this.operation = 'down'
       this.selectTab = false
     },
-    routeTo () {
+    routeTo() {
       this.$router.push({ path: '/ResourceAllocation/manage_ciType?code=2' })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (tab.name == 'first') {
         this.visible = true
       } else if (tab.name == 'second') {
         this.visible = false
       }
     },
-    clickCIType (id) {
-      this.CITypeItems.forEach(item => {
+    clickCIType(id) {
+      this.CITypeItems.forEach((item) => {
         if (item.cigroupId == id) {
           item.ifShow = !item.ifShow
         }
       })
     },
-    getCITypeItemDetail (citypeId, value) {
+    getCITypeItemDetail(citypeId, value) {
       this.nodeTypeId = value.citypeId
       this.chartType = 'citype'
       this.visible = true
@@ -1545,8 +1811,8 @@ export default {
       }
       this.copySubareaLabelName = JSON.stringify(this.subareaLabelName)
       this.subareaGroups = []
-      this.CITypeItems.forEach(citype => {
-        citype.citypeList.forEach(item => {
+      this.CITypeItems.forEach((citype) => {
+        citype.citypeList.forEach((item) => {
           if (item.citypeId == citypeId) {
             item.addHighLight = true
           } else {
@@ -1558,12 +1824,12 @@ export default {
       this.citypeId = citypeId
       this.copyForm = '[]'
       this.noneChange = false
-      axios.ciTypeDetail(citypeId).then(res => {
+      axios.ciTypeDetail(citypeId).then((res) => {
         let data = res.data.data
         if (data.result.extend) {
           // 如果extend值不空，把名称的分区提取出来。
           let extend = JSON.parse(data.result.extend)
-          extend.forEach(item => {
+          extend.forEach((item) => {
             if (item.title === '名称') {
               // let tmpArr = new Array(item);
               this.subareaLabelName = item
@@ -1576,10 +1842,10 @@ export default {
 
           this.copyForm = JSON.stringify(this.subareaGroups)
         } else if (!data.result.extend && data.result.templateId) {
-          axios.templateDetail(data.result.templateId).then(res1 => {
+          axios.templateDetail(data.result.templateId).then((res1) => {
             if (res1.data.data.result.extend) {
               let extend = JSON.parse(res1.data.data.result.extend)
-              extend.forEach(item => {
+              extend.forEach((item) => {
                 if (item.title === '名称') {
                   // let tmpArr = new Array(item);
                   this.subareaLabelName = item
@@ -1603,18 +1869,18 @@ export default {
         initFileds()
       })
     },
-    onEnd () {
+    onEnd() {
       if (this.copyForm != JSON.stringify(this.subareaGroups)) {
         this.noneChange = true
       }
     },
-    clickAddSubArea (e) {
+    clickAddSubArea(e) {
       e.stopPropagation()
       if (this.citypeId) {
         this.$prompt('', '新增分区', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputValidator: val => {
+          inputValidator: (val) => {
             if (!val) {
               return '分区名不能为空'
             } else if (val.replace(/\s+/g, '') === '') {
@@ -1622,7 +1888,7 @@ export default {
             } else if (val.length < 2 || val.length > 20) {
               return '分区名应在2-20个字符之间'
             } else {
-              let ifRepeat = this.subareaGroups.some(item => {
+              let ifRepeat = this.subareaGroups.some((item) => {
                 return item.title === val
               })
               if (ifRepeat || val === '名称') {
@@ -1642,7 +1908,7 @@ export default {
           .catch(() => { })
       }
     },
-    clickAddCredentials (e) {
+    clickAddCredentials(e) {
       e.stopPropagation()
       if (this.subareaGroups.length === 0) {
         this.$notify({
@@ -1673,12 +1939,12 @@ export default {
         }
       }
     },
-    changeCredential () {
+    changeCredential() {
       if (this.copySubareaLabelName !== JSON.stringify(this.subareaLabelName)) {
         this.noneChange = true
       }
     },
-    deleteCredential () {
+    deleteCredential() {
       this.subareaLabelName.extend.pop()
       if (
         this.copySubareaLabelName != JSON.stringify(this.subareaLabelName) ||
@@ -1689,7 +1955,7 @@ export default {
         this.noneChange = false
       }
     },
-    clickDeletSubarea (index) {
+    clickDeletSubarea(index) {
       this.subareaGroups.splice(index, 1)
       let subareaGroupsString = JSON.stringify(this.subareaGroups)
       if (
@@ -1701,7 +1967,7 @@ export default {
         this.noneChange = true
       }
     },
-    clickAttributeInput (e) {
+    clickAttributeInput(e) {
       if (!this.citypeId) {
         this.$notify({
           title: '警告',
@@ -1779,7 +2045,7 @@ export default {
         })
       }
     },
-    removeDomain (item, subareaIndex) {
+    removeDomain(item, subareaIndex) {
       let editSubareaGroups = this.subareaGroups[subareaIndex]
       var index = editSubareaGroups.extend.indexOf(item)
       if (index !== -1) {
@@ -1796,7 +2062,7 @@ export default {
       }
     },
 
-    proving () {
+    proving() {
       this.form.minLength = this.form.minLength.replace(/[^\.\d]/g, '')
       this.form.maxLength = this.form.maxLength.replace(/[^\.\d]/g, '')
       this.form.minLength = this.form.minLength.replace('.', '')
@@ -1804,7 +2070,7 @@ export default {
     },
 
     // 关闭编辑弹框
-    closeForm () {
+    closeForm() {
       if (this.existedDomain !== '' && this.existedSubarea !== '') {
         let nowEditSubarea = this.subareaGroups[this.existedSubarea]
         let nowEditDomain = nowEditSubarea.extend[this.existedDomain]
@@ -1971,7 +2237,7 @@ export default {
         dateOnly: false
       }
     },
-    getDomian (domain, domainIndex, subareaIndex) {
+    getDomian(domain, domainIndex, subareaIndex) {
       if (arguments.length === 2) {
         this.islabelName = true
       } else {
@@ -1993,7 +2259,7 @@ export default {
         this.existedDomain = domainIndex
       }
     },
-    addDefined () {
+    addDefined() {
       if (this.form.defined === undefined) {
         this.form.defined = []
       }
@@ -2005,13 +2271,13 @@ export default {
         this.definedItem = ''
       }
     },
-    deleteItem (index) {
+    deleteItem(index) {
       this.form.defined.splice(index, 1)
     },
     // 提交
-    clickSubmit () {
-      this.subareaGroups.forEach(subarea => {
-        subarea.extend.forEach(item => {
+    clickSubmit() {
+      this.subareaGroups.forEach((subarea) => {
+        subarea.extend.forEach((item) => {
           if (item.rules != '0') {
             if (item.rules === JSON.stringify(this.urlRule)) {
               item.rules = 'URL'
@@ -2088,7 +2354,7 @@ export default {
         content: copyArray
       }
       if (copyArray[1] && copyArray[1].extend.length > 0) {
-        copyArray[1].extend.forEach(item => {
+        copyArray[1].extend.forEach((item) => {
           item.options = []
         })
         for (let i = 0; i < copyArray[1].extend.length; i++) {
@@ -2106,10 +2372,10 @@ export default {
         }
       }
       this.isbl = true
-      axios.putCItypeDetail(data).then(res => {
+      axios.putCItypeDetail(data).then((res) => {
         if (res.data.code === 200) {
           if (copyArray[1] && copyArray[1].extend.length > 0) {
-            copyArray[1].extend.forEach(item => {
+            copyArray[1].extend.forEach((item) => {
               item.options = []
             })
           }
@@ -2125,7 +2391,7 @@ export default {
         }
       })
     },
-    cancleChange () {
+    cancleChange() {
       if (this.copyForm) {
         this.subareaGroups = JSON.parse(this.copyForm)
       } else {
@@ -2135,10 +2401,10 @@ export default {
       this.noneChange = false
     },
     // 模糊查询
-    fuzzySearch () {
+    fuzzySearch() {
       let name = ''
       let templateId = ''
-      axios.getCIList(name, templateId).then(res => {
+      axios.getCIList(name, templateId).then((res) => {
         let data = res.data.data
         let tmpCITypeItems = data.result
         tmpCITypeItems.forEach((ciType, index) => {
@@ -2187,12 +2453,14 @@ export default {
       })
     }
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (this.visible) {
       try {
         let bl = checkModification(this.isbl)
         if (bl) {
-          const answer = window.confirm('页面相关数据还未保存，是否离开当前页面!')
+          const answer = window.confirm(
+            '页面相关数据还未保存，是否离开当前页面!'
+          )
           answer ? next() : next(false)
         }
       } catch (error) {
@@ -2202,13 +2470,13 @@ export default {
     next()
   },
 
-  destroyed () {
+  destroyed() {
     window.onbeforeunload = null
   },
-  mounted () {
+  mounted() {
     let name = ''
     let templateId = ''
-    axios.getCIList(name, templateId).then(res => {
+    axios.getCIList(name, templateId).then((res) => {
       let data = res.data.data
       this.CITypeItems = data.result
       this.CITypeItems.forEach((ciType, index) => {
@@ -2329,9 +2597,9 @@ export default {
           line-height: 40px;
           font-size: 18px;
           font-weight: bold;
-          color: #00A8E8;
+          color: #00a8e8;
           /* border-bottom: 2px solid #409eff; */
-          border-bottom: 1px solid #00A8E8;
+          border-bottom: 1px solid #00a8e8;
           /* padding-left: 30px; */
           margin-bottom: 10px;
           /* background-image: url("../../../static/img/icon_bt.png");
@@ -2356,7 +2624,7 @@ export default {
             height: 76px;
             margin-left: 35px;
             /* background-color: #423be2; */
-            background-color: #00A8E8;
+            background-color: #00a8e8;
             border-radius: 6px;
           }
           .type-tempalte-content {
@@ -2427,8 +2695,8 @@ export default {
             cursor: pointer;
             /* border: 1px solid rgba(22, 155, 213, 1);
             color: rgba(22, 155, 213, 1); */
-            border: 1px solid #00A8E8;
-            color: #00A8E8;
+            border: 1px solid #00a8e8;
+            color: #00a8e8;
             span {
               flex: 1;
               text-align: center;
@@ -2464,7 +2732,7 @@ export default {
               color: #afafaf;
             }
             .type-box {
-              ul {
+              /deep/ ul {
                 margin: 10px;
                 li {
                   list-style-type: none;
@@ -2473,7 +2741,7 @@ export default {
                   padding: 5px 10px;
                   &:hover {
                     /* background: #409eff; */
-                    background: #00A8E8;
+                    background: #00a8e8;
                     color: #fff;
                   }
                 }
@@ -2498,7 +2766,7 @@ export default {
       .editTitle {
         height: 50px;
         /* background-color: rgba(66, 59, 226, 0.8); */
-        background-color: #00A8E8;
+        background-color: #00a8e8;
         border-radius: 6px 6px 0 0;
         color: #fff;
         text-indent: 1.5em;
@@ -2523,7 +2791,7 @@ export default {
     .noborder {
       .el-tabs__nav-wrap {
         .el-tabs__nav-wrap::after {
-          content: "";
+          content: '';
           background-color: transparent !important;
         }
       }
@@ -2531,7 +2799,7 @@ export default {
   }
   .highLigtht {
     /* color: #409eff; */
-    color: #00A8E8;
+    color: #00a8e8;
   }
   .el-tabs__item {
     font-size: 18px;
@@ -2553,12 +2821,12 @@ export default {
   .el-tabs__item {
     .is-active {
       /* color: rgb(66, 59, 226); */
-      color: #00A8E8 !important;
+      color: #00a8e8 !important;
       /* background-color: #00A8E8!important; */
     }
     &:hover {
       /* color: rgb(66, 59, 226); */
-      color: #00A8E8 !important;
+      color: #00a8e8 !important;
     }
   }
   .el-tabs__active-bar {
@@ -2566,7 +2834,7 @@ export default {
   }
   .active {
     /* background-color: rgba(22, 155, 213, 1); */
-    background-color: #00A8E8;
+    background-color: #00a8e8;
     color: #fff;
   }
   .aLabel {
@@ -2577,15 +2845,26 @@ export default {
 <style>
 .el-tabs__item.is-active {
   /* color: rgb(66, 59, 226); */
-  color: #00A8E8 !important;
+  color: #00a8e8 !important;
   /* background-color: #00A8E8!important; */
 }
 .el-tabs__item:hover {
   /* color: rgb(66, 59, 226); */
-  color: #00A8E8 !important;
+  color: #00a8e8 !important;
 }
 .el-tabs__active-bar {
   /* background: linear-gradient(left, #ff4b95 0%, #9f43bd 28%, #3e3be4 100%); */
-  background: #00A8E8;
+  background: #00a8e8;
+}
+.gx-box ul li {
+  display: inline-block;
+  list-style-type: none;
+  padding: 5px 8px;
+  margin: 5px 5px;
+  background-color: #aeaeae;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
 }
 </style>
