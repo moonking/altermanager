@@ -26,6 +26,8 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
     //语句强制分号结尾
     "semi": ["off", "always"],
+    //
+    "space-before-function-paren":"off",
     //强制使用===
     "eqeqeq": "off",
     //文字间的空格和tabs
