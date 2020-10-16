@@ -2867,4 +2867,12 @@ export default {
   cursor: pointer;
   font-size: 14px;
 }
+.el-tree-node__content:hover {
+  background: #00a8e8;
+  color: #fff;
+}
+.el-tree-node:focus > .el-tree-node__content {
+  background: #00a8e8;
+  color: #fff;
+}
 </style>

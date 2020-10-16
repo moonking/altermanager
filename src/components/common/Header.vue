@@ -12,18 +12,17 @@
       <li
         v-for="(item, index) in tabData"
         :key="index"
-        @click="navClick(item,index)"
-        :class="{'active-nav': currentIndex == index}"
-        style="position: relative;"
+        @click="navClick(item, index)"
+        :class="{ 'active-nav': currentIndex == index }"
+        style="position: relative"
       >
-      <span v-if="item.bl">
-        <span>
-          <icon-svg :icon-class="item.className" class="white-icon-color" />
+        <span v-if="item.bl">
+          <span>
+            <icon-svg :icon-class="item.className" class="white-icon-color" />
+          </span>
+          <span class="miantext" :id="index">{{ item.label }}</span>
+          <div class="backcolor"></div>
         </span>
-        <span class="miantext" :id="index">{{item.label}}</span>
-        <div class="backcolor"></div>
-      </span>
-
       </li>
     </ul>
 
@@ -41,8 +40,8 @@
           <img :src="imgSrc" />
           <!-- {{this.$store.state.userPhoto}} -->
         </div>
-        <ul>
-          <li>
+
+        <!-- <li>
             <div class="btn-bell">
               <el-tooltip
                 effect="dark"
@@ -55,28 +54,26 @@
               </el-tooltip>
               <span class="btn-bell-badge" v-if="message"></span>
             </div>
-          </li>
-          <li>
-            <el-dropdown class="user-name" trigger="click" @command="handleCommand">
-              <span class="el-dropdown-link">
-                {{userName}}
-                <i class="el-icon-caret-bottom"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item divided>
-                  <!-- <router-link to="/edit">编辑个人资料</router-link> -->
-                  <p @click="edit">编辑个人资料</p>
-                </el-dropdown-item>
-                <el-dropdown-item divided>
-                  <p @click="ChangePasswordBtn">修改密码</p>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <p @click="loginoutBtn">退出系统</p>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
-        </ul>
+          </li> -->
+
+        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+          <span class="el-dropdown-link">
+            {{ userName }}
+            <i class="el-icon-caret-bottom"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item divided>
+              <!-- <router-link to="/edit">编辑个人资料</router-link> -->
+              <p @click="edit">编辑个人资料</p>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <p @click="ChangePasswordBtn">修改密码</p>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <p @click="loginoutBtn">退出系统</p>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
 
         <!-- 用户名下拉菜单 -->
       </div>
@@ -95,17 +92,27 @@
 
         <transition name="fade">
           <ul class="imgBox" v-if="boxshow">
-            <li v-for="(item,index) in list" v-on:click="switchPic(item.img)" :key="index">
+            <li
+              v-for="(item, index) in list"
+              v-on:click="switchPic(item.img)"
+              :key="index"
+            >
               <img :src="item.img" />
             </li>
           </ul>
         </transition>
         <el-form ref="form" label-width="100px">
           <el-form-item label="真实姓名：">
-            <el-input v-model="personalData.name" disabled="disabled"></el-input>
+            <el-input
+              v-model="personalData.name"
+              disabled="disabled"
+            ></el-input>
           </el-form-item>
           <el-form-item label="用户名：">
-            <el-input v-model="personalData.loginName" disabled="disabled"></el-input>
+            <el-input
+              v-model="personalData.loginName"
+              disabled="disabled"
+            ></el-input>
           </el-form-item>
           <el-form-item label="性别：">
             <el-radio label="0" v-model="personalData.sex">男</el-radio>
@@ -122,8 +129,11 @@
               type="primary"
               :loading="editLoading"
               @click="changeImformationBtn(personalData.userId)"
-            >确认修改</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">取消</el-button>
+              >确认修改</el-button
+            >
+            <el-button type="primary" @click="dialogFormVisible = false"
+              >取消</el-button
+            >
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -137,9 +147,15 @@
       >
         <el-form ref="form" :model="password" label-width="100px">
           <el-form-item label="原密码：" class="password-input">
-            <el-input v-model="password.oldPwd" :type="registration_data1.pwdType"></el-input>
+            <el-input
+              v-model="password.oldPwd"
+              :type="registration_data1.pwdType"
+            ></el-input>
             <span @click="changeType(1)" class="password-icon">
-              <icon-svg :icon-class="registration_data1.className" class="eye1 gray-icon-color" />
+              <icon-svg
+                :icon-class="registration_data1.className"
+                class="eye1 gray-icon-color"
+              />
             </span>
           </el-form-item>
           <el-form-item label="新密码：" class="password-input">
@@ -149,18 +165,34 @@
               :type="registration_data2.pwdType"
             ></el-input>
             <span @click="changeType(2)" class="password-icon">
-              <icon-svg :icon-class="registration_data2.className" class="eye2 gray-icon-color" />
+              <icon-svg
+                :icon-class="registration_data2.className"
+                class="eye2 gray-icon-color"
+              />
             </span>
           </el-form-item>
           <el-form-item label="确认密码：" class="password-input">
-            <el-input v-model="password.rePwd" :type="registration_data3.pwdType"></el-input>
+            <el-input
+              v-model="password.rePwd"
+              :type="registration_data3.pwdType"
+            ></el-input>
             <span @click="changeType(3)" class="password-icon">
-              <icon-svg :icon-class="registration_data3.className" class="eye3 gray-icon-color" />
+              <icon-svg
+                :icon-class="registration_data3.className"
+                class="eye3 gray-icon-color"
+              />
             </span>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="editLoading" @click="changePasswordClick()">确认修改</el-button>
-            <el-button type="primary" @click="ChangePasswordCancle()">取消</el-button>
+            <el-button
+              type="primary"
+              :loading="editLoading"
+              @click="changePasswordClick()"
+              >确认修改</el-button
+            >
+            <el-button type="primary" @click="ChangePasswordCancle()"
+              >取消</el-button
+            >
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -172,7 +204,7 @@ import bus from '../common/bus'
 import axios from '@/api';
 import { resourceManageWebsocketUrl } from '../../config'
 export default {
-  data () {
+  data() {
     return {
       // imgSrc:'',
       eye1: 'eye',
@@ -252,13 +284,13 @@ export default {
         {
           className: 'caizhitihuan',
           label: '基础管理',
-          link: '/BasicManagement',
+          link: '/BasicManagement/user',
           bl: true
         },
         {
           className: 'dashujuzhichi',
           label: '资源配置管理',
-          link: '/ResourceAllocation',
+          link: '/ResourceAllocation/CIlistData',
           bl: true
         },
         {
@@ -307,11 +339,11 @@ export default {
     }
   },
   computed: {
-    userName () {
+    userName() {
       let userName = localStorage.getItem('')
       return userName || this.name
     },
-    imgSrc () {
+    imgSrc() {
       return this.currentPic || this.$store.state.userPhoto
     }
   },
@@ -371,7 +403,7 @@ export default {
       this.boxshow = !this.boxshow
     },
     // 显示隐藏密码
-    changeType (id) {
+    changeType(id) {
       if (id == 1) {
         this.eye1 = 'eye'
         this.registration_data1.pwdType =
@@ -399,11 +431,11 @@ export default {
       }
     },
     // 切换图像
-    switchPic (url) {
+    switchPic(url) {
       this.currentPic = url
     },
     // 获取用户信息
-    getImformationData () {
+    getImformationData() {
       let id = localStorage.getItem('userId')
       //   console.log(this.$route);
       if (id) {
@@ -417,12 +449,12 @@ export default {
       }
     },
     // 编辑个人资料弹框
-    edit () {
+    edit() {
       this.dialogFormVisible = true
       this.getImformationData()
     },
     // 确认修改个人资料
-    changeImformationBtn (userId) {
+    changeImformationBtn(userId) {
       var name = this.personalData.name
       var email = this.personalData.email
       var loginName = this.personalData.loginName
@@ -496,7 +528,7 @@ export default {
       //  this.dialogFormVisible = false;
     },
     // 退出系统
-    loginoutBtn () {
+    loginoutBtn() {
       axios.LogOut().then(res => {
         if (!res) {
           return false
@@ -518,11 +550,11 @@ export default {
       })
     },
     // 修改密码
-    ChangePasswordBtn () {
+    ChangePasswordBtn() {
       this.ChangePassword = true
     },
     // 确认修改密码
-    changePasswordClick () {
+    changePasswordClick() {
       var oldPwd = this.password.oldPwd
       var newPwd = this.password.newPwd
       var rePwd = this.password.rePwd
@@ -588,18 +620,18 @@ export default {
       }
     },
     // 取消修改密码
-    ChangePasswordCancle () {
+    ChangePasswordCancle() {
       this.password.oldPwd = ''
       this.password.newPwd = ''
       this.password.rePwd = ''
       this.ChangePassword = false
     },
-    handleDialogClose () {
+    handleDialogClose() {
       this.dialogFormVisible = false
       this.ChangePassword = false
     },
     // 用户名下拉菜单选择事件
-    handleCommand (command) {
+    handleCommand(command) {
       if (command == 'loginout') {
         localStorage.removeItem('ms_username')
         this.$router.push('/login')
@@ -607,13 +639,12 @@ export default {
     },
 
     // 点击切换页面
-    navClick (item, index) {
+    navClick(item, index) {
       this.currentIndex = index
       this.$router.push({
         path: item.link,
         query: {
-          code: this.currentIndex,
-          mode: 1
+          code: this.currentIndex
         }
       })
       // if (allowList.indexOf(item.link) === -1 && item.link !== '/') {
@@ -635,7 +666,7 @@ export default {
       // }
     },
     // 侧边栏折叠
-    collapseChage () {
+    collapseChage() {
       this.collapse = !this.collapse
       bus.$emit('collapse', this.collapse)
     }
@@ -644,14 +675,14 @@ export default {
   //   this.imgSrc=localStorage.getItem('userPhoto');
   //   this.getImformationData();
   // },
-  created () {
+  created() {
     bus.$on('startWebSocket', () => {
       this.init()
     })
     // this.getImformationData();
     // console.log(this.$router.current);
   },
-  mounted () {
+  mounted() {
     this.currentPic = localStorage.getItem('userPhoto')
     this.getImformationData()
     if (document.body.clientWidth < 1500) {
@@ -659,7 +690,7 @@ export default {
     }
   },
   watch: {
-    $route (newValue, oldValue) {
+    $route(newValue, oldValue) {
       this.dialogFormVisible = false
       this.currentIndex = this.$route.query.code
       this.getImformationData()
@@ -729,7 +760,7 @@ body {
   height: 70px;
   line-height: 70px;
 }
-.logo>img {
+.logo > img {
   height: 60px;
   vertical-align: middle;
 }

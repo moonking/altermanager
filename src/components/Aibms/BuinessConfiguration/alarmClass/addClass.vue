@@ -16,7 +16,7 @@
               v-model="form.name"
               clearable
               style="width: 632px;"
-              maxlength="50"
+              maxlength="40"
               :disabled="readOnly"
               placeholder="请输入名称"
             />

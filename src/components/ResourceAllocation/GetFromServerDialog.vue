@@ -728,8 +728,8 @@ export default {
 }
 .dialog-form {
   max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+
 }
 .dialog-detail {
   position: absolute;

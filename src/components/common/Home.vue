@@ -2,7 +2,7 @@
   <div class="wrapper">
     <v-sidebar class="sidebar"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags></v-tags>
+      <!-- <v-tags></v-tags> -->
       <div class="content">
         <vBreadcrumb />
         <transition

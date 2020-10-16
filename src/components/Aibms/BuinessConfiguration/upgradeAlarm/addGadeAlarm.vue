@@ -75,7 +75,7 @@
           <h4>
             告警分类：
             <icon-svg icon-class="lianjie" class="middle-operation-color" />
-            <span @click="openAlarmDialog" v-if="!readOnly">选择告警分类</span>
+            <span  @click="openAlarmDialog" v-if="!readOnly">选择告警分类</span>
             <span class="match-type" v-else>匹配类型</span>
           </h4>
           <ul>
@@ -502,7 +502,7 @@ export default {
           box-sizing: border-box;
           cursor: pointer;
           span {
-            color: #fff;
+            color: #00a8e8;
           }
         }
         ul {

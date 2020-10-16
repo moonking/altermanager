@@ -2,7 +2,12 @@
   <div class="aia-content">
     <!-- 筛选 -->
     <div class="search-bar">
-      <el-form :inline="true" :model="alarmModel" label-width="80px" class="search-inline-form">
+      <el-form
+        :inline="true"
+        :model="alarmModel"
+        label-width="80px"
+        class="search-inline-form"
+      >
         <el-form-item>
           <el-autocomplete
             v-model="alarmModel.alarmClass"
@@ -33,7 +38,9 @@
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addType">新增</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="addType"
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -42,10 +49,21 @@
       :data="tableData"
       stripe
       @row-click="classDetail"
-      :header-cell-style="{background:'#f5f5f5'}"
+      :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
-      >
-      <el-table-column prop="name" label="分类名称" />
+    >
+      <el-table-column prop="name" label="分类名称">
+        <template slot-scope="scope">
+          <el-tooltip
+            class="item"
+            effect="light"
+            :content="scope.row.name"
+            placement="top"
+          >
+            <span class="white-space">{{ scope.row.name }}</span>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column prop="label" label="标签">
         <template slot-scope="scope">
           {{ scope.row.label | labelFilter }}
@@ -55,8 +73,18 @@
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="task-btn-box">
-            <el-link type="primary" :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
-            <el-link type="primary" :underline="false" @click.stop="handleDelete(scope.row)">删除</el-link>
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleEdit(scope.row)"
+              >编辑</el-link
+            >
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleDelete(scope.row)"
+              >删除</el-link
+            >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
                 <icon-svg icon-class="bianji" />
@@ -89,16 +117,28 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      style="text-align: center; margin-top: 92px"
     />
     <!-- 删除提示 -->
-    <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+    <el-dialog
+      center
+      title="删除提示"
+      :visible.sync="confirmDeleteDialogVisible"
+      width="25%"
+    >
       <div style="text-align: center">
         <i class="el-icon-warning" /> 确认删除？
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button size="medium" class="nomal-button" @click="confirmDeleteDialogVisible = false">取消</el-button>
-        <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+        <el-button
+          size="medium"
+          class="nomal-button"
+          @click="confirmDeleteDialogVisible = false"
+          >取消</el-button
+        >
+        <el-button size="medium" type="primary" @click="confirmDelete"
+          >确定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -147,12 +187,12 @@ export default {
     confirmDeleteDialogVisible: false,
     currentDeleteItemId: -1
   }),
-  created () {
+  created() {
     this.getClassList()
     this.getAlarmList()
   },
   methods: {
-    getClassList () {
+    getClassList() {
       axios.geAlarmNameList().then(res => {
         if (res.data.success) {
           this.classList = res.data.data
@@ -166,17 +206,17 @@ export default {
       })
     },
     // 联想输入
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       const alarmClassList = this.classList
       const results = queryString ? alarmClassList.filter(this.createFilter(queryString)) : alarmClassList
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (classList) => {
         return (classList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
-    getAlarmList () {
+    getAlarmList() {
       const params = {
         name: this.alarmModel.alarmClass,
         source: this.alarmModel.sourceValue,
@@ -198,18 +238,18 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getAlarmList()
     },
-    search () {
+    search() {
       this.getAlarmList()
     },
-    addType () {
+    addType() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
@@ -217,7 +257,7 @@ export default {
         }
       })
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
@@ -226,11 +266,11 @@ export default {
         }
       })
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.currentDeleteItemId = row.iD
       this.confirmDeleteDialogVisible = true
     },
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteAlarm(id).then(res => {
         if (res.data.success) {
@@ -248,7 +288,7 @@ export default {
       })
       this.confirmDeleteDialogVisible = false
     },
-    classDetail (row) {
+    classDetail(row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
@@ -340,5 +380,10 @@ export default {
 }
 .search-inline-btn {
   width: 100px;
+}
+.white-space {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
