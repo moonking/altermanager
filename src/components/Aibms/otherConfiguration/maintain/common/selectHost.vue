@@ -1,7 +1,13 @@
 <template>
   <div class="select-content">
     <!-- 筛选 -->
-    <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" v-if="!readOnly">
+    <el-form
+      :inline="true"
+      ref="searchFrom"
+      :model="searchFrom"
+      label-width="80px"
+      v-if="!readOnly"
+    >
       <el-form-item>
         <el-input
           v-model="searchFrom.ipAddress"
@@ -11,7 +17,11 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-select clearable v-model="searchFrom.businessValue" placeholder="请选择业务系统">
+        <el-select
+          clearable
+          v-model="searchFrom.businessValue"
+          placeholder="请选择业务系统"
+        >
           <el-option
             v-for="item in businessList"
             :key="item"
@@ -21,7 +31,9 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" class="search-icon" @click="search">搜索</el-button>
+        <el-button icon="el-icon-search" class="search-icon" @click="search"
+          >搜索</el-button
+        >
       </el-form-item>
     </el-form>
     <!-- 表格数据 -->
@@ -29,8 +41,9 @@
       :data="tableData"
       ref="dataTable"
       stripe
-      :header-cell-style="{background:'#f5f5f5'}"
-      @selection-change="handleSelectionChange"
+      :header-cell-style="{ background: '#f5f5f5' }"
+      @select-all="handleSelectionChange"
+      @select="handleSelectionChange"
     >
       <el-table-column v-if="!readOnly" type="selection" width="55" />
       <el-table-column prop="name" label="业务系统" />
@@ -46,7 +59,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin:92px 0"
+      style="text-align: center; margin: 92px 0"
     />
   </div>
 </template>
@@ -66,21 +79,11 @@ export default {
   },
   watch: {
     // 获取勾选数据
-    checkedTableData (val, oldVal) {
+    checkedTableData(val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
           this.hostList = val
-          setTimeout(() => {
-            this.$nextTick(() => {
-              this.hostList.forEach(result => {
-                this.tableData.forEach((row, index) => {
-                  if (row.systemId === result.systemId) {
-                    this.$refs.dataTable.toggleRowSelection(this.tableData[index], true)
-                  }
-                })
-              })
-            })
-          }, 300)
+          this.returnSelect()
           if (this.readOnly) {
             this.tableData = val
           }
@@ -104,7 +107,7 @@ export default {
     checkedHostList: [],
     firstLoad: true
   }),
-  created () {
+  created() {
     if (this.$route.query.id) {
       if (!this.readOnly) {
         this.getHostTableData()
@@ -114,10 +117,23 @@ export default {
     }
   },
   methods: {
-    search () {
+    returnSelect() {
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.hostList.forEach(result => {
+            this.tableData.forEach((row, index) => {
+              if (row.systemId === result.systemId) {
+                this.$refs.dataTable.toggleRowSelection(this.tableData[index], true)
+              }
+            })
+          })
+        })
+      }, 300)
+    },
+    search() {
       this.getHostTableData()
     },
-    getHostTableData () {
+    getHostTableData() {
       const params = {
         name: this.searchFrom.businessValue,
         ipAddress: this.searchFrom.ipAddress,
@@ -140,16 +156,17 @@ export default {
           })
         }
       })
+      this.returnSelect()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.hostList = val
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getHostTableData()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getHostTableData()
     }

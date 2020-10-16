@@ -294,10 +294,10 @@ export default {
           sources: '',
           current: this.page.current,
           size: this.page.size,
-          label: '',
-          level: ''
-          // label: [],
-          // level: this.form.alarmLevel
+          // label: '',
+          // level: '',
+          label: [],
+          level: this.form.alarmLevel
         }
         this.addOrUpgradeSort(params, axios.getAlarmList)
       } else if (!this.readOnly) {

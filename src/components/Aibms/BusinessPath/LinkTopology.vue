@@ -40,7 +40,7 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
           <template v-slot:tooltip="tooltip">
             <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
           </template>
@@ -71,19 +71,19 @@ export default {
       },
       blackListType: 1,
       blackListValue: '',
-      mouseCfg: {zoom: false, move: {x: true, y: false}},
+      mouseCfg: {zoom: true, move: {x: true, y: false}},
       tempData: {
         // 点集
         nodes: [
           // 主机
-          { id: 'nodeA1', text: '\ue60e', level: 1, status: 'warning' },
+          { id: 'nodeA1', text: '\ue60e', level: 1, status: 's3' },
           { id: 'nodeA2', text: '\ue60e', level: 1 },
           // 进程
           { id: 'nodeB1', text: '\ue6d8', level: 2 },
           { id: 'nodeB2', text: '\ue6d8', level: 2 },
           { id: 'nodeB3', text: '\ue6d8', level: 2 },
           // 服务
-          { id: 'nodeC1', text: '\ue663', level: 3, status: 'warning' },
+          { id: 'nodeC1', text: '\ue663', level: 3, status: 's3' },
           { id: 'nodeC2', text: '\ue663', level: 3 },
           { id: 'nodeC3', text: '\ue663', level: 3 },
           { id: 'nodeC4', text: '\ue663', level: 3 },
@@ -91,7 +91,7 @@ export default {
           { id: 'nodeC6', text: '\ue663', level: 3 },
           { id: 'nodeC7', text: '\ue663', level: 3 },
           { id: 'nodeC8', text: '\ue663', level: 3 },
-          { id: 'nodeC9', text: '\ue663', level: 3, status: 'warning' },
+          { id: 'nodeC9', text: '\ue663', level: 3, status: 's3' },
           { id: 'nodeC10', text: '\ue663', level: 3 },
           { id: 'nodeC11', text: '\ue663', level: 3 },
           { id: 'nodeC12', text: '\ue663', level: 3 },
@@ -118,7 +118,7 @@ export default {
           { id: 'nodeE2', text: '\ue605', level: 5 },
           { id: 'nodeE3', text: '\ue605', level: 5 },
           { id: 'nodeE4', text: '\ue605', level: 5 },
-          { id: 'nodeE5', text: '\ue605', level: 5, status: 'error' }
+          { id: 'nodeE5', text: '\ue605', level: 5, status: 's1' }
         ],
         // 边集
         edges: [
@@ -188,8 +188,9 @@ export default {
           color: '#000',
           style: {
             stroke: '#666',
-            lineAppendWidth: 20
+            lineAppendWidth: 20,
             // startArrow: true,
+            endArrow: true
             // endArrow: {
             //   // 自定义箭头指向(0, 0)，尾部朝向 x 轴正方向的 path
             //   path: 'M 0,0 L 8,4 L 8,-4 Z',
@@ -213,8 +214,9 @@ export default {
           }
         },
         nodeStateStyles: {
-          hoverNode: {
-            stroke: 'purple',
+          hover: {
+            stroke: '#1890ff',
+            lineWidth: 2,
             strokeOpacity: 1
           },
           selected: {
@@ -225,7 +227,11 @@ export default {
             stroke: 'red',
             strokeOpacity: 1
           },
-          warning: { fill: 'orange', fontColor: '#fff', 'iconfont-icon': { fill: '#fff' } },
+          warning: {
+            fill: 'orange',
+            fontColor: '#fff',
+            'iconfont-icon': { fill: '#fff' }
+          },
           error: { fill: 'red', fontColor: '#fff' }
         },
         edgeStateStyles: {
@@ -496,6 +502,56 @@ export default {
         //   delay: 0 // 无延迟
         // })
       })
+      graph.on('node:click', e => {
+        console.log('test event: ', e)
+        const state = 'selected'
+        const item = e.item
+        const { graph } = this
+        if (item.hasState(state)) {
+          graph.setItemState(item, state, false)
+          this.triggleHighlightItem(item, false)
+        } else {
+          graph.setItemState(item, state, true)
+          this.triggleHighlightItem(item, true)
+        }
+      })
+    },
+    triggleHighlightItems (item, highlight) {
+      const isNode = item.getType() === 'node'
+      const lineDash = [4, 2, 1, 2]
+      if (isNode) {
+        const edges = item.getInEdges()
+        edges.forEach(edge => {
+          const group = edge.getContainer()
+          const shape = group.get('children')[0]
+          let index = 0;
+          // Define the animation
+          if (highlight) {
+            shape.animate(
+              () => {
+                index++;
+                if (index > 9) {
+                  index = 0
+                }
+                const res = {
+                  lineDash,
+                  lineDashOffset: -index
+                }
+                // returns the modified configurations here, lineDash and lineDashOffset here
+                return res
+              },
+              {
+                repeat: true, // whether executes the animation repeatly
+                duration: 3000 // the duration for executing once
+              }
+            )
+          } else {
+            shape.stopAnimate();
+            // 清空 lineDash
+            shape.attr('lineDash', null);
+          }
+        })
+      }
     }
   },
   computed: {
@@ -505,7 +561,7 @@ export default {
     }
   },
   created () {
-    this.getData()
+    // this.getData()
   },
   mounted () {
     this.$nextTick(() => {
