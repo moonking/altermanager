@@ -40,7 +40,7 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
           <template v-slot:tooltip="tooltip">
             <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
           </template>
@@ -510,38 +510,48 @@ export default {
 
         // 置空已经选择的节点状态
         const nodes = graph.getNodes()
+        const edges = graph.getEdges()
         // const prevHighlightNode = this.prevHighlightNode
         // if (prevHighlightNode) {
 
         // }
+        console.log(nodes)
+        // reset highlight nodes and edges
         nodes.forEach(node => {
-          if (node.hasState(state)) {
-            graph.setItemState(item, state, false)
-            this.triggleHighlightItem(item, false, graph)
-          }
+          graph.setItemState(node, state, false)
         })
+        edges.forEach(edge => {
+          this.clearEdgeAnimate(edge)
+        })
+
+        graph.setItemState(item, state, true)
+
         if (item.hasState(state)) {
-          graph.setItemState(item, state, false)
-          this.triggleHighlightItem(item, false, graph)
-        } else {
           graph.setItemState(item, state, true)
-          this.triggleHighlightItem(item, true, graph)
+          this.setHighlightItem(item, true, graph)
         }
+        // if (item.hasState(state)) {
+        //   graph.setItemState(item, state, false)
+        //   this.setHighlightItem(item, false, graph)
+        // } else {
+        //   graph.setItemState(item, state, true)
+        //   this.setHighlightItem(item, true, graph)
+        // }
       })
     },
-    triggleHighlightItem (item, highlight, graph) {
+    setHighlightItem (item, highlight, graph) {
       const isNode = item.getType() === 'node'
       if (isNode) {
         const edges = item.getInEdges()
         edges.forEach(edge => {
-          this.triggerAnimateEdge(edge, highlight)
+          this.setEdgeAnimate(edge, highlight)
           const source = edge.getSource()
-          graph.setItemState(source, 'selected', true)
-          this.triggleHighlightItem(source, highlight, graph)
+          graph.setItemState(source, 'selected', highlight)
+          this.setHighlightItem(source, highlight, graph)
         })
       }
     },
-    triggerAnimateEdge (edge, animate) {
+    setEdgeAnimate (edge, animate) {
       const lineDash = [4, 2, 1, 2]
       const group = edge.getContainer()
       const shape = group.get('children')[0]
@@ -568,11 +578,16 @@ export default {
           }
         )
       } else {
-        shape.stopAnimate();
-        // 清空 lineDash
-        shape.attr('lineDash', null);
-        shape.attr('stroke', '#666');
+        this.clearEdgeAnimate(edge)
       }
+    },
+    clearEdgeAnimate (edge) {
+      const group = edge.getContainer()
+      const shape = group.get('children')[0]
+      shape.stopAnimate()
+      // 清空 lineDash
+      shape.attr('lineDash', null)
+      shape.attr('stroke', '#666')
     }
   },
   computed: {
@@ -582,7 +597,7 @@ export default {
     }
   },
   created () {
-    // this.getData()
+    this.getData()
   },
   mounted () {
     this.$nextTick(() => {
