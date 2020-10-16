@@ -25,7 +25,7 @@
                   :key="subItem.menuId"
                 >
                   <template slot="title">
-                    <i class="nav-sub-icon iconfont" :class="subItem.icon"></i>
+                    <!-- <i class="nav-sub-icon iconfont" :class="subItem.icon"></i> -->
                     <span style="color: #fff;">{{ subItem.name }}</span>
                   </template>
                   <el-menu-item
@@ -39,7 +39,7 @@
                   </el-menu-item>
                 </el-submenu>
                 <el-menu-item v-else :index="subItem.href" :key="subItem.href" class="childermenu">
-                  <i class="second-icon" :class="subItem.icon"></i>
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.name }}
                 </el-menu-item>
               </template>
@@ -71,7 +71,7 @@
                 <!--&gt;{{ threeItem.title }}</el-menu-item>-->
                 <!--</el-submenu>-->
                 <el-menu-item :index="subItem.href" :key="subItem.href" class="childermenu">
-                  <i class="second-icon" :class="subItem.icon"></i>
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.name }}
                 </el-menu-item>
               </template>
@@ -79,7 +79,7 @@
           </template>
           <template v-else>
             <el-menu-item :index="item.index" :key="item.href">
-              <i :class="item.icon"></i>
+              <!-- <i :class="item.icon"></i> -->
               <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </template>
@@ -317,7 +317,7 @@
                     :key="i"
                     :index="threeItem.index"
                   >
-                    <i class="second-icon" :class="subItem.icon"></i>
+                    <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                     {{ threeItem.title }}
                   </el-menu-item>
                 </el-submenu>
@@ -327,7 +327,7 @@
                   :key="subItem.index"
                   class="childermenu"
                 >
-                  <i class="second-icon" :class="subItem.icon"></i>
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.title }}
                 </el-menu-item>
               </template>
@@ -750,17 +750,17 @@ export default {
           ]
         },
         {
-          icon: 'sidebar-icon icon-zixitongyinyong ',
+          icon: 'sidebar-icon icon-zhinengyunwei',
           index: '/Aibms/alarmnotice?code=8',
           title: '告警通知'
         },
         {
-          icon: 'sidebar-icon icon-xitongyingyongfuwuqi',
+          icon: 'sidebar-icon icon-dianshangshujuhutong',
           index: '/Aibms/Transaction?code=8',
           title: '交易追踪'
         },
         {
-          icon: 'sidebar-icon icon-xitongyingyongfuwuqi',
+          icon: 'sidebar-icon icon-quanbuxitong',
           index: '2',
           title: '其他配置',
           subs: [

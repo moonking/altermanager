@@ -17,9 +17,9 @@
         style="position: relative"
       >
         <span v-if="item.bl">
-          <span>
+          <!-- <span>
             <icon-svg :icon-class="item.className" class="white-icon-color" />
-          </span>
+          </span> -->
           <span class="miantext" :id="index">{{ item.label }}</span>
           <div class="backcolor"></div>
         </span>
