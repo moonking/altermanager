@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import axios from "@/api";
+import axios from '@/api';
 // import Cookie from 'js-cookie';
 export default {
   data() {
@@ -63,21 +63,21 @@ export default {
       noticeLock: false,
       kaptchaShow: false,
       form: {
-        loginType: "0",
-        loginName: "",
-        password: "",
-        img_src: axios.baseurl() + "kaptcha",
-        kaptcha: "",
+        loginType: '0',
+        loginName: '',
+        password: '',
+        img_src: axios.baseurl() + 'kaptcha',
+        kaptcha: ''
       },
       systemMapping: {
-        bms: "/BasicManagement",
-        cmdb: "/ResourceAllocation",
-        delivery: "/AutomatedRelease",
-        autotest: "/",
-        devops: "/AutomaticOperation",
-        monitoring: "/",
-        aiops: "/",
-      },
+        bms: '/BasicManagement',
+        cmdb: '/ResourceAllocation',
+        delivery: '/AutomatedRelease',
+        autotest: '/',
+        devops: '/AutomaticOperation',
+        monitoring: '/',
+        aiops: '/'
+      }
     };
   },
 
@@ -88,17 +88,17 @@ export default {
       let kaptcha = this.form.kaptcha;
       let loginType = this.form.loginType;
       if (
-        username == "" ||
-        password == "" ||
+        username == '' ||
+        password == '' ||
         password == null ||
         username == null ||
         username == undefined ||
         password == undefined
       ) {
         this.$notify({
-          title: "提示",
-          message: "请输入账户名和密码",
-          type: "warning",
+          title: '提示',
+          message: '请输入账户名和密码',
+          type: 'warning'
         });
       } else {
         axios.userlogin(username, password, kaptcha, loginType).then((res) => {
@@ -115,17 +115,17 @@ export default {
           //   });
           // }
           if (loginData.code == 200) {
-            localStorage.setItem("token", loginData.data.token);
-            localStorage.setItem("userId", loginData.data.user.userId);
+            localStorage.setItem('token', loginData.data.token);
+            localStorage.setItem('userId', loginData.data.user.userId);
             localStorage.setItem(
-              "verify",
+              'verify',
               JSON.stringify(loginData.data.verify)
             );
             localStorage.setItem(
-              "allowList",
+              'allowList',
               JSON.stringify(this.parseVerify(loginData.data.verify))
             );
-            localStorage.setItem("sessionId", loginData.data.sessionId);
+            localStorage.setItem('sessionId', loginData.data.sessionId);
             // localStorage.setItem('shiroCookie', )
             // const verify = {
             //   code: 200,
@@ -135,20 +135,20 @@ export default {
             // }
             // localStorage.setItem('allowList',JSON.stringify(this.parseVerify(verify)))
             this.$router.push({
-              path: "/",
+              path: '/',
               query: {
-                userId: loginData.data.user.userId,
-              },
+                userId: loginData.data.user.userId
+              }
             });
 
-            localStorage.setItem("userName", loginData.data.user.loginName);
-            localStorage.setItem("userPhoto", loginData.data.user.photo);
-            localStorage.setItem("bl", "false");
+            localStorage.setItem('userName', loginData.data.user.loginName);
+            localStorage.setItem('userPhoto', loginData.data.user.photo);
+            localStorage.setItem('bl', 'false');
           } else {
             this.$notify({
-              title: "提示",
+              title: '提示',
               message: loginData.message,
-              type: "warning",
+              type: 'warning'
             });
           }
         });
@@ -156,7 +156,7 @@ export default {
     },
     changeImg() {
       this.form.img_src =
-        axios.baseurl() + "kaptcha?" + Math.floor(Math.random() * 100);
+        axios.baseurl() + 'kaptcha?' + Math.floor(Math.random() * 100);
     },
     parseVerify(verify) {
       if (!verify) {
@@ -170,18 +170,18 @@ export default {
         }
       }
       return result;
-    },
+    }
   },
   created() {
-    // if (this.$route.path == "/login") {
+    // if (this.$route.path == '/login') {
     //   var lett = this;
     //   document.onkeydown = function(evt) {
-    //     evt = evt ? evt : window.event ? window.event : "";
+    //     evt = evt || (window.event ? window.event : '');
     //     var keyCode = evt.keyCode
     //       ? evt.keyCode
     //       : evt.which
-    //       ? evt.which
-    //       : evt.charCode;
+    //         ? evt.which
+    //         : evt.charCode;
     //     if (keyCode == 13) {
     //       lett.submitForm();
     //     }
@@ -190,7 +190,7 @@ export default {
   },
   mounted() {
     this.changeImg();
-  },
+  }
 };
 </script>
 
