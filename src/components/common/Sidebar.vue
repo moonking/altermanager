@@ -16,7 +16,9 @@
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title" id="submenu">
                 <i class="sidebar-icon icon-caizhitihuan"></i>
-                <span slot="title" style="color:#fff" id="parentmenu">{{ item.name }}</span>
+                <span slot="title" style="color: #fff" id="parentmenu">{{
+                  item.name
+                }}</span>
               </template>
               <template v-for="subItem in item.children">
                 <el-submenu
@@ -25,8 +27,8 @@
                   :key="subItem.menuId"
                 >
                   <template slot="title">
-                    <i class="nav-sub-icon iconfont" :class="subItem.icon"></i>
-                    <span style="color: #fff;">{{ subItem.name }}</span>
+                    <!-- <i class="nav-sub-icon iconfont" :class="subItem.icon"></i> -->
+                    <span style="color: #fff">{{ subItem.name }}</span>
                   </template>
                   <el-menu-item
                     class="childermenu"
@@ -38,8 +40,13 @@
                     {{ threeItem.name }}
                   </el-menu-item>
                 </el-submenu>
-                <el-menu-item v-else :index="subItem.href" :key="subItem.href" class="childermenu">
-                  <i class="second-icon" :class="subItem.icon"></i>
+                <el-menu-item
+                  v-else
+                  :index="subItem.href"
+                  :key="subItem.href"
+                  class="childermenu"
+                >
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.name }}
                 </el-menu-item>
               </template>
@@ -47,7 +54,7 @@
           </template>
           <template v-else>
             <el-menu-item :index="item.href" :key="item.index">
-              <i class="fa" :class="[item.icon,{'isclick': item.isclick}]"></i>
+              <i class="fa" :class="[item.icon, { isclick: item.isclick }]"></i>
               <span slot="title">{{ item.title }}</span>
             </el-menu-item>
           </template>
@@ -59,7 +66,7 @@
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title">
                 <i class="sidebar-icon icon-dashujuzhichi"></i>
-                <span slot="title" style="color:#fff">{{ item.name }}</span>
+                <span slot="title" style="color: #fff">{{ item.name }}</span>
               </template>
               <template v-for="subItem in item.children">
                 <!--<el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">-->
@@ -70,8 +77,12 @@
                 <!--:index="threeItem.index"-->
                 <!--&gt;{{ threeItem.title }}</el-menu-item>-->
                 <!--</el-submenu>-->
-                <el-menu-item :index="subItem.href" :key="subItem.href" class="childermenu">
-                  <i class="second-icon" :class="subItem.icon"></i>
+                <el-menu-item
+                  :index="subItem.href"
+                  :key="subItem.href"
+                  class="childermenu"
+                >
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.name }}
                 </el-menu-item>
               </template>
@@ -79,7 +90,7 @@
           </template>
           <template v-else>
             <el-menu-item :index="item.index" :key="item.href">
-              <i :class="item.icon"></i>
+              <!-- <i :class="item.icon"></i> -->
               <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </template>
@@ -91,13 +102,17 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
                   >
@@ -131,13 +146,17 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
                   >
@@ -171,23 +190,29 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
-                  >{{ threeItem.title }}</el-menu-item>
+                    >{{ threeItem.title }}</el-menu-item
+                  >
                 </el-submenu>
                 <el-menu-item
                   v-else
                   :index="subItem.index"
                   :key="subItem.index"
                   class="childermenu"
-                >{{ subItem.title }}</el-menu-item>
+                  >{{ subItem.title }}</el-menu-item
+                >
               </template>
             </el-submenu>
           </template>
@@ -205,23 +230,29 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
-                  >{{ threeItem.title }}</el-menu-item>
+                    >{{ threeItem.title }}</el-menu-item
+                  >
                 </el-submenu>
                 <el-menu-item
                   v-else
                   :index="subItem.index"
                   :key="subItem.index"
                   class="childermenu"
-                >{{ subItem.title }}</el-menu-item>
+                  >{{ subItem.title }}</el-menu-item
+                >
               </template>
             </el-submenu>
           </template>
@@ -239,23 +270,29 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
-                  >{{ threeItem.title }}</el-menu-item>
+                    >{{ threeItem.title }}</el-menu-item
+                  >
                 </el-submenu>
                 <el-menu-item
                   v-else
                   :index="subItem.index"
                   :key="subItem.index"
                   class="childermenu"
-                >{{ subItem.title }}</el-menu-item>
+                  >{{ subItem.title }}</el-menu-item
+                >
               </template>
             </el-submenu>
           </template>
@@ -307,17 +344,21 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color:#fff">{{ item.title }}</span>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
-                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
                   <template slot="title">{{ subItem.title }}</template>
                   <el-menu-item
-                    v-for="(threeItem,i) in subItem.subs"
+                    v-for="(threeItem, i) in subItem.subs"
                     :key="i"
                     :index="threeItem.index"
                   >
-                    <i class="second-icon" :class="subItem.icon"></i>
+                    <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                     {{ threeItem.title }}
                   </el-menu-item>
                 </el-submenu>
@@ -327,7 +368,7 @@
                   :key="subItem.index"
                   class="childermenu"
                 >
-                  <i class="second-icon" :class="subItem.icon"></i>
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
                   {{ subItem.title }}
                 </el-menu-item>
               </template>
@@ -350,7 +391,7 @@
 import bus from '../common/bus';
 import axios from '@/api';
 export default {
-  data () {
+  data() {
     return {
       currentIndex: [],
       currentActive: '',
@@ -718,7 +759,7 @@ export default {
           subs: [
             {
               index: '/Aibms/businessPath?code=8',
-              title: '监控来源'
+              title: '业务拓扑'
             },
             {
               index: '/Aibms/blackList?code=8',
@@ -750,17 +791,17 @@ export default {
           ]
         },
         {
-          icon: 'sidebar-icon icon-zixitongyinyong ',
+          icon: 'sidebar-icon icon-zhinengyunwei',
           index: '/Aibms/alarmnotice?code=8',
           title: '告警通知'
         },
         {
-          icon: 'sidebar-icon icon-xitongyingyongfuwuqi',
+          icon: 'sidebar-icon icon-dianshangshujuhutong',
           index: '/Aibms/Transaction?code=8',
           title: '交易追踪'
         },
         {
-          icon: 'sidebar-icon icon-xitongyingyongfuwuqi',
+          icon: 'sidebar-icon icon-quanbuxitong',
           index: '2',
           title: '其他配置',
           subs: [
@@ -781,12 +822,43 @@ export default {
               title: '定时任务'
             }
           ]
+        },
+        {
+          icon: 'sidebar-icon icon-dapingmu',
+          index: '3',
+          title: '监控平台',
+          subs: [
+            {
+              index: 'http://10.130.116.100:8000/zh-CN/account/login',
+              title: 'Splunk'
+            },
+            {
+              index: 'https://10.130.182.223:8443/bpc',
+              title: 'BPC'
+            },
+            {
+              index: 'https://10.130.116.222:8443/zh-hans/account/login',
+              title: 'NPM'
+            },
+            {
+              index: 'http://cnzhaplpms040:3000/',
+              title: 'Prometheus'
+            },
+            {
+              index: 'https://ugv140.dynatrace-managed.com/login',
+              title: 'Oneagent'
+            },
+            {
+              index: 'http://10.130.182.254/Orion',
+              title: 'Solarwind'
+            }
+          ]
         }
       ]
     };
   },
   computed: {
-    sides () {
+    sides() {
       if (this.$store.state.sides.arr) {
         this.$store.state.sides.arr.forEach(item => {
           this.getReturnSides(item);
@@ -805,7 +877,7 @@ export default {
     }
   },
   methods: {
-    getReturnSides (item) {
+    getReturnSides(item) {
       if (item.children && item.children.length > 0) {
         item.children.forEach(d => {
           if (d.menuType === '3') {
@@ -817,7 +889,7 @@ export default {
       }
     },
     //    默认左侧菜单栏展开
-    getCurrentMune (code) {
+    getCurrentMune(code) {
       if (code === 1) {
         if (this.sides.arr) {
           let href = this.sides.arr[0].href;
@@ -868,10 +940,10 @@ export default {
         }
       }
     },
-    onRoutes (val) {
+    onRoutes(val) {
       return val;
     },
-    clickParent (item, keyPath) {
+    clickParent(item, keyPath) {
       // let last = item.split('&')[1];
       // item.isclick = true;
     },
@@ -891,7 +963,7 @@ export default {
     //     .catch(function(err) {}); "GET",
     //     url: "h
     // },
-    getLoginerMenu (userId) {
+    getLoginerMenu(userId) {
       //    默认左侧菜单栏展开
       let code = parseInt(this.$route.query.code);
       this.getCurrentMune(code);
@@ -951,7 +1023,7 @@ export default {
       });
     }
   },
-  created () {
+  created() {
     this.userId = localStorage.getItem('userId');
     // 通过 Event Bus 进行组件间通信，来折叠侧边栏
     this.getLoginerMenu(this.userId);
@@ -965,7 +1037,7 @@ export default {
     // console.log(this.$store.state.sides)
     //   this.getMenuLsit();
   },
-  updated () {
+  updated() {
     // console.log(this.$store.state.sides)
     // console.log(this.sides)
   }
@@ -973,7 +1045,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../../../static/fonticon/font_sideBar/iconfont.css";
+@import '../../../static/fonticon/font_sideBar/iconfont.css';
 .sidebar {
   display: block;
   min-width: 200px;
@@ -1009,11 +1081,11 @@ export default {
   border-color: #fff;
 }
 .sidebar ul li.el-menu-item.childermenu.is-active {
-  background: #00A8E8;
+  background: #00a8e8;
   color: #fff;
 }
 .sidebar ul li.el-menu-item.is-active {
-  background: #00A8E8;
+  background: #00a8e8;
   color: #fff;
 }
 .childermenu:hover {
@@ -1024,7 +1096,7 @@ export default {
 }
 #parentmenu:hover {
   color: #fff !important;
-  background: #00A8E8 !important;
+  background: #00a8e8 !important;
 }
 .el-submenu .el-menu-item {
   padding-left: 65px !important;
@@ -1033,11 +1105,11 @@ export default {
   padding: 0 !important;
 }
 .el-submenu__title:hover {
-  background-color: #00A8E8 !important;
+  background-color: #00a8e8 !important;
 }
 .el-submenu__title:focus,
 .el-submenu__title:hover {
-  background-color: #00A8E8 !important;
+  background-color: #00a8e8 !important;
 }
 .nav-sub-icon {
   color: #fff;

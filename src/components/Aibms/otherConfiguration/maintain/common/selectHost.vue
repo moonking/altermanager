@@ -122,7 +122,7 @@ export default {
         this.$nextTick(() => {
           this.hostList.forEach(result => {
             this.tableData.forEach((row, index) => {
-              if (row.systemId === result.systemId) {
+              if (row.systemId === result.systemId && row.ciitemId === result.ciitemId) {
                 this.$refs.dataTable.toggleRowSelection(this.tableData[index], true)
               }
             })

@@ -1,14 +1,17 @@
 <template>
   <div class="cronPage">
-    <div class="item-block-title paddingTop" @click="openController = !openController">
+    <div
+      class="item-block-title paddingTop"
+      @click="openController = !openController"
+    >
       <div class="item-block-title-mark"></div>
-      <span class="item-block-title-font" style="color: #fff;">
+      <span class="item-block-title-font" style="color: #fff">
         {{
-        status === "read"
-        ? "查看定时任务"
-        : status === "create"
-        ? "新增定时任务"
-        : "编辑定时任务"
+          status === 'read'
+            ? '查看定时任务'
+            : status === 'create'
+            ? '新增定时任务'
+            : '编辑定时任务'
         }}
       </span>
       <i
@@ -49,13 +52,40 @@
       </el-form> -->
       <el-form label-width="140px">
         <el-form-item label="任务名称：">
-          <el-input v-model="name" :style="{width: '460px'}"></el-input>
+          <el-input v-model="name" :style="{ width: '460px' }"></el-input>
         </el-form-item>
         <el-form-item label="发起地址：">
-          <el-input v-model="url" :style="{width: '460px'}"></el-input>
+          <el-input
+            v-model="url"
+            @blur="getUrl"
+            :style="{ width: '460px' }"
+          ></el-input>
+          <el-select
+            v-if="relation"
+            class="select-item"
+            v-model="relationType"
+            placeholder="请选择类型"
+            :disabled="status === 'read'"
+            @change="getUrlRelation()"
+          >
+            <el-option label="day" value="day"></el-option>
+            <el-option label="hour" value="hour"></el-option>
+          </el-select>
+          <el-input-number
+            v-if="relation"
+            v-model="relationNum"
+            :disabled="status === 'read'"
+            controls-position="right"
+            @change="getUrlRelation()"
+            :min="0"
+            :max="30"
+          ></el-input-number>
         </el-form-item>
         <el-form-item label="定时策略：">
-          <el-radio-group v-model="radio" :disabled="status === 'read' || taskType === '2'">
+          <el-radio-group
+            v-model="radio"
+            :disabled="status === 'read' || taskType === '2'"
+          >
             <el-radio :label="1">周期性任务</el-radio>
             <el-radio :label="2">一次性任务</el-radio>
             <el-radio :label="3">间隔性任务</el-radio>
@@ -134,7 +164,7 @@
               clearable
               @clear="handleClearTime(1)"
               :picker-options="{
-                format: 'HH:mm'
+                format: 'HH:mm',
               }"
               format="HH:mm"
               value-format="HH:mm"
@@ -171,7 +201,7 @@
               @clear="handleClearTime(2)"
               v-model="onceTime"
               :picker-options="{
-                format: 'HH:mm'
+                format: 'HH:mm',
               }"
               value-format="HH:mm"
               placeholder="选择时间"
@@ -196,7 +226,8 @@
                 type="number"
                 style="width: 100px"
                 min="0"
-                :disabled="status === 'read'"></el-input>
+                :disabled="status === 'read'"
+              ></el-input>
               <!-- <el-select style="width: 100px" v-model="intervalForm.timeType">
                 <el-option label="秒" value="1"></el-option>
                 <el-option label="分钟" value="2"></el-option>
@@ -215,7 +246,9 @@
         style="margin-right: 200px"
         @click="confirmCrontab"
         v-if="status !== 'read'"
-      >确 定</button>
+      >
+        确 定
+      </button>
       <button class="cm-btn isoutline" @click="cancelConfirm">取 消</button>
     </div>
   </div>
@@ -226,7 +259,7 @@ import moment from 'moment'
 import axios from '@/api';
 export default {
   name: 'crontabPage',
-  data () {
+  data() {
     return {
       code: '',
       name: '',
@@ -262,11 +295,19 @@ export default {
         startTime: 0,
         timeType: '1',
         interval: 0
-      }
+      },
+      relationNum: '',
+      relationType: '',
+      copyUrl: ''
     }
   },
   computed: {
-    endPickOptions () {
+    relation() {
+      // eslint-disable-next-line no-unused-vars
+      let bl = this.url.includes('/mysql/dump')
+      return bl
+    },
+    endPickOptions() {
       return {
         disabledDate: time => {
           if (this.startDate) {
@@ -277,7 +318,7 @@ export default {
         }
       }
     },
-    startPickOptions () {
+    startPickOptions() {
       return {
         disabledDate: time => {
           if (this.endDate) {
@@ -291,15 +332,15 @@ export default {
         }
       }
     },
-    pickOptions () {
+    pickOptions() {
       return {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < moment().valueOf() - 1000 * 60 * 60 * 24
         }
       }
     }
   },
-  created () {
+  created() {
     if (
       this.$route.params.status === 'read' ||
       this.$route.params.status === 'edit'
@@ -313,7 +354,7 @@ export default {
      * 对值进行验证和处理
      */
     rangWeek: {
-      handler (val) {
+      handler(val) {
         this.inputWeek(val)
       },
       deep: true
@@ -322,7 +363,7 @@ export default {
      * 监听天数的输入
      */
     rangDay: {
-      handler (val) {
+      handler(val) {
         this.inputDay(val)
       },
       deep: true
@@ -331,7 +372,7 @@ export default {
      * 监听时间的选择
      */
     rangTime: {
-      handler (val) {
+      handler(val) {
         this.selectRangTime(val)
       },
       deep: true
@@ -340,7 +381,7 @@ export default {
      * 周期执行中 开始时间的选择
      */
     startDate: {
-      handler (val) {
+      handler(val) {
         this.getStartDate(val)
       },
       deep: true
@@ -349,7 +390,7 @@ export default {
      * 周期执行中，结束时间的选择
      */
     endDate: {
-      handler (val) {
+      handler(val) {
         this.getEndDate(val)
       },
       deep: true
@@ -358,7 +399,7 @@ export default {
      * 一次执行中，日期选择
      */
     onceDate: {
-      handler (val) {
+      handler(val) {
         this.chooseOnceDate(val)
       },
       deep: true
@@ -367,14 +408,25 @@ export default {
      * 一次执行中，时间的选择
      */
     onceTime: {
-      handler (val) {
+      handler(val) {
         this.chooseOnceTime(val)
       },
       deep: true
     }
   },
   methods: {
-    maxLimit (val) {
+    getUrl() {
+      this.copyUrl = this.url
+    },
+    // 拼接url
+    getUrlRelation() {
+      let strList = this.copyUrl.split('/')
+      let length = strList.length
+      strList[length] = this.relationType
+      strList[length + 1] = this.relationNum
+      this.url = strList.join('/')
+    },
+    maxLimit(val) {
       const typeMaxCountMap = {
         '1': 60,
         '2': 60,
@@ -384,7 +436,7 @@ export default {
       this.intervalForm.startTime = val > time ? time : val
     },
     // 清空日期的选择
-    handleClearDate (num) {
+    handleClearDate(num) {
       if (num === 1) {
         this.startDate = ''
       } else if (num === 2) {
@@ -394,7 +446,7 @@ export default {
       }
     },
     // 清空时间选择
-    handleClearTime (num) {
+    handleClearTime(num) {
       if (num === 1) {
         this.rangTime = ''
       } else {
@@ -402,12 +454,14 @@ export default {
       }
     },
     //  清空执行方式的下拉框
-    handleClearType () {
+    handleClearType() {
       this.rangWeek = ''
       this.rangDay = ''
+      this.relationNum = ''
+      this.relationType = ''
     },
     // 判断时间的有效性
-    verdictDate (date) {
+    verdictDate(date) {
       let curDate
       if (date) {
         let curTimeStamp = +new Date()
@@ -423,15 +477,24 @@ export default {
       return curDate
     },
     // 获取详情
-    fetchDetail (id) {
+    fetchDetail(id) {
       axios.getTimingTaskDetail(id).then(res => {
         if (res.data.code === 200) {
           let data = res.data.data
+          let strList
           // this.chooseTaskType(data.taskType)
           // this.taskType = data.taskType
           this.name = data.name
           this.url = data.url
           this.code = data.code
+          if (this.relation) {
+            strList = this.url.split('/')
+            let length = strList.length
+            this.relationType = strList[length - 2]
+            this.relationNum = strList[length - 1]
+            console.log(strList)
+            this.copyUrl = strList.slice(0, 5).join('/')
+          }
 
           this.taskItem = data.manageId
           this.handleCronExpr(
@@ -449,7 +512,7 @@ export default {
       })
     },
     // 处理cron 表达式
-    handleCronExpr (cron, timePoint, humanityTime, cronStrategy) {
+    handleCronExpr(cron, timePoint, humanityTime, cronStrategy) {
       let cronArr = cron.split(' ')
       // 判断是一次还是周期
       if (cronStrategy === 'once') {
@@ -511,7 +574,7 @@ export default {
       }
     },
     // 一次执行的操作
-    handleOnceCron (time, condition) {
+    handleOnceCron(time, condition) {
       let year, month, day, hour, minute, second
       let date = new Date(time)
       year = date.getFullYear()
@@ -530,7 +593,7 @@ export default {
       }
     },
     // 时间判断
-    handleTime (time) {
+    handleTime(time) {
       let cur = ''
       if (time * 1 < 10) {
         cur = `0${time}`
@@ -540,7 +603,7 @@ export default {
 
       return cur
     },
-    chooseOnceDate (val) {
+    chooseOnceDate(val) {
       this.onceDate = val
       let year = this.handleOnceYear(val, '')
       if (this.onceTime) {
@@ -549,7 +612,7 @@ export default {
         this.onceStr = `${year} 00:00执行`
       }
     },
-    chooseOnceTime (val) {
+    chooseOnceTime(val) {
       let year = this.handleOnceYear(this.onceDate, '')
       if (val) {
         // this.onceTime = val;
@@ -560,7 +623,7 @@ export default {
         this.onceStr = `${year} 00:00 执行`
       }
     },
-    handleOnceYear (val) {
+    handleOnceYear(val) {
       let date
       if (val) {
         date = new Date(val)
@@ -574,7 +637,7 @@ export default {
       return (this.str = `将在${year}年${month}月${day}号`)
     },
     // 执行策略的选择
-    chooseCodition (val) {
+    chooseCodition(val) {
       if (this.taskType === '2') {
         for (let key of this.taskList) {
           if (key.manageId === val) {
@@ -593,7 +656,7 @@ export default {
       }
     },
     // 任务类型的下拉框操作
-    chooseTaskType (val) {
+    chooseTaskType(val) {
       if (val === '') {
         this.taskList = []
         return
@@ -612,17 +675,17 @@ export default {
       }
     },
     // 选择开始日期的下拉框
-    getStartDate (val) {
+    getStartDate(val) {
       let year = this.formatYear(val, this.endDate)
       this.handleDateForCron(year)
     },
     // 选择结束日期的下拉框
-    getEndDate (val) {
+    getEndDate(val) {
       let year = this.formatYear(this.startDate, val)
       this.handleDateForCron(year)
     },
     // 处理开始时间和结束时间的判断
-    handleDateForCron (year) {
+    handleDateForCron(year) {
       if (this.rangTime) {
         if (this.rangWeek) {
           let week = this.formatWeek(this.rangWeek * 1)
@@ -635,8 +698,7 @@ export default {
       } else {
         if (this.rangWeek) {
           let week = this.handleWeeks()
-          this.str = `${year}, 每周${
-            week.length > 0 ? week.join(',') : ''
+          this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
           } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
@@ -647,7 +709,7 @@ export default {
     },
 
     // 确认按钮保存操作
-    confirmCrontab () {
+    confirmCrontab() {
       let cron = []
       const radio = this.radio
       if (radio === 1) {
@@ -697,8 +759,7 @@ export default {
         }
       } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
-          let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${
-            this.onceTime
+          let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${this.onceTime
           }`
           let validate = this.verdictDate(fullDate)
           let cronStr = this.handleOnceCron(fullDate, 2)
@@ -756,10 +817,10 @@ export default {
         }
       }
     },
-    handleIntervalCron (interval) {
+    handleIntervalCron(interval) {
       return `0 0/${interval} * * * ?`
     },
-    saveCronTask (params) {
+    saveCronTask(params) {
       axios.addTimingTask(params).then(result => {
         if (result.data.code === 200) {
           this.$notify({
@@ -781,7 +842,7 @@ export default {
       })
     },
     // 取消按钮操作
-    cancelConfirm () {
+    cancelConfirm() {
       this.$router.push({
         path: '/Aibms/otherConfiguration/timingList',
         query: {
@@ -790,7 +851,7 @@ export default {
       })
     },
     // 按周执行的转换
-    inputWeek (val) {
+    inputWeek(val) {
       let reg1 = /(\d+)(,[\d]*)*$/
       let reg2 = /^[\d]+$/
       let dataSource
@@ -838,7 +899,7 @@ export default {
       }
     },
     // 校验重复
-    handleJudgeRepeat (val) {
+    handleJudgeRepeat(val) {
       let hash = {}
       let temp = val.split(',')
       let newTemp = temp.filter(item => item)
@@ -856,7 +917,7 @@ export default {
       return status
     },
     // 多个数值验证
-    handleMatchVal (val, reg1) {
+    handleMatchVal(val, reg1) {
       let weekStr = '',
         newStr = [],
         weekArr = []
@@ -885,7 +946,7 @@ export default {
       }
     },
     // 只有单个值时的处理
-    handleSingleVal (val, reg2) {
+    handleSingleVal(val, reg2) {
       let weekStr = '',
         weekArr = [],
         stringCode = ''
@@ -909,7 +970,7 @@ export default {
       }
     },
     // 判断是否正确来进行后续操作
-    handleJudge (year, newStr, stringCode, weekArr, weekStr) {
+    handleJudge(year, newStr, stringCode, weekArr, weekStr) {
       if (this.weekAlert) {
         // 选择周期后天数不能选择
         this.cronObj.week = newStr ? newStr.join(',') : stringCode
@@ -929,7 +990,7 @@ export default {
       }
     },
     // 按天执行的转换
-    inputDay (val) {
+    inputDay(val) {
       let reg1 = /(\d+)(,[\d]*)*$/
       let reg2 = /^[\d]+$/
       let dataSource
@@ -978,7 +1039,7 @@ export default {
       }
     },
     // 多个天数的验证处理
-    handleMoreDay (val, reg1) {
+    handleMoreDay(val, reg1) {
       let alertStr = '',
         newStr = []
       if (reg1.test(val)) {
@@ -1003,7 +1064,7 @@ export default {
       }
     },
     // 单个天数的验证处理
-    handleSingleDay (val, reg2) {
+    handleSingleDay(val, reg2) {
       let alertStr = '',
         stringCode = ''
       if (reg2.test(val)) {
@@ -1024,7 +1085,7 @@ export default {
       }
     },
     // 判断天数的正确与否后输出
-    handleDayOutput (newStr, stringCode, year, val, alertStr) {
+    handleDayOutput(newStr, stringCode, year, val, alertStr) {
       if (this.alert) {
         // 天数选择后周期不能选择
         this.cronObj.day = newStr ? newStr.join(',') : stringCode
@@ -1044,7 +1105,7 @@ export default {
       }
     },
     // 时间选择后的转换
-    selectRangTime (val) {
+    selectRangTime(val) {
       let year = this.formatYear(this.startDate, this.endDate)
       if (val) {
         // 处理成小时，分钟
@@ -1055,8 +1116,7 @@ export default {
         this.cronObj.minute = minute * 1
         if (this.rangWeek) {
           let week = this.handleWeeks()
-          this.str = `${year}, 每周${
-            week.length > 0 ? week.join(',') : ''
+          this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
           } ${val} 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 ${val} 执行`
@@ -1068,8 +1128,7 @@ export default {
         this.cronObj.minute = ''
         if (this.rangWeek) {
           let week = this.handleWeeks()
-          this.str = `${year}, 每周${
-            week.length > 0 ? week.join(',') : ''
+          this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
           } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
@@ -1079,7 +1138,7 @@ export default {
       }
     },
     // 多数的处理
-    handleWeeks () {
+    handleWeeks() {
       let week = []
       if (this.rangWeek.indexOf(',') > -1) {
         let strArr = this.rangWeek.split(',')
@@ -1092,7 +1151,7 @@ export default {
       return week
     },
     // 星期数转换
-    formatWeek (val) {
+    formatWeek(val) {
       let week = ''
       switch (val) {
         case 1:
@@ -1120,7 +1179,7 @@ export default {
       return week
     },
     // 判断日期并处理
-    formatYear (start, end) {
+    formatYear(start, end) {
       let rang = ''
       let startYear = ''
       let endYear = ''
@@ -1165,7 +1224,7 @@ export default {
       return rang
     },
     // 处理月份
-    handleMonth (startMonth, endMonth, endDay) {
+    handleMonth(startMonth, endMonth, endDay) {
       let result,
         endNum = 0
       let start, end
@@ -1213,7 +1272,7 @@ export default {
       return result
     },
     // 编辑定时任务
-    editCronTask (params) {
+    editCronTask(params) {
       axios.updateTimingTask(params).then(res => {
         if (res.data.code === 200) {
           this.$notify({
@@ -1235,7 +1294,7 @@ export default {
       })
     },
     // 反解周数 对应的需要减一来显示普遍认识的星期数
-    handleReleaseWeek (val) {
+    handleReleaseWeek(val) {
       if (val) {
         if (val.indexOf(',') > -1) {
           let cronWeek = val.split(',')
