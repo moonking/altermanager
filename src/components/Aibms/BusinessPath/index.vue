@@ -121,14 +121,14 @@ export default {
             strokeOpacity: 1
           },
           hover: {
-            // stroke: 'blue',
-            // strokeOpacity: 1
-            cursor: 'pointer'
+            stroke: 'blue',
+            strokeOpacity: 1
+          },
+          selected: {
+            stroke: 'green',
+            lineWidth: 2,
+            strokeOpacity: 1
           }
-          // selected: {
-          //   stroke: 'red',
-          //   strokeOpacity: 1
-          // },
           // active: {
           //   stroke: 'yellow',
           //   strokeOpacity: 1
@@ -140,7 +140,8 @@ export default {
             cursor: 'pointer'
           },
           selected: {
-            stroke: 'red'
+            stroke: 'green',
+            lineWidth: 2
           },
           warning: {
             stroke: 'red'
@@ -244,17 +245,82 @@ export default {
         console.log('hello node: ', model)
         this.goLinkTopology(systemId)
       })
-      graph.on('afteritemstatechange', (e) => {
-        const { item, state, enabled } = e
-        const model = item.getModel()
-        if (state === 'warning') {
-          if (enabled) {
-            console.log(model.id + 'warning 设置为 true')
-          } else {
-            console.log(model.id + 'warning 设置为 false')
-          }
-        }
+      // graph.on('afteritemstatechange', (e) => {
+      //   const { item, state, enabled } = e
+      //   const model = item.getModel()
+      //   if (state === 'warning') {
+      //     if (enabled) {
+      //       console.log(model.id + 'warning 设置为 true')
+      //     } else {
+      //       console.log(model.id + 'warning 设置为 false')
+      //     }
+      //   }
+      // })
+
+      graph.on('node:mouseenter', e => {
+        const item = e.item
+        const { graph } = this
+
+        this.setHighlightItem(item, true, graph)
       })
+
+      graph.on('edge:mouseenter', e => {
+        const item = e.item
+        const { graph } = this
+
+        this.setHighlightItem(item, true, graph)
+      })
+
+      graph.on('node:mouseleave', e => {
+        const { graph } = this
+        this.clearItemHighlight(graph)
+      })
+      graph.on('edge:mouseleave', e => {
+        const { graph } = this
+        this.clearItemHighlight(graph)
+      })
+    },
+    clearItemHighlight (graph) {
+      const state = 'selected'
+      // 置空所有节点和边的高亮状态
+      const nodes = graph.getNodes()
+      const edges = graph.getEdges()
+
+      nodes.forEach(node => {
+        graph.setItemState(node, state, false)
+      })
+      edges.forEach(edge => {
+        graph.setItemState(edge, state, false)
+      })
+    },
+    setHighlightItem (item, highlight, graph) {
+      const isNode = item.getType() === 'node'
+      const isEdge = item.getType() === 'edge'
+      const state = 'selected'
+      if (isNode) {
+        // 设置节点自身高亮
+        graph.setItemState(item, state, highlight)
+
+        // 递归遍历节点树
+        const edges = item.getInEdges()
+        edges.forEach(edge => {
+          graph.setItemState(edge, state, highlight)
+          const source = edge.getSource()
+          graph.setItemState(source, state, highlight)
+
+          // 递归设置后续节点高亮
+          this.setHighlightItem(source, highlight, graph)
+        })
+      }
+
+      if (isEdge) {
+        const target = item.getTarget()
+        graph.setItemState(target, state, highlight)
+        graph.setItemState(item, state, highlight)
+
+        const source = item.getSource()
+        this.setHighlightItem(source, highlight, graph)
+      }
     },
     tranformToGraphData (data) {
       const nodes = []

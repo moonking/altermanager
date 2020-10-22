@@ -36,6 +36,14 @@
           <!-- 动态增加项目 -->
           <div v-for="(domain, index) in form.domains" :key="domain.key" class="domains-form">
             <el-form-item
+              label="描述"
+              :prop="'domains.' + index + '.desc'"
+              :rules="{
+                required: true, message: '请输入表达式描述', trigger: 'blur'
+              }">
+              <el-input type="textarea" v-model="domain.desc" autosize></el-input>
+            </el-form-item>
+            <el-form-item
               :label="'来源：'"
               :prop="'domains.' + index + '.source'"
               :rules="{
@@ -122,7 +130,8 @@ export default {
       domains: [
         {
           source: '',
-          expression: ''
+          expression: '',
+          desc: ''
         }
       ]
     },
@@ -228,7 +237,8 @@ export default {
         ),
         extend: this.form.domains.map(item => ({
           source: item.source,
-          expression: item.expression
+          expression: item.expression,
+          desc: item.desc
         }))
       };
       methods(params).then(res => {

@@ -74,8 +74,8 @@
         <div class="alarm-class">
           <h4>
             告警分类：
-            <icon-svg icon-class="lianjie" class="middle-operation-color" />
-            <span  @click="openAlarmDialog" v-if="!readOnly">选择告警分类</span>
+            <!-- <icon-svg icon-class="lianjie" class="middle-operation-color" /> -->
+            <span  @click="openAlarmDialog" v-if="!readOnly"><i class="el-icon-link"></i> 选择告警分类</span>
             <span class="match-type" v-else>匹配类型</span>
           </h4>
           <ul>
@@ -501,9 +501,15 @@ export default {
           padding: 0 12px 0 0;
           box-sizing: border-box;
           cursor: pointer;
+          .middle-operation-color {
+            color: #00a8e8
+          };
           span {
             color: #00a8e8;
           }
+        }
+        h4:hover span, h4:hover .middle-operation-color{
+          color: #00cde8;
         }
         ul {
           margin: 20px auto;

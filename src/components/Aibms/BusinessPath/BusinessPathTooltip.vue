@@ -10,6 +10,17 @@
         <div class="alert-count">{{alert.alertName}}: {{alert.alertNum}}</div>
       </div>
     </div>
+    <div class="tooltip-title">
+      <span><i class="el-icon-user-solid"></i> 维护人员</span>
+    </div>
+    <div class="tooltip-operate-user">
+      <div class="user-info">
+        <!-- <div class="user-item user-name">用户名: vince</div> -->
+        <div class="user-item user-name">姓名: Tom</div>
+        <div class="user-item user-phone">手机号：18920378867</div>
+        <div class="user-item user-email">邮箱：jacky.smith@aeer.com.cn</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,9 +72,11 @@ export default {
 
 <style scoped>
 .business-path-tooltip {
-  width: 260px;
+  width: 300px;
   padding: 0 20px;
   background-color: rgba(22, 22, 22, 0.7);
+  box-shadow: 0 0 10px #000;
+  border-radius: 5px;
 }
 .tooltip-title {
   width: 100%;
@@ -81,10 +94,13 @@ export default {
 }
 .tooltip-content {
   width: 100%;
-  height: 140px;
+  height: 124px;
   padding: 10px 0;
+  /* margin-bottom: 10px; */
 
   overflow-y: auto;
+
+  /* border-bottom: 1px dashed #999; */
 }
 .level-item {
   width: 100%;
@@ -98,5 +114,22 @@ export default {
 }
 .level-item-count, .alert-count {
   flex: 1;
+}
+.tooltip-operate-user {
+  padding: 10px 0;
+}
+.user-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-item {
+  width: 50%;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #fff;
+}
+.user-email {
+  width: 100%;
 }
 </style>

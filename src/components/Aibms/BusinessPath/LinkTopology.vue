@@ -40,7 +40,7 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
           <template v-slot:tooltip="tooltip">
             <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
           </template>
@@ -221,6 +221,7 @@ export default {
           },
           selected: {
             stroke: '#1890ff',
+            lineWidth: 2,
             strokeOpacity: 1
           },
           active: {
@@ -240,7 +241,8 @@ export default {
             cursor: 'pointer'
           },
           selected: {
-            stroke: 'red'
+            stroke: '#1890ff',
+            lineWidth: 2
           }
         },
         defaultNode: {
@@ -502,91 +504,113 @@ export default {
         //   delay: 0 // 无延迟
         // })
       })
-      graph.on('node:click', e => {
-        console.log('test event: ', e)
-        const state = 'selected'
+      graph.on('node:mouseenter', e => {
         const item = e.item
         const { graph } = this
 
-        // 置空已经选择的节点状态
-        const nodes = graph.getNodes()
-        const edges = graph.getEdges()
-        // const prevHighlightNode = this.prevHighlightNode
-        // if (prevHighlightNode) {
+        this.setHighlightItem(item, true, graph)
+      })
 
-        // }
-        console.log(nodes)
-        // reset highlight nodes and edges
-        nodes.forEach(node => {
-          graph.setItemState(node, state, false)
-        })
-        edges.forEach(edge => {
-          this.clearEdgeAnimate(edge)
-        })
+      graph.on('edge:mouseenter', e => {
+        const item = e.item
+        const { graph } = this
 
-        graph.setItemState(item, state, true)
+        this.setHighlightItem(item, true, graph)
+      })
 
-        if (item.hasState(state)) {
-          graph.setItemState(item, state, true)
-          this.setHighlightItem(item, true, graph)
-        }
-        // if (item.hasState(state)) {
-        //   graph.setItemState(item, state, false)
-        //   this.setHighlightItem(item, false, graph)
-        // } else {
-        //   graph.setItemState(item, state, true)
-        //   this.setHighlightItem(item, true, graph)
-        // }
+      graph.on('node:mouseleave', e => {
+        const { graph } = this
+        this.clearItemHighlight(graph)
+      })
+      graph.on('edge:mouseleave', e => {
+        const { graph } = this
+        this.clearItemHighlight(graph)
+      })
+    },
+    clearItemHighlight (graph) {
+      const state = 'selected'
+      // 置空所有节点和边的高亮状态
+      const nodes = graph.getNodes()
+      const edges = graph.getEdges()
+
+      nodes.forEach(node => {
+        graph.setItemState(node, state, false)
+      })
+      edges.forEach(edge => {
+        graph.setItemState(edge, state, false)
       })
     },
     setHighlightItem (item, highlight, graph) {
       const isNode = item.getType() === 'node'
+      const isEdge = item.getType() === 'edge'
+      const state = 'selected'
       if (isNode) {
+        // 设置节点自身高亮
+        graph.setItemState(item, state, highlight)
+
+        // 递归遍历节点树
         const edges = item.getInEdges()
         edges.forEach(edge => {
-          this.setEdgeAnimate(edge, highlight)
+          graph.setItemState(edge, state, highlight)
           const source = edge.getSource()
-          graph.setItemState(source, 'selected', highlight)
+          graph.setItemState(source, state, highlight)
+
+          // 递归设置后续节点高亮
           this.setHighlightItem(source, highlight, graph)
         })
       }
-    },
-    setEdgeAnimate (edge, animate) {
-      const lineDash = [4, 2, 1, 2]
-      const group = edge.getContainer()
-      const shape = group.get('children')[0]
-      let index = 0;
-      // Define the animation
-      if (animate) {
-        shape.animate(
-          () => {
-            index++;
-            if (index > 9) {
-              index = 0
-            }
-            const res = {
-              stroke: '#1890ff',
-              lineDash,
-              lineDashOffset: -index
-            }
-            // returns the modified configurations here, lineDash and lineDashOffset here
-            return res
-          },
-          {
-            repeat: true, // whether executes the animation repeatly
-            duration: 3000 // the duration for executing once
-          }
-        )
-      } else {
-        this.clearEdgeAnimate(edge)
+
+      if (isEdge) {
+        const target = item.getTarget()
+        graph.setItemState(target, state, highlight)
+        graph.setItemState(item, state, highlight)
+
+        const source = item.getSource()
+        this.setHighlightItem(source, highlight, graph)
       }
     },
-    clearEdgeAnimate (edge) {
+    setEdgeHighlightStyle (edge, highlight) {
+      // const lineDash = [4, 2, 1, 2]
       const group = edge.getContainer()
       const shape = group.get('children')[0]
-      shape.stopAnimate()
+      if (highlight) {
+        shape.attr('stroke', '#1890ff')
+        shape.attr('lineWidth', 2)
+      } else {
+        shape.clearEdgeHighlightStyle()
+      }
+      // let index = 0;
+      // // Define the animation
+      // if (highlight) {
+      //   shape.animate(
+      //     () => {
+      //       index++;
+      //       if (index > 9) {
+      //         index = 0
+      //       }
+      //       const res = {
+      //         stroke: '#1890ff',
+      //         lineDash,
+      //         lineDashOffset: -index
+      //       }
+      //       // returns the modified configurations here, lineDash and lineDashOffset here
+      //       return res
+      //     },
+      //     {
+      //       repeat: true, // whether executes the animation repeatly
+      //       duration: 3000 // the duration for executing once
+      //     }
+      //   )
+      // } else {
+      //   this.clearEdgeAnimate(edge)
+      // }
+    },
+    clearEdgeHighlightStyle (edge) {
+      const group = edge.getContainer()
+      const shape = group.get('children')[0]
+      // shape.stopAnimate()
       // 清空 lineDash
-      shape.attr('lineDash', null)
+      shape.attr('lineWidth', 1)
       shape.attr('stroke', '#666')
     }
   },
