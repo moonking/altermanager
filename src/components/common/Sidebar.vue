@@ -340,7 +340,7 @@
       </template>-->
       <template v-for="item in AIA">
         <template v-if="$route.query.code == 8">
-          <template v-if="item.subs && item.title !== '监控平台'">
+          <template v-if="item.subs">
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
@@ -375,44 +375,10 @@
             </el-submenu>
           </template>
           <template v-else>
-            <el-submenu :index="item.index" :key="item.index">
-              <template slot="title">
-                <i :class="item.icon"></i>
-                <span slot="title" style="color: #fff">{{ item.title }}</span>
-              </template>
-              <template v-for="subItem in item.subs">
-                <el-submenu
-                  v-if="subItem.subs"
-                  :index="subItem.index"
-                  :key="subItem.index"
-                >
-                  <template slot="title">{{ subItem.title }}</template>
-                  <el-menu-item
-                    v-for="(threeItem, i) in subItem.subs"
-                    :key="i"
-                    :index="threeItem.index"
-                  >
-                    <!-- <i class="second-icon" :class="subItem.icon"></i> -->
-                    {{ threeItem.title }}
-                  </el-menu-item>
-                </el-submenu>
-                <el-menu-item
-                  v-else
-                  :index="subItem.url"
-                  :key="subItem.index"
-                  class="childermenu"
-                >
-                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
-                  <span @click="goOther(subItem.index)">{{
-                    subItem.title
-                  }}</span>
-                </el-menu-item>
-              </template>
-            </el-submenu>
-            <!-- <el-menu-item :index="item.index" :key="item.index">
+            <el-menu-item :index="item.index" :key="item.index">
               <i :class="item.icon"></i>
               <span slot="title">{{ item.title }}</span>
-            </el-menu-item> -->
+            </el-menu-item>
           </template>
         </template>
       </template>
@@ -863,32 +829,26 @@ export default {
           title: '监控平台',
           subs: [
             {
-              url: '/Aibms?code=8&type=Splunk',
               index: 'http://10.130.116.100:8000/zh-CN/account/login',
               title: 'Splunk'
             },
             {
-              url: '/Aibms?code=8&type=BPC',
               index: 'https://10.130.182.223:8443/bpc',
               title: 'BPC'
             },
             {
-              url: '/Aibms?code=8&type=NPM',
               index: 'https://10.130.116.222:8443/zh-hans/account/login',
               title: 'NPM'
             },
             {
-              url: '/Aibms?code=8&type=Prometheus',
               index: 'http://cnzhaplpms040:3000/',
               title: 'Prometheus'
             },
             {
-              url: '/Aibms?code=8&type=Oneagent',
               index: 'https://ugv140.dynatrace-managed.com/login',
               title: 'Oneagent'
             },
             {
-              url: '/Aibms?code=8&type=Solarwind',
               index: 'http://10.130.182.254/Orion',
               title: 'Solarwind'
             }
@@ -917,9 +877,6 @@ export default {
     }
   },
   methods: {
-    goOther(url) {
-      window.open(url, '_blank');
-    },
     getReturnSides(item) {
       if (item.children && item.children.length > 0) {
         item.children.forEach(d => {
