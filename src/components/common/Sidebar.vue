@@ -398,7 +398,6 @@
                 </el-submenu>
                 <el-menu-item
                   v-else
-                  :index="subItem.index"
                   :key="subItem.index"
                   class="childermenu"
                 >
