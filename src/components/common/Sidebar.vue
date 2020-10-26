@@ -340,7 +340,7 @@
       </template>-->
       <template v-for="item in AIA">
         <template v-if="$route.query.code == 8">
-          <template v-if="item.subs">
+          <template v-if="item.subs && item.title !== '监控平台'">
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
@@ -375,10 +375,42 @@
             </el-submenu>
           </template>
           <template v-else>
-            <el-menu-item :index="item.index" :key="item.index">
+            <el-submenu :index="item.index" :key="item.index">
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <span slot="title" style="color: #fff">{{ item.title }}</span>
+              </template>
+              <template v-for="subItem in item.subs">
+                <el-submenu
+                  v-if="subItem.subs"
+                  :index="subItem.index"
+                  :key="subItem.index"
+                >
+                  <template slot="title">{{ subItem.title }}</template>
+                  <el-menu-item
+                    v-for="(threeItem, i) in subItem.subs"
+                    :key="i"
+                    :index="threeItem.index"
+                  >
+                    <!-- <i class="second-icon" :class="subItem.icon"></i> -->
+                    {{ threeItem.title }}
+                  </el-menu-item>
+                </el-submenu>
+                <el-menu-item
+                  v-else
+                  :index="subItem.index"
+                  :key="subItem.index"
+                  class="childermenu"
+                >
+                  <!-- <i class="second-icon" :class="subItem.icon"></i> -->
+                  <span  @click="goOther(subItem.index)"  >{{ subItem.title }}</span>
+                </el-menu-item>
+              </template>
+            </el-submenu>
+            <!-- <el-menu-item :index="item.index" :key="item.index">
               <i :class="item.icon"></i>
               <span slot="title">{{ item.title }}</span>
-            </el-menu-item>
+            </el-menu-item> -->
           </template>
         </template>
       </template>
@@ -877,6 +909,9 @@ export default {
     }
   },
   methods: {
+    goOther (url) {
+      window.open(url, '_blank');
+    },
     getReturnSides(item) {
       if (item.children && item.children.length > 0) {
         item.children.forEach(d => {
