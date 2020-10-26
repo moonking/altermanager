@@ -398,11 +398,14 @@
                 </el-submenu>
                 <el-menu-item
                   v-else
+                  :index="subItem.url"
                   :key="subItem.index"
                   class="childermenu"
                 >
                   <!-- <i class="second-icon" :class="subItem.icon"></i> -->
-                  <span  @click="goOther(subItem.index)"  >{{ subItem.title }}</span>
+                  <span @click="goOther(subItem.index)">{{
+                    subItem.title
+                  }}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
@@ -860,26 +863,32 @@ export default {
           title: '监控平台',
           subs: [
             {
+              url: '/Aibms?code=8&type=Splunk',
               index: 'http://10.130.116.100:8000/zh-CN/account/login',
               title: 'Splunk'
             },
             {
+              url: '/Aibms?code=8&type=BPC',
               index: 'https://10.130.182.223:8443/bpc',
               title: 'BPC'
             },
             {
+              url: '/Aibms?code=8&type=NPM',
               index: 'https://10.130.116.222:8443/zh-hans/account/login',
               title: 'NPM'
             },
             {
+              url: '/Aibms?code=8&type=Prometheus',
               index: 'http://cnzhaplpms040:3000/',
               title: 'Prometheus'
             },
             {
+              url: '/Aibms?code=8&type=Oneagent',
               index: 'https://ugv140.dynatrace-managed.com/login',
               title: 'Oneagent'
             },
             {
+              url: '/Aibms?code=8&type=Solarwind',
               index: 'http://10.130.182.254/Orion',
               title: 'Solarwind'
             }
@@ -908,7 +917,7 @@ export default {
     }
   },
   methods: {
-    goOther (url) {
+    goOther(url) {
       window.open(url, '_blank');
     },
     getReturnSides(item) {
