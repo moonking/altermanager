@@ -51,8 +51,8 @@
       </el-form-item>
       <el-form-item label="关联CI项" prop="hosts">
         <div class="cursor" @click="showChooseHostDialog">
-          <i class="el-icon-link"></i> 已选择 {{ hostTableSelected.length }} 个
-          CI 项
+          <i class="el-icon-link"></i> {{hostTableSelected.length === 0 ? '点击选择CI项' : `已选择 ${ hostTableSelected.length } 个
+          CI 项`}}
         </div>
       </el-form-item>
       <!-- <el-form-item label="关联主机" prop="hosts">

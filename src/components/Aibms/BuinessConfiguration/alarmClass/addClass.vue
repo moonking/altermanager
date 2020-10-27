@@ -41,7 +41,7 @@
               :rules="{
                 required: true, message: '请输入表达式描述', trigger: 'blur'
               }">
-              <el-input type="textarea" v-model="domain.desc" autosize></el-input>
+              <el-input :disabled="readOnly" type="textarea" v-model="domain.desc" autosize></el-input>
             </el-form-item>
             <el-form-item
               :label="'来源：'"
@@ -189,7 +189,7 @@ export default {
           if (matcheList && matcheList.length) {
             this.form.domains = []
             this.form.domains = matcheList.map(item => {
-              return { source: item.source, expression: item.expression }
+              return { source: item.source, expression: item.expression, desc: item.desc }
             });
           }
         } else {
