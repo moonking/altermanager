@@ -10,23 +10,23 @@
       ref="selectHost"
       v-show="active === 0"
       />
-      <selectCategory
+      <!-- <selectCategory
       ref="selectCategory"
       :checkedLabels="checkedLabels"
       :sortList="sortList"
       :readOnly="readOnly"
-      v-show="active === 1" />
+      v-show="active === 1" /> -->
       <selectDate
       :startingTime="startTime"
       :endingTime="endTime"
       :readOnly="readOnly"
       ref="selectDate"
-      v-show="active === 2"
+      v-show="active === 1"
       />
       <div class="operation-button">
-        <el-button @click="prev" type="primary" v-if="active === 1 || active === 2">上一步</el-button>
-        <el-button @click.stop="next" type="primary" v-if="active === 0 || active === 1">下一步</el-button>
-        <el-button @click="save" type="primary" v-if="active === 2 && !readOnly">保存</el-button>
+        <el-button @click="prev" type="primary" v-if="active === 1  ">上一步</el-button>
+        <el-button @click.stop="next" type="primary" v-if="active === 0  ">下一步</el-button>
+        <el-button @click="save" type="primary" v-if="active === 1 && !readOnly">保存</el-button>
         <el-button @click="cancel" v-if="!readOnly" class="cancel-button">取消</el-button>
       </div>
     </div>
@@ -47,8 +47,8 @@ export default {
   data: () => ({
     stepList: [
       { value: 1, label: '选择主机' },
-      { value: 2, label: '选择告警分类' },
-      { value: 3, label: '选择时间窗口' }
+      // { value: 2, label: '选择告警分类' },
+      { value: 2, label: '选择时间窗口' }
     ],
     active: 0,
     editId: '',
@@ -104,20 +104,21 @@ export default {
         } else {
           this.$message.error('请选择主机')
         }
-      } else if (this.active === 1 && this.$refs.selectCategory) {
-        if (this.$refs.selectCategory.checkedCategory.length) {
-          this.active++
-          this.$refs.selectDate.alarmType = this.$refs.selectCategory.checkedClass
-        } else {
-          this.$message.error('请选择告警分类')
-        }
       }
+      //  else if (this.active === 1 && this.$refs.selectCategory) {
+      //   if (this.$refs.selectCategory.checkedCategory.length) {
+      //     this.active++
+      //     this.$refs.selectDate.alarmType = this.$refs.selectCategory.checkedClass
+      //   } else {
+      //     this.$message.error('请选择告警分类')
+      //   }
+      // }
     },
     addOrEdit (methods) {
       const params = {
         id: this.editId,
         systemList: this.$refs.selectHost.hostList,
-        sortIds: this.$refs.selectCategory.checkedCategory,
+        // sortIds: this.$refs.selectCategory.checkedCategory,
         startTime: this.$refs.selectDate.startTime,
         endTime: this.$refs.selectDate.endTime
       }

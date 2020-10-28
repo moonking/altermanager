@@ -375,7 +375,11 @@
             </el-submenu>
           </template>
           <template v-else>
-            <el-submenu v-if="item.title == '监控平台'" :index="item.index" :key="item.index">
+            <el-submenu
+              v-if="item.title == '监控平台'"
+              :index="item.index"
+              :key="item.index"
+            >
               <template slot="title">
                 <i :class="item.icon"></i>
                 <span slot="title" style="color: #fff">{{ item.title }}</span>
@@ -409,7 +413,7 @@
                 </el-menu-item>
               </template>
             </el-submenu>
-            <el-menu-item  v-else :index="item.index" :key="item.index">
+            <el-menu-item v-else :index="item.index" :key="item.index">
               <i :class="item.icon"></i>
               <span slot="title">{{ item.title }}</span>
             </el-menu-item>
@@ -1158,9 +1162,6 @@ export default {
   color: #fff;
   font-size: 16px;
 }
-</style>
-
-<style>
 .el-menu--popup {
   background-color: #041c25e6 !important;
 }

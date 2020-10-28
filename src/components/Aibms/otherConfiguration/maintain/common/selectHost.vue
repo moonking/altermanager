@@ -9,14 +9,6 @@
       v-if="!readOnly"
     >
       <el-form-item>
-        <el-input
-          v-model="searchFrom.ipAddress"
-          clearable
-          placeholder="请输入IP地址"
-          style="width: 200px"
-        />
-      </el-form-item>
-      <el-form-item>
         <el-select
           clearable
           v-model="searchFrom.businessValue"
@@ -29,6 +21,14 @@
             :value="item"
           />
         </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input
+          v-model="searchFrom.ipAddress"
+          clearable
+          placeholder="请输入主机名"
+          style="width: 200px"
+        />
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" class="search-icon" @click="search"
@@ -45,8 +45,13 @@
       @select-all="handleSelectionChange"
       @select="handleSelectionChange"
     >
-      <el-table-column v-if="!readOnly" type="selection" width="55" />
-      <el-table-column prop="name" label="业务系统" />
+      <el-table-column
+        v-if="!readOnly"
+        type="selection"
+        width="55"
+        :selectable="checkSelectable"
+      />
+      <!-- <el-table-column prop="name" label="业务系统" /> -->
       <el-table-column prop="hosts" label="主机" />
     </el-table>
     <!-- 分页 -->
@@ -117,6 +122,9 @@ export default {
     }
   },
   methods: {
+    checkSelectable(row) {
+      return !row.belongOps
+    },
     returnSelect() {
       setTimeout(() => {
         this.$nextTick(() => {

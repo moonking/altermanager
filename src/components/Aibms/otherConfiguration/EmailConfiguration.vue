@@ -164,50 +164,50 @@
 </template>
 
 <script>
-import axios from "@/api";
-import TempConfig from "./TemplateConfig";
+import axios from '@/api';
+import TempConfig from './TemplateConfig';
 export default {
   data() {
     var validateEmail = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
+      if (value === '') {
+        callback(new Error('请输入邮箱'));
       } else if (
         !/^([0-9A-Za-z\-_\\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(
           value
         )
       ) {
-        callback(new Error("请输入正确的email"));
+        callback(new Error('请输入正确的email'));
       } else {
         callback();
       }
     };
     var validateTheme = (rule, value, callback) => {
-      if (this.ThemeText.content === "") {
-        callback(new Error("请输入邮件主题！"));
+      if (this.ThemeText.content === '') {
+        callback(new Error('请输入邮件主题！'));
       } else {
         callback();
       }
     };
     var validateContent = (rule, value, callback) => {
-      if (this.ContentText.content === "") {
-        callback(new Error("请编写内容！"));
+      if (this.ContentText.content === '') {
+        callback(new Error('请编写内容！'));
       } else {
         callback();
       }
     };
     return {
       testForm: {
-        receiver: "",
+        receiver: ''
       },
       testFormRules: {
         receiver: [
-          { required: true, message: "手机号不能为空！", trigger: "blur" },
+          { required: true, message: '手机号不能为空！', trigger: 'blur' },
           {
             pattern: /^([0-9A-Za-z\-_\\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g,
-            message: "请输入合法的邮箱！",
-            trigger: "blur",
-          },
-        ],
+            message: '请输入合法的邮箱！',
+            trigger: 'blur'
+          }
+        ]
       },
       testDialogVisible: false,
       isTesting: false,
@@ -216,41 +216,41 @@ export default {
       clickContentNum: -1,
       clickContent: 0,
       blockSwitch: { 1: true, 2: false },
-      placeholderTheme: "例如：您好，关于[[$DATE]]告警信息的邮件，请查阅",
+      placeholderTheme: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       placeholderContent:
-        "请输入内容，例如\nDear[[$NAME]]\n[[$HOSTNAME]]发出告警 [[$A_CLASS]]，详情为[[$MESSAGE]]，告警来源为[[$M_SOURCE]]",
+        '请输入内容，例如\nDear[[$NAME]]\n[[$HOSTNAME]]发出告警 [[$A_CLASS]]，详情为[[$MESSAGE]]，告警来源为[[$M_SOURCE]]',
       emailForm: {
-        ip: "",
-        port: "",
-        accountNumber: "",
-        password: "",
+        ip: '',
+        port: '',
+        accountNumber: '',
+        password: ''
       },
       emailFormRules: {
-        ip: [{ required: true, message: "请输入IP！", trigger: "blur" }],
-        port: [{ required: true, message: "请输入端口！", trigger: "blur" }],
+        ip: [{ required: true, message: '请输入IP！', trigger: 'blur' }],
+        port: [{ required: true, message: '请输入端口！', trigger: 'blur' }],
         accountNumber: [
-          { required: true, validator: validateEmail, trigger: "blur" },
+          { required: true, validator: validateEmail, trigger: 'blur' }
           // { required: true, message: "请输入账号！", trigger: "blur" }
         ],
         password: [
-          { required: true, message: "请输入密码！", trigger: "blur" },
-        ],
+          { required: true, message: '请输入密码！', trigger: 'blur' }
+        ]
       },
       configForm: {
-        variable: "",
-        theme: "",
-        content: "",
+        variable: '',
+        theme: '',
+        content: ''
       },
       configFormRules: {
         theme: [
-          { required: true, validator: validateTheme, trigger: "change" },
+          { required: true, validator: validateTheme, trigger: 'change' }
         ],
         content: [
-          { required: true, validator: validateContent, trigger: "change" },
-        ],
+          { required: true, validator: validateContent, trigger: 'change' }
+        ]
       },
-      ThemeText: { content: "" },
-      ContentText: { content: "" },
+      ThemeText: { content: '' },
+      ContentText: { content: '' }
     };
   },
   created() {
@@ -260,25 +260,25 @@ export default {
     handleTest() {
       Promise.all([
         this.$refs.mailform.validate(),
-        this.$refs.configform.validate(),
+        this.$refs.configform.validate()
       ])
         .then((res) => {
           if (res[0] && res[1]) {
             this.testDialogVisible = true;
           } else {
             this.$notify({
-              title: "提示",
-              type: "error",
-              message: "配置或模板校验失败，请检查输入！",
+              title: '提示',
+              type: 'error',
+              message: '配置或模板校验失败，请检查输入！'
             });
           }
         })
         .catch((err) => {
           console.log(err);
           this.$notify({
-            title: "提示",
-            type: "error",
-            message: "配置或模板校验失败，请检查输入！",
+            title: '提示',
+            type: 'error',
+            message: '配置或模板校验失败，请检查输入！'
           });
         });
     },
@@ -286,23 +286,23 @@ export default {
       Promise.all([
         axios.userList({
           online: false,
-          condition: "", /// 姓名、手机、登录名
+          condition: '', /// 姓名、手机、登录名
           roleIds: [], // 角色ID，多个用“,”隔开
-          userStatus: "", // 用户状态  0正常 1禁用 2锁定 3注销
+          userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
           current: 1, // 当前页
-          size: 1000, // 每页显示条数
+          size: 1000 // 每页显示条数
         }),
-        axios.emailConfig(),
+        axios.emailConfig()
       ]).then((res) => {
         console.log(res[0]);
         if (res[1].data.code === 200) {
           let emailData = res[1].data.data;
           this.formatData(emailData.emailParams);
-          this.emailForm.ip = emailData.hostIp || "";
-          this.emailForm.port = emailData.hostPost || "";
-          this.emailForm.accountNumber = emailData.emailUser || "";
-          this.emailForm.password = emailData.emailPassword || "";
-          this.ID = emailData.id || "";
+          this.emailForm.ip = emailData.hostIp || '';
+          this.emailForm.port = emailData.hostPost || '';
+          this.emailForm.accountNumber = emailData.emailUser || '';
+          this.emailForm.password = emailData.emailPassword || '';
+          this.ID = emailData.id || '';
           this.ThemeText.content = emailData.emailSubject;
           this.ContentText.content = emailData.emailContent;
         }
@@ -318,12 +318,12 @@ export default {
     },
     formatData(str) {
       let arr = [];
-      arr = str.slice(1, -1).replace(/\"/g, "").split(",");
+      arr = str.slice(1, -1).replace(/\"/g, '').split(',');
       arr.forEach((item) => {
-        let team = item.split(":");
+        let team = item.split(':');
         this.StringList.push({
-          value: "$" + team[0],
-          name: team[1],
+          value: '$' + team[0],
+          name: team[1]
         });
       });
     },
@@ -336,7 +336,7 @@ export default {
     saveEmail() {
       Promise.all([
         this.$refs.mailform.validate(),
-        this.$refs.configform.validate(),
+        this.$refs.configform.validate()
       ]).then((res) => {
         if (res[0] && res[1]) {
           let params = {
@@ -345,20 +345,20 @@ export default {
             emailUser: this.emailForm.accountNumber,
             emailPassword: this.emailForm.password,
             emailSubject: this.ThemeText.content,
-            emailContent: this.ContentText.content,
+            emailContent: this.ContentText.content
           };
           axios.saveEmailConfig(params).then((res) => {
             if (res.data.code === 200) {
               this.$notify({
-                title: "提示",
-                message: "保存成功！",
-                type: "success",
+                title: '提示',
+                message: '保存成功！',
+                type: 'success'
               });
             } else if (res.data.code === 400) {
               this.$notify({
-                title: "提示",
+                title: '提示',
                 message: res.data.message,
-                type: "error",
+                type: 'error'
               });
             }
           });
@@ -375,7 +375,7 @@ export default {
             emailPassword: this.emailForm.password,
             emailSubject: this.ThemeText.content,
             emailContent: this.ContentText.content,
-            receiver: this.testForm.receiver,
+            receiver: this.testForm.receiver
           };
           this.isTesting = true;
           axios
@@ -385,15 +385,15 @@ export default {
               this.isTesting = false;
               if (res.data.code === 200) {
                 this.$notify({
-                  title: "提示",
-                  message: "测试通过！",
-                  type: "success",
+                  title: '提示',
+                  message: '测试通过！',
+                  type: 'success'
                 });
               } else if (res.data.code === 400) {
                 this.$notify({
-                  title: "提示",
+                  title: '提示',
                   message: res.data.message,
-                  type: "error",
+                  type: 'error'
                 });
               }
             })
@@ -402,11 +402,11 @@ export default {
             });
         }
       });
-    },
+    }
   },
   components: {
-    TempConfig,
-  },
+    TempConfig
+  }
 };
 </script>
 

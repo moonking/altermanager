@@ -286,8 +286,8 @@ export default {
         week: '',
         year: ''
       },
-      alert: true,
-      weekAlert: true,
+      alert: false,
+      weekAlert: false,
       status: this.$route.params.status,
       taskList: [],
       openController: true, // 控制展开或收缩
@@ -710,6 +710,14 @@ export default {
 
     // 确认按钮保存操作
     confirmCrontab() {
+      if (!this.name) {
+        this.$notify({
+          type: 'warning',
+          title: '提示',
+          message: '请填写任务名称！'
+        })
+        return
+      }
       let cron = []
       const radio = this.radio
       if (radio === 1) {
