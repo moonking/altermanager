@@ -211,7 +211,7 @@ export default {
             //     return text
             //   }
             // },
-            'hover-node'
+            // 'hover-node'
             // 'select-edge',
             // 'hover-edge',
             // 'select-node',
@@ -298,6 +298,7 @@ export default {
       const isEdge = item.getType() === 'edge'
       const state = 'selected'
       if (isNode) {
+        console.log(graph.setItemState)
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
 

@@ -530,7 +530,7 @@ export default {
       // 点击节点跳转
       graph.on('node:click', e => {
         const item = e.item
-        const { ciitemId = '' } = item.getModel()
+        const { ciitemId = '' } = item.getModel().businessData
         this.$router.push({
           path: '/ResourceAllocation/CIlistData/toview',
           query: {
