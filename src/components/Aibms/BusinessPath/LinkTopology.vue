@@ -40,7 +40,7 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
           <template v-slot:tooltip="tooltip">
             <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
           </template>
@@ -525,6 +525,16 @@ export default {
       graph.on('edge:mouseleave', e => {
         const { graph } = this
         this.clearItemHighlight(graph)
+      })
+
+      // 点击节点跳转
+      graph.on('node:click', e => {
+        this.$router.push({
+          path: '/Aibms/BuinessConfiguration/MonitoringSource',
+          query: {
+            code: 8
+          }
+        })
       })
     },
     clearItemHighlight (graph) {

@@ -405,9 +405,10 @@
                   :index="subItem.url"
                   :key="subItem.index"
                   class="childermenu"
+                  @click="goOther(subItem.index)"
                 >
                   <!-- <i class="second-icon" :class="subItem.icon"></i> -->
-                  <span @click="goOther(subItem.index)">{{
+                  <span>{{
                     subItem.title
                   }}</span>
                 </el-menu-item>
@@ -878,7 +879,7 @@ export default {
             },
             {
               url: '/Aibms?code=8&type=NPM',
-              index: 'https://10.130.116.222:8443/zh-hans/account/login',
+              index: 'https://10.130.182.222:8443/zh-hans/accounts/login',
               title: 'NPM'
             },
             {
