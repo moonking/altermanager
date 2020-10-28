@@ -40,7 +40,7 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
           <template v-slot:tooltip="tooltip">
             <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
           </template>
@@ -631,7 +631,7 @@ export default {
     }
   },
   created () {
-    // this.getData()
+    this.getData()
   },
   mounted () {
     this.$nextTick(() => {

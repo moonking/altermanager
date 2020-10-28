@@ -875,7 +875,7 @@ export default {
             },
             {
               url: '/Aibms?code=8&type=NPM',
-              index: 'https://10.130.116.222:8443/zh-hans/account/login',
+              index: 'https://10.130.182.222:8443/zh-hans/accounts/login',
               title: 'NPM'
             },
             {
