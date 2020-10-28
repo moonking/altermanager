@@ -529,10 +529,13 @@ export default {
 
       // 点击节点跳转
       graph.on('node:click', e => {
+        const item = e.item
+        const { ciitemId = '' } = item.getModel()
         this.$router.push({
-          path: '/Aibms/BuinessConfiguration/MonitoringSource',
+          path: '/ResourceAllocation/CIlistData/toview',
           query: {
-            code: 8
+            ciitemId: ciitemId,
+            code: 2
           }
         })
       })
