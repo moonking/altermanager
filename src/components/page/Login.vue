@@ -1,7 +1,10 @@
 <template>
   <div class="login-wrap" @keydown.enter="submitForm">
     <div class="ms-login">
-      <div class="ms-title">欢迎登录AI·BMS</div>
+      <div class="ms-title">
+        <img src="../../assets/aia_short_logo.png" class="title-img" alt="">
+        <span class="title-text">欢迎登录AI·BMS</span>
+      </div>
       <el-form
         ref="form"
         :model="form"
@@ -199,17 +202,20 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: url(../../assets/login-bg.jpg);
-  background-size: 100%;
+  background-image: url(../../assets/login_bg_small.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .ms-title {
   width: 100%;
+  height: 50px;
   line-height: 50px;
   text-align: center;
   font-size: 20px;
   color: #0066ff;
   border-bottom: 1px solid #ddd;
+  padding: 10px 0;
 }
 
 .ms-login {
@@ -219,7 +225,7 @@ export default {
   width: 400px;
   margin: -190px 0 0 -175px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(80, 80, 80, 0.6);
   overflow: hidden;
 }
 
@@ -247,5 +253,13 @@ export default {
   color: red;
   font-size: 12px;
   margin: 0 15px;
+}
+.title-img {
+  height: 100%;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+.title-text {
+  color: #fff;
 }
 </style>

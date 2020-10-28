@@ -401,9 +401,10 @@
                   :index="subItem.url"
                   :key="subItem.index"
                   class="childermenu"
+                  @click="goOther(subItem.index)"
                 >
                   <!-- <i class="second-icon" :class="subItem.icon"></i> -->
-                  <span @click="goOther(subItem.index)">{{
+                  <span>{{
                     subItem.title
                   }}</span>
                 </el-menu-item>

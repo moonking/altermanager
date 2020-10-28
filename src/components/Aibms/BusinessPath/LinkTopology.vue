@@ -526,6 +526,16 @@ export default {
         const { graph } = this
         this.clearItemHighlight(graph)
       })
+
+      // 点击节点跳转
+      graph.on('node:click', e => {
+        this.$router.push({
+          path: '/Aibms/BuinessConfiguration/MonitoringSource',
+          query: {
+            code: 8
+          }
+        })
+      })
     },
     clearItemHighlight (graph) {
       const state = 'selected'
@@ -621,7 +631,7 @@ export default {
     }
   },
   created () {
-    this.getData()
+    // this.getData()
   },
   mounted () {
     this.$nextTick(() => {
