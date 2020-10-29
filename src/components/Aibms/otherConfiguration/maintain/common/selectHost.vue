@@ -42,7 +42,7 @@
       ref="dataTable"
       stripe
       :header-cell-style="{ background: '#f5f5f5' }"
-      @select-all="handleSelectionChange"
+      @select-all="handleSelectionChangeAll"
       @select="handleSelectionChange"
     >
       <el-table-column
@@ -150,6 +150,11 @@ export default {
       }
       axios.getCiSystemList(params).then(res => {
         if (res.data.success) {
+          res.data.data.records.forEach((item) => {
+            if (!item.belongOps) {
+              item.bl = false
+            }
+          })
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
           // 获取下拉列表的数据
@@ -166,8 +171,96 @@ export default {
       })
       this.returnSelect()
     },
-    handleSelectionChange(val) {
-      this.hostList = val
+    handleSelectionChangeAll(selection) {
+      if (selection.length > 0) {
+        this.tableData.forEach((item) => {
+          if (!item.belongOps) {
+            item.bl = true
+          }
+        })
+        if (this.hostList.length === 0) {
+          this.hostList = selection
+        } else {
+          let ciitemList = this.hostList.map(item => item.ciitemId)
+          let systemList = this.hostList.map(item => item.systemId)
+          let arrayList = []
+          ciitemList.forEach((item) => {
+            systemList.forEach((data) => {
+              arrayList.push(item + data)
+            })
+          })
+          this.tableData.forEach((item, index) => {
+            if (item.bl) {
+              if (!ciitemList.includes(item.ciitemId + item.systemId)) {
+                this.hostList.push(item)
+              }
+            }
+          })
+        }
+      } else {
+        this.tableData.forEach((item) => {
+          if (!item.belongOps) {
+            item.bl = false
+          }
+        })
+        this.tableData.forEach((item, index) => {
+          this.hostList.splice(index, 1)
+        })
+      }
+    },
+    handleSelectionChange(selection, row) {
+      if (selection.length > 0) {
+        let ciitemIdList = selection.map(item => item.ciitemId)
+        let systemIdList = selection.map(item => item.systemId)
+        let arrList = []
+        ciitemIdList.forEach((item) => {
+          systemIdList.forEach((data) => {
+            arrList.push(item + data)
+          })
+        })
+        let bl = false
+        if (arrList.includes(row.ciitemId + row.systemId)) {
+          bl = true
+        }
+        console.log(bl)
+        this.tableData.forEach((item) => {
+          if (item.ciitemId === row.ciitemId && item.systemId === row.systemId) {
+            if (!item.belongOps) {
+              item.bl = bl
+            }
+          }
+        })
+      } else {
+        this.tableData.forEach((item) => {
+          if (item.ciitemId === row.ciitemId && item.systemId === row.systemId) {
+            if (!item.belongOps) {
+              item.bl = false
+            }
+          }
+        })
+      }
+
+      if (this.hostList.length === 0) {
+        this.hostList = selection
+      } else {
+        let ciitemList = this.hostList.map(item => item.ciitemId)
+        let systemList = this.hostList.map(item => item.systemId)
+        let arrayList = []
+        ciitemList.forEach((item) => {
+          systemList.forEach((data) => {
+            arrayList.push(item + data)
+          })
+        })
+        this.tableData.forEach((item, index) => {
+          if (item.bl) {
+            if (!ciitemList.includes(item.ciitemId + item.systemId)) {
+              this.hostList.push(item)
+            }
+          } else if (!item.bl && arrayList.includes(item.ciitemId + item.systemId)) {
+            this.hostList.splice(index, 1)
+          }
+        })
+      }
     },
     // 分页
     handleCurrentChange() {

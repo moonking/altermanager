@@ -71,7 +71,9 @@ export default {
     endTime: '',
     startTime: '',
     sortList: [],
-    readOnly: false
+    readOnly: false,
+    startDay: '',
+    endDay: ''
   }),
   created() {
     this.getMaintenanceDetail()
