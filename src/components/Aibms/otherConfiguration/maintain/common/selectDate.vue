@@ -111,6 +111,7 @@ export default {
       if (val.length) {
         if (this.$route.query.id) {
           this.dateModel.startTime = val
+          this.dateModel.timePicker[0] = val
           this.startTime = val
         }
       }
@@ -119,6 +120,7 @@ export default {
       if (val.length) {
         if (this.$route.query.id) {
           this.dateModel.endTime = val
+          this.dateModel.timePicker[1] = val
           this.endTime = val
         }
       }
