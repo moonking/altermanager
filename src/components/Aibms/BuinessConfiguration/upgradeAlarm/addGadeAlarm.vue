@@ -200,20 +200,20 @@ export default {
     levelList: [
       {
         value: '1',
-        label: 'S1'
+        label: 'critical'
       },
       {
         value: '2',
-        label: 'S2'
+        label: 'error'
       },
       {
         value: '3',
-        label: 'S3'
-      },
-      {
-        value: '4',
-        label: 'S4'
+        label: 'warning'
       }
+      // {
+      //   value: '4',
+      //   label: 'S4'
+      // }
     ],
     alarmList: [],
     dialogFormVisible: false,

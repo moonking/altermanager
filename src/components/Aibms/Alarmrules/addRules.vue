@@ -453,24 +453,24 @@ export default {
       levelList: [
         {
           value: '1',
-          label: 'S1'
+          label: 'critical'
         },
         {
           value: '2',
-          label: 'S2'
+          label: 'error'
         },
         {
           value: '3',
-          label: 'S3'
+          label: 'warning'
         },
-        {
-          value: '4',
-          label: 'S4'
-        },
-        {
-          value: '5',
-          label: 'S5'
-        }
+        // {
+        //   value: '4',
+        //   label: 'S4'
+        // },
+        // {
+        //   value: '5',
+        //   label: 'S5'
+        // }
       ],
       labelList: [
         { label: '交易类型', value: '1' },

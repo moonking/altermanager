@@ -137,24 +137,24 @@ export default {
     levelList: [
       {
         value: '1',
-        label: 'S1'
+        label: 'critical'
       },
       {
         value: '2',
-        label: 'S2'
+        label: 'error'
       },
       {
         value: '3',
-        label: 'S3'
-      },
-      {
-        value: '4',
-        label: 'S4'
-      },
-      {
-        value: '5',
-        label: 'S5'
+        label: 'warning'
       }
+      // {
+      //   value: '4',
+      //   label: 'S4'
+      // },
+      // {
+      //   value: '5',
+      //   label: 'S5'
+      // }
     ],
     labelList: [
       { label: '交易类型', value: '1' },
@@ -188,11 +188,11 @@ export default {
     },
     LevelFilter: level => {
       const iconMap = {
-        1: 'S1',
-        2: 'S2',
-        3: 'S3',
-        4: 'S4',
-        5: 'S5'
+        1: 'critical',
+        2: 'error',
+        3: 'warning'
+        // 4: 'S4',
+        // 5: 'S5'
       };
       return iconMap[level];
     },

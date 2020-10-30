@@ -8,6 +8,7 @@
         </template>
       </graph-editor>
     </div>
+    <div class="notify-list"></div>
   </div>
 </template>
 
@@ -100,7 +101,9 @@ export default {
           type: 'line',
           // color: '#000',
           style: {
-            stroke: '#A8D4FF',
+            stroke: '#23bbd6',
+            // stroke: '#23d692',
+            lineWidth: 4,
             lineAppendWidth: 20,
             // startArrow: true,
             endArrow: true
@@ -125,8 +128,8 @@ export default {
             strokeOpacity: 1
           },
           selected: {
-            stroke: 'green',
-            lineWidth: 2,
+            stroke: '#19b868',
+            lineWidth: 4,
             strokeOpacity: 1
           }
           // active: {
@@ -140,8 +143,8 @@ export default {
             cursor: 'pointer'
           },
           selected: {
-            stroke: 'green',
-            lineWidth: 2
+            stroke: '#19b868',
+            lineWidth: 4
           },
           warning: {
             stroke: 'red'
@@ -152,8 +155,10 @@ export default {
           labelColor: '#fff',
           // type: 'iconCircle',
           style: {
-            stroke: '#1AC1FF',
-            fill: '#00A8E8'
+            stroke: 'transparent',
+            fill: '#50505099',
+            shadowColor: '#333',
+            shadowBlur: 5
           },
           colors: {
             warning: 'orange',
@@ -520,5 +525,14 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
+  background-color: #23bbd6;
+}
+.notify-list {
+  width: 320px;
+  height: 260px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
 }
 </style>

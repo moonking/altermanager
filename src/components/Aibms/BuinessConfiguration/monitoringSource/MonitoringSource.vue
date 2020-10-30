@@ -27,6 +27,9 @@
         </el-form-item>
         <el-form-item class="search-source">
           <el-button icon="el-icon-search" class="search-icon" @click.stop="search">搜索</el-button>
+          <el-button @click="testNotify">
+            测试弹框
+          </el-button>
         </el-form-item>
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
@@ -137,6 +140,33 @@ export default {
     this.getMonitorList()
   },
   methods: {
+    testNotify () {
+      const h = this.$createElement;
+      // customClass
+      this.$notify({
+        customClass: 'notify-style',
+        dangerouslyUseHTMLString: true,
+        message: `
+          <p class="notify-title">
+          有新的<span style="color:red;font-weight: bold;"> Critical </span>告警
+          </p>
+          <div class="notify-content">
+            <div class="notify-item"><span>对象：</span>CNZHAPWRPA010:9182</div>
+            <div class="notify-item"><span>时间：</span>2020-08-13 05:24:01</div>
+            <div class="notify-item"><span>详情：</span>Usage filesystem space > 90% for 5 minutes</div>
+          </div>
+          `
+        // message: h('div', { style: 'color: #fff' }, '这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案')
+      });
+
+      // this.$notify({
+      //   message: h('div', { style: 'color: teal;background-color: #50505099;position: absolute;top: 0;left: 0;' }, '这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案')
+      // });
+      // this.$notify.success({
+      //   title: '测试',
+      //   message: 'etst'
+      // })
+    },
     getMonitorList () {
       const params = {
         current: this.page.current,
@@ -293,5 +323,39 @@ export default {
 }
 .search-inline-btn {
   width: 100px;
+}
+
+</style>
+<style>
+.notify-style {
+  width: 360px;
+  height: 160px;
+  background-color: #161616b3;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 10px #000;
+}
+.notify-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ddd;
+}
+.notify-content {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.notify-item {
+  margin-bottom: 4px;
+}
+.notify-item:last-child {
+  margin-bottom: 0;
 }
 </style>
