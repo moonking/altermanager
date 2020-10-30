@@ -24,13 +24,32 @@
             label-position="right"
             :rules="msgFormRules"
           >
-            <el-form-item label="URL：" prop="apiUrl">
+            <el-form-item label="URL：" prop="apiUrl" style="display: block">
               <el-input
                 clearable
                 v-model.trim="msgForm.apiUrl"
                 placeholder="请输入URL"
                 :style="{ width: '500px' }"
               />
+            </el-form-item>
+            <el-form-item
+              label="模板类型："
+              prop="noticeType"
+              style="display: block"
+            >
+              <el-select
+                v-model="msgForm.noticeType"
+                clearable
+                placeholder="请选择模板"
+                :style="{ width: '200px' }"
+              >
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
             </el-form-item>
             <!-- <el-form-item>
               <el-button type="primary" @click="handleTest">测试</el-button>
@@ -148,8 +167,8 @@
 </template>
 
 <script>
-import TempConfig from "./TemplateConfig";
-import axios from "@/api";
+import TempConfig from './TemplateConfig';
+import axios from '@/api';
 export default {
   data() {
     // var validateMobile = (rule, value, callback) => {
@@ -162,60 +181,67 @@ export default {
     //   }
     // };
     var validatecontent = (rule, value, callback) => {
-      if (this.MsgText.content === "") {
-        callback(new Error("请编写内容！"));
+      if (this.MsgText.content === '') {
+        callback(new Error('请编写内容！'));
       } else {
         callback();
       }
     };
     return {
+      typeList: [
+        { value: 'ALERT', label: '普通模板' },
+        { value: 'ALERT_UPGRADE', label: '升级模板' },
+        { value: 'ALERT_AGGREGATION', label: '聚合模板' }
+      ],
       isSubmit: false,
       isFirst: false,
       StringList: [],
       clickMsgNum: -1,
       blockSwitch: { 1: true, 2: false },
-      placeholderMsg: "例如：您好，关于[[$DATE]]告警信息的邮件，请查阅",
+      placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       msgForm: {
-        apiUrl: "",
+        apiUrl: '',
+        noticeType: ''
       },
       msgFormRules: {
-        apiUrl: [{ required: true, message: "请输入url！", trigger: "blur" }],
+        apiUrl: [{ required: true, message: '请输入url！', trigger: 'blur' }],
+        noticeType: [{ required: true, message: '请选择模板类型！', trigger: 'change' }],
         // accountNumber: [
         //   { required: true, validator: validateMobile, trigger: "blur" }
         // ],
         accountNumber: [
-          { required: true, message: "请输入账号！", trigger: "blur" },
+          { required: true, message: '请输入账号！', trigger: 'blur' }
         ],
         passWord: [
-          { required: true, message: "请输入密码！", trigger: "blur" },
-        ],
+          { required: true, message: '请输入密码！', trigger: 'blur' }
+        ]
       },
       configForm: {
-        variable: "",
-        content: "",
+        variable: '',
+        content: ''
       },
       configFormRules: {
         content: [
-          { required: true, validator: validatecontent, trigger: "blur" },
-        ],
+          { required: true, validator: validatecontent, trigger: 'blur' }
+        ]
       },
-      MsgText: { content: "" },
-      ID: "",
+      MsgText: { content: '' },
+      ID: '',
       testForm: {
-        receiver: "",
+        receiver: ''
       },
       testFormRules: {
         receiver: [
-          { required: true, message: "手机号不能为空！", trigger: "blur" },
+          { required: true, message: '手机号不能为空！', trigger: 'blur' },
           {
             pattern: /^1[34578]\d{9}$/,
-            message: "请输入合法的手机号",
-            trigger: "blur",
-          },
-        ],
+            message: '请输入合法的手机号',
+            trigger: 'blur'
+          }
+        ]
       },
       isTesting: false,
-      testDialogVisible: false,
+      testDialogVisible: false
     };
   },
   created() {
@@ -233,13 +259,13 @@ export default {
       Promise.all([
         axios.userList({
           online: false,
-          condition: "", /// 姓名、手机、登录名
+          condition: '', /// 姓名、手机、登录名
           roleIds: [], // 角色ID，多个用“,”隔开
-          userStatus: "", // 用户状态  0正常 1禁用 2锁定 3注销
+          userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
           current: 1, // 当前页
-          size: 1000, // 每页显示条数
+          size: 1000 // 每页显示条数
         }),
-        axios.smsDetail(),
+        axios.smsDetail()
       ]).then((res) => {
         console.log(res[0]);
         if (res[1].data.code === 200) {
@@ -248,9 +274,10 @@ export default {
             this.isFirst = true;
           }
           this.formatData(JSON.stringify(smsData.varible));
-          this.msgForm.apiUrl = smsData.apiUrl || "";
-          this.MsgText.content = smsData.smsContent || "";
-          this.ID = smsData.iD || "";
+          this.msgForm.apiUrl = smsData.apiUrl || '';
+          this.msgForm.noticeType = smsData.noticeType || '';
+          this.MsgText.content = smsData.smsContent || '';
+          this.ID = smsData.iD || '';
         }
       });
     },
@@ -262,12 +289,12 @@ export default {
     },
     formatData(str) {
       let arr = [];
-      arr = str.slice(1, -1).replace(/\"/g, "").split(",");
+      arr = str.slice(1, -1).replace(/\"/g, '').split(',');
       arr.forEach((item) => {
-        let team = item.split(":");
+        let team = item.split(':');
         this.StringList.push({
-          value: "$" + team[0],
-          name: team[1],
+          value: '$' + team[0],
+          name: team[1]
         });
       });
     },
@@ -276,19 +303,20 @@ export default {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
         smsContent: this.MsgText.content,
+        noticeType: this.msgForm.noticeType
       };
       axios.FirstSmsSave(params).then((res) => {
         if (res.data.code === 200) {
           this.$notify({
-            title: "提示",
-            message: "保存成功！",
-            type: "success",
+            title: '提示',
+            message: '保存成功！',
+            type: 'success'
           });
         } else {
           this.$notify({
-            title: "提示",
+            title: '提示',
             message: res.data.message,
-            type: "error",
+            type: 'error'
           });
         }
       });
@@ -297,20 +325,21 @@ export default {
       let params = {
         ID: this.ID,
         apiUrl: this.msgForm.apiUrl,
-        smsContent: this.MsgText.content,
+        smsContent: this.MsgText.contentm,
+        noticeType: this.msgForm.noticeType
       };
       axios.smsSave(params).then((res) => {
         if (res.data.code === 200) {
           this.$notify({
-            title: "提示",
-            message: "保存成功！",
-            type: "success",
+            title: '提示',
+            message: '保存成功！',
+            type: 'success'
           });
         } else {
           this.$notify({
-            title: "提示",
+            title: '提示',
             message: res.data.message,
-            type: "error",
+            type: 'error'
           });
         }
       });
@@ -322,11 +351,12 @@ export default {
             // ID: this.ID,
             apiUrl:
               this.msgForm.apiUrl ||
-              "https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0",
+              'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0',
             // accountNumber: this.msgForm.accountNumber,
             // passWord: this.msgForm.passWord,
-            smsContent: this.MsgText.content || "testMsg",
+            smsContent: this.MsgText.content || 'testMsg',
             receiver: this.testForm.receiver,
+            noticeType: this.msgForm.noticeType
           };
           this.isTesting = true;
           axios
@@ -337,15 +367,15 @@ export default {
                 this.isSubmit = true;
                 this.testDialogVisible = false;
                 this.$notify({
-                  title: "提示",
-                  message: "测试通过！",
-                  type: "success",
+                  title: '提示',
+                  message: '测试通过！',
+                  type: 'success'
                 });
               } else {
                 this.$notify({
-                  title: "提示",
-                  message: "测试失败！",
-                  type: "error",
+                  title: '提示',
+                  message: '测试失败！',
+                  type: 'error'
                 });
               }
             })
@@ -358,14 +388,14 @@ export default {
     submit() {
       if (!this.isSubmit) {
         this.$notify({
-          title: "提示",
-          message: "请先通过短信测试！",
-          type: "warning",
+          title: '提示',
+          message: '请先通过短信测试！',
+          type: 'warning'
         });
       } else {
         Promise.all([
           this.$refs.smsForm.validate(),
-          this.$refs.configform.validate(),
+          this.$refs.configform.validate()
         ]).then((res) => {
           if (res[0] && res[1]) {
             if (this.isFirst) {
@@ -376,11 +406,11 @@ export default {
           }
         });
       }
-    },
+    }
   },
   components: {
-    TempConfig,
-  },
+    TempConfig
+  }
 };
 </script>
 

@@ -116,6 +116,31 @@
           </ul>
         </div>
       </div>
+      <div class="block-item">
+        <div class="item-block-title" @click="switchBlock(4)">
+          <span class="item-block-title-font">升级规则</span>
+          <i
+            class="icons el-icon-arrow-right"
+            :style="{
+              transform: blockSwitch[4] ? 'rotate(90deg)' : 'rotate(0)',
+            }"
+          />
+        </div>
+        <div
+          class="block-content"
+          v-show="blockSwitch[4]"
+          style="overflow: visible"
+        >
+          <span class="upgrade">
+            test规则等告警分类在过去2分钟内累计告警5次，即升级为S1
+          </span>
+          <!-- <span>
+            {{
+              `${scope.row.categoryName}等告警分类在过去${scope.row.period}分钟内${scope.row.type}告警${scope.row.count}次，即升级为${scope.row.level}`
+            }}
+          </span> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -131,7 +156,7 @@ export default {
       detail: '',
       status: ''
     },
-    blockSwitch: { '1': true, '2': false, '3': false },
+    blockSwitch: { '1': true, '2': false, '3': false, '4': false },
     tableData: [],
     alarmInfoList: []
   }),
@@ -236,6 +261,9 @@ export default {
       .block-content {
         padding-left: 20px;
         overflow: hidden;
+        .upgrade {
+          color: #fff;
+        }
         li {
           margin-bottom: 5px;
           padding-right: 20px;

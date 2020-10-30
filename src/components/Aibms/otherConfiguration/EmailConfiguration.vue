@@ -49,6 +49,25 @@
                 :style="{ width: '632px' }"
               />
             </el-form-item>
+            <el-form-item
+              label="模板类型："
+              prop="noticeType"
+              style="display: block"
+            >
+              <el-select
+                v-model="emailForm.noticeType"
+                clearable
+                placeholder="请选择模板"
+                :style="{ width: '200px' }"
+              >
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
             <!-- <el-form-item label="密码：" prop="password">
               <el-input
                 maxlength="20"
@@ -196,6 +215,11 @@ export default {
       }
     };
     return {
+      typeList: [
+        { value: 'ALERT', label: '普通模板' },
+        { value: 'ALERT_UPGRADE', label: '升级模板' },
+        { value: 'ALERT_AGGREGATION', label: '聚合模板' }
+      ],
       testForm: {
         receiver: ''
       },
@@ -223,7 +247,8 @@ export default {
         ip: '',
         port: '',
         accountNumber: '',
-        password: ''
+        password: '',
+        noticeType: ''
       },
       emailFormRules: {
         ip: [{ required: true, message: '请输入IP！', trigger: 'blur' }],
@@ -234,7 +259,8 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码！', trigger: 'blur' }
-        ]
+        ],
+        noticeType: [{ required: true, message: '请选择模板类型！', trigger: 'change' }]
       },
       configForm: {
         variable: '',
@@ -302,6 +328,7 @@ export default {
           this.emailForm.port = emailData.hostPost || '';
           this.emailForm.accountNumber = emailData.emailUser || '';
           this.emailForm.password = emailData.emailPassword || '';
+          this.emailForm.noticeType = emailData.noticeType || '';
           this.ID = emailData.id || '';
           this.ThemeText.content = emailData.emailSubject;
           this.ContentText.content = emailData.emailContent;
@@ -345,7 +372,8 @@ export default {
             emailUser: this.emailForm.accountNumber,
             emailPassword: this.emailForm.password,
             emailSubject: this.ThemeText.content,
-            emailContent: this.ContentText.content
+            emailContent: this.ContentText.content,
+            noticeType: this.emailForm.noticeType
           };
           axios.saveEmailConfig(params).then((res) => {
             if (res.data.code === 200) {
@@ -375,7 +403,8 @@ export default {
             emailPassword: this.emailForm.password,
             emailSubject: this.ThemeText.content,
             emailContent: this.ContentText.content,
-            receiver: this.testForm.receiver
+            receiver: this.testForm.receiver,
+            noticeType: this.emailForm.noticeType
           };
           this.isTesting = true;
           axios
