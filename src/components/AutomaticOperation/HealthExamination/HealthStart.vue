@@ -273,7 +273,7 @@ export default {
           }
 
           .btn-box {
-            padding-bottom: 30px;
+
           }
         }
 

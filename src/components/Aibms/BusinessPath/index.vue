@@ -152,8 +152,9 @@ export default {
           labelColor: '#fff',
           // type: 'iconCircle',
           style: {
-            stroke: '#1AC1FF',
-            fill: '#00A8E8'
+            stroke: '#aaa',
+            fill: '#50505099'
+            // fill: '#50505099'
           },
           colors: {
             warning: 'orange',
@@ -200,7 +201,7 @@ export default {
           default: [
             // 'drag-canvas',
             'drag-node',
-            'contextmenu',
+            'contextmenu'
             // 'brush-select',
             // 'click-select',
             // {

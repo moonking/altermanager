@@ -244,7 +244,6 @@ export default {
   border: 1px solid #ccc;
   width: 90%;
   padding-top: 30px;
-  padding-bottom: 30px;
   margin-top: 10px;
   margin-left: 20px;
 }

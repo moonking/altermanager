@@ -751,14 +751,14 @@ body {
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  height: 70px;
+  height: 72px;
   font-size: 22px;
   color: #fff;
-  background: #10101d;
+  background: #10101d99;
 }
 .logo {
-  height: 70px;
-  line-height: 70px;
+  height: 72px;
+  line-height: 68px;
 }
 .logo > img {
   height: 60px;
@@ -777,7 +777,7 @@ body {
   width: 5%;
   text-align: center;
   cursor: pointer;
-  line-height: 70px;
+  line-height: 72px;
 }
 .collapse-btn:hover {
   background: #0066ff;
@@ -786,7 +786,7 @@ body {
 .header .logo {
   float: left;
   width: 12%;
-  line-height: 70px;
+  line-height: 68px;
 }
 
 .header-right {
@@ -796,7 +796,7 @@ body {
 
 .header-user-con {
   display: flex;
-  height: 70px;
+  height: 72px;
   align-items: center;
 }
 
@@ -860,7 +860,7 @@ body {
 .mian_tab {
   list-style: none;
   display: inline-block;
-  line-height: 70px;
+  line-height: 72px;
   width: 73%;
   white-space: nowrap;
   overflow-x: auto;

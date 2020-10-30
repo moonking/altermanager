@@ -389,7 +389,6 @@ export default {
 .bg {
   margin: 10px;
   border-radius: 5px;
-  padding-bottom: 30px;
   background: #fff;
 
   .spanx {

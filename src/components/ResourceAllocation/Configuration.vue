@@ -613,7 +613,6 @@ export default {
   width: 100%;
   background: #fff;
   border-radius: 5px;
-  padding-bottom: 30px;
 }
 .el-input {
   width: 70%;

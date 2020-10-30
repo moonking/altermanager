@@ -262,7 +262,6 @@ export default {
   margin: 10px;
   background: none;
   border-radius: 5px;
-  padding-bottom: 30px;
 }
 .operationLog {
   height: 60px;

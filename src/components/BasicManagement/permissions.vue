@@ -210,24 +210,24 @@
   </div>
 </template>
 <script>
-import treeTable from "../treeTable";
-import axios from "@/api";
+import treeTable from '../treeTable';
+import axios from '@/api';
 // import Cookie from 'js-cookie';
 export default {
-  name: "MoreOperation",
+  name: 'MoreOperation',
   components: { treeTable },
   data() {
     return {
       rules: {
         name: [
-          { required: true, message: "请输入系统名称！", trigger: "blur" },
+          { required: true, message: '请输入系统名称！', trigger: 'blur' }
         ],
         permission: [
-          { required: true, message: "请输入系统标识！", trigger: "blur" },
+          { required: true, message: '请输入系统标识！', trigger: 'blur' }
         ],
         href: [
-          { required: true, message: "请输入系统地址！", trigger: "blur" },
-        ],
+          { required: true, message: '请输入系统地址！', trigger: 'blur' }
+        ]
       },
       active: 0,
       menuRemarksLength: 0,
@@ -237,13 +237,13 @@ export default {
       menuListDtata: [],
       syslist: [],
       syslistdata: [],
-      systemId: "",
-      firstMeunId: "",
+      systemId: '',
+      firstMeunId: '',
       count: 0,
       addSystemBox: false,
       editLoading: false,
-      sysname: "",
-      delmenuid: "",
+      sysname: '',
+      delmenuid: '',
       menuNameLength1: 0,
       menuNameLength2: 0,
       menuNameLength3: 0,
@@ -256,76 +256,76 @@ export default {
       menuForm2: {},
       menuForm3: {},
       form: {
-        name: "",
-        permission: "",
-        remarks: "",
+        name: '',
+        permission: '',
+        remarks: ''
         //        name: "",
         //        permission: "",
         //        remarks: ""
       },
       columns: [
         {
-          text: "名称",
-          value: "name",
+          text: '名称',
+          value: 'name',
           width: 200,
-          option: "sonData1",
+          option: 'sonData1'
         },
         {
-          text: "类型",
-          value: "typeName",
-          option: "sonData1",
-          act: "act",
+          text: '类型',
+          value: 'typeName',
+          option: 'sonData1',
+          act: 'act'
         },
         {
-          text: "权限标识",
+          text: '权限标识'
         },
         {
-          text: "链接地址",
+          text: '链接地址'
         },
         {
-          text: "描述",
-        },
+          text: '描述'
+        }
       ],
       data: {
         id: 1,
-        event: "事件1",
+        event: '事件1',
         timeLine: 100,
-        comment: "无",
+        comment: '无',
         children: [
           {
             id: 2,
-            event: "事件2",
+            event: '事件2',
             timeLine: 10,
-            comment: "无",
+            comment: '无'
           },
           {
             id: 3,
-            event: "事件3",
+            event: '事件3',
             timeLine: 90,
-            comment: "无",
+            comment: '无',
             children: [
               {
                 id: 4,
-                event: "事件4",
+                event: '事件4',
                 timeLine: 5,
-                comment: "无",
+                comment: '无'
               },
               {
                 id: 5,
-                event: "事件5",
+                event: '事件5',
                 timeLine: 10,
-                comment: "无",
+                comment: '无'
               },
               {
                 id: 6,
-                event: "事件6",
+                event: '事件6',
                 timeLine: 75,
-                comment: "无",
-              },
-            ],
-          },
-        ],
-      },
+                comment: '无'
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -349,9 +349,9 @@ export default {
     },
     // 获取菜单列表
     getMenuList(menuId) {
-      let mId = "";
+      let mId = '';
       if (menuId) {
-        mId += "menuId=" + menuId;
+        mId += 'menuId=' + menuId;
       }
       axios.menuList(mId).then((res) => {
         this.count++;
@@ -428,22 +428,22 @@ export default {
     },
     // 删除系统
     DeleteSystem() {
-      let typeIds = "";
+      let typeIds = '';
       // this.uniq(this.$store.state.typeIds).forEach(function(item){
       //   typeIds+=item+','
 
       // })
       // typeIds =typeIds.slice(0,typeIds.length-1)
 
-      if (!this.delmenuid || this.delmenuid === "" || this.delmenuid === null) {
+      if (!this.delmenuid || this.delmenuid === '' || this.delmenuid === null) {
         typeIds = this.systemId;
       } else {
         typeIds = this.delmenuid;
       }
-      this.$confirm("确认删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           axios
@@ -451,19 +451,19 @@ export default {
             .then((res) => {
               if (res.data.code === 200) {
                 this.$notify({
-                  type: "success",
-                  message: "删除成功!",
+                  type: 'success',
+                  message: '删除成功!'
                 });
                 this.active = 0;
-                this.delmenuid = "";
+                this.delmenuid = '';
                 this.delmenuid = null;
                 this.getMenuList();
                 this.getMenuSysList();
               } else {
                 this.$notify({
-                  title: "提示",
+                  title: '提示',
                   message: res.data.message,
-                  type: "warning",
+                  type: 'warning'
                 });
               }
             })
@@ -471,8 +471,8 @@ export default {
         })
         .catch(() => {
           this.$notify({
-            type: "info",
-            message: "已取消删除",
+            type: 'info',
+            message: '已取消删除'
           });
         });
 
@@ -500,29 +500,29 @@ export default {
     addsysteam() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.form.menuType = "1";
+          this.form.menuType = '1';
           axios
             .AddMenuItem(this.form)
             .then((res) => {
               if (res.data.code === 200) {
                 this.$notify({
-                  type: "success",
-                  message: "添加成功!",
+                  type: 'success',
+                  message: '添加成功!'
                 });
                 this.addSystemBox = false;
                 this.getMenuSysList();
                 this.getMenuSysList();
               } else if (res.data.code === 400) {
                 this.$notify({
-                  title: "提示",
+                  title: '提示',
                   message: res.data.message,
-                  type: "warning",
+                  type: 'warning'
                 });
               } else {
                 this.$notify({
-                  title: "提示",
+                  title: '提示',
                   message: res.data.message,
-                  type: "warning",
+                  type: 'warning'
                 });
               }
             })
@@ -585,56 +585,56 @@ export default {
 
     // 点击表单删除该用户
     open2() {
-      this.$confirm("确认删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           this.$notify({
-            type: "success",
-            message: "删除成功!",
+            type: 'success',
+            message: '删除成功!'
           });
         })
         .catch(() => {
           this.$notify({
-            type: "info",
-            message: "已取消删除",
+            type: 'info',
+            message: '已取消删除'
           });
         });
     },
     // 删除角色(无角色)
     deletUser() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           this.$notify({
-            type: "success",
-            message: "删除成功!",
+            type: 'success',
+            message: '删除成功!'
           });
         })
         .catch(() => {
           this.$notify({
-            type: "info",
-            message: "已取消删除",
+            type: 'info',
+            message: '已取消删除'
           });
         });
     },
     // 有角色
     alertUser() {
-      this.$alert("这是一段内容", "标题名称", {
-        confirmButtonText: "确定",
+      this.$alert('这是一段内容', '标题名称', {
+        confirmButtonText: '确定',
         callback: (action) => {
           this.$notify({
-            type: "info",
-            message: `action: ${action}`,
+            type: 'info',
+            message: `action: ${action}`
           });
-        },
+        }
       });
-    },
+    }
   },
   mounted() {
     this.getMenuSysList();
@@ -642,14 +642,13 @@ export default {
   watch: {
     $route(newValue, oldValue) {
       this.addSystemBox = false;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="scss">
 .bg {
   margin: 10px 10px 0;
-  padding-bottom: 30px;
   background: #fff;
   border-radius: 5px;
 

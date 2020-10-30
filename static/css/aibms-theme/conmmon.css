@@ -110,7 +110,7 @@
 }
 .aibms-user .block {
     text-align: center!important;
-    margin-top: 92px!important;
+    /* margin-top: 92px!important; */
 }
 .aibms-user .userContainer > div .information .databox span {
     margin-right: 1px !important;

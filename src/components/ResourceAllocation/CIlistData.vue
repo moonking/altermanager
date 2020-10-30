@@ -1155,7 +1155,6 @@ export default {
         height: 32px;
         line-height: 32px;
         .el-pagination {
-          margin-top: 92px;
           cursor: pointer;
         }
       }

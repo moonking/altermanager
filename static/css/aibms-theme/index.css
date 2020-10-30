@@ -8781,7 +8781,7 @@ body {
     height: 50px;
     line-height: 50px;
     padding: 0 45px;
-    min-width: 200px; }
+    min-width: 180px; }
   .el-submenu__icon-arrow {
     position: absolute;
     top: 50%;
@@ -30523,7 +30523,7 @@ body {
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse; }
   .el-message-box--center {
-    padding-bottom: 30px; }
+  }
     .el-message-box--center .el-message-box__header {
       padding-top: 30px; }
     .el-message-box--center .el-message-box__title {

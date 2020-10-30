@@ -32,7 +32,12 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="alarmModel.origin" clearable placeholder="请选择来源" style="width: 160px;">
+          <el-select
+            v-model="alarmModel.origin"
+            clearable
+            placeholder="请选择来源"
+            style="width: 160px"
+          >
             <el-option
               v-for="item in originList"
               :key="item.value"
@@ -96,10 +101,19 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="level" label="原级别">
+        <template v-slot="scope">
+          <span>{{ scope.row.level }}</span>
+          <icon-svg
+            icon-class="bj"
+            :class="scope.row.level | iconLevelFilter"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="platform" label="来源" />
       <el-table-column prop="alarmAddress" label="告警对象" />
       <el-table-column prop="alarmType" label="类型" />
-      <el-table-column prop="startTime" label="开始时间" width="230"  />
+      <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">
         <template v-slot="scope">
           <span>{{ scope.row.status === '1' ? '已收到' : '-' }}</span>
