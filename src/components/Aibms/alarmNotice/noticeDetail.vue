@@ -131,14 +131,11 @@
           v-show="blockSwitch[4]"
           style="overflow: visible"
         >
-          <span class="upgrade">
-            test规则等告警分类在过去2分钟内累计告警5次，即升级为S1
-          </span>
-          <!-- <span>
+          <span class="upgrade" v-if="alertUpgradeRepDTO">
             {{
-              `${scope.row.categoryName}等告警分类在过去${scope.row.period}分钟内${scope.row.type}告警${scope.row.count}次，即升级为${scope.row.level}`
+              `${alertUpgradeRepDTO.categoryName}等告警分类在过去${alertUpgradeRepDTO.period}分钟内${alertUpgradeRepDTO.type}告警${alertUpgradeRepDTO.count}次，即升级为${UpgradeLevel}`
             }}
-          </span> -->
+          </span>
         </div>
       </div>
     </div>
@@ -156,12 +153,34 @@ export default {
       detail: '',
       status: ''
     },
+    alertUpgradeRepDTO: '',
     blockSwitch: { '1': true, '2': false, '3': false, '4': false },
     tableData: [],
     alarmInfoList: []
   }),
   created() {
     this.getNoticeDetail()
+  },
+  computed: {
+    UpgradeLevel() {
+      var Level
+      console.log(this.alertUpgradeRepDTO.level)
+      switch (this.alertUpgradeRepDTO.level) {
+        case '1':
+          Level = 'critical'
+          break;
+        case '2':
+          Level = 'error'
+          break;
+        case '3':
+          Level = 'warning'
+          break;
+        default:
+          break;
+      }
+
+      return Level
+    }
   },
   methods: {
     getNoticeDetail() {
@@ -175,9 +194,12 @@ export default {
             description,
             userList,
             status,
-            alarmInfoList
+            alarmInfoList,
+            oldLevel,
+            alertUpgradeRepDTO
           } = alarmDetail
-          this.alarmForm.level = level
+          this.alertUpgradeRepDTO = alertUpgradeRepDTO
+          this.alarmForm.level = oldLevel ? `${level} → ${oldLevel}` : level
           this.alarmForm.object = alarmAddress
           this.alarmForm.date = startTime
           this.alarmForm.status = status == '0' ? '' : status

@@ -118,11 +118,13 @@
       </el-table-column>
       <el-table-column prop="level" label="原级别">
         <template v-slot="scope">
-          <span>{{ scope.row.level }}</span>
-          <icon-svg
-            icon-class="bj"
-            :class="scope.row.level | iconLevelFilter"
-          />
+          <div v-if="scope.row.oldLevel">
+            <span>{{ scope.row.oldLevel }}</span>
+            <icon-svg
+              icon-class="bj"
+              :class="scope.row.oldLevel | iconLevelFilter"
+            />
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="platform" label="来源" />
