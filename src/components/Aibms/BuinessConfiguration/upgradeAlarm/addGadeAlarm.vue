@@ -147,10 +147,10 @@
 <script>
 import axios from '@/api'
 const iconMap = {
-  'S1': 's1-color',
-  'S2': 's2-color',
-  'S3': 's3-color',
-  'S4': 's4-color'
+  'critical': 's1-color',
+  'warning': 's2-color',
+  'information': 's3-color'
+  // 'S4': 's4-color'
 }
 export default {
   filters: {
@@ -204,11 +204,11 @@ export default {
       },
       {
         value: '2',
-        label: 'error'
+        label: 'warning'
       },
       {
         value: '3',
-        label: 'warning'
+        label: 'information'
       }
       // {
       //   value: '4',

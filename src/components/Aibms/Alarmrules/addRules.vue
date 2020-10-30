@@ -457,12 +457,12 @@ export default {
         },
         {
           value: '2',
-          label: 'error'
+          label: 'warning'
         },
         {
           value: '3',
-          label: 'warning'
-        },
+          label: 'information'
+        }
         // {
         //   value: '4',
         //   label: 'S4'
