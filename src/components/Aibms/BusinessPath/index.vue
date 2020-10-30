@@ -2,13 +2,109 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
-      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+      <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
         <template v-slot:tooltip="tooltip">
           <business-path-tooltip :alerts="tooltip.editorInfo"></business-path-tooltip>
         </template>
       </graph-editor>
     </div>
-    <div class="notify-list"></div>
+    <div class="notify-list">
+      <div class="notify-list-title">
+        <div class="notify-list-title-text">告警信息 <el-button @click="notifyAlert" size="mini">测试</el-button></div>
+      </div>
+      <div class="notify-list-content">
+        <div class="item-wrapper">
+          <div class="notify-list-item">
+            <div class="notify-list-icon">
+              <icon-svg
+                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                icon-class="bj"
+                :class="1 | iconLevelFilter"
+              />
+            </div>
+            <div class="list-item-dettail">
+              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
+              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            </div>
+            <div class="notify-close">
+              <i class="el-icon-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item-wrapper">
+          <div class="notify-list-item">
+            <div class="notify-list-icon">
+              <icon-svg
+                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                icon-class="bj"
+                :class="1 | iconLevelFilter"
+              />
+            </div>
+            <div class="list-item-dettail">
+              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
+              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            </div>
+            <div class="notify-close">
+              <i class="el-icon-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item-wrapper">
+          <div class="notify-list-item">
+            <div class="notify-list-icon">
+              <icon-svg
+                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                icon-class="bj"
+                :class="1 | iconLevelFilter"
+              />
+            </div>
+            <div class="list-item-dettail">
+              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
+              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            </div>
+            <div class="notify-close">
+              <i class="el-icon-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item-wrapper">
+          <div class="notify-list-item">
+            <div class="notify-list-icon">
+              <icon-svg
+                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                icon-class="bj"
+                :class="1 | iconLevelFilter"
+              />
+            </div>
+            <div class="list-item-dettail">
+              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
+              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            </div>
+            <div class="notify-close">
+              <i class="el-icon-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item-wrapper">
+          <div class="notify-list-item">
+            <div class="notify-list-icon">
+              <icon-svg
+                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                icon-class="bj"
+                :class="1 | iconLevelFilter"
+              />
+            </div>
+            <div class="list-item-dettail">
+              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
+              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            </div>
+            <div class="notify-close">
+              <i class="el-icon-close"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +117,18 @@
 import BusinessPathTooltip from './BusinessPathTooltip'
 import axios from '@/api'
 export default {
+  filters: {
+    iconLevelFilter: level => {
+      const iconMap = {
+        1: 's1-color',
+        2: 's2-color',
+        3: 's3-color',
+        4: 's4-color',
+        5: 's5-color'
+      };
+      return iconMap[level]
+    }
+  },
   data () {
     return {
       tempData: {
@@ -101,8 +209,8 @@ export default {
           type: 'line',
           // color: '#000',
           style: {
-            stroke: '#23bbd6',
-            // stroke: '#23d692',
+            // stroke: '#23bbd6',
+            stroke: '#00a8e8',
             lineWidth: 4,
             lineAppendWidth: 20,
             // startArrow: true,
@@ -128,8 +236,8 @@ export default {
             strokeOpacity: 1
           },
           selected: {
-            stroke: '#19b868',
-            lineWidth: 4,
+            stroke: '#ff6766',
+            lineWidth: 2,
             strokeOpacity: 1
           }
           // active: {
@@ -143,7 +251,8 @@ export default {
             cursor: 'pointer'
           },
           selected: {
-            stroke: '#19b868',
+            stroke: '#ff6766',
+            // stroke: '#19b868',
             lineWidth: 4
           },
           warning: {
@@ -156,7 +265,8 @@ export default {
           // type: 'iconCircle',
           style: {
             stroke: 'transparent',
-            fill: '#50505099',
+            fill: '#16161693',
+            // fill: '#50505099',
             shadowColor: '#333',
             shadowBlur: 5
           },
@@ -205,7 +315,7 @@ export default {
           default: [
             // 'drag-canvas',
             'drag-node',
-            'contextmenu',
+            'contextmenu'
             // 'brush-select',
             // 'click-select',
             // {
@@ -242,6 +352,22 @@ export default {
     }
   },
   methods: {
+    notifyAlert () {
+      this.$notify({
+        customClass: 'notify-style',
+        dangerouslyUseHTMLString: true,
+        message: `
+          <p class="notify-title">
+            有新的<span style="color:red;font-weight: bold;"> Critical </span>告警
+          </p>
+          <div class="notify-content">
+            <div class="notify-item"><span>对象：</span>CNZHAPWRPA010:9182</div>
+            <div class="notify-item"><span>时间：</span>2020-08-13 05:24:01</div>
+            <div class="notify-item"><span>详情：</span>Usage filesystem space > 90% for 5 minutes</div>
+          </div>
+          `
+      });
+    },
     initCustomGraphListener (graph) {
       graph.on('node:click', (e) => {
         const { item } = e
@@ -474,7 +600,7 @@ export default {
   },
   created () {
     this.getSystemList()
-    this.initWebSocket()
+    // this.initWebSocket()
   },
   mounted () {
     this.$nextTick(() => {
@@ -514,6 +640,8 @@ export default {
 .business-path-wrapper {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  /* padding: 0 360px 0 0; */
 }
 .editor {
   width: 100%;
@@ -528,11 +656,134 @@ export default {
   background-color: #23bbd6;
 }
 .notify-list {
-  width: 320px;
-  height: 260px;
+  width: 360px;
   position: absolute;
   right: 0;
   bottom: 0;
-  background-color: #fff;
+  background-color: #161616b3;
+  box-shadow: 0 0  10px #000;
+  z-index: 100;
+}
+.notify-list-title {
+  padding: 10px 16px 4px;
+}
+.notify-list-title-text {
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px dashed #ddd;
+  color: #fff;
+  padding-bottom: 12px;
+}
+.notify-list-content {
+  height: 224px;
+  overflow-y: auto;
+}
+.item-wrapper {
+  padding: 0 16px;
+}
+.notify-list-item {
+  /* width: 100%; */
+  font-size: 14px;
+  color: #fff;
+  /* border-bottom: 1px dashed #ddd; */
+  padding: 10px 10px 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notify-list-icon {
+  text-align: left;
+  margin-right: 16px;
+}
+.list-item-dettail {
+  flex: 1;
+  font-size: 12px;
+}
+.notify-list-item:hover {
+  box-shadow: 0 0 10px #000;
+}
+.notify-list-item-name {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notify-list-item-time {
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+.notify-close:hover {
+  cursor: pointer;
+}
+.notify-close:hover i {
+  color: #1890ff;
+}
+
+/* 滚动条样式 */
+/*css主要部分的样式*/
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+width: 8px; /*对垂直流动条有效*/
+height: 8px; /*对水平流动条有效*/
+}
+
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+::-webkit-scrollbar-track{
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: #444;
+border-radius: 3px;
+}
+
+/*定义滑块颜色、内阴影及圆角*/
+::-webkit-scrollbar-thumb{
+border-radius: 7px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: #666;
+}
+
+/*定义两端按钮的样式*/
+::-webkit-scrollbar-button {
+/* background-color:cyan; */
+}
+
+/*定义右下角汇合处的样式*/
+::-webkit-scrollbar-corner {
+/* background:khaki; */
+}
+</style>
+<style>
+.notify-style {
+  width: 360px;
+  height: 160px;
+  background-color: #161616b3;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 10px #000;
+}
+.notify-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ddd;
+}
+.notify-content {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.notify-item {
+  margin-bottom: 4px;
+}
+.notify-item:last-child {
+  margin-bottom: 0;
 }
 </style>
