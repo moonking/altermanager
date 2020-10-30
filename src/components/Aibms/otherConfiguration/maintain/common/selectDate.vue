@@ -78,6 +78,12 @@ export default {
     endingTime: {
       type: String
     },
+    sTime: {
+      type: String
+    },
+    eTime: {
+      type: String
+    },
     readOnly: {
       required: true,
       default: false,
@@ -98,6 +104,24 @@ export default {
         if (this.$route.query.id) {
           this.dateModel.daterange.push(val)
           this.endDay = val
+        }
+      }
+    },
+    sTime(val, oldVal) {
+      if (val.length) {
+        if (this.$route.query.id) {
+          this.dateModel.startTime = val
+          this.dateModel.timePicker[0] = val
+          this.startTime = val
+        }
+      }
+    },
+    eTime(val, oldVal) {
+      if (val.length) {
+        if (this.$route.query.id) {
+          this.dateModel.endTime = val
+          this.dateModel.timePicker[1] = val
+          this.endTime = val
         }
       }
     }
@@ -127,6 +151,8 @@ export default {
       let endMinutes = this.dateModel.endTime.split(':')[1]
       this.dateModel.timePicker[0] = this.dateModel.startTime
       this.dateModel.timePicker[1] = this.dateModel.endTime
+      this.startTime = this.dateModel.startTime
+      this.endTime = this.dateModel.endTime
       if (startHour > endHour) {
         this.tomorrow = '次日'
       } else if (startHour == endHour) {

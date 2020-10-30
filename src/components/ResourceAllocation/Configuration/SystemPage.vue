@@ -27,6 +27,7 @@
     >
       <el-form-item label="名称" prop="name">
         <el-input
+          maxlength="40"
           v-model="sysdata.name"
           :disabled="status === 'watch'"
         ></el-input>
@@ -52,9 +53,15 @@
       <el-form-item label="关联CI项" prop="hosts">
         <div class="cursor" @click="showChooseHostDialog">
           <i class="el-icon-link"></i>
-          <span v-if="status === 'watch'">{{`已选择 ${ hostTableSelected.length } 个 CI 项`}}</span>
+          <span v-if="status === 'watch'">{{
+            `已选择 ${hostTableSelected.length} 个 CI 项`
+          }}</span>
           <span v-else>
-            {{hostTableSelected.length === 0 ? '点击选择CI项' : `已选择 ${ hostTableSelected.length } 个 CI 项`}}
+            {{
+              hostTableSelected.length === 0
+                ? '点击选择CI项'
+                : `已选择 ${hostTableSelected.length} 个 CI 项`
+            }}
           </span>
         </div>
       </el-form-item>
@@ -284,7 +291,7 @@ export default {
       if (value === '') {
         callback(new Error('请输入名称!'))
       } else if (
-        !/^[0-9A-Za-z_\u4e00-\u9fa5]{2,26}$/.test(
+        !/^[0-9A-Za-z_-\u4e00-\u9fa5\s]{2,26}$/.test(
           value
         )
       ) {
@@ -785,5 +792,4 @@ export default {
   color: #1890ff;
   cursor: pointer;
 }
-
 </style>

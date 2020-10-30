@@ -49,7 +49,7 @@
                 :style="{ width: '632px' }"
               />
             </el-form-item>
-            <el-form-item label="密码：" prop="password">
+            <!-- <el-form-item label="密码：" prop="password">
               <el-input
                 maxlength="20"
                 show-password
@@ -58,7 +58,7 @@
                 placeholder="请输入密码"
                 :style="{ width: '632px' }"
               />
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
         </div>
       </div>

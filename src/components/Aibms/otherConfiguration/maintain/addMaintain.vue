@@ -2,13 +2,17 @@
   <div class="aia-content">
     <div class="wrapper-pannel">
       <el-steps :active="active" align-center>
-        <el-step v-for="item in stepList" :key="item.value" :title="item.label" />
+        <el-step
+          v-for="item in stepList"
+          :key="item.value"
+          :title="item.label"
+        />
       </el-steps>
       <selectHost
-      :checkedTableData="checkedTableData"
-      :readOnly="readOnly"
-      ref="selectHost"
-      v-show="active === 0"
+        :checkedTableData="checkedTableData"
+        :readOnly="readOnly"
+        ref="selectHost"
+        v-show="active === 0"
       />
       <!-- <selectCategory
       ref="selectCategory"
@@ -17,17 +21,27 @@
       :readOnly="readOnly"
       v-show="active === 1" /> -->
       <selectDate
-      :startingTime="startTime"
-      :endingTime="endTime"
-      :readOnly="readOnly"
-      ref="selectDate"
-      v-show="active === 1"
+        :startingTime="startDay"
+        :endingTime="endDay"
+        :sTime="startTime"
+        :eTime="endTime"
+        :readOnly="readOnly"
+        ref="selectDate"
+        v-show="active === 1"
       />
       <div class="operation-button">
-        <el-button @click="prev" type="primary" v-if="active === 1  ">上一步</el-button>
-        <el-button @click.stop="next" type="primary" v-if="active === 0  ">下一步</el-button>
-        <el-button @click="save" type="primary" v-if="active === 1 && !readOnly">保存</el-button>
-        <el-button @click="cancel" v-if="!readOnly" class="cancel-button">取消</el-button>
+        <el-button @click="prev" type="primary" v-if="active === 1"
+          >上一步</el-button
+        >
+        <el-button @click.stop="next" type="primary" v-if="active === 0"
+          >下一步</el-button
+        >
+        <el-button @click="save" type="primary" v-if="active === 1 && !readOnly"
+          >保存</el-button
+        >
+        <el-button @click="cancel" v-if="!readOnly" class="cancel-button"
+          >取消</el-button
+        >
       </div>
     </div>
   </div>
@@ -57,13 +71,15 @@ export default {
     endTime: '',
     startTime: '',
     sortList: [],
-    readOnly: false
+    readOnly: false,
+    startDay: '',
+    endDay: ''
   }),
-  created () {
+  created() {
     this.getMaintenanceDetail()
   },
   methods: {
-    getMaintenanceDetail () {
+    getMaintenanceDetail() {
       //  查看或编辑
       if (this.$route.query.id) {
         this.editId = this.$route.query.id
@@ -76,9 +92,11 @@ export default {
         axios.getMaintenanceDetail(this.$route.query.id).then(res => {
           if (res.data.success) {
             const resultData = res.data.data
-            const { systemList, startTime, endTime, categoryList, labels } = resultData
+            const { systemList, startDay, endDay, startTime, endTime, categoryList, labels } = resultData
             this.checkedTableData = systemList
             this.checkedLabels = labels
+            this.startDay = startDay
+            this.endDay = endDay
             this.startTime = startTime
             this.endTime = endTime
             this.sortList = categoryList
@@ -93,10 +111,10 @@ export default {
         this.$route.meta.title = '新增维护窗口'
       }
     },
-    prev () {
+    prev() {
       this.active--
     },
-    next () {
+    next() {
       if (this.active === 0) {
         if (this.$refs.selectHost.hostList.length) {
           this.active++
@@ -114,11 +132,13 @@ export default {
       //   }
       // }
     },
-    addOrEdit (methods) {
+    addOrEdit(methods) {
       const params = {
         id: this.editId,
         systemList: this.$refs.selectHost.hostList,
         // sortIds: this.$refs.selectCategory.checkedCategory,
+        startDay: this.$refs.selectDate.startDay,
+        endDay: this.$refs.selectDate.endDay,
         startTime: this.$refs.selectDate.startTime,
         endTime: this.$refs.selectDate.endTime
       }
@@ -143,7 +163,7 @@ export default {
         }
       })
     },
-    save () {
+    save() {
       this.$refs.selectDate.$refs['dateFrom'].validate((valid) => {
         if (valid) {
           if (this.editId) {
@@ -156,7 +176,7 @@ export default {
         }
       })
     },
-    cancel () {
+    cancel() {
       this.$router.replace({
         path: '/Aibms/otherConfiguration/maintain',
         query: { code: 8 }
