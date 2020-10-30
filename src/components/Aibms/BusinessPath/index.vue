@@ -2,7 +2,7 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
-      <graph-editor :data="tempData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
         <template v-slot:tooltip="tooltip">
           <business-path-tooltip :alerts="tooltip.editorInfo"></business-path-tooltip>
         </template>
@@ -10,93 +10,23 @@
     </div>
     <div class="notify-list">
       <div class="notify-list-title">
-        <div class="notify-list-title-text">告警信息 <el-button @click="notifyAlert" size="mini">测试</el-button></div>
+        <div class="notify-list-title-text">告警信息
+          <!-- <el-button @click="notifyAlert" size="mini">测试</el-button> -->
+        </div>
       </div>
       <div class="notify-list-content">
-        <div class="item-wrapper">
+        <div class="item-wrapper" v-for="notify in notifyList" :key="notify.id">
           <div class="notify-list-item">
             <div class="notify-list-icon">
               <icon-svg
                 style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
                 icon-class="bj"
-                :class="1 | iconLevelFilter"
+                :class="notify.level | iconLevelFilter"
               />
             </div>
-            <div class="list-item-dettail">
-              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
-              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
-            </div>
-            <div class="notify-close">
-              <i class="el-icon-close"></i>
-            </div>
-          </div>
-        </div>
-        <div class="item-wrapper">
-          <div class="notify-list-item">
-            <div class="notify-list-icon">
-              <icon-svg
-                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
-                icon-class="bj"
-                :class="1 | iconLevelFilter"
-              />
-            </div>
-            <div class="list-item-dettail">
-              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
-              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
-            </div>
-            <div class="notify-close">
-              <i class="el-icon-close"></i>
-            </div>
-          </div>
-        </div>
-        <div class="item-wrapper">
-          <div class="notify-list-item">
-            <div class="notify-list-icon">
-              <icon-svg
-                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
-                icon-class="bj"
-                :class="1 | iconLevelFilter"
-              />
-            </div>
-            <div class="list-item-dettail">
-              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
-              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
-            </div>
-            <div class="notify-close">
-              <i class="el-icon-close"></i>
-            </div>
-          </div>
-        </div>
-        <div class="item-wrapper">
-          <div class="notify-list-item">
-            <div class="notify-list-icon">
-              <icon-svg
-                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
-                icon-class="bj"
-                :class="1 | iconLevelFilter"
-              />
-            </div>
-            <div class="list-item-dettail">
-              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
-              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
-            </div>
-            <div class="notify-close">
-              <i class="el-icon-close"></i>
-            </div>
-          </div>
-        </div>
-        <div class="item-wrapper">
-          <div class="notify-list-item">
-            <div class="notify-list-icon">
-              <icon-svg
-                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
-                icon-class="bj"
-                :class="1 | iconLevelFilter"
-              />
-            </div>
-            <div class="list-item-dettail">
-              <div class="notify-list-item-time">时间：2020-08-13 05:24:01</div>
-              <div class="notify-list-item-name">对象：CNZHAPWRPA010:9182</div>
+            <div class="list-item-detail">
+              <div class="notify-list-item-time">时间：{{notify.time}}</div>
+              <div class="notify-list-item-name">对象：{{notify.name}}</div>
             </div>
             <div class="notify-close">
               <i class="el-icon-close"></i>
@@ -131,6 +61,38 @@ export default {
   },
   data () {
     return {
+      notifyList: [
+        {
+          id: 0,
+          name: 'CNZHAPWRPA010:9182',
+          time: '2020-08-13 05:24:01',
+          level: '1'
+        },
+        {
+          id: 1,
+          name: 'CNZHAPWRPA010:9182',
+          time: '2020-08-13 05:24:01',
+          level: '3'
+        },
+        {
+          id: 2,
+          name: 'CNZHAPWRPA010:9182',
+          time: '2020-08-13 05:24:01',
+          level: '2'
+        },
+        {
+          id: 3,
+          name: 'CNZHAPWRPA010:9182',
+          time: '2020-08-13 05:24:01',
+          level: '1'
+        },
+        {
+          id: 4,
+          name: 'CNZHAPWRPA010:9182',
+          time: '2020-08-13 05:24:01',
+          level: '3'
+        }
+      ],
       tempData: {
         // 点集
         nodes: [
@@ -677,6 +639,7 @@ export default {
 .notify-list-content {
   height: 224px;
   overflow-y: auto;
+  padding: 10px 0;
 }
 .item-wrapper {
   padding: 0 16px;
@@ -695,7 +658,7 @@ export default {
   text-align: left;
   margin-right: 16px;
 }
-.list-item-dettail {
+.list-item-detail {
   flex: 1;
   font-size: 12px;
 }
@@ -719,6 +682,28 @@ export default {
 }
 .notify-close:hover i {
   color: #1890ff;
+}
+
+/* 等级颜色 */
+.s1-color {
+  color: #ff0000 !important;
+  fill: #ff0000 !important;
+}
+.s2-color {
+  color: #ff9900 !important;
+  fill: #ff9900 !important;
+}
+.s3-color {
+  color: #ffcc00 !important;
+  fill: #ffcc00 !important;
+}
+.s4-color {
+  color: #ffff00 !important;
+  fill: #ffff00 !important;
+}
+.s5-color {
+  color: #ffff88 !important;
+  fill: #ffff88 !important;
 }
 
 /* 滚动条样式 */
