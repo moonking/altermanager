@@ -116,6 +116,28 @@
           </ul>
         </div>
       </div>
+      <div class="block-item">
+        <div class="item-block-title" @click="switchBlock(4)">
+          <span class="item-block-title-font">升级规则</span>
+          <i
+            class="icons el-icon-arrow-right"
+            :style="{
+              transform: blockSwitch[4] ? 'rotate(90deg)' : 'rotate(0)',
+            }"
+          />
+        </div>
+        <div
+          class="block-content"
+          v-show="blockSwitch[4]"
+          style="overflow: visible"
+        >
+          <span class="upgrade" v-if="alertUpgradeRepDTO">
+            {{
+              `${alertUpgradeRepDTO.categoryName}等告警分类在过去${alertUpgradeRepDTO.period}分钟内${alertUpgradeRepDTO.type}告警${alertUpgradeRepDTO.count}次，即升级为${UpgradeLevel}`
+            }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -131,12 +153,34 @@ export default {
       detail: '',
       status: ''
     },
-    blockSwitch: { '1': true, '2': false, '3': false },
+    alertUpgradeRepDTO: '',
+    blockSwitch: { '1': true, '2': false, '3': false, '4': false },
     tableData: [],
     alarmInfoList: []
   }),
   created() {
     this.getNoticeDetail()
+  },
+  computed: {
+    UpgradeLevel() {
+      var Level
+      console.log(this.alertUpgradeRepDTO.level)
+      switch (this.alertUpgradeRepDTO.level) {
+        case '1':
+          Level = 'critical'
+          break;
+        case '2':
+          Level = 'error'
+          break;
+        case '3':
+          Level = 'warning'
+          break;
+        default:
+          break;
+      }
+
+      return Level
+    }
   },
   methods: {
     getNoticeDetail() {
@@ -150,9 +194,12 @@ export default {
             description,
             userList,
             status,
-            alarmInfoList
+            alarmInfoList,
+            oldLevel,
+            alertUpgradeRepDTO
           } = alarmDetail
-          this.alarmForm.level = level
+          this.alertUpgradeRepDTO = alertUpgradeRepDTO
+          this.alarmForm.level = oldLevel ? `${level} → ${oldLevel}` : level
           this.alarmForm.object = alarmAddress
           this.alarmForm.date = startTime
           this.alarmForm.status = status == '0' ? '' : status
@@ -236,6 +283,9 @@ export default {
       .block-content {
         padding-left: 20px;
         overflow: hidden;
+        .upgrade {
+          color: #fff;
+        }
         li {
           margin-bottom: 5px;
           padding-right: 20px;

@@ -755,7 +755,6 @@ export default {
   }
   .block {
     text-align: center;
-    margin-top: 92px;
   }
   .addbutton {
     background-color: #0280ff !important;

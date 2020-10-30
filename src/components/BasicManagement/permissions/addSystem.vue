@@ -724,7 +724,6 @@ export default {
   margin: 10px;
   background: #fff;
   border-radius: 5px;
-  padding-bottom: 30px;
 
   .title {
     height: 60px;

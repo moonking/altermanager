@@ -55,6 +55,7 @@ export default {
   computed: {
     alertList () {
       const {alerts} = this
+      console.log(alerts)
       let alertList = []
       try {
         alertList = alerts.businessData.hierarchicalCount.systemLinkLevelList

@@ -1096,10 +1096,10 @@ export default {
 @import '../../../static/fonticon/font_sideBar/iconfont.css';
 .sidebar {
   display: block;
-  min-width: 200px;
+  min-width: 180px;
   position: absolute;
   left: 0;
-  top: 70px;
+  top: 72px;
   bottom: 0;
   /* background: rgba(4, 28, 37, 0.4); */
 }
@@ -1147,7 +1147,7 @@ export default {
   background: #00a8e8 !important;
 }
 .el-submenu .el-menu-item {
-  padding-left: 65px !important;
+  padding-left: 58px !important;
 }
 .el-submenu__title {
   padding: 0 !important;

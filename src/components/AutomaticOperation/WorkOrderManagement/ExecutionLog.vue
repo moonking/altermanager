@@ -275,6 +275,5 @@ export default {
   margin-right: 0 !important;
 }
 .el-pagination {
-  margin-top: 92px;
 }
 </style>

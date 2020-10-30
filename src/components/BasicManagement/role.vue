@@ -1148,7 +1148,6 @@ export default {
   }
   .rolePaginate {
     position: relative;
-    margin-top: 92px;
     text-align: center;
   }
   .systemName {

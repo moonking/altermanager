@@ -32,9 +32,29 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="alarmModel.origin" clearable placeholder="请选择来源" style="width: 160px;">
+          <el-select
+            v-model="alarmModel.origin"
+            clearable
+            placeholder="请选择来源"
+            style="width: 160px"
+          >
             <el-option
               v-for="item in originList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            v-model="alarmModel.topologyValue"
+            clearable
+            placeholder="是否为升级告警"
+            style="width: 160px"
+          >
+            <el-option
+              v-for="item in upgradeList"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -96,10 +116,21 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="level" label="原级别">
+        <template v-slot="scope">
+          <div v-if="scope.row.oldLevel">
+            <span>{{ scope.row.oldLevel }}</span>
+            <icon-svg
+              icon-class="bj"
+              :class="scope.row.oldLevel | iconLevelFilter"
+            />
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="platform" label="来源" />
       <el-table-column prop="alarmAddress" label="告警对象" />
       <el-table-column prop="alarmType" label="类型" />
-      <el-table-column prop="startTime" label="开始时间" width="230"  />
+      <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">
         <template v-slot="scope">
           <span>{{ scope.row.status === '1' ? '已收到' : '-' }}</span>
@@ -175,6 +206,11 @@ export default {
       alarmDate: [],
       labelValue: ''
     },
+    upgradeList: [
+      { value: '0', label: '全部' },
+      { value: '1', label: '已升级' },
+      { value: '2', label: '未升级' }
+    ],
     topologyList: [
       { value: '1', label: '交易类型' },
       { value: '2', label: '应用' },

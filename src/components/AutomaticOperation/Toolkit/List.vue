@@ -100,7 +100,6 @@ export default {
   background: #f5f5f5 !important;
 }
 .block {
-  margin-top: 92px;
 }
 .task-btn-box span {
   display: inline-block;
