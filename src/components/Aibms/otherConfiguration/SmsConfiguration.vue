@@ -42,6 +42,7 @@
                 clearable
                 placeholder="请选择模板"
                 :style="{ width: '200px' }"
+                @change="chooseType"
               >
                 <el-option
                   v-for="item in typeList"
@@ -201,7 +202,7 @@ export default {
       placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       msgForm: {
         apiUrl: '',
-        noticeType: ''
+        noticeType: 'ALERT'
       },
       msgFormRules: {
         apiUrl: [{ required: true, message: '请输入url！', trigger: 'blur' }],
@@ -226,7 +227,7 @@ export default {
         ]
       },
       MsgText: { content: '' },
-      ID: '',
+      id: '',
       testForm: {
         receiver: ''
       },
@@ -241,13 +242,52 @@ export default {
         ]
       },
       isTesting: false,
-      testDialogVisible: false
+      testDialogVisible: false,
+      template: [
+        {
+          noticeType: 'ALERT',
+          subject: '',
+          content: ''
+        },
+        {
+          noticeType: 'ALERT_UPGRADE',
+          subject: '',
+          content: ''
+        },
+        {
+          noticeType: 'ALERT_AGGREGATION',
+          subject: '',
+          content: ''
+        }
+      ]
     };
   },
   created() {
     this.init();
   },
+  watch: {
+    MsgText: {
+      handler(val) {
+        this.handleContent(val)
+      },
+      deep: true
+    }
+  },
   methods: {
+    chooseType() {
+      this.template.forEach((item) => {
+        if (item.noticeType === this.msgForm.noticeType) {
+          this.MsgText.content = item.content
+        }
+      })
+    },
+    handleContent(val) {
+      this.template.forEach((item) => {
+        if (item.noticeType === this.msgForm.noticeType) {
+          item.content = val.content
+        }
+      })
+    },
     handleTest() {
       this.$refs.smsForm.validate((valid) => {
         if (valid) {
@@ -260,7 +300,7 @@ export default {
         axios.userList({
           online: false,
           condition: '', /// 姓名、手机、登录名
-          roleIds: [], // 角色ID，多个用“,”隔开
+          roleIds: [], // 角色id，多个用“,”隔开
           userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
           current: 1, // 当前页
           size: 1000 // 每页显示条数
@@ -270,14 +310,22 @@ export default {
         console.log(res[0]);
         if (res[1].data.code === 200) {
           let smsData = res[1].data.data;
-          if (!smsData.smsContent) {
+          let bl = false
+          smsData.template.forEach((item) => {
+            if (item.content) {
+              bl = true
+            }
+            if (this.msgForm.noticeType === item.noticeType) {
+              this.MsgText.content = item.content || '';
+            }
+          })
+          if (!bl) {
             this.isFirst = true;
           }
-          this.formatData(JSON.stringify(smsData.varible));
-          this.msgForm.apiUrl = smsData.apiUrl || '';
-          this.msgForm.noticeType = smsData.noticeType || '';
-          this.MsgText.content = smsData.smsContent || '';
-          this.ID = smsData.iD || '';
+          this.formatData(JSON.stringify(smsData.params));
+          this.msgForm.apiUrl = smsData.config.apiUrl || '';
+          this.id = smsData.id || '';
+          this.template = smsData.template || []
         }
       });
     },
@@ -300,10 +348,12 @@ export default {
     },
     FirstSaveMsg() {
       let params = {
-        ID: this.ID,
-        apiUrl: this.msgForm.apiUrl,
-        smsContent: this.MsgText.content,
-        noticeType: this.msgForm.noticeType
+        id: this.id,
+        type: 'sms',
+        config: {
+          apiUrl: this.msgForm.apiUrl
+        },
+        template: JSON.stringify(this.template)
       };
       axios.FirstSmsSave(params).then((res) => {
         if (res.data.code === 200) {
@@ -323,10 +373,12 @@ export default {
     },
     saveMsg() {
       let params = {
-        ID: this.ID,
-        apiUrl: this.msgForm.apiUrl,
-        smsContent: this.MsgText.contentm,
-        noticeType: this.msgForm.noticeType
+        id: this.id,
+        type: 'sms',
+        config: {
+          apiUrl: this.msgForm.apiUrl
+        },
+        template: JSON.stringify(this.template)
       };
       axios.smsSave(params).then((res) => {
         if (res.data.code === 200) {
@@ -348,15 +400,14 @@ export default {
       this.$refs.testForm.validate((valid) => {
         if (valid) {
           let params = {
-            // ID: this.ID,
+            // id: this.id,
             apiUrl:
               this.msgForm.apiUrl ||
               'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0',
             // accountNumber: this.msgForm.accountNumber,
             // passWord: this.msgForm.passWord,
             smsContent: this.MsgText.content || 'testMsg',
-            receiver: this.testForm.receiver,
-            noticeType: this.msgForm.noticeType
+            receiver: this.testForm.receiver
           };
           this.isTesting = true;
           axios

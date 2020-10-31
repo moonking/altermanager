@@ -59,6 +59,7 @@
                 clearable
                 placeholder="请选择模板"
                 :style="{ width: '200px' }"
+                @change="chooseType"
               >
                 <el-option
                   v-for="item in typeList"
@@ -225,7 +226,7 @@ export default {
       },
       testFormRules: {
         receiver: [
-          { required: true, message: '手机号不能为空！', trigger: 'blur' },
+          { required: true, message: '邮箱账号不能为空！', trigger: 'blur' },
           {
             pattern: /^([0-9A-Za-z\-_\\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g,
             message: '请输入合法的邮箱！',
@@ -248,7 +249,7 @@ export default {
         port: '',
         accountNumber: '',
         password: '',
-        noticeType: ''
+        noticeType: 'ALERT'
       },
       emailFormRules: {
         ip: [{ required: true, message: '请输入IP！', trigger: 'blur' }],
@@ -276,13 +277,66 @@ export default {
         ]
       },
       ThemeText: { content: '' },
-      ContentText: { content: '' }
+      ContentText: { content: '' },
+      template: [
+        {
+          noticeType: 'ALERT',
+          subject: '',
+          content: ''
+        },
+        {
+          noticeType: 'ALERT_UPGRADE',
+          subject: '',
+          content: ''
+        },
+        {
+          noticeType: 'ALERT_AGGREGATION',
+          subject: '',
+          content: ''
+        }
+      ]
     };
+  },
+  watch: {
+    ContentText: {
+      handler(val) {
+        this.handleContent(val)
+      },
+      deep: true
+    },
+    ThemeText: {
+      handler(val) {
+        this.handleTheme(val)
+      },
+      deep: true
+    }
   },
   created() {
     this.init();
   },
   methods: {
+    chooseType() {
+      this.template.forEach((item) => {
+        if (item.noticeType === this.emailForm.noticeType) {
+          this.ThemeText.content = item.subject
+          this.ContentText.content = item.content
+        }
+      })
+    },
+    handleContent(val) {
+      this.template.forEach((item) => {
+        if (item.noticeType === this.emailForm.noticeType) {
+          item.content = val.content
+        }
+      })
+    },
+    handleTheme(val) {
+      this.template.forEach((item) => {
+        if (item.noticeType === this.emailForm.noticeType) {
+          item.subject = val.content
+        }
+      })
+    },
     handleTest() {
       Promise.all([
         this.$refs.mailform.validate(),
@@ -313,7 +367,7 @@ export default {
         axios.userList({
           online: false,
           condition: '', /// 姓名、手机、登录名
-          roleIds: [], // 角色ID，多个用“,”隔开
+          roleIds: [], // 角色id，多个用“,”隔开
           userStatus: '', // 用户状态  0正常 1禁用 2锁定 3注销
           current: 1, // 当前页
           size: 1000 // 每页显示条数
@@ -323,15 +377,18 @@ export default {
         console.log(res[0]);
         if (res[1].data.code === 200) {
           let emailData = res[1].data.data;
-          this.formatData(emailData.emailParams);
-          this.emailForm.ip = emailData.hostIp || '';
-          this.emailForm.port = emailData.hostPost || '';
-          this.emailForm.accountNumber = emailData.emailUser || '';
-          this.emailForm.password = emailData.emailPassword || '';
-          this.emailForm.noticeType = emailData.noticeType || '';
-          this.ID = emailData.id || '';
-          this.ThemeText.content = emailData.emailSubject;
-          this.ContentText.content = emailData.emailContent;
+          this.formatData(JSON.stringify(emailData.params));
+          this.emailForm.ip = emailData.config.hostIp || '';
+          this.emailForm.port = emailData.config.hostPost || '';
+          this.emailForm.accountNumber = emailData.config.emailUser || '';
+          this.id = emailData.id || '';
+          this.template = emailData.template || []
+          emailData.template.forEach((item) => {
+            if (this.emailForm.noticeType === item.noticeType) {
+              this.ThemeText.content = item.subject || '';
+              this.ContentText.content = item.content || '';
+            }
+          })
         }
       });
     },
@@ -367,13 +424,14 @@ export default {
       ]).then((res) => {
         if (res[0] && res[1]) {
           let params = {
-            hostIp: this.emailForm.ip,
-            hostPost: this.emailForm.port,
-            emailUser: this.emailForm.accountNumber,
-            emailPassword: this.emailForm.password,
-            emailSubject: this.ThemeText.content,
-            emailContent: this.ContentText.content,
-            noticeType: this.emailForm.noticeType
+            id: this.id,
+            config: {
+              hostIp: this.emailForm.ip,
+              hostPost: this.emailForm.port,
+              emailUser: this.emailForm.accountNumber
+            },
+            type: 'email',
+            template: JSON.stringify(this.template)
           };
           axios.saveEmailConfig(params).then((res) => {
             if (res.data.code === 200) {
@@ -397,14 +455,13 @@ export default {
       this.$refs.testForm.validate((valid) => {
         if (valid) {
           let params = {
-            hostIp: this.emailForm.ip,
-            hostPost: this.emailForm.port,
-            emailUser: this.emailForm.accountNumber,
-            emailPassword: this.emailForm.password,
-            emailSubject: this.ThemeText.content,
-            emailContent: this.ContentText.content,
-            receiver: this.testForm.receiver,
-            noticeType: this.emailForm.noticeType
+            config: {
+              hostIp: this.emailForm.ip,
+              hostPost: this.emailForm.port,
+              emailUser: this.emailForm.accountNumber
+            },
+            type: 'email',
+            template: JSON.stringify(this.template)
           };
           this.isTesting = true;
           axios

@@ -4,13 +4,27 @@
       <div class="operate-bar">
         <el-row :gutter="10">
           <el-col :span="3">
-            <el-input v-model="name" placeholder="请输入发布任务名称" sortable clearable></el-input>
+            <el-input
+              v-model="name"
+              placeholder="请输入发布任务名称"
+              sortable
+              clearable
+            ></el-input>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="jobName" placeholder="请输入任务流水线名称" sortable clearable></el-input>
+            <el-input
+              v-model="jobName"
+              placeholder="请输入任务流水线名称"
+              sortable
+              clearable
+            ></el-input>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="systemId" placeholder="选择所属系统" :clearable="true">
+            <el-select
+              v-model="systemId"
+              placeholder="选择所属系统"
+              :clearable="true"
+            >
               <el-option
                 v-for="system in systemList"
                 :label="system.name"
@@ -20,7 +34,11 @@
             </el-select>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="level" placeholder="请选择优先级" :clearable="true">
+            <el-select
+              v-model="level"
+              placeholder="请选择优先级"
+              :clearable="true"
+            >
               <el-option
                 v-for="system in priorityList"
                 :label="system.name"
@@ -30,7 +48,11 @@
             </el-select>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="taskStatus" placeholder="请选择发布状态" :clearable="true">
+            <el-select
+              v-model="taskStatus"
+              placeholder="请选择发布状态"
+              :clearable="true"
+            >
               <el-option
                 v-for="system in statusList"
                 :label="system.name"
@@ -40,7 +62,11 @@
             </el-select>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="taskType" placeholder="请选择任务属性" :clearable="true">
+            <el-select
+              v-model="taskType"
+              placeholder="请选择任务属性"
+              :clearable="true"
+            >
               <el-option
                 v-for="system in attributeList"
                 :label="system.name"
@@ -49,8 +75,17 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="5" style="margin-top:5px;text-align: right;" class="item-right">
-            <el-button icon="el-icon-search" class="nomal-button" @click="search">查找</el-button>
+          <el-col
+            :span="5"
+            style="margin-top: 5px; text-align: right"
+            class="item-right"
+          >
+            <el-button
+              icon="el-icon-search"
+              class="nomal-button"
+              @click="search"
+              >查找</el-button
+            >
             <el-dropdown trigger="click">
               <el-button
                 type="primary"
@@ -81,77 +116,150 @@
           stripe
           :data="tableData"
           style="width: 100%"
-          :header-cell-style="{background:'#f5f5f5'}"
+          :header-cell-style="{ background: '#f5f5f5' }"
           :expand-row-keys="expands"
           :row-key="getRowKeys"
           @expand-change="handleExpansion"
         >
           <el-table-column type="expand">
             <template slot-scope="scope">
-              <ExpandLi :manageId="scope.row.manageId" @visibal="handleOpenJenkins" />
+              <ExpandLi
+                :manageId="scope.row.manageId"
+                @visibal="handleOpenJenkins"
+              />
             </template>
           </el-table-column>
           <el-table-column label="发布任务名称" prop="name"></el-table-column>
-          <el-table-column label="发布任务类型" prop="taskType" :formatter="formatPurposes"></el-table-column>
+          <el-table-column
+            label="发布任务类型"
+            prop="taskType"
+            :formatter="formatPurposes"
+          ></el-table-column>
           <el-table-column label="业务系统" prop="systemName"></el-table-column>
           <el-table-column label="优先级" min-width="100">
             <template slot-scope="scope">
-              <span v-if="scope.row.level===4">高</span>
-              <span v-if="scope.row.level===1">最低</span>
-              <span v-if="scope.row.level===2">低</span>
-              <span v-if="scope.row.level===3">中</span>
-              <span v-if="scope.row.level===5">最高</span>
-              <span v-if="scope.row.level===''">-</span>
+              <span v-if="scope.row.level === 4">高</span>
+              <span v-if="scope.row.level === 1">最低</span>
+              <span v-if="scope.row.level === 2">低</span>
+              <span v-if="scope.row.level === 3">中</span>
+              <span v-if="scope.row.level === 5">最高</span>
+              <span v-if="scope.row.level === ''">-</span>
             </template>
           </el-table-column>
           <el-table-column label="执行人" prop="runUsersList"></el-table-column>
-          <el-table-column label="负责人" prop="dutyUsersList"></el-table-column>
+          <el-table-column
+            label="负责人"
+            prop="dutyUsersList"
+          ></el-table-column>
           <el-table-column label="发布状态">
             <template slot-scope="scope">
-              <span v-if="scope.row.taskStatus=='FAILURE'" class="error">失败</span>
-              <span v-if="scope.row.taskStatus=='NOTEXECUTED'">未发布</span>
-              <span v-if="scope.row.taskStatus=='building'" class="wraning">发布中</span>
-              <span v-if="scope.row.taskStatus=='SUCCESS'" class="success">成功</span>
-              <span v-if="scope.row.taskStatus=='ABORTED'" class="error">手动结束</span>
+              <span v-if="scope.row.taskStatus == 'FAILURE'" class="error"
+                >失败</span
+              >
+              <span v-if="scope.row.taskStatus == 'NOTEXECUTED'">未发布</span>
+              <span v-if="scope.row.taskStatus == 'building'" class="wraning"
+                >发布中</span
+              >
+              <span v-if="scope.row.taskStatus == 'SUCCESS'" class="success"
+                >成功</span
+              >
+              <span v-if="scope.row.taskStatus == 'ABORTED'" class="error"
+                >手动结束</span
+              >
             </template>
           </el-table-column>
           <!-- <el-table-column label="计划发布时间" prop="planEndTime" v-if="taskType == 1">
           </el-table-column>-->
           <el-table-column label="计划发布时间">
             <template slot-scope="scope">
-              <span v-if="scope.row.taskType==1">-</span>
-              <span v-if="scope.row.taskType==2">{{scope.row.planStartTime}}</span>
+              <span v-if="scope.row.taskType == 1">-</span>
+              <span v-if="scope.row.taskType == 2">{{
+                scope.row.planStartTime
+              }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="center" prop="operate" width="255px">
+          <el-table-column
+            label="操作"
+            align="center"
+            prop="operate"
+            width="255px"
+          >
             <template slot-scope="scope">
               <div class="task-btn-box">
-                <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
-                  <span class="special" @click="readJob(scope.row.manageId, scope.row.taskType)">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="查看详情"
+                  placement="top-start"
+                >
+                  <span
+                    class="special"
+                    @click="readJob(scope.row.manageId, scope.row.taskType)"
+                  >
                     <icon-svg icon-class="chakan" />
                   </span>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="修改" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="修改"
+                  placement="top-start"
+                >
                   <span
                     class="special"
-                    @click="editJob(scope.row.manageId, scope.row.taskType,scope.row.applyStatus,scope.row.cronExpr)"
+                    @click="
+                      editJob(
+                        scope.row.manageId,
+                        scope.row.taskType,
+                        scope.row.applyStatus,
+                        scope.row.cronExpr
+                      )
+                    "
                   >
                     <icon-svg icon-class="bianji" />
                   </span>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top-start"
+                >
                   <span class="special" @click="deleteJob(scope.row)">
                     <icon-svg icon-class="shanchu" />
                   </span>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="一键执行" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="一键执行"
+                  placement="top-start"
+                >
                   <span
-                    :class="scope.row.taskStatus !=='building' ? 'canClick' : 'notClick'"
+                    :class="
+                      scope.row.taskStatus !== 'building'
+                        ? 'canClick'
+                        : 'notClick'
+                    "
                     class="special"
-                    @click="tostart(scope.row.manageId,scope.row.taskType,scope.row.applyStatus,scope.row.taskStatus)"
+                    @click="
+                      tostart(
+                        scope.row.manageId,
+                        scope.row.taskType,
+                        scope.row.applyStatus,
+                        scope.row.taskStatus
+                      )
+                    "
                   >
-                    <icon-svg v-if="scope.row.taskStatus=='building'" icon-class="zhihang" />
-                    <icon-svg v-else icon-class="zhihang" class="forbidden-icon-color" />
+                    <icon-svg
+                      v-if="scope.row.taskStatus == 'building'"
+                      icon-class="zhihang"
+                    />
+                    <icon-svg
+                      v-else
+                      icon-class="zhihang"
+                      class="forbidden-icon-color"
+                    />
                   </span>
                 </el-tooltip>
                 <el-tooltip
@@ -162,15 +270,31 @@
                   v-if="scope.row.taskType === '2'"
                 >
                   <span
-                    :class="(!scope.row.appro && validateBtn(scope.row)) ? 'canClick' : 'notClick'"
+                    :class="
+                      !scope.row.appro && validateBtn(scope.row)
+                        ? 'canClick'
+                        : 'notClick'
+                    "
                     class="special"
                     @click="openApproveDialog(scope.row)"
                   >
-                    <icon-svg icon-class="fabu" v-if="!scope.row.appro && validateBtn(scope.row)" />
-                    <icon-svg icon-class="fabu" v-else class="icon forbidden-icon-color" />
+                    <icon-svg
+                      icon-class="fabu"
+                      v-if="!scope.row.appro && validateBtn(scope.row)"
+                    />
+                    <icon-svg
+                      icon-class="fabu"
+                      v-else
+                      class="icon forbidden-icon-color"
+                    />
                   </span>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="执行日志" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="执行日志"
+                  placement="top-start"
+                >
                   <span class="special" @click="goTaskLog(scope.row.manageId)">
                     <icon-svg icon-class="cha" />
                   </span>
@@ -190,7 +314,7 @@
       </div>
       <el-dialog title="发起审批" :visible.sync="approveDialog" center>
         <div class="content-wrapper" v-if="hasApprove">
-          <span style="margin-right: 20px;">审批流程为：</span>
+          <span style="margin-right: 20px">审批流程为：</span>
           <UserListSelect :selectedList="approveList" />
         </div>
         <div class="content-wrapper" v-else>
@@ -201,40 +325,69 @@
             class="cm-btn deep save-btn-margin-special"
             @click="handleApprove"
             v-if="hasApprove"
-          >发起审批</button>
-          <button class="cm-btn deep save-btn-margin-special" @click="goApprove" v-else>添加审批</button>
-          <button class="cm-btn isoutline" @click="approveDialog = false">取 消</button>
+          >
+            发起审批
+          </button>
+          <button
+            class="cm-btn deep save-btn-margin-special"
+            @click="goApprove"
+            v-else
+          >
+            添加审批
+          </button>
+          <button class="cm-btn isoutline" @click="approveDialog = false">
+            取 消
+          </button>
         </div>
       </el-dialog>
-      <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+      <el-dialog
+        center
+        title="删除提示"
+        :visible.sync="confirmDeleteDialogVisible"
+        width="25%"
+      >
         <div style="text-align: center">
           <i class="el-icon-warning"></i> 确定要删除这个发布任务吗？
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button size="medium" @click="confirmDeleteDialogVisible = false">取消</el-button>
-          <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+          <el-button size="medium" @click="confirmDeleteDialogVisible = false"
+            >取消</el-button
+          >
+          <el-button size="medium" type="primary" @click="confirmDelete"
+            >确定</el-button
+          >
         </div>
       </el-dialog>
-      <el-dialog center title="编辑提示" :visible.sync="confirmCancelTimingDialogVisible" width="25%">
+      <el-dialog
+        center
+        title="编辑提示"
+        :visible.sync="confirmCancelTimingDialogVisible"
+        width="25%"
+      >
         <span>
           <i class="el-icon-warning"></i> 该任务已经被定时，请先取消定时
         </span>
         <div slot="footer" class="dialog-footer">
-          <el-button type="danger" @click="confirmCancelTiming">去取消</el-button>
+          <el-button type="danger" @click="confirmCancelTiming"
+            >去取消</el-button
+          >
         </div>
       </el-dialog>
       <!-- 分页 -->
-      <div class="block" style="text-align: center;width: 100%;padding: 92px 0 0;">
+      <div
+        class="block"
+        style="text-align: center; width: 100%; padding: 92px 0 0"
+      >
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currPage"
           :page-size="size"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           layout="prev, pager, next, sizes, total, jumper"
           :total="total"
           v-if="total"
-          style="cursor: pointer;"
+          style="cursor: pointer"
         ></el-pagination>
       </div>
     </div>
@@ -251,7 +404,9 @@
     >
       <div class="dialog-block">
         <div class="dialog-block-label">业务系统：</div>
-        <div class="dialog-block-content system-name">{{releaseDialog.data.systemName}}</div>
+        <div class="dialog-block-content system-name">
+          {{ releaseDialog.data.systemName }}
+        </div>
       </div>
       <div class="dialog-block">
         <div class="dialog-block-label">选择制品包：</div>
@@ -266,14 +421,20 @@
               v-for="pipeline in releaseDialog.data.nodeParamsVo"
               :key="pipeline.jobId"
             >
-              <div class="pipeline-name">{{pipeline.jobName}}</div>
+              <div class="pipeline-name">{{ pipeline.jobName }}</div>
               <el-form-item
                 v-for="node in pipeline.actNodeparams"
                 :key="node.actNodeId"
-                :rules="[{required: true, message: '请选择制品包', trigger: 'blur'}]"
+                :rules="[
+                  { required: true, message: '请选择制品包', trigger: 'blur' },
+                ]"
               >
-                <span class="node-name">{{node.actNodeName + '：'}}</span>
-                <el-select v-model="releaseDialog.form.systemId" placeholder="请选择制品版本" size="mini">
+                <span class="node-name">{{ node.actNodeName + '：' }}</span>
+                <el-select
+                  v-model="releaseDialog.form.systemId"
+                  placeholder="请选择制品版本"
+                  size="mini"
+                >
                   <el-option
                     v-for="version in node.nexusVersion"
                     :label="version"
@@ -281,7 +442,7 @@
                     :key="version"
                   ></el-option>
                 </el-select>
-                <span class="package-name">{{node.applicationName}}</span>
+                <span class="package-name">{{ node.applicationName }}</span>
               </el-form-item>
             </div>
           </el-form>
@@ -302,7 +463,7 @@ import axios from '@/api';
 import ExpandLi from './ExpandLi'
 export default {
   name: 'releaseTasklist',
-  data () {
+  data() {
     return {
       isbl: false,
       dutyUsersList: '',
@@ -374,7 +535,7 @@ export default {
       ],
       tableData: [],
       expands: [], // 展开行id的数组
-      getRowKeys (row) {
+      getRowKeys(row) {
         return row.id
       },
       nodeList: [],
@@ -444,7 +605,7 @@ export default {
     ExpandLi
   },
   computed: {
-    handleJenkinsFile () {
+    handleJenkinsFile() {
       if (this.jenkinsFile) {
         if (this.jenkinsFile === '-') {
           return '暂无jenkinsFile信息'
@@ -454,17 +615,17 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.currentUserId = localStorage.getItem('userId')
     this.getAllUsersList()
     this.getSystemList()
     this.getclusterList()
     this.handdleMsg()
   },
-  mounted () {
+  mounted() {
     this.init()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.socket.onclose()
   },
   methods: {
@@ -512,7 +673,7 @@ export default {
     },
 
     // 查看执行日志
-    goTaskLog (id) {
+    goTaskLog(id) {
       this.$router.push({
         path: '/AutomatedRelease/releaseLog',
         query: {
@@ -522,7 +683,7 @@ export default {
       })
     },
     // 判断并控制按钮的是否可点
-    validateBtn (val) {
+    validateBtn(val) {
       let bool = false
       if (val.isUser) {
         if (val.applyStatus === '' || val.applyStatus === '3') {
@@ -536,7 +697,7 @@ export default {
       return bool
     },
     // 选择提示信息
-    selectTip (val) {
+    selectTip(val) {
       let str = ''
       if (val.applyStatus === '0') {
         str = '您已发起了审批，不可重复提交'
@@ -552,7 +713,7 @@ export default {
       return str
     },
     // 获取系统
-    getSystemList () {
+    getSystemList() {
       let name = ''
       axios.getcigroupSystablist(name).then(res => {
         if (res.data.success) {
@@ -562,11 +723,11 @@ export default {
     },
 
     // 查找
-    search () {
+    search() {
       this.getclusterList()
     },
     // 获取用户列表
-    getAllUsersList () {
+    getAllUsersList() {
       axios.userList({
         condition: '',
         current: 1,
@@ -582,7 +743,7 @@ export default {
       })
     },
     // 获取发布管理列表
-    getclusterList (userList) {
+    getclusterList(userList) {
       let data = {
         currPage: this.currPage,
         pageSize: this.size,
@@ -645,7 +806,7 @@ export default {
       })
     },
     // 编辑
-    editJob (manageId, taskType, status, cronExpr) {
+    editJob(manageId, taskType, status, cronExpr) {
       console.log(manageId, taskType, status, cronExpr)
       if (cronExpr !== '') {
         this.confirmCancelTimingDialogVisible = true
@@ -677,7 +838,7 @@ export default {
       }
     },
     // 新增
-    goAddcreateTask () {
+    goAddcreateTask() {
       this.$router.push({
         path: '/AutomatedRelease/BuildReleaseTask/create',
         query: {
@@ -685,7 +846,7 @@ export default {
         }
       })
     },
-    goAddTask () {
+    goAddTask() {
       this.$router.push({
         path: '/AutomatedRelease/DeployReleaseTask/create',
         query: {
@@ -694,7 +855,7 @@ export default {
       })
     },
     // 查看发布任务
-    readJob (manageId, taskType) {
+    readJob(manageId, taskType) {
       if (taskType === '1') {
         this.$router.push({
           path: '/AutomatedRelease/BuildReleaseTask/read',
@@ -714,7 +875,7 @@ export default {
       }
     },
     // 删除
-    deleteJob (data) {
+    deleteJob(data) {
       if (data.applyStatus === '2' && data.taskType === '2') {
         this.$notify({
           type: 'error',
@@ -732,7 +893,7 @@ export default {
       }
     },
     // 确认删除
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteReleaseTask(id).then(res => {
         if (res.data.success) {
@@ -750,7 +911,7 @@ export default {
       })
       this.confirmDeleteDialogVisible = false
     },
-    confirmCancelTiming () {
+    confirmCancelTiming() {
       this.$router.push({
         path: '/AutomatedRelease/crontabList',
         query: {
@@ -758,7 +919,7 @@ export default {
         }
       })
     },
-    handdleMsg (msg) {
+    handdleMsg(msg) {
       let _this = this
       _this.$global.ws.onmessage = function (res) {
         if (res.data.length > 0) {
@@ -778,7 +939,7 @@ export default {
       }
     },
     // 一件执行
-    tostart (id, type, status, taskStatus) {
+    tostart(id, type, status, taskStatus) {
       if (taskStatus === 'building') {
         this.$notify({
           type: 'error',
@@ -857,7 +1018,7 @@ export default {
       }
     },
     // 查看审批人的信息
-    openApproveDialog (tool) {
+    openApproveDialog(tool) {
       this.currentData = tool
       let str = this.selectTip(tool)
       if (
@@ -911,7 +1072,7 @@ export default {
         }
       }
     },
-    handleApprove () {
+    handleApprove() {
       let params = {
         businessType: 2,
         businessId: this.manageId,
@@ -937,7 +1098,7 @@ export default {
       })
     },
     // 跳转到编辑页添加审批人
-    goApprove () {
+    goApprove() {
       // console.log(this.taskType )
       this.editJob(
         this.currentData.manageId,
@@ -970,15 +1131,15 @@ export default {
       //   });
       // }
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getclusterList()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.currPage = val
       this.getclusterList()
     },
-    handleWatch (row) {
+    handleWatch(row) {
       axios.clusterDetail(row.clusterId).then(res => {
         if (res.status === 200) {
           // 将 row中数据映射到对话框中
@@ -989,10 +1150,10 @@ export default {
         }
       })
     },
-    closeDialog () {
+    closeDialog() {
       this.clusterDialogVisible = false
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.$router.push({
         path: '/AutomatedRelease/ResourceManagement/NewCluster',
         query: {
@@ -1002,11 +1163,11 @@ export default {
       })
     },
     // 发起审批
-    dialogCloseHandle () {
+    dialogCloseHandle() {
       this.$refs.clusterForm.clearValidate()
     },
     // 跳转查看执行
-    logDetailBtn (id, di, jenkinsId) {
+    logDetailBtn(id, di, jenkinsId) {
       this.$router.push({
         path: '/AutomatedRelease/logDetail',
         query: {
@@ -1022,7 +1183,7 @@ export default {
     formatPurposes: function (row, column) {
       return row.taskType === '2' ? '部署' : '构建'
     },
-    getRunPhase (item) {
+    getRunPhase(item) {
       let result = []
       try {
         item.stages.forEach(node => {
@@ -1033,7 +1194,7 @@ export default {
       }
       return result.join(',')
     },
-    getRunStatus (item) {
+    getRunStatus(item) {
       let result = ''
       switch (item) {
         case 'FAILURE':
@@ -1052,14 +1213,14 @@ export default {
       return result
     },
     // jenkins弹框控制
-    handleOpenJenkins (file) {
+    handleOpenJenkins(file) {
       this.jenkinsVisable = true
       let str = file.replace(/\n/g, '<br />')
       let nstr = str.replace(/\t/g, '&nbsp;')
       this.jenkinsFile = nstr
     },
     // 根据执行状态改变颜色
-    filterStatus (item) {
+    filterStatus(item) {
       let result = ''
       switch (item) {
         case 'FAILURE':
@@ -1075,10 +1236,10 @@ export default {
           result = ''
           break
       }
-      return result 
+      return result
     },
     // 列表展开显示流水线数据
-    handleExpansion (row, expanded) {
+    handleExpansion(row, expanded) {
       // if (expanded.length > 0) {
       // }
       // row.isOpen = !row.isOpen

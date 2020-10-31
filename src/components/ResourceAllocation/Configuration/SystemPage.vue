@@ -44,11 +44,26 @@
           :disabled="status === 'watch'"
         ></el-input>
       </el-form-item>
-      <el-form-item label="负责人" prop="opsPerson">
-        <el-input
-          v-model="sysdata.opsPerson"
+      <el-form-item label="负责人" prop="userId">
+        <!-- <el-input
+          v-model="sysdata.userId"
           :disabled="status === 'watch'"
-        ></el-input>
+        ></el-input> -->
+        <el-select
+          :disabled="status === 'watch'"
+          v-model="sysdata.userId"
+          clearable
+          filterable
+          placeholder="请选择负责人"
+        >
+          <el-option
+            v-for="item in userList"
+            :key="item.userId"
+            :label="item.name"
+            :value="item.userId"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="关联CI项" prop="hosts">
         <div class="cursor" @click="showChooseHostDialog">
@@ -308,6 +323,7 @@ export default {
       }
     }
     return {
+      userList: [],
       dialogPager: {
         current: 1,
         size: 10,
@@ -334,7 +350,7 @@ export default {
         repoType: '',
         url: '',
         voucherId: '',
-        opsPerson: '',
+        userId: '',
         devPerson: '',
         remarks: '',
         // 英文缩写
@@ -362,8 +378,8 @@ export default {
         repoType: [
           { required: true, message: '请选择代码库类型!', trigger: 'change' }
         ],
-        opsPerson: [
-          { required: true, message: '请输入名称!', trigger: 'blur' }
+        userId: [
+          { required: true, message: '请选择负责人!', trigger: 'change' }
         ]
       },
       rules2: {
@@ -379,13 +395,14 @@ export default {
         repoType: [
           { required: true, validator: validategitsvn, trigger: 'change' }
         ],
-        opsPerson: [
-          { required: true, message: '请输入名称!', trigger: 'blur' }
+        userId: [
+          { required: true, message: '请选择负责人!', trigger: 'blur' }
         ]
       }
     }
   },
   created() {
+    this.getUserList()
     this.getVoucherData()
     if (this.$route.query.id) {
       this.getSystemDetail(this.$route.query.id)
@@ -394,6 +411,21 @@ export default {
     if (this.$route.params.status !== 'edit') this.getSystemList()
   },
   methods: {
+    getUserList() {
+      axios.userList({
+        condition: '',
+        current: 1,
+        online: false,
+        roleIds: [],
+        size: 1000,
+        userStatus: ''
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.userList = res.data.data.result.records
+          console.log(this.userList)
+        }
+      })
+    },
     handleCurrentPageChange(value) {
       this.dialogPager.current = value
       this.searchHostList()
@@ -539,7 +571,6 @@ export default {
             isContain = true
           }
         })
-        console.log(isContain)
         this.$nextTick(() => {
           if (this.$refs.dialogTable) {
             this.$refs.dialogTable.toggleRowSelection(row, isContain)
@@ -645,7 +676,10 @@ export default {
           let data = {
             name: this.sysdata.name,
             devPerson: this.sysdata.devPerson,
-            opsPerson: this.sysdata.opsPerson,
+            userId: this.sysdata.userId,
+            username: this.userList.filter(item => item.userId == this.sysdata.userId)[0].name,
+            phone: this.userList.filter(item => item.userId == this.sysdata.userId)[0].mobile,
+            email: this.userList.filter(item => item.userId == this.sysdata.userId)[0].email,
             url: this.sysdata.url,
             voucherId: this.sysdata.voucherId,
             remarks: this.sysdata.remarks,

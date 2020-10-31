@@ -144,6 +144,11 @@
 
 <script>
 import axios from '@/api'
+const levelMap = {
+  '1': 'critical',
+  '2': 'error',
+  '3': 'warning'
+}
 export default {
   data: () => ({
     alarmForm: {
@@ -164,7 +169,6 @@ export default {
   computed: {
     UpgradeLevel() {
       var Level
-      console.log(this.alertUpgradeRepDTO.level)
       switch (this.alertUpgradeRepDTO.level) {
         case '1':
           Level = 'critical'
@@ -183,6 +187,7 @@ export default {
     }
   },
   methods: {
+    LevelFilter: level => levelMap[level],
     getNoticeDetail() {
       axios.getNoticeDetail(this.$route.query.id).then(res => {
         if (res.data.success) {
@@ -199,7 +204,7 @@ export default {
             alertUpgradeRepDTO
           } = alarmDetail
           this.alertUpgradeRepDTO = alertUpgradeRepDTO
-          this.alarmForm.level = oldLevel ? `${level} → ${oldLevel}` : level
+          this.alarmForm.level = oldLevel ? `${this.LevelFilter(level)} → ${this.LevelFilter(oldLevel)}` : this.LevelFilter(level)
           this.alarmForm.object = alarmAddress
           this.alarmForm.date = startTime
           this.alarmForm.status = status == '0' ? '' : status

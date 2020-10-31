@@ -48,7 +48,7 @@
         </el-form-item>
         <el-form-item>
           <el-select
-            v-model="alarmModel.topologyValue"
+            v-model="alarmModel.upgradeValue"
             clearable
             placeholder="是否为升级告警"
             style="width: 160px"
@@ -109,21 +109,21 @@
           <icon-svg icon-class="loudou" class="gray-icon-color header-icon" />
         </template>
         <template v-slot="scope">
-          <span>{{ scope.row.level }}</span>
           <icon-svg
             icon-class="bj"
             :class="scope.row.level | iconLevelFilter"
           />
+          <span>{{ scope.row.level | LevelFilter }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="level" label="原级别">
         <template v-slot="scope">
           <div v-if="scope.row.oldLevel">
-            <span>{{ scope.row.oldLevel }}</span>
             <icon-svg
               icon-class="bj"
               :class="scope.row.oldLevel | iconLevelFilter"
             />
+            <span>{{ scope.row.oldLevel | LevelFilter }}</span>
           </div>
         </template>
       </el-table-column>
@@ -173,15 +173,21 @@
 <script>
 import axios from '@/api'
 const iconMap = {
-  'critical': 's1-color',
-  'warning': 's2-color',
-  'information': 's3-color'
+  '1': 's1-color',
+  '2': 's2-color',
+  '3': 's3-color'
   // 'S4': 's4-color',
   // 'S5': 's5-color'
+};
+const levelMap = {
+  '1': 'critical',
+  '2': 'error',
+  '3': 'warning'
 }
 export default {
   filters: {
-    iconLevelFilter: level => iconMap[level]
+    iconLevelFilter: level => iconMap[level],
+    LevelFilter: level => levelMap[level]
   },
   data: () => ({
     originList: [
@@ -202,6 +208,7 @@ export default {
     alarmModel: {
       systemValue: '',
       topologyValue: '',
+      upgradeValue: '',
       origin: '',
       alarmDate: [],
       labelValue: ''
@@ -295,6 +302,7 @@ export default {
       const params = {
         system: this.alarmModel.systemValue,
         topology: this.alarmModel.topologyValue,
+        upgrade: this.alarmModel.upgradeValue,
         platform: this.alarmModel.origin,
         label: this.alarmModel.labelValue,
         startTime: this.startTime,
