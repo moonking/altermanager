@@ -16,9 +16,9 @@
     <div class="tooltip-operate-user">
       <div class="user-info">
         <!-- <div class="user-item user-name">用户名: vince</div> -->
-        <div class="user-item user-name">姓名: Tom</div>
-        <div class="user-item user-phone">手机号：18920378867</div>
-        <div class="user-item user-email">邮箱：jacky.smith@aeer.com.cn</div>
+        <div class="user-item user-name">姓名: {{alerts.businessData.opsPerson.name}}</div>
+        <div class="user-item user-phone">手机号：{{alerts.businessData.opsPerson.phone}}</div>
+        <div class="user-item user-email">邮箱：{{alerts.businessData.opsPerson.email}}</div>
       </div>
     </div>
   </div>
