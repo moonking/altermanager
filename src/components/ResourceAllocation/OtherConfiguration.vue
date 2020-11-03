@@ -42,6 +42,7 @@
       </el-form>
       <el-table
         :data="systemListData"
+        @row-click="systemDetail"
         stripe
         class="table-css non-border"
         style="width: 100%; font-size: 0.9rem"
@@ -298,6 +299,16 @@ export default {
       this.systemListData = []
       var searchPage = 1
       this.getBsystemListData(searchPage)
+    },
+    systemDetail(row) {
+      console.log(row)
+      this.$router.push({
+        path: '/ResourceAllocation/SystemPage/watch',
+        query: {
+          code: 2,
+          id: row.systemId
+        }
+      })
     },
     // 新增业务系统按钮
     addSystembtn() {

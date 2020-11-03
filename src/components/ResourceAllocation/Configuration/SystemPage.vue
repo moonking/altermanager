@@ -209,7 +209,6 @@
     <el-dialog
       title="选择主机"
       center
-      :close-on-click-modal="false"
       :visible.sync="chooseHostDialogVisible"
       width="760px"
     >
@@ -249,7 +248,12 @@
         @select-all="handleTableSelectAll"
         @selection-change="handleTableSelectChange"
       >
-        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column
+          type="selection"
+          width="55"
+          :selectable="checkSelectable"
+        >
+        </el-table-column>
         <el-table-column prop="name" label="主机名称" width="280">
         </el-table-column>
         <el-table-column prop="ip" label="IP地址" width="120">
@@ -411,6 +415,9 @@ export default {
     if (this.$route.params.status !== 'edit') this.getSystemList()
   },
   methods: {
+    checkSelectable() {
+      return this.status !== 'watch'
+    },
     getUserList() {
       axios.userList({
         condition: '',
@@ -509,6 +516,11 @@ export default {
       this.chooseHostDialogVisible = true
       this.tempSelect = JSON.parse(JSON.stringify(this.hostTableSelected))
       this.setTableSelectStatus()
+      this.$nextTick(() => {
+        if (this.status === 'watch') {
+          document.getElementsByClassName('el-table-column--selection')[0].children[0].children[0].style.display = 'none'
+        }
+      })
     },
     // 禁用已经选择了的系统
     handeSelectSystemChange() {
