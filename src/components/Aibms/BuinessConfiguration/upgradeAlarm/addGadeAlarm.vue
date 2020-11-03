@@ -171,8 +171,8 @@
 import axios from '@/api'
 const iconMap = {
   'critical': 's1-color',
-  'error': 's2-color',
-  'warning': 's3-color'
+  'warning': 's2-color',
+  'information': 's3-color'
   // 'S4': 's4-color'
 }
 export default {
@@ -227,11 +227,11 @@ export default {
       },
       {
         value: '2',
-        label: 'error'
+        label: 'warning'
       },
       {
         value: '3',
-        label: 'warning'
+        label: 'information'
       }
       // {
       //   value: '4',

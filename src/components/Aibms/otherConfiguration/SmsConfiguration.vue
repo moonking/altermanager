@@ -28,6 +28,7 @@
               <el-input
                 clearable
                 v-model.trim="msgForm.apiUrl"
+                @blur="checkUrl"
                 placeholder="请输入URL"
                 :style="{ width: '500px' }"
               />
@@ -198,6 +199,7 @@ export default {
         { value: 'ALERT_UPGRADE', label: '升级模板' },
         { value: 'ALERT_AGGREGATION', label: '聚合模板' }
       ],
+      firstUrl: '',
       isSubmit: false,
       isFirst: false,
       StringList: [],
@@ -279,6 +281,15 @@ export default {
     }
   },
   methods: {
+    checkUrl() {
+      if (!this.isFirst) {
+        if (this.msgForm.apiUrl === this.firstUrl) {
+          this.isSubmit = true
+        } else {
+          this.isSubmit = false
+        }
+      }
+    },
     chooseType() {
       this.template.forEach((item) => {
         if (item.noticeType === this.msgForm.noticeType) {
@@ -326,6 +337,9 @@ export default {
           })
           if (!bl) {
             this.isFirst = true;
+          } else {
+            this.isSubmit = true
+            this.firstUrl = smsData.config.apiUrl
           }
           this.formatData(JSON.stringify(smsData.params));
           this.msgForm.apiUrl = smsData.config.apiUrl || '';
@@ -449,18 +463,22 @@ export default {
           type: 'warning'
         });
       } else {
-        Promise.all([
-          this.$refs.smsForm.validate(),
-          this.$refs.configform.validate()
-        ]).then((res) => {
-          if (res[0] && res[1]) {
-            if (this.isFirst) {
-              this.FirstSaveMsg();
-            } else {
-              this.saveMsg();
+        this.blockSwitch[1] = true
+        this.blockSwitch[2] = true
+        this.$nextTick(() => {
+          Promise.all([
+            this.$refs.smsForm.validate(),
+            this.$refs.configform.validate()
+          ]).then((res) => {
+            if (res[0] && res[1]) {
+              if (this.isFirst) {
+                this.FirstSaveMsg();
+              } else {
+                this.saveMsg();
+              }
             }
-          }
-        });
+          });
+        })
       }
     }
   },

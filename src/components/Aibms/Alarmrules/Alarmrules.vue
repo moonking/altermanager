@@ -30,11 +30,11 @@
               :value="item.value"
             >
               <icon-svg
-                style="font-size: 18px; vertical-align: sub;"
+                style="font-size: 18px; vertical-align: sub"
                 icon-class="bj"
                 :class="item.value | iconLevelFilter"
               />
-              <span >{{ item.label }}</span>
+              <span>{{ item.label }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -168,11 +168,11 @@ export default {
       },
       {
         value: '2',
-        label: 'error'
+        label: 'warning'
       },
       {
         value: '3',
-        label: 'warning'
+        label: 'information'
       }
       // {
       //   value: '4',
@@ -216,8 +216,8 @@ export default {
     LevelFilter: level => {
       const iconMap = {
         1: 'critical',
-        2: 'error',
-        3: 'warning'
+        2: 'warning',
+        3: 'information'
         // 4: 'S4',
         // 5: 'S5'
       };

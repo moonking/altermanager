@@ -181,8 +181,8 @@ const iconMap = {
 };
 const levelMap = {
   '1': 'critical',
-  '2': 'error',
-  '3': 'warning'
+  '2': 'warning',
+  '3': 'information'
 }
 export default {
   filters: {
