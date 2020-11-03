@@ -132,7 +132,11 @@
                   <temp-config
                     :clickNum="clickContentNum"
                     :StringList="StringList"
-                    :placeholderText="placeholderContent"
+                    :placeholderText="
+                      emailForm.noticeType !== 'ALERT_AGGREGATION'
+                        ? placeholderContent
+                        : polymerization
+                    "
                     :inputH="8"
                     :textContent.sync="ContentText"
                   />
@@ -244,6 +248,7 @@ export default {
       placeholderTheme: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       placeholderContent:
         '请输入内容，例如\nDear[[$NAME]]\n[[$HOSTNAME]]发出告警 [[$A_CLASS]]，详情为[[$MESSAGE]]，告警来源为[[$M_SOURCE]]',
+      polymerization: '请输入内容，例如\nDear[[$NAME]]\n[[$HOSTNAME]] ###描述:[[$message]]###,ps:###里面的为聚合内容',
       emailForm: {
         ip: '',
         port: '',
@@ -455,11 +460,13 @@ export default {
       this.$refs.testForm.validate((valid) => {
         if (valid) {
           let params = {
+            id: this.id,
             config: {
               hostIp: this.emailForm.ip,
               hostPost: this.emailForm.port,
               emailUser: this.emailForm.accountNumber
             },
+            receiver: this.testForm.receiver,
             type: 'email',
             template: JSON.stringify(this.template)
           };

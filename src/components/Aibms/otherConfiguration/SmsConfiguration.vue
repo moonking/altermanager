@@ -116,7 +116,11 @@
                   <temp-config
                     :clickNum="clickMsgNum"
                     :StringList="StringList"
-                    :placeholderText="placeholderMsg"
+                    :placeholderText="
+                      msgForm.noticeType !== 'ALERT_AGGREGATION'
+                        ? placeholderMsg
+                        : polymerization
+                    "
                     :inputH="8"
                     :textContent.sync="MsgText"
                   />
@@ -200,6 +204,7 @@ export default {
       clickMsgNum: -1,
       blockSwitch: { 1: true, 2: false },
       placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
+      polymerization: '例如：您好，主机:[[$HOSTNAME]]###描述:[[$message]]###,ps:###里面的为聚合内容',
       msgForm: {
         apiUrl: '',
         noticeType: 'ALERT'
@@ -400,13 +405,13 @@ export default {
       this.$refs.testForm.validate((valid) => {
         if (valid) {
           let params = {
-            // id: this.id,
-            apiUrl:
-              this.msgForm.apiUrl ||
-              'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0',
-            // accountNumber: this.msgForm.accountNumber,
-            // passWord: this.msgForm.passWord,
-            smsContent: this.MsgText.content || 'testMsg',
+            id: this.id,
+            type: 'sms',
+            config: {
+              apiUrl: this.msgForm.apiUrl ||
+                'https://oapi.dingtalk.com/robot/send?access_token=3686cdfea72acecf7b4703dfec556d4beb10e40122b6fa8d93d4cf8ddbd749e0'
+            },
+            template: JSON.stringify(this.template),
             receiver: this.testForm.receiver
           };
           this.isTesting = true;

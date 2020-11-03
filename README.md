@@ -22,7 +22,7 @@ url 文件配置 src/config/test.js
 
 生产打包
 
-运行 npm run build
+运行 npm run build-prod
 
 url 文件配置 src/config/prod.js
 
@@ -36,7 +36,7 @@ url 文件配置 src/config/test.js
 
 运行 npm run build-devlop
 
-url 文件配置 src/config/evlop.js
+url 文件配置 src/config/devlop.js
 
 前段代码扫描
 

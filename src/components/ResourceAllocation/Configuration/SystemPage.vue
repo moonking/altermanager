@@ -770,6 +770,7 @@ export default {
           })
           this.hostTableSelected = JSON.parse(data.hosts)
           this.sysdata = data
+          this.sysdata.userId = JSON.parse(data.opsPerson).userId
           if (callNodesData.length > 0) this.callNodes = callNodesData
 
           this.getSystemList()
