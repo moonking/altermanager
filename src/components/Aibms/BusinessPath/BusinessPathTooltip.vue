@@ -27,6 +27,7 @@
 <script>
 export default {
   props: {
+    // tooltip信息
     alerts: {
       type: Object,
       default: () => {}
