@@ -1,18 +1,6 @@
 <template>
   <div class="link-topology">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;">链路拓扑</p> -->
-    <!-- <div>
-      <el-input placeholder="请输入内容" v-model="blackListValue" class="input-with-select">
-        <el-select v-model="blackListType" slot="prepend" placeholder="请选择类型" style="width: 120px;">
-          <el-option label="交易类型" value="1"></el-option>
-          <el-option label="应用" value="2"></el-option>
-          <el-option label="服务" value="3"></el-option>
-          <el-option label="进程" value="4"></el-option>
-          <el-option label="主机" value="5"></el-option>
-        </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="addBlackList"></el-button>
-      </el-input>
-    </div> -->
     <div class="link-topology-wrapper">
       <div class="level-labels">
         <div :class="['level-label', { noData: levelCount[5] === 0 }]">
@@ -62,6 +50,7 @@ import config from '@/config/index.js'
 export default {
   data () {
     return {
+      // 每一层级上的节点数量
       levelCount: {
         1: 0,
         2: 0,
@@ -69,9 +58,9 @@ export default {
         4: 0,
         5: 0
       },
-      blackListType: 1,
-      blackListValue: '',
+      // 图鼠标滚轮配置
       mouseCfg: {zoom: true, move: {x: true, y: false}},
+      // 图 mock 数据
       tempData: {
         // 点集
         nodes: [
@@ -171,18 +160,15 @@ export default {
           { source: 'nodeD4', target: 'nodeE5' }
         ]
       },
-      nodeLevelPlugin: [
-        { id: 1, name: '交易' },
-        { id: 2, name: '应用' },
-        { id: 3, name: '服务' },
-        { id: 4, name: '进程' },
-        { id: 5, name: '主机' }
-      ],
+      // graph 实例对象的配置
       sessionCfg: {
+        // 背景是否透明
         transparentBg: true,
+        // 图渲染引擎
         renderer: 'canvas',
         // width: width,
         // height: height,
+        // 默认边配置
         defaultEdge: {
           type: 'cubic-vertical',
           color: '#000',
@@ -213,6 +199,7 @@ export default {
             autoRotate: true
           }
         },
+        // 节点状态样式配置
         nodeStateStyles: {
           hover: {
             stroke: '#1890ff',
@@ -235,6 +222,7 @@ export default {
           },
           error: { fill: 'red', fontColor: '#fff' }
         },
+        // 边状态样式配置
         edgeStateStyles: {
           hover: {
             stroke: 'yellow',
@@ -245,6 +233,7 @@ export default {
             lineWidth: 2
           }
         },
+        // 默认节点配置
         defaultNode: {
           type: 'iconfontNode',
           fontColor: '#ddd',
@@ -269,6 +258,7 @@ export default {
             }
           }
         },
+        // 布局配置
         layout: {
           type: 'level-layout',
           level: 5,
@@ -288,6 +278,7 @@ export default {
         },
         // fitView: true,
         // fitViewPadding: [0, 20, 0, 80],
+        // 模式配置
         modes: {
           default: [
             // 'drag-canvas',
@@ -313,6 +304,7 @@ export default {
           addEdge: ['add-edge']
         }
       },
+      // 各层级 icon 映射
       iconMapping: {
         '主机': '\ue60e',
         '进程': '\ue6d8',
@@ -320,6 +312,7 @@ export default {
         '应用': '\ue650',
         '交易类型': '\ue605'
       },
+      // 层级值映射
       levelMapping: {
         '主机': 1,
         '进程': 2,
@@ -327,6 +320,7 @@ export default {
         '应用': 4,
         '交易类型': 5
       },
+      // 层级颜色映射
       colorMap: {
         '1': '#ff0000',
         '2': '#ff9900',
@@ -334,44 +328,20 @@ export default {
         '4': '#ffff00',
         '5': '#ffff88'
       },
+      // 后台业务数据
       topologyData: [],
+      // websokect 实例
       ws: null,
+      // graph 实例
       graph: null
     }
   },
   methods: {
-    addBlackList () {
-      let value = this.blackListValue
-      const type = this.blackListType
-      const systemId = this.$route.query.systemId
-      if (!value || value === '') {
-        this.$notify({
-          title: '提示',
-          message: '黑名单不能为空',
-          type: 'error'
-        })
-        return
-      } else {
-        value = value.split(',')
-        value.forEach((val, index) => {
-          value[index] = val.trim()
-          // val = val.trim()
-        })
-      }
-      console.log(value)
-      axios.getEditSystemList({
-        type,
-        blackList: value
-      }, systemId).then(res => {
-        console.log(res)
-      })
-    },
+    // 获取业务数据
     getData () {
       const route = this.$route
       const { query } = route
-      console.log(route)
       axios.getTopologyInfoBySystemId(query.systemId).then(res => {
-        console.log(res)
         if (res.data.code === 200) {
           const nodes = res.data.data
           nodes.forEach(node => {
@@ -439,6 +409,8 @@ export default {
 
       this.ws = ws
     },
+    // 将后台业务数据转换为可渲染的图数据结构
+    // 即 data =  { nodes: [], edges: [] }
     transfromToGraphData (data) {
       let nodes = []
       let edges = []
@@ -460,7 +432,6 @@ export default {
         // edge
         let targets = []
         if (linkRelationship) targets = JSON.parse(linkRelationship)
-        console.log(targets)
         targets.forEach(item => {
           let edge = {
             source: ciitemId,
@@ -473,6 +444,7 @@ export default {
       })
       return { nodes, edges }
     },
+    // 初始化自定义图事件监听器
     initGraphListener (graph) {
       if (!graph) return
       graph.on('afteritemstatechange', (item, state, enabled) => {
@@ -540,6 +512,7 @@ export default {
         })
       })
     },
+    // 取消节点和边的高亮
     clearItemHighlight (graph) {
       const state = 'selected'
       // 置空所有节点和边的高亮状态
@@ -553,6 +526,7 @@ export default {
         graph.setItemState(edge, state, false)
       })
     },
+    // 设置节点和边的高亮
     setHighlightItem (item, highlight, graph) {
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
@@ -582,6 +556,7 @@ export default {
         this.setHighlightItem(source, highlight, graph)
       }
     },
+    // 设置边高亮样式
     setEdgeHighlightStyle (edge, highlight) {
       // const lineDash = [4, 2, 1, 2]
       const group = edge.getContainer()
@@ -618,6 +593,7 @@ export default {
       //   this.clearEdgeAnimate(edge)
       // }
     },
+    // 清楚边高亮样式
     clearEdgeHighlightStyle (edge) {
       const group = edge.getContainer()
       const shape = group.get('children')[0]
@@ -628,12 +604,14 @@ export default {
     }
   },
   computed: {
+    // 图数据
     graphData () {
       const {topologyData, transfromToGraphData} = this
       return transfromToGraphData(topologyData)
     }
   },
   created () {
+    // 获取后台业务数据
     this.getData()
   },
   mounted () {
@@ -641,6 +619,7 @@ export default {
       const graph = this.$refs.graphEditor
       const instance = graph.getGraphInstance()
       this.graph = instance
+      // 初始化自定义图事件监听器
       this.initGraphListener(instance)
     })
   },
@@ -656,7 +635,7 @@ export default {
     })
   },
   beforeRouteLeave (to, from, next) {
-    console.log('离开了当前路由！')
+    // 关闭 websocket 连接
     const { ws } = this
     if (ws) ws.close()
     next()

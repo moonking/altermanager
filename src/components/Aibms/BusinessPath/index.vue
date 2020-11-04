@@ -94,6 +94,7 @@ export default {
         //   level: 'warning'
         // }
       ],
+      // mock 的图数据
       tempData: {
         // 点集
         nodes: [
@@ -161,13 +162,17 @@ export default {
           { source: 'nodeD4', target: 'nodeE5' }
         ]
       },
-      mouseCfg: { zoom: true, move: true },
-      alerts: { name: 'test' },
+      // 图配置项
+      mouseCfg: {zoom: true, move: true},
+      // tooltip 信息
+      alerts: {name: 'test'},
+      // graph 实例配置
       sessionCfg: {
+        // 是否透明背景
         transparentBg: true,
+        // 渲染引擎
         renderer: 'canvas',
-        // width: width,
-        // height: height,
+        // 默认边配置
         defaultEdge: {
           type: 'line',
           // color: '#000',
@@ -189,6 +194,7 @@ export default {
           // type: 'cubic-horizontal'
           // controlPoints: [{ x: 20, y: 20 }, { x: 120, y: 20 }]
         },
+        // 节点状态样式配置
         nodeStateStyles: {
           warning: {
             stroke: 'red',
@@ -208,6 +214,7 @@ export default {
           //   strokeOpacity: 1
           // },
         },
+        // 边状态样式配置
         edgeStateStyles: {
           hover: {
             stroke: 'yellow',
@@ -222,6 +229,7 @@ export default {
             stroke: 'red'
           }
         },
+        // 默认节点配置
         defaultNode: {
           type: 'businessPathNode',
           labelColor: '#fff',
@@ -244,6 +252,7 @@ export default {
           //   }
           // }
         },
+        // 布局配置
         layout: {
           type: 'topology-layout',
           level: 5,
@@ -274,6 +283,7 @@ export default {
         },
         // fitView: true,
         // fitViewPadding: [10],
+        // 模式配置
         modes: {
           default: [
             // 'drag-canvas',
@@ -299,18 +309,20 @@ export default {
           addEdge: ['add-edge']
         }
       },
+      // 系统列表
       systemList: [],
+      // 当前推送 websocket 实例
       ws: null,
+      // websocket 数据
       wsData: {},
-      graph: null,
-      editorCfg: {
-        transparentBg: true
-      }
+      // 当前 graph 对象
+      graph: null
     }
   },
   computed: {
-    graphData() {
-      const { systemList, tranformToGraphData } = this
+    // 图数据
+    graphData () {
+      const {systemList, tranformToGraphData} = this
       return tranformToGraphData(systemList)
     }
   },
@@ -346,26 +358,17 @@ export default {
           `
       });
     },
-    initCustomGraphListener(graph) {
+    // 初始化自定义图事件监听器
+    initCustomGraphListener (graph) {
+      // 监听鼠标点击节点事件，点击借条跳转到拓扑层级图页面
       graph.on('node:click', (e) => {
         const { item } = e
         const model = item.getModel()
         const { systemId } = model.businessData || {}
-        console.log('hello node: ', model)
         this.goLinkTopology(systemId)
       })
-      // graph.on('afteritemstatechange', (e) => {
-      //   const { item, state, enabled } = e
-      //   const model = item.getModel()
-      //   if (state === 'warning') {
-      //     if (enabled) {
-      //       console.log(model.id + 'warning 设置为 true')
-      //     } else {
-      //       console.log(model.id + 'warning 设置为 false')
-      //     }
-      //   }
-      // })
 
+      // 监听鼠标滑动到节点上事件，鼠滑动到节点上则高亮相关联的节点和边
       graph.on('node:mouseenter', e => {
         const item = e.item
         const { graph } = this
@@ -373,6 +376,7 @@ export default {
         this.setHighlightItem(item, true, graph)
       })
 
+      // 监听鼠标滑动到边上事件，鼠滑动到边上则高亮相关联的节点和边
       graph.on('edge:mouseenter', e => {
         const item = e.item
         const { graph } = this
@@ -380,16 +384,20 @@ export default {
         this.setHighlightItem(item, true, graph)
       })
 
+      // 监听鼠标滑出节点事件，鼠滑出节点后取消高亮相关联的节点和边
       graph.on('node:mouseleave', e => {
         const { graph } = this
         this.clearItemHighlight(graph)
       })
+
+      // 监听鼠标滑出边事件，鼠滑出边后取消高亮相关联的节点和边
       graph.on('edge:mouseleave', e => {
         const { graph } = this
         this.clearItemHighlight(graph)
       })
     },
-    clearItemHighlight(graph) {
+    // 清楚高亮节点和边
+    clearItemHighlight (graph) {
       const state = 'selected'
       // 置空所有节点和边的高亮状态
       const nodes = graph.getNodes()
@@ -402,12 +410,12 @@ export default {
         graph.setItemState(edge, state, false)
       })
     },
-    setHighlightItem(item, highlight, graph) {
+    // 设置高亮节点和边
+    setHighlightItem (item, highlight, graph) {
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
       const state = 'selected'
       if (isNode) {
-        console.log(graph.setItemState)
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
 
@@ -432,7 +440,9 @@ export default {
         this.setHighlightItem(source, highlight, graph)
       }
     },
-    tranformToGraphData(data) {
+    // 将后台业务数据转换为可渲染的图数据结构
+    // 即 data =  { nodes: [], edges: [] }
+    tranformToGraphData (data) {
       const nodes = []
       const edges = []
       data.forEach(system => {
@@ -461,20 +471,21 @@ export default {
         nodes, edges
       }
     },
-    getSystemList() {
+    // 获取系统列表
+    getSystemList () {
       // const param = {
       //   name: '',
       //   current: 1,
       //   size: 100000
       // }
       axios.getTopologySystems().then(res => {
-        console.log(res)
         if (res.data.code == 200) {
           this.systemList = res.data.data
         }
       })
     },
-    goLinkTopology(systemId) {
+    // 跳转到层级拓扑图页面
+    goLinkTopology (systemId) {
       this.$router.push({
         path: '/Aibms/businessPath/linkTopology',
         query: {
@@ -594,6 +605,7 @@ export default {
       const graph = this.$refs.graphEditor
       const instance = graph.getGraphInstance()
       this.graph = instance
+      // 初始化自定义图事件监听器
       this.initCustomGraphListener(instance)
     })
   },
