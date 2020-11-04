@@ -234,11 +234,9 @@ export default {
     ],
     tableData: [],
     levelFilters: [
-      { text: 'S1', value: 'S1' },
-      { text: 'S2', value: 'S2' },
-      { text: 'S3', value: 'S3' },
-      { text: 'S4', value: 'S4' },
-      { text: 'S5', value: 'S5' }
+      { text: 'critical', value: '1' },
+      { text: 'warning', value: '2' },
+      { text: 'information', value: '3' }
     ],
     totalSize: 0,
     page: {
@@ -362,7 +360,9 @@ export default {
         }
       })
     },
-    filterLevel: (value, row) => row.level === value,
+    filterLevel(value, row) {
+      return row.level === value
+    },
     noticeDetail(row) {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',

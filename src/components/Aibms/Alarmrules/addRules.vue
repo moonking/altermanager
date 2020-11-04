@@ -627,6 +627,7 @@ export default {
         if (res.data.code === 200) {
           let query = res.data.data;
           let notify = JSON.parse(query.notifyPersonnel);
+          console.log(notify)
           const { iD, level, name, label, categoryCode } = query;
           this.typesForm.rulesName = name;
           this.typesForm.label = label;
@@ -657,6 +658,7 @@ export default {
     },
     // 展示通知人信息
     getInform(item) {
+      console.log(item)
       item.forEach((res) => {
         this.noticeInform.push(res);
       });
@@ -1213,8 +1215,7 @@ export default {
     },
     // 新增告警规则
     saveAlarm() {
-      let notifyPersonnel = [];
-      notifyPersonnel = [
+      let notifyPersonnel = [
         {
           methodToInforme: 1,
           roles: this.tipsForm.role,

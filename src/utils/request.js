@@ -18,7 +18,7 @@ const service = axios.create({
   //     return JSON.stringify(data);
   //   } // 序列化请求的数据
   // ],
-  timeout: 6000 // 配置请求超时
+  timeout: 10000 // 配置请求超时
 });
 service.interceptors.request.use(config => {
   // 修改请求头信息

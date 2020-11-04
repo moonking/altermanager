@@ -65,9 +65,9 @@ export default {
   filters: {
     iconLevelFilter: level => {
       const iconMap = {
-        'critical': 's1-color',
-        'warning': 's2-color',
-        'information': 's3-color'
+        '1': 's1-color',
+        '2': 's2-color',
+        '3': 's3-color'
       };
       return iconMap[level]
     }
@@ -321,9 +321,14 @@ export default {
     notifyAlert(alert) {
       let { host, time, description, level } = alert
       const iconMap = {
-        'critical': '#ff0000',
-        'warning': '#ff9900',
-        'information': '#ffcc00'
+        '1': '#ff0000',
+        '2': '#ff9900',
+        '3': '#ffcc00'
+      };
+      const levelMap = {
+        '1': 'critical',
+        '2': 'warning',
+        '3': 'information'
       };
       time = moment(time).format('YYYY-MM-DD hh:mm:ss')
       this.$notify({
@@ -331,7 +336,7 @@ export default {
         dangerouslyUseHTMLString: true,
         message: `
           <p class="notify-title">
-            有新的<span style="color:${iconMap[level]};font-weight: bold;"> ${level} </span>告警
+            有新的<span style="color:${iconMap[level]};font-weight: bold;"> ${levelMap[level]} </span>告警
           </p>
           <div class="notify-content">
             <div class="notify-item"><span>对象：</span>${host}</div>
