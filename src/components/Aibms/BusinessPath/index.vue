@@ -2,33 +2,46 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
-      <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+      <graph-editor
+        :data="graphData"
+        :sessionCfg="sessionCfg"
+        :mouseCfg="mouseCfg"
+        class="editor"
+        ref="graphEditor"
+      >
         <template v-slot:tooltip="tooltip">
-          <business-path-tooltip :alerts="tooltip.editorInfo"></business-path-tooltip>
+          <business-path-tooltip
+            :alerts="tooltip.editorInfo"
+          ></business-path-tooltip>
         </template>
       </graph-editor>
     </div>
-    <div class="notify-list">
+    <div class="notify-list" v-if="notifyList.length > 0">
       <div class="notify-list-title">
-        <div class="notify-list-title-text">告警信息
+        <div class="notify-list-title-text">
+          告警信息
           <!-- <el-button @click="notifyAlert" size="mini">测试</el-button> -->
         </div>
       </div>
       <div class="notify-list-content">
-        <div class="item-wrapper" v-for="notify in notifyList" :key="notify.id">
+        <div
+          class="item-wrapper"
+          v-for="(notify, index) in notifyList"
+          :key="notify.id"
+        >
           <div class="notify-list-item">
             <div class="notify-list-icon">
               <icon-svg
-                style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                style="font-size: 18px; vertical-align: sub; margin-left: 10px"
                 icon-class="bj"
                 :class="notify.level | iconLevelFilter"
               />
             </div>
             <div class="list-item-detail">
-              <div class="notify-list-item-time">时间：{{notify.time}}</div>
-              <div class="notify-list-item-name">对象：{{notify.name}}</div>
+              <div class="notify-list-item-time">时间：{{ notify.time }}</div>
+              <div class="notify-list-item-name">对象：{{ notify.host }}</div>
             </div>
-            <div class="notify-close">
+            <div class="notify-close" @click="closeNotify(index)">
               <i class="el-icon-close"></i>
             </div>
           </div>
@@ -45,53 +58,41 @@
 // import serviceSvg from '../../../../static/img/graph-icons/quanqiu.svg'
 // import appSvg from '../../../../static/img/graph-icons/yingyong.svg'
 import BusinessPathTooltip from './BusinessPathTooltip'
+import config from '@/config/index.js'
+import moment from 'moment'
 import axios from '@/api'
 export default {
   filters: {
     iconLevelFilter: level => {
       const iconMap = {
-        1: 's1-color',
-        2: 's2-color',
-        3: 's3-color',
-        4: 's4-color',
-        5: 's5-color'
+        'critical': 's1-color',
+        'warning': 's2-color',
+        'information': 's3-color'
       };
       return iconMap[level]
     }
   },
-  data () {
+  data() {
     return {
       notifyList: [
-        {
-          id: 0,
-          name: 'CNZHAPWRPA010:9182',
-          time: '2020-08-13 05:24:01',
-          level: '1'
-        },
-        {
-          id: 1,
-          name: 'CNZHAPWRPA010:9182',
-          time: '2020-08-13 05:24:01',
-          level: '3'
-        },
-        {
-          id: 2,
-          name: 'CNZHAPWRPA010:9182',
-          time: '2020-08-13 05:24:01',
-          level: '2'
-        },
-        {
-          id: 3,
-          name: 'CNZHAPWRPA010:9182',
-          time: '2020-08-13 05:24:01',
-          level: '1'
-        },
-        {
-          id: 4,
-          name: 'CNZHAPWRPA010:9182',
-          time: '2020-08-13 05:24:01',
-          level: '3'
-        }
+        // {
+        //   id: 0,
+        //   name: 'CNZHAPWRPA010:9182',
+        //   time: '2020-08-13 05:24:01',
+        //   level: 'critical'
+        // },
+        // {
+        //   id: 1,
+        //   name: 'CNZHAPWRPA010:9182',
+        //   time: '2020-08-13 05:24:01',
+        //   level: 'information'
+        // },
+        // {
+        //   id: 2,
+        //   name: 'CNZHAPWRPA010:9182',
+        //   time: '2020-08-13 05:24:01',
+        //   level: 'warning'
+        // }
       ],
       // mock 的图数据
       tempData: {
@@ -326,19 +327,28 @@ export default {
     }
   },
   methods: {
-    // 弹出告警通知弹框
-    notifyAlert () {
+    closeNotify(index) {
+      this.notifyList.splice(index, 1)
+    },
+    notifyAlert(alert) {
+      let { host, time, description, level } = alert
+      const iconMap = {
+        'critical': '#ff0000',
+        'warning': '#ff9900',
+        'information': '#ffcc00'
+      };
+      time = moment(time).format('YYYY-MM-DD hh:mm:ss')
       this.$notify({
         customClass: 'notify-style',
         dangerouslyUseHTMLString: true,
         message: `
           <p class="notify-title">
-            有新的<span style="color:red;font-weight: bold;"> Critical </span>告警
+            有新的<span style="color:${iconMap[level]};font-weight: bold;"> ${level} </span>告警
           </p>
           <div class="notify-content">
-            <div class="notify-item"><span>对象：</span>CNZHAPWRPA010:9182</div>
-            <div class="notify-item"><span>时间：</span>2020-08-13 05:24:01</div>
-            <div class="notify-item"><span>详情：</span>Usage filesystem space > 90% for 5 minutes</div>
+            <div class="notify-item"><span>对象：</span>${host}</div>
+            <div class="notify-item"><span>时间：</span>${time}</div>
+            <div class="notify-item"><span>详情：</span>${description}</div>
           </div>
           `
       });
@@ -431,7 +441,7 @@ export default {
       const nodes = []
       const edges = []
       data.forEach(system => {
-        const {name, systemId, callNodes} = system
+        const { name, systemId, callNodes } = system
         // id: 'nodeA1', nodeName: 'testName', label: 'user', ip: '127.0.0.1', img: hostSvg
         let node = {
           id: systemId,
@@ -479,9 +489,32 @@ export default {
         }
       })
     },
-    // 初始化websocket连接
-    initWebSocket () {
-      const url = 'ws://111.231.165.249:8087/ws/topology/system'
+    setSystemAlertStyle(systemId) {
+      const { graph, systemList } = this
+      if (!graph) return
+      // 重置所有系统告警状态
+      systemList.forEach(system => {
+        // graph.setItemState(system.systemId, 'warning', false)
+
+        const node = graph.findById(system.systemId)
+        const keyShape = node.getKeyShape()
+        keyShape.attr('stroke', '#1890ff')
+        // node.setState('warning', true)
+      })
+
+      // 设置有告警信息系统的告警状态
+      // graph.setItemState(systemId, 'warning', true)
+
+      const node = graph.findById(systemId)
+      const keyShape = node.getKeyShape()
+      keyShape.attr('stroke', 'red')
+      // node.setState('warning', true)
+
+      console.log(node.getStates())
+      console.log('warning style: ', node.getStateStyle())
+    },
+    initWebSocket() {
+      let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
       const ws = new WebSocket(url)
 
       ws.onopen = () => {
@@ -494,47 +527,56 @@ export default {
         if (data) {
           data = JSON.parse(data)
           console.log(data)
-          this.wsData = data
-          let alertsList = []
-          data.forEach(item => {
-            const { systemId } = item
-            systemList.forEach((system, index) => {
-              if (systemId === system.systemId) {
-                // system = item
-                // 重置每一个节点告警状态
-                const { graph } = this
-                const { systemId } = system
-                if (graph) {
-                  graph.setItemState(systemId, 'warning', false)
-                }
-                const nodeList = item.hierarchicalCount.systemLinkLevelList
-                let alertFlag = false
-                nodeList.forEach(node => {
-                  if (node.alertNum > 0) {
-                    console.log('nnmm')
-                    alertFlag = true
+          if (data.aelrtList && data.aelrtList.length > 0) {
+            this.notifyList = data.aelrtList
+            this.notifyList.forEach((item) => {
+              item.time = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss')
+            })
+            this.notifyAlert(data.alert)
+          } else {
+            this.wsData = data
+            let alertsList = []
+            data.forEach(item => {
+              const { systemId } = item
+              systemList.forEach((system, index) => {
+                if (systemId === system.systemId) {
+                  // system = item
+                  // 重置每一个节点告警状态
+                  const { graph } = this
+                  const { systemId } = system
+                  if (graph) {
+                    graph.setItemState(systemId, 'warning', false)
                   }
-                })
-                if (alertFlag) {
-                  system.hierarchicalCount = item.hierarchicalCount
-                  alertsList.push(systemId)
-                  // this.$set(systemList, index, item)
+                  const nodeList = item.hierarchicalCount.systemLinkLevelList
+                  let alertFlag = false
+                  nodeList.forEach(node => {
+                    if (node.alertNum > 0) {
+                      console.log('nnmm')
+                      alertFlag = true
+                    }
+                  })
+                  if (alertFlag) {
+                    system.hierarchicalCount = item.hierarchicalCount
+                    alertsList.push(systemId)
+                    // this.$set(systemList, index, item)
+                  }
                 }
+              })
+            })
+            alertsList.forEach(systemId => {
+              const { graph } = this
+              // 设置节点为红色
+              if (graph) {
+                // systemList.forEach(node => {
+                //   if (node.alerts.length > 0) {
+
+                //   }
+                // })
+                graph.setItemState(systemId, 'warning', true)
               }
             })
-          })
-          alertsList.forEach(systemId => {
-            const { graph } = this
-            // 设置节点为红色
-            if (graph) {
-              // systemList.forEach(node => {
-              //   if (node.alerts.length > 0) {
+          }
 
-              //   }
-              // })
-              graph.setItemState(systemId, 'warning', true)
-            }
-          })
           // this.systemList = JSON.parse(data)
         }
       }
@@ -549,12 +591,11 @@ export default {
       this.ws = ws
     }
   },
-  created () {
-    // 获取系统列表
+  created() {
     this.getSystemList()
-    // this.initWebSocket()
+    this.initWebSocket()
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       const graph = this.$refs.graphEditor
       const instance = graph.getGraphInstance()
@@ -566,16 +607,16 @@ export default {
   components: {
     BusinessPathTooltip
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     console.log('离开了当前路由！')
     const { ws } = this
     if (ws) ws.close()
     next()
   },
-  activated () {
+  activated() {
     console.log('业务路径组件被激活了')
   },
-  deactivated () {
+  deactivated() {
     console.log('业务路径组件被失活了')
   }
 }
@@ -614,7 +655,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: #161616b3;
-  box-shadow: 0 0  10px #000;
+  box-shadow: 0 0 10px #000;
   z-index: 100;
 }
 .notify-list-title {
@@ -702,32 +743,32 @@ export default {
 /*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
 
 ::-webkit-scrollbar {
-width: 8px; /*对垂直流动条有效*/
-height: 8px; /*对水平流动条有效*/
+  width: 8px; /*对垂直流动条有效*/
+  height: 8px; /*对水平流动条有效*/
 }
 
 /*定义滚动条的轨道颜色、内阴影及圆角*/
-::-webkit-scrollbar-track{
--webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-background-color: #444;
-border-radius: 3px;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #444;
+  border-radius: 3px;
 }
 
 /*定义滑块颜色、内阴影及圆角*/
-::-webkit-scrollbar-thumb{
-border-radius: 7px;
--webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-background-color: #666;
+::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #666;
 }
 
 /*定义两端按钮的样式*/
 ::-webkit-scrollbar-button {
-/* background-color:cyan; */
+  /* background-color:cyan; */
 }
 
 /*定义右下角汇合处的样式*/
 ::-webkit-scrollbar-corner {
-/* background:khaki; */
+  /* background:khaki; */
 }
 </style>
 <style>

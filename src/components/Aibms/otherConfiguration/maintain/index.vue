@@ -2,7 +2,13 @@
   <div class="aia-content">
     <!-- 筛选 -->
     <div class="search-bar">
-      <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" class="search-inline-form">
+      <el-form
+        :inline="true"
+        ref="searchFrom"
+        :model="searchFrom"
+        label-width="80px"
+        class="search-inline-form"
+      >
         <el-form-item>
           <el-input
             v-model="searchFrom.ipAddress"
@@ -12,7 +18,11 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-select clearable v-model="searchFrom.businessValue" placeholder="请选择业务系统">
+          <el-select
+            clearable
+            v-model="searchFrom.businessValue"
+            placeholder="请选择业务系统"
+          >
             <el-option
               v-for="item in businessList"
               :key="item"
@@ -27,7 +37,9 @@
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addRule">新增</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="addRule"
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -35,13 +47,13 @@
     <el-table
       :data="tableData"
       stripe
-      :header-cell-style="{background:'#f5f5f5'}"
+      :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="maintainDeatil"
       style="width: 100%"
     >
-      <el-table-column  label="主机">
+      <el-table-column label="主机">
         <template v-slot="scope">
-          {{ scope.row.ips.filter(item=>item).join(',') }}
+          {{ scope.row.ips.filter((item) => item).join(',') }}
         </template>
       </el-table-column>
       <el-table-column label="时间窗口">
@@ -55,8 +67,12 @@
             <el-switch size="large" v-model="scope.row.status" />
           </div>
           <div class="task-btn-box">
-            <el-link :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
-            <el-link :underline="false" @click.stop="handleDelete(scope.row)">删除</el-link>
+            <el-link :underline="false" @click.stop="handleEdit(scope.row)"
+              >编辑</el-link
+            >
+            <el-link :underline="false" @click.stop="handleDelete(scope.row)"
+              >删除</el-link
+            >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
                 <icon-svg icon-class="bianji" />
@@ -89,7 +105,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      style="text-align: center; margin-top: 92px"
     />
     <!-- 删除组件 -->
     <deleteDialog ref="deleteDialog" @confim-delete="confirmDelete" />
@@ -117,13 +133,13 @@ export default {
     totalSize: 0,
     currentDeleteItemId: -1
   }),
-  created () {
+  created() {
     this.getMaintenanceList()
     this.getBusinessList()
   },
   methods: {
     // 维护窗口列表
-    getMaintenanceList () {
+    getMaintenanceList() {
       const params = {
         systemName: this.searchFrom.businessValue,
         hostIp: this.searchFrom.ipAddress,
@@ -143,16 +159,17 @@ export default {
       })
     },
     // 获取业务系统下拉框列表
-    getBusinessList () {
+    getBusinessList() {
       const params = {
         name: '',
         ipAddress: '',
         current: 1,
         size: 1000
       }
-      axios.getCiSystemList(params).then(res => {
+      axios.getSystemList(params).then(res => {
         if (res.data.success) {
-          this.businessList = [...new Set(res.data.data.records.map(item => item.name))]
+          // this.businessList = res.data.data.result.records
+          this.businessList = [...new Set(res.data.data.result.records.map(item => item.name))]
         } else {
           this.$notify.error({
             title: '提示',
@@ -161,10 +178,10 @@ export default {
         }
       })
     },
-    search () {
+    search() {
       this.getMaintenanceList()
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -173,7 +190,7 @@ export default {
         }
       });
     },
-    addRule () {
+    addRule() {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -181,7 +198,7 @@ export default {
         }
       });
     },
-    openRule (scope) {
+    openRule(scope) {
       const params = {
         id: scope.id,
         status: scope.status
@@ -201,7 +218,7 @@ export default {
         }
       })
     },
-    maintainDeatil (row) {
+    maintainDeatil(row) {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -212,19 +229,19 @@ export default {
       });
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getMaintenanceList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getMaintenanceList()
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteMaintenance(id).then(res => {
         if (res.data.success) {

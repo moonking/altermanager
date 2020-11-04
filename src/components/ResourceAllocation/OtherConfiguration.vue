@@ -1,48 +1,55 @@
 <template>
   <div class="containBox aibms-role">
     <div>
-      <el-form
-        :inline="true"
-        v-model="formInline"
-        class="demo-form-inline">
+      <el-form :inline="true" v-model="formInline" class="demo-form-inline">
         <el-form-item>
-          <el-input type="text" placeholder="业务系统名称" clearable v-model="searchSystemName" />
+          <el-input
+            type="text"
+            placeholder="业务系统名称"
+            clearable
+            v-model="searchSystemName"
+          />
         </el-form-item>
 
         <el-form-item class="item-right overHideMargin">
-          <el-button @click="allSystembtnde" icon="el-icon-close" class="nomal-button">批量删除</el-button>
           <el-button
-            @click="checkAll"
-            v-if="delesteBtnSys"
-            class="cm-form-btn"
-          >删除</el-button>
-          <el-button
-            @click="cancleall"
-            v-if="cancleallBtn"
-            class="cm-form-btn"
-          >取消</el-button>
+            @click="allSystembtnde"
+            icon="el-icon-close"
+            class="nomal-button"
+            >批量删除</el-button
+          >
+          <el-button @click="checkAll" v-if="delesteBtnSys" class="cm-form-btn"
+            >删除</el-button
+          >
+          <el-button @click="cancleall" v-if="cancleallBtn" class="cm-form-btn"
+            >取消</el-button
+          >
           <el-button
             icon="el-icon-search"
-            class=" nomal-button margin-left-btn"
+            class="nomal-button margin-left-btn"
             @click="searchBtn"
-          >查找</el-button>
+            >查找</el-button
+          >
           <el-button
             type="primary"
             icon="el-icon-plus"
             class="margin-left-btn"
             @click.prevent="addSystembtn"
-          >新增</el-button>
+            >新增</el-button
+          >
         </el-form-item>
         <el-form-item class="form-btn"></el-form-item>
       </el-form>
       <el-table
         :data="systemListData"
+        @row-click="systemDetail"
         stripe
         class="table-css non-border"
-        style="width:100%;font-size:0.9rem"
-        :header-cell-style="{background:'#f5f5f5'}"
+        style="width: 100%; font-size: 0.9rem"
+        :header-cell-style="{ background: '#f5f5f5' }"
         @selection-change="handleSelectionChange"
-        center="true">
+        center="true"
+      >
         <el-table-column type="selection" v-if="allSysDeleteShow" />
         <el-table-column label="业务系统名称" prop="name" />
         <el-table-column label="英文缩写" prop="englishAbridge" />
@@ -55,14 +62,27 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <div class="task-btn-box">
-              <span class="special" @click="getSystemDetail(scope.row.systemId)">
-                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
-                  <icon-svg icon-class="bianji" class="whiteness-icon-color"/>
+              <span
+                class="special"
+                @click="getSystemDetail(scope.row.systemId)"
+              >
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="编辑"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="bianji" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="showOpen3(scope.row.systemId)">
-                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color "/>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
             </div>
@@ -89,27 +109,39 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currPage"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           layout="prev, pager, next, sizes, total, jumper"
           :total="total"
           v-if="pageShow"
-          style="cursor: pointer;margin:10px"
+          style="cursor: pointer; margin: 10px"
         ></el-pagination>
       </div>
       <div class="clear"></div>
     </div>
 
-    <el-dialog center :visible.sync="dialogVisibleDelete" title="提示" width="300px">
-      <div :style="{textAlign: 'center'}">
+    <el-dialog
+      center
+      :visible.sync="dialogVisibleDelete"
+      title="提示"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
         <i class="el-icon-warning"></i>&nbsp;&nbsp;确定要删除该项吗？
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogVisibleDelete = false">取 消</el-button>
+        <el-button size="mini" @click="dialogVisibleDelete = false"
+          >取 消</el-button
+        >
         <el-button type="primary" size="mini" @click="open3">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog center :visible.sync="isDeleteAll" title="批量删除" width="300px">
-      <div :style="{textAlign: 'center'}">
+    <el-dialog
+      center
+      :visible.sync="isDeleteAll"
+      title="批量删除"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
         <i class="el-icon-warning"></i>&nbsp;&nbsp;确定要删除这些项吗？
       </div>
       <div slot="footer" class="dialog-footer">
@@ -118,7 +150,8 @@
           class="save-btn-margin-special"
           size="mini"
           @click="batchDeleteSys(tableChecked)"
-        >确 定</el-button>
+          >确 定</el-button
+        >
         <el-button size="mini" @click="isDeleteAll = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -127,7 +160,7 @@
 <script>
 import axios from '@/api';
 export default {
-  data () {
+  data() {
     // var validateurl = (rule, value, callback) => {
     //   if (value === '') {
     //     callback(new Error('请输入Url'));
@@ -231,11 +264,11 @@ export default {
     }
   },
   methods: {
-    checkAll () {
+    checkAll() {
       this.isDeleteAll = true
     },
     // 业务系统列表
-    getBsystemListData (searchPage) {
+    getBsystemListData(searchPage) {
       if (searchPage) {
         this.current = searchPage
       }
@@ -258,17 +291,27 @@ export default {
         }
       })
     },
-    getsvegit () {
+    getsvegit() {
       this.editBsystem.svngit = this.svngit
     },
     // 搜索业务系统
-    searchBtn () {
+    searchBtn() {
       this.systemListData = []
       var searchPage = 1
       this.getBsystemListData(searchPage)
     },
+    systemDetail(row) {
+      console.log(row)
+      this.$router.push({
+        path: '/ResourceAllocation/SystemPage/watch',
+        query: {
+          code: 2,
+          id: row.systemId
+        }
+      })
+    },
     // 新增业务系统按钮
-    addSystembtn () {
+    addSystembtn() {
       // this.addSystem = true;
       // this.systemDetail = false;
       // this.num = 0;
@@ -280,7 +323,7 @@ export default {
       })
     },
     // 获取业务系统详情
-    getSystemDetail (systemId) {
+    getSystemDetail(systemId) {
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/edit',
         query: {
@@ -297,12 +340,12 @@ export default {
       //   }
       // });
     },
-    showOpen3 (id) {
+    showOpen3(id) {
       this.dialogVisibleDelete = true
       this.deleteSystemId = id
     },
     // 业务系统删除
-    open3 () {
+    open3() {
       axios.getSystemCancle(this.deleteSystemId).then(res => {
         if (res.data.code == 200) {
           this.$notify({
@@ -321,17 +364,17 @@ export default {
       })
     },
     // 多选删除
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.tableChecked = val
     },
     // 业务系统批量删除
-    allSystembtnde () {
+    allSystembtnde() {
       this.cancleallBtn = true
       this.delesteBtnSys = true
       this.allSysDeleteShow = true
     },
     // 取消业务系统批量删除
-    cancleall () {
+    cancleall() {
       this.cancleallBtn = false
       this.delesteBtnSys = false
       this.allSysDeleteShow = false
@@ -339,7 +382,7 @@ export default {
       this.BatchDeleteShow = false
     },
     // 确定业务系统批量删除
-    batchDeleteSys (rows) {
+    batchDeleteSys(rows) {
       // console.log(rows);
       var ids = []
       rows.forEach(element => {
@@ -385,7 +428,7 @@ export default {
       }
     },
     // 下拉框凭证
-    getVoucherData () {
+    getVoucherData() {
       var name = ''
       var voucherType = '2'
       let that = this
@@ -398,7 +441,7 @@ export default {
     },
 
     // 环境列表
-    getEnvListData (envsearchPage) {
+    getEnvListData(envsearchPage) {
       if (envsearchPage) {
         this.envcurrent = envsearchPage
       }
@@ -426,35 +469,35 @@ export default {
     },
     // 分页
 
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getEnvListData()
       this.getBsystemListData()
     },
-    handleSizeChangeenv (val) {
+    handleSizeChangeenv(val) {
       this.size = val
       this.getEnvListData()
     },
     // 分页
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       this.current = val
       this.size = 10
       this.getEnvListData()
       this.getBsystemListData()
     },
-    handleCurrentChangeenv (val, page) {
+    handleCurrentChangeenv(val, page) {
       this.envcurrent = val
       this.size = 10
       this.getEnvListData()
     },
     // 查询环境列表
-    getEnvBtn () {
+    getEnvBtn() {
       this.envListData = []
       var envsearchPage = 1
       this.getEnvListData(envsearchPage)
     },
     // 新增环境
-    addEnvironment () {
+    addEnvironment() {
       // this.addUser = true;
       // this.num = 0;
       this.$router.push({
@@ -466,7 +509,7 @@ export default {
     },
 
     // 获取环境详情
-    edit (userId) {
+    edit(userId) {
       this.$router.push({
         path: '/ResourceAllocation/EnvirmentPage/edit',
         query: {
@@ -483,7 +526,7 @@ export default {
       // });
     },
     // 点击删除
-    open2 (userId) {
+    open2(userId) {
       let environmentId = userId
 
       this.$confirm('确认删除?', '提示', {
@@ -517,7 +560,7 @@ export default {
     },
 
     // 批量删除环境
-    batchDelete (rows) {
+    batchDelete(rows) {
       var ids = []
       rows.forEach(element => {
         ids.push(element.environmentId)
@@ -565,13 +608,13 @@ export default {
       }
     },
     // 批量操作
-    BatchDeletebtn () {
+    BatchDeletebtn() {
       this.cancleallBtn = true
       this.delesteBtn = true
       this.BatchDeleteShow = true
     }
   },
-  mounted () {
+  mounted() {
     this.getEnvListData()
     this.getBsystemListData()
     this.getVoucherData()
@@ -587,24 +630,24 @@ export default {
     & /deep/ .el-tabs__header {
       margin: 0 !important;
       border-bottom: 4px solid;
-      border-color:rgba(4, 28, 37, .7)!important;
+      border-color: rgba(4, 28, 37, 0.7) !important;
     }
     & /deep/ .el-tabs__item {
-      background-color: rgba(4, 28, 37, .3)!important;
+      background-color: rgba(4, 28, 37, 0.3) !important;
       height: 35px !important;
       line-height: 35px !important;
       margin-right: 10px !important;
       border: 1px solid;
-      border-color: transparent!important;
+      border-color: transparent !important;
       &:hover {
-        background: #00A8E8!important;
-        color: #fff!important;
+        background: #00a8e8 !important;
+        color: #fff !important;
       }
     }
     & /deep/ .is-active {
-      background-color: #00A8E8!important;
-      color: #fff!important;
-      border: 2px solid #00A8E8 !important;
+      background-color: #00a8e8 !important;
+      color: #fff !important;
+      border: 2px solid #00a8e8 !important;
       border-bottom: none !important;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;

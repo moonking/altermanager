@@ -109,16 +109,17 @@ export default {
     },
     totalSize: 0,
     hostList: [],
-    checkedHostList: [],
-    firstLoad: true
+    checkedHostList: []
   }),
   created() {
     if (this.$route.query.id) {
       if (!this.readOnly) {
         this.getHostTableData()
+        this.getBusinessList()
       }
     } else {
       this.getHostTableData()
+      this.getBusinessList()
     }
   },
   methods: {
@@ -141,6 +142,24 @@ export default {
     search() {
       this.getHostTableData()
     },
+    getBusinessList() {
+      const params = {
+        name: '',
+        ipAddress: '',
+        current: 1,
+        size: 1000
+      }
+      axios.getSystemList(params).then(res => {
+        if (res.data.success) {
+          this.businessList = [...new Set(res.data.data.result.records.map(item => item.name))]
+        } else {
+          this.$notify.error({
+            title: '提示',
+            message: res.data.message
+          })
+        }
+      })
+    },
     getHostTableData() {
       const params = {
         name: this.searchFrom.businessValue,
@@ -157,11 +176,6 @@ export default {
           })
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
-          // 获取下拉列表的数据
-          if (this.firstLoad) {
-            this.businessList = [...new Set(res.data.data.records.map(item => item.name))]
-            this.firstLoad = false
-          }
         } else {
           this.$notify.error({
             title: '提示',

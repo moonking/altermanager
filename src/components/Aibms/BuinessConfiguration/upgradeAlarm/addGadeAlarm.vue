@@ -15,7 +15,7 @@
             <el-input
               v-model="form.name"
               clearable
-              style="width: 632px;"
+              style="width: 632px"
               maxlength="20"
               :disabled="readOnly"
               placeholder="查询表单列表响应时间超时"
@@ -24,14 +24,19 @@
           <br />
           <el-form-item label="规则：" prop="period">
             <span class="wihte-color">若所选告警分类在过去&nbsp;</span>
-            <el-input-number size="small" :disabled="readOnly" v-model="form.period" :min="1" />
+            <el-input-number
+              size="small"
+              :disabled="readOnly"
+              v-model="form.period"
+              :min="1"
+            />
             <span class="wihte-color">&nbsp;分钟内&nbsp;</span>
           </el-form-item>
           <el-form-item prop="ruleValue">
             <el-select
               v-model="form.ruleValue"
               :disabled="readOnly"
-              style="width: 150px;"
+              style="width: 150px"
               placeholder="请选择"
             >
               <el-option
@@ -44,14 +49,19 @@
             <span class="wihte-color">&nbsp;&nbsp;告警&nbsp;</span>
           </el-form-item>
           <el-form-item prop="times">
-            <el-input-number size="small" :disabled="readOnly" v-model="form.times" :min="1" />
+            <el-input-number
+              size="small"
+              :disabled="readOnly"
+              v-model="form.times"
+              :min="1"
+            />
             <span class="wihte-color">&nbsp;&nbsp;次，即升级至&nbsp;</span>
           </el-form-item>
           <el-form-item prop="alarmLevel">
             <el-select
               v-model="form.alarmLevel"
               :disabled="readOnly"
-              style="width: 150px;"
+              style="width: 150px"
               placeholder="请选择"
             >
               <el-option
@@ -60,12 +70,12 @@
                 :label="item.label"
                 :value="item.value"
               >
-                <span style="float: left">{{ item.label }}</span>
                 <icon-svg
-                  style=" font-size: 18px; vertical-align: sub; margin-left: 10px;"
+                  style="font-size: 18px; vertical-align: sub"
                   icon-class="bj"
                   :class="item.label | iconLevelFilter"
                 />
+                <span>{{ item.label }}</span>
               </el-option>
             </el-select>
           </el-form-item>
@@ -75,17 +85,23 @@
           <h4>
             告警分类：
             <!-- <icon-svg icon-class="lianjie" class="middle-operation-color" /> -->
-            <span  @click="openAlarmDialog" v-if="!readOnly"><i class="el-icon-link"></i> 选择告警分类</span>
+            <span @click="openAlarmDialog" v-if="!readOnly"
+              ><i class="el-icon-link"></i> 选择告警分类</span
+            >
             <span class="match-type" v-else>匹配类型</span>
           </h4>
           <ul>
-            <li v-for="(item,index) in checkedAlarmList" :key="index">
+            <li v-for="(item, index) in checkedAlarmList" :key="index">
               <span>{{ item }}</span>
             </li>
           </ul>
         </div>
         <!-- 告警分类表单弹窗 -->
-        <el-dialog title="选择告警分类" :visible.sync="dialogFormVisible" center>
+        <el-dialog
+          title="选择告警分类"
+          :visible.sync="dialogFormVisible"
+          center
+        >
           <el-form :model="alarmModel" ref="classForm" :inline="true">
             <el-form-item>
               <el-autocomplete
@@ -98,7 +114,9 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+              <el-button type="primary" icon="el-icon-search" @click="search"
+                >搜索</el-button
+              >
             </el-form-item>
             <br />
             <el-form-item>
@@ -106,15 +124,20 @@
                 :indeterminate="isIndeterminate"
                 v-model="checkAll"
                 @change="handleCheckAllChange"
-              >全选</el-checkbox>
-              <div style="margin: 15px 0;" />
-              <el-checkbox-group v-model="checkedAlarms" @change="handleCheckedAlarmsChange">
+                >全选</el-checkbox
+              >
+              <div style="margin: 15px 0" />
+              <el-checkbox-group
+                v-model="checkedAlarms"
+                @change="handleCheckedAlarmsChange"
+              >
                 <el-checkbox
                   v-for="item in alarmOptions"
                   :label="item.name"
                   :key="item.iD"
                   :disabled="!item.active"
-                >{{ item.name }}</el-checkbox>
+                  >{{ item.name }}</el-checkbox
+                >
               </el-checkbox-group>
               <!-- 分页 -->
               <el-pagination
@@ -126,7 +149,7 @@
                 :total="totalSize"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                style="margin-top:24px;text-align: center"
+                style="margin-top: 24px; text-align: center"
               />
             </el-form-item>
           </el-form>
@@ -229,13 +252,13 @@ export default {
     totalSize: 0,
     editId: ''
   }),
-  created () {
+  created() {
     this.getClassList()
     this.getAlarmDetail()
   },
   methods: {
     // 获取详情数据
-    getAlarmDetail () {
+    getAlarmDetail() {
       //  查看或编辑
       if (this.$route.query.id) {
         this.editId = this.$route.query.id
@@ -272,7 +295,7 @@ export default {
       }
     },
     // 获取联想输入数据
-    getClassList () {
+    getClassList() {
       axios.geAlarmNameList().then(res => {
         if (res.data.success) {
           this.alarmList = res.data.data
@@ -286,7 +309,7 @@ export default {
       })
     },
     // 获取告警分类多选框数据
-    getAlarmList () {
+    getAlarmList() {
       // 新增和编辑状态下，调用不同接口
       if (!this.$route.query.id) {
         const params = {
@@ -312,7 +335,7 @@ export default {
       }
     },
     // 获取新增和编辑数据
-    addOrUpgradeSort (params, methods) {
+    addOrUpgradeSort(params, methods) {
       methods(params).then(res => {
         if (res.data.success) {
           this.alarmOptions = res.data.data.records
@@ -330,27 +353,27 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getAlarmList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getAlarmList()
     },
     // 联想输入
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       const alarmClassList = this.alarmList
       const results = queryString ? alarmClassList.filter(this.createFilter(queryString)) : alarmClassList
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (alarmList) => {
         return (alarmList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
     // 多选
-    handleCheckAllChange (val) {
+    handleCheckAllChange(val) {
       let activeOptions = this.alarmOptions.filter(item => item.active === true)
       let copyType = val ? activeOptions.map(item => item.name) : []
       let delList = []
@@ -372,11 +395,11 @@ export default {
       }
       this.classCheckStatus(this.checkedAlarms)
     },
-    handleCheckedAlarmsChange (value) {
+    handleCheckedAlarmsChange(value) {
       this.classCheckStatus(this.checkedAlarms)
     },
     // 分类勾选状态
-    classCheckStatus (type) {
+    classCheckStatus(type) {
       let bl = true
       let num = 0
       let alarmOptionList = (this.alarmOptions.filter(item => item.active === true)).map(item => item.name)
@@ -400,14 +423,14 @@ export default {
       }
     },
     // 搜索告警分类
-    search () {
+    search() {
       this.getAlarmList()
     },
-    confimAlarm () {
+    confimAlarm() {
       this.dialogFormVisible = false
       this.checkedAlarmList = this.checkedAlarms
     },
-    submitForm () {
+    submitForm() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.checkedAlarms.length) {
@@ -424,7 +447,7 @@ export default {
         }
       })
     },
-    addOrEdit (methods) {
+    addOrEdit(methods) {
       const params = {
         id: this.editId,
         name: this.form.name,
@@ -456,13 +479,13 @@ export default {
         }
       })
     },
-    turnBack () {
+    turnBack() {
       this.$router.back()
     },
-    cancel () {
+    cancel() {
       this.dialogFormVisible = false
     },
-    openAlarmDialog () {
+    openAlarmDialog() {
       if (this.form.alarmLevel) {
         this.dialogFormVisible = true
         this.getAlarmList()
@@ -502,13 +525,14 @@ export default {
           box-sizing: border-box;
           cursor: pointer;
           .middle-operation-color {
-            color: #00a8e8
-          };
+            color: #00a8e8;
+          }
           span {
             color: #00a8e8;
           }
         }
-        h4:hover span, h4:hover .middle-operation-color{
+        h4:hover span,
+        h4:hover .middle-operation-color {
           color: #00cde8;
         }
         ul {
@@ -525,7 +549,7 @@ export default {
             span {
               width: 100%;
               display: inline-block;
-              background: #00A8E8;
+              background: #00a8e8;
               border-radius: 20px;
               text-align: center;
               color: #fff;
@@ -548,11 +572,11 @@ export default {
       span {
         margin-left: 5px;
         font-size: 14px;
-        color: #00A8E8;
+        color: #00a8e8;
         cursor: pointer;
       }
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         z-index: 1;
         left: -20px;
@@ -560,7 +584,7 @@ export default {
         width: 8px;
         border-radius: 4px;
         height: 30px;
-        background: #00A8E8;
+        background: #00a8e8;
       }
     }
     .button-area {

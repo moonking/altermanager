@@ -43,7 +43,9 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择分类：" prop="type">
-          <span class="tips cursor" v-if="classList.length === 0">请先选择标签</span>
+          <span class="tips cursor" v-if="classList.length === 0"
+            >请先选择标签</span
+          >
           <el-row v-else :gutter="20">
             <el-col :span="2">
               <el-checkbox
@@ -109,12 +111,12 @@
               :label="item.label"
               :value="item.value"
             >
-              <span style="float: left">{{ item.label }}</span>
               <icon-svg
-                style="font-size: 18px; vertical-align: sub; margin-left: 10px"
+                style="font-size: 18px; vertical-align: sub"
                 icon-class="bj"
                 :class="item.value | iconLevelFilter"
               />
+              <span>{{ item.label }}</span>
             </el-option>
           </el-select>
         </el-form-item>

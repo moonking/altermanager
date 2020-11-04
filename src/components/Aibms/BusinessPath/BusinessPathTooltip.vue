@@ -2,12 +2,20 @@
   <div class="business-path-tooltip">
     <div class="tooltip-title">
       <span><i class="el-icon-s-data"></i> 链路层级统计</span>
-      <el-button size="mini" type="text" @click="goSystemEdit">去配置</el-button>
+      <el-button size="mini" type="text" @click="goSystemEdit"
+        >去配置</el-button
+      >
     </div>
     <div class="tooltip-content">
-      <div class="transaction level-item" v-for="alert in alertList" :key="alert.name">
-        <div class="level-item-count">{{alert.name}}: {{alert.num}}</div>
-        <div class="alert-count">{{alert.alertName}}: {{alert.alertNum}}</div>
+      <div
+        class="transaction level-item"
+        v-for="alert in alertList"
+        :key="alert.name"
+      >
+        <div class="level-item-count">{{ alert.name }}: {{ alert.num }}</div>
+        <div class="alert-count">
+          {{ alert.alertName }}: {{ alert.alertNum }}
+        </div>
       </div>
     </div>
     <div class="tooltip-title">
@@ -16,9 +24,28 @@
     <div class="tooltip-operate-user">
       <div class="user-info">
         <!-- <div class="user-item user-name">用户名: vince</div> -->
-        <div class="user-item user-name">姓名: Tom</div>
-        <div class="user-item user-phone">手机号：18920378867</div>
-        <div class="user-item user-email">邮箱：jacky.smith@aeer.com.cn</div>
+        <div class="user-item user-name">
+          姓名:
+          {{
+            Object.keys(alerts).length > 0
+              ? alerts.businessData.opsPerson.name
+              : ''
+          }}
+        </div>
+        <div class="user-item user-phone">
+          手机号：{{
+            Object.keys(alerts).length > 0
+              ? alerts.businessData.opsPerson.phone
+              : ''
+          }}
+        </div>
+        <div class="user-item user-email">
+          邮箱：{{
+            Object.keys(alerts).length > 0
+              ? alerts.businessData.opsPerson.email
+              : ''
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -30,14 +57,14 @@ export default {
     // tooltip信息
     alerts: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
-  data () {
+  data() {
     return {}
   },
   methods: {
-    goSystemEdit () {
+    goSystemEdit() {
       const { alerts } = this
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/edit',
@@ -49,13 +76,13 @@ export default {
     }
   },
   watch: {
-    alerts (value) {
+    alerts(value) {
       console.log('new tooltip value: ', value)
     }
   },
   computed: {
-    alertList () {
-      const {alerts} = this
+    alertList() {
+      const { alerts } = this
       console.log(alerts)
       let alertList = []
       try {
@@ -66,7 +93,7 @@ export default {
       return alertList
     }
   },
-  created () {
+  created() {
     console.log(this.alerts)
   }
 }
@@ -114,7 +141,8 @@ export default {
   font-size: 14px;
   color: #fff;
 }
-.level-item-count, .alert-count {
+.level-item-count,
+.alert-count {
   flex: 1;
 }
 .tooltip-operate-user {
