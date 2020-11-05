@@ -277,11 +277,6 @@ export default {
       img: {},
       tabData: [
         {
-          label: '首页',
-          link: '/',
-          bl: false
-        },
-        {
           className: 'caizhitihuan',
           label: '基础管理',
           link: '/BasicManagement/user',
@@ -292,37 +287,6 @@ export default {
           label: '资源配置管理',
           link: '/ResourceAllocation/CIlistData',
           bl: true
-        },
-        {
-          className: 'dianshangshujuhutong',
-          label: '持续交付',
-          link: '/AutomatedRelease',
-          bl: false
-        },
-
-        {
-          className: 'zidonghuayunwei',
-          label: '自动化运维',
-          link: '/AutomaticOperation',
-          bl: false
-        },
-        {
-          className: 'hezuoyiyuan',
-          label: '资源环境管理',
-          link: '/ResourceManagement/vcenterManage',
-          bl: false
-        },
-        {
-          className: 'zidonghuaceshi',
-          label: '自动化测试',
-          link: '/AutomatedTesting',
-          bl: false
-        },
-        {
-          className: 'dapingmu',
-          label: '大屏统一监控',
-          link: '/ScreenMonitor',
-          bl: false
         },
         {
           className: 'dapingmu',

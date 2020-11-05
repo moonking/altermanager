@@ -780,11 +780,11 @@ export default {
 .notify-style {
   width: 360px;
   height: 160px;
-  background-color: #161616b3;
+  background-color: #161616b3 !important;
   border-radius: 5px;
   border: none;
   color: #fff;
-  box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000 !important;
 }
 .notify-title {
   font-size: 14px;

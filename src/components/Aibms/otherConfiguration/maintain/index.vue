@@ -53,7 +53,8 @@
     >
       <el-table-column label="主机">
         <template v-slot="scope">
-          {{ scope.row.ips.filter((item) => item).join(',') }}
+          <!-- {{ scope.row.ips.filter((item) => item).join(',') }} -->
+          {{ scope.row.ips[0] }}
         </template>
       </el-table-column>
       <el-table-column label="时间窗口">
