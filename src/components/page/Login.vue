@@ -74,12 +74,12 @@ export default {
       },
       systemMapping: {
         bms: '/BasicManagement',
-        cmdb: '/ResourceAllocation',
-        delivery: '/AutomatedRelease',
-        autotest: '/',
-        devops: '/AutomaticOperation',
-        monitoring: '/',
-        aiops: '/'
+        cmdb: '/ResourceAllocation'
+        // delivery: '/AutomatedRelease',
+        // autotest: '/',
+        // devops: '/AutomaticOperation',
+        // monitoring: '/',
+        // aiops: '/'
       }
     };
   },
