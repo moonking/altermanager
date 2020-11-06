@@ -69,7 +69,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/edit',
         query: {
-          code: 2,
+          code: 1,
           id: alerts.id
         }
       })

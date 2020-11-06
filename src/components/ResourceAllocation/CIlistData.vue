@@ -667,14 +667,14 @@ export default {
     // 新增
     addCidata() {
       this.$router.push({
-        path: '/ResourceAllocation/creatci?code=2'
+        path: '/ResourceAllocation/creatci?code=1'
       })
     }, // 点击编辑
     edit(id) {
       let ciitemId = id
 
       this.$router.push({
-        path: '/ResourceAllocation/CIlistData/edit?code=2',
+        path: '/ResourceAllocation/CIlistData/edit?code=1',
         query: { ciitemId: ciitemId }
       })
     },
@@ -683,7 +683,7 @@ export default {
       let ciitemId = id
 
       this.$router.push({
-        path: '/ResourceAllocation/CIlistData/toview?code=2',
+        path: '/ResourceAllocation/CIlistData/toview?code=1',
         query: { ciitemId: ciitemId }
       })
     },
@@ -913,7 +913,7 @@ export default {
     getFromExcel() {
       this.$router.push({
         path: '/ResourceAllocation/Excel',
-        query: { code: 2 }
+        query: { code: 1 }
       })
     },
     // 获取列表

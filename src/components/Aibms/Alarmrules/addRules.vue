@@ -1261,7 +1261,7 @@ export default {
           this.$router.push({
             path: '/Aibms/Bconfiguration/Alarmrules',
             query: {
-              code: 8
+              code: 2
             }
           });
         } else if (res.data.code === 0) {
@@ -1285,7 +1285,7 @@ export default {
           this.$router.push({
             path: '/Aibms/Bconfiguration/Alarmrules',
             query: {
-              code: 8
+              code: 2
             }
           });
         } else if (res.data.code === 0) {
@@ -1302,7 +1302,7 @@ export default {
       this.$router.push({
         path: '/Aibms/Bconfiguration/Alarmrules',
         query: {
-          code: 8
+          code: 2
         }
       });
     },

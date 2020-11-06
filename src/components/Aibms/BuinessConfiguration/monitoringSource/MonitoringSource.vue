@@ -164,7 +164,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
-          code: 8,
+          code: 2,
           id: row.id
         }
       })
@@ -177,7 +177,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
-          code: 8
+          code: 2
         }
       })
     },

@@ -338,7 +338,7 @@ export default {
                     this.$router.push({
                       path: '/ResourceAllocation/CIrelationship',
                       query: {
-                        code: 2
+                        code: 1
                       }
                     })
                   } else {
@@ -366,7 +366,7 @@ export default {
                     this.$router.push({
                       path: '/ResourceAllocation/CIrelationship',
                       query: {
-                        code: 2
+                        code: 1
                       }
                     })
                   } else {
@@ -406,7 +406,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationship',
         query: {
-          code: 2
+          code: 1
         }
       })
     }

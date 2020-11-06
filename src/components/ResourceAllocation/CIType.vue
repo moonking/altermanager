@@ -1765,7 +1765,7 @@ export default {
       this.selectTab = false
     },
     routeTo() {
-      this.$router.push({ path: '/ResourceAllocation/manage_ciType?code=2' })
+      this.$router.push({ path: '/ResourceAllocation/manage_ciType?code=1' })
     },
     handleClick(tab, event) {
       if (tab.name == 'first') {

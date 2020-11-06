@@ -1277,13 +1277,13 @@ export default {
     getFromExcel () {
       this.$router.push({
         path: '/ResourceAllocation/Excel',
-        query: { code: 2 }
+        query: { code: 1 }
       })
     },
     getFromServer () {
       this.$router.push({
         path: '/ResourceAllocation/creatci/getFromServer',
-        query: { code: 2 }
+        query: { code: 1 }
       })
     },
     inputFun (value) {

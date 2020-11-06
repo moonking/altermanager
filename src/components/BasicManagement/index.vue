@@ -205,7 +205,7 @@ export default {
       this.$router.push({
         path: this.$route.path + '/moreOperation',
         query: {
-          code: 1
+          code: 0
         }
       })
     }

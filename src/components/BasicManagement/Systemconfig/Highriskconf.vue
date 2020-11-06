@@ -201,7 +201,7 @@ export default {
       this.$router.push({
         path: '/BasicManagement/Systemconfig/Configpage',
         query: {
-          code: 1,
+          code: 0,
           id: id,
           operation: 'edit'
         }
@@ -226,7 +226,7 @@ export default {
       this.$router.push({
         path: '/BasicManagement/Systemconfig/Configpage',
         query: {
-          code: 1,
+          code: 0,
           id: id,
           operation: 'detail'
         }

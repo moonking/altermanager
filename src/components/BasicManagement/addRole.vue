@@ -296,7 +296,7 @@ export default {
               this.$router.push({
                 path: '/BasicManagement/role',
                 query: {
-                  code: 1
+                  code: 0
                 }
               })
             } else {
@@ -345,8 +345,7 @@ export default {
     resetForm () {
       this.ruleForm2 = ''
       this.$router.push({
-        path: '/BasicManagement/role?code=1',
-        query: {}
+        path: '/BasicManagement/role?code=0'
       })
     }
   },

@@ -107,7 +107,7 @@ export default {
             this.$router.push({
               path: '/BasicManagement/Systemconfig/Highriskconf',
               query: {
-                code: 1
+                code: 0
               }
             });
             this.$notify({
@@ -127,7 +127,7 @@ export default {
         this.$router.push({
           path: '/BasicManagement/Systemconfig/Highriskconf',
           query: {
-            code: 1
+            code: 0
           }
         });
         this.$notify({

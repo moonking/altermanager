@@ -507,7 +507,7 @@ export default {
           path: '/ResourceAllocation/CIlistData/toview',
           query: {
             ciitemId: ciitemId,
-            code: 2
+            code: 1
           }
         })
       })

@@ -240,7 +240,7 @@ export default {
     addTask () {
       this.$router.push({
         query: {
-          code: 8
+          code: 2
         },
         path: '/Aibms/otherConfiguration/timing/create'
       })
@@ -248,7 +248,7 @@ export default {
     readJob (id) {
       this.$router.push({
         query: {
-          code: 8,
+          code: 2,
           manageId: id
         },
         path: '/Aibms/otherConfiguration/timing/read'
@@ -257,7 +257,7 @@ export default {
     editJob (id) {
       this.$router.push({
         query: {
-          code: 8,
+          code: 2,
           manageId: id
         },
         path: '/Aibms/otherConfiguration/timing/edit'

@@ -469,7 +469,7 @@ export default {
           this.$router.push({
             path: '/Aibms/BuinessConfiguration/MonitoringSource',
             query: {
-              code: 8
+              code: 2
             }
           })
         } else {

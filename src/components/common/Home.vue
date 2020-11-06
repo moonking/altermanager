@@ -8,7 +8,7 @@
         <transition
           name="mode"
           transition-mode="out-in"
-          v-if="$route.query.mode == 1 && $route.query.code == 1"
+          v-if="$route.query.mode == 1 && $route.query.code == 0"
         >
           <keep-alive :include="tagsList">
             <BMindex />
@@ -17,7 +17,7 @@
         <transition
           name="mode"
           transition-mode="out-in"
-          v-if="$route.query.mode == 1 && $route.query.code == 2"
+          v-if="$route.query.mode == 1 && $route.query.code == 1"
         >
           <keep-alive :include="tagsList">
             <RAindex />
@@ -26,7 +26,7 @@
         <transition
           name="mode"
           transition-mode="out-in"
-          v-if="$route.query.mode == 1 && $route.query.code == 8"
+          v-if="$route.query.mode == 1 && $route.query.code == 2"
         >
           <keep-alive :include="tagsList">
             <AIAindex />
@@ -52,16 +52,18 @@ import bus from './bus'
 
 export default {
   beforeRouteEnter(to, from, next) {
+    console.log(to, from.next)
     const codeMapping = {
-      '1': { path: '/BasicManagement', name: '基础管理' },
-      '2': { path: '/ResourceAllocation', name: '资源配置管理' },
-      '8': { path: '/Aibms', name: 'Aibms' }
+      '0': { path: '/BasicManagement', name: '基础管理' },
+      '1': { path: '/ResourceAllocation', name: '资源配置管理' },
+      '2': { path: '/Aibms', name: 'Aibms' }
     }
     // 权限判断
     let allowList = JSON.parse(localStorage.getItem('allowList')) || []
     const newAllowList = ['/ResourceManagement', '/Aibms']
     const jurisdiction = [...allowList, ...newAllowList]
     const currentRoute = codeMapping[to.query.code]
+    console.log(jurisdiction, currentRoute)
     if (jurisdiction.indexOf(currentRoute.path) === -1) {
       next('/Unauthorized?system=' + currentRoute.name)
       return

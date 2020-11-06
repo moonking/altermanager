@@ -4,22 +4,18 @@
  * @date 2019/6/28
  */
 module.exports = {
-  // aiaUrl: 'http://111.231.165.249:8075/test_bms/aia/',
-  // baserUrl: 'http://111.231.165.249:8075/test_bms/',
-  // CiBaseUrl: 'http://111.231.165.249:8075/test_cmdb/',
-  // wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
-  aiaUrl: 'http://10.200.190.41:8075/bms/aia/',
-  baserUrl: 'http://10.200.190.41:8075/bms/',
-  CiBaseUrl: 'http://10.200.190.41:8075/cmdb/',
-  wsTopology: 'ws://10.200.190.41:8087/ws/topology/ciitem/'
-  // aiaUrl: 'http://111.231.165.249:8086/',
-  // baserUrl: 'http://111.231.165.249:8086/',
-  // CiBaseUrl: 'http://111.231.165.249:8087/',
-  // wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
-  // deliveryUrl: 'http://10.131.111.167:8075/delivery/',
-  // devopsUrl: 'http://10.131.111.167:8075/devops/',
-  // workflowUrl: 'http://10.131.111.167:8091/',
-  // websocketurl: 'ws://10.131.111.167:1800/ws',
+  // eproe-prod
+  aiaUrl: 'http://114.55.218.127:8075/test_bms/aia/',
+  baserUrl: 'http://114.55.218.127:8075/test_bms/',
+  CiBaseUrl: 'http://114.55.218.127:8075/test_cmdb/',
+  wsTopology: 'ws://114.55.218.127:8087/ws/topology/ciitem/'
+
+  // // AIA-prod
+  // aiaUrl: 'http://10.200.190.41:8075/bms/aia/',
+  // baserUrl: 'http://10.200.190.41:8075/bms/',
+  // CiBaseUrl: 'http://10.200.190.41:8075/cmdb/',
+  // wsTopology: 'ws://10.200.190.41:8087/ws/topology/ciitem/'
+
   // aibmsWebsocketurl: 'ws://10.131.111.167:1802/ws',
   // devopswebsocketurl: 'ws://10.131.111.167:1801/ws',
   // resourceManageUrl: 'http://10.131.111.167:8094/',

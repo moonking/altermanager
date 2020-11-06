@@ -28,7 +28,7 @@
         <div class="item-right">
           <router-link
             :to="{
-              path: '/BasicManagement/permissions/addSystem?code=1',
+              path: '/BasicManagement/permissions/addSystem?code=0',
               query: { id: systemId },
             }"
           >
@@ -41,7 +41,7 @@
           </router-link>
           <router-link
             :to="{
-              path: '/BasicManagement/permissions/editSystem?code=1',
+              path: '/BasicManagement/permissions/editSystem?code=0',
               query: { id: systemId },
             }"
           >

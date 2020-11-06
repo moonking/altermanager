@@ -489,7 +489,7 @@ export default {
       this.$router.push({
         path: '/Aibms/businessPath/linkTopology',
         query: {
-          code: 8,
+          code: 2,
           systemId
         }
       })

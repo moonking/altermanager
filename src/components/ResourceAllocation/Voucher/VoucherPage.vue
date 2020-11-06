@@ -292,7 +292,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/Configuration',
         query: {
-          code: 2
+          code: 1
         }
       })
     },

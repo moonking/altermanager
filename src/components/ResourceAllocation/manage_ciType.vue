@@ -2196,7 +2196,7 @@ export default {
   },
   methods: {
     routeTo () {
-      this.$router.push({ path: '/ResourceAllocation/Template?code=2' })
+      this.$router.push({ path: '/ResourceAllocation/Template?code=1' })
     },
     // 模板模糊查询
     fuzzySearch () {

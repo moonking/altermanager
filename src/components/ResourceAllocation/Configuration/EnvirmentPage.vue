@@ -158,7 +158,7 @@ export default {
                 that.$router.push({
                   path: '/ResourceAllocation/OtherConfiguration',
                   query: {
-                    code: 2
+                    code: 1
                   }
                 })
               } else {
@@ -180,7 +180,7 @@ export default {
                 that.$router.push({
                   path: '/ResourceAllocation/OtherConfiguration',
                   query: {
-                    code: 2
+                    code: 1
                   }
                 })
               } else {

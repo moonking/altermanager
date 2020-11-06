@@ -363,7 +363,7 @@ export default {
     getCIDetail (id) {
       this.curId = id
       this.$router.push({
-        path: '/ResourceAllocation/CIlistData/toview?code=2',
+        path: '/ResourceAllocation/CIlistData/toview?code=1',
         query: { ciitemId: id }
       })
     },
@@ -409,7 +409,7 @@ export default {
     editCI (id) {
       this.curId = id
       this.$router.push({
-        path: '/ResourceAllocation/CIlistData/edit?code=2',
+        path: '/ResourceAllocation/CIlistData/edit?code=1',
         query: { ciitemId: id }
       })
     },

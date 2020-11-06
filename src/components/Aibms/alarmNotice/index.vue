@@ -356,7 +356,7 @@ export default {
       this.$router.push({
         path: '/Aibms/Transaction',
         query: {
-          code: 8
+          code: 2
         }
       })
     },
@@ -367,7 +367,7 @@ export default {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',
         query: {
-          code: 8,
+          code: 2,
           id: row.code
         }
       })

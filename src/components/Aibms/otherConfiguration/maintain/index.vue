@@ -186,7 +186,7 @@ export default {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
-          code: 8,
+          code: 2,
           id: row.id
         }
       });
@@ -195,7 +195,7 @@ export default {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
-          code: 8
+          code: 2
         }
       });
     },
@@ -223,7 +223,7 @@ export default {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
-          code: 8,
+          code: 2,
           id: row.id,
           read: true
         }

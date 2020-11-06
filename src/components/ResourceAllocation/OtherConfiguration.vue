@@ -305,7 +305,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/watch',
         query: {
-          code: 2,
+          code: 1,
           id: row.systemId
         }
       })
@@ -318,7 +318,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/create',
         query: {
-          code: 2
+          code: 1
         }
       })
     },
@@ -327,7 +327,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/edit',
         query: {
-          code: 2,
+          code: 1,
           id: systemId
         }
       })
@@ -503,7 +503,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/EnvirmentPage/create',
         query: {
-          code: 2
+          code: 1
         }
       })
     },
@@ -513,7 +513,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/EnvirmentPage/edit',
         query: {
-          code: 2,
+          code: 1,
           id: userId
         }
       })

@@ -38,42 +38,42 @@
       </div>
       <ul>
         <li>
-          <router-link to="/ResourceAllocation/CIlistData?code=2">
+          <router-link to="/ResourceAllocation/CIlistData?code=1">
             <a>CI列表</a>
           </router-link>
         </li>
         <li>
-          <router-link to="/ResourceAllocation/creatci?code=2">
+          <router-link to="/ResourceAllocation/creatci?code=1">
             <a>创建CI项</a>
           </router-link>
         </li>
         <li>
-          <router-link to="/ResourceAllocation/manage_ciType?code=2">
+          <router-link to="/ResourceAllocation/manage_ciType?code=1">
             <a>管理CI类型</a>
           </router-link>
         </li>
         <li>
-          <router-link to="/ResourceAllocation/CIType?code=2">
+          <router-link to="/ResourceAllocation/CIType?code=1">
             <a>编辑CI类型</a>
           </router-link>
         </li>
         <!-- <li>
-          <router-link to="/ResourceAllocation/Configuration?code=2">
+          <router-link to="/ResourceAllocation/Configuration?code=1">
             <a>凭证管理</a>
           </router-link>
         </li> -->
         <li>
-          <router-link to="/ResourceAllocation/OtherConfiguration?code=2">
+          <router-link to="/ResourceAllocation/OtherConfiguration?code=1">
             <a>业务系统</a>
           </router-link>
         </li>
         <li>
-          <router-link to="/ResourceAllocation/CIrelationship?code=2">
+          <router-link to="/ResourceAllocation/CIrelationship?code=1">
             <a>CI关系</a>
           </router-link>
         </li>
         <!-- <li>
-          <router-link to="/ResourceAllocation/Template?code=2">
+          <router-link to="/ResourceAllocation/Template?code=1">
             <a>模块管理</a>
           </router-link>
         </li> -->

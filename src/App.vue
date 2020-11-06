@@ -132,7 +132,7 @@ export default {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',
         query: {
-          code: 8,
+          code: 2,
           id: id
         }
       })

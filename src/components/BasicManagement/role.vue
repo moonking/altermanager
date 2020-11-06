@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item class="item-right">
         <el-button icon="el-icon-search" class="common-btn-style nomal-button" @click="getRoleLsit(1)">查找</el-button>
-        <router-link to="/BasicManagement/addRole?code=1">
+        <router-link to="/BasicManagement/addRole?code=0">
           <el-button type="primary" icon="el-icon-plus" class="common-btn-style margin-left-btn">新增</el-button>
         </router-link>
       </el-form-item>

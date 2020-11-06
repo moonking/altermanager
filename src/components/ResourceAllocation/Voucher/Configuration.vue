@@ -159,7 +159,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/VoucherPage/create',
         query: {
-          code: 2
+          code: 1
         }
       })
     },
@@ -167,7 +167,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/VoucherPage/watch',
         query: {
-          code: 2,
+          code: 1,
           id: voucherId
         }
       })
@@ -215,7 +215,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/VoucherPage/edit',
         query: {
-          code: 2,
+          code: 1,
           id: voucherId
         }
       })

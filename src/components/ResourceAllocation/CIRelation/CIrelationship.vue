@@ -195,7 +195,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/edit',
         query: {
-          code: 2,
+          code: 1,
           id: cirelationId
         }
       })
@@ -227,7 +227,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/watch',
         query: {
-          code: 2,
+          code: 1,
           id: cirelationId
         }
       })
@@ -301,7 +301,7 @@ export default {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/create',
         query: {
-          code: 2
+          code: 1
         }
       })
     },

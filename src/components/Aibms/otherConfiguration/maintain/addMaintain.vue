@@ -151,7 +151,7 @@ export default {
           this.$router.push({
             path: '/Aibms/otherConfiguration/maintain',
             query: {
-              code: 8
+              code: 2
             }
           })
         } else {
@@ -179,7 +179,7 @@ export default {
     cancel() {
       this.$router.replace({
         path: '/Aibms/otherConfiguration/maintain',
-        query: { code: 8 }
+        query: { code: 2 }
       })
     }
   }

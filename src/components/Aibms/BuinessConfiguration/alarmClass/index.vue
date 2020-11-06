@@ -253,7 +253,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
-          code: 8
+          code: 2
         }
       })
     },
@@ -261,7 +261,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
-          code: 8,
+          code: 2,
           id: row.iD
         }
       })
@@ -292,7 +292,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
-          code: 8,
+          code: 2,
           id: row.iD,
           read: true
         }

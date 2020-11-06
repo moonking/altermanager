@@ -11,7 +11,7 @@
       router
     >
       <template v-for="item in sides.arr">
-        <template v-if="$route.query.code == 1">
+        <template v-if="$route.query.code == 0">
           <template v-if="item.children">
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title" id="submenu">
@@ -61,7 +61,7 @@
         </template>
       </template>
       <template v-for="item in sides.arr1">
-        <template v-if="$route.query.code == 2">
+        <template v-if="$route.query.code == 1">
           <template v-if="item.children">
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title">
@@ -97,7 +97,7 @@
         </template>
       </template>
       <template v-for="item in AIA">
-        <template v-if="$route.query.code == 8">
+        <template v-if="$route.query.code == 2">
           <template v-if="item.subs && item.title !== '监控平台'">
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
@@ -196,7 +196,7 @@ export default {
       BasicManagementItems: [
         {
           icon: 'sidebar icon-caizhitihuan',
-          index: '/BasicManagement/permissions?code=1',
+          index: '/BasicManagement/permissions?code=0',
           title: '',
           subs: [
             { index: '1', title: '', subs: [] },
@@ -212,63 +212,63 @@ export default {
       ResourceAllocation: [
         {
           icon: 'el-icon-goods',
-          index: '/ResourceAllocation/organization?code=2',
+          index: '/ResourceAllocation/organization?code=1',
           title: '资源配置管理',
           subs: [
             {
-              index: '/ResourceAllocation/ResourceType?code=2',
+              index: '/ResourceAllocation/ResourceType?code=1',
               title: '资源类型管理'
             },
             {
-              index: '/ResourceAllocation/CIlistData?code=2',
+              index: '/ResourceAllocation/CIlistData?code=1',
               title: 'CI列表'
             },
             {
-              index: '/ResourceAllocation/manage_ciType?code=2',
+              index: '/ResourceAllocation/manage_ciType?code=1',
               title: '管理CI类型'
             },
             {
-              index: '/ResourceAllocation/creatci?code=2',
+              index: '/ResourceAllocation/creatci?code=1',
               title: '创建CI项'
             },
             {
-              index: '/ResourceAllocation/Configuration?code=2',
+              index: '/ResourceAllocation/Configuration?code=1',
               title: '应用配置'
             },
             {
-              index: '/ResourceAllocation/ResourceAllocation?code=2',
+              index: '/ResourceAllocation/ResourceAllocation?code=1',
 
               title: '资源配置管理'
             },
             {
-              index: '/ResourceAllocation/ResourceTopology?code=2',
+              index: '/ResourceAllocation/ResourceTopology?code=1',
 
               title: '查询及资源拓扑'
             },
             {
-              index: '/ResourceAllocation/CIType?code=2',
+              index: '/ResourceAllocation/CIType?code=1',
               title: 'CI类型'
             }
           ]
         },
         {
           icon: 'el-icon-lx-cascades',
-          index: '/ResourceAllocation/Basicnformation?code=2',
+          index: '/ResourceAllocation/Basicnformation?code=1',
 
           title: '基础信息',
           subs: [
             {
-              index: '/ResourceAllocation/relation?code=2',
+              index: '/ResourceAllocation/relation?code=1',
 
               title: '关系管理'
             },
             {
-              index: '/ResourceAllocation/BusinessGroup?code=2',
+              index: '/ResourceAllocation/BusinessGroup?code=1',
 
               title: '业务组管理'
             },
             {
-              index: '/ResourceAllocation/environment?code=2',
+              index: '/ResourceAllocation/environment?code=1',
 
               title: '环境管理'
             }
@@ -282,11 +282,11 @@ export default {
           title: '业务路径',
           subs: [
             {
-              index: '/Aibms/businessPath?code=8',
+              index: '/Aibms/businessPath?code=2',
               title: '业务拓扑'
             },
             {
-              index: '/Aibms/blackList?code=8',
+              index: '/Aibms/blackList?code=2',
               title: '黑名单'
             }
           ]
@@ -297,31 +297,31 @@ export default {
           title: '业务配置',
           subs: [
             {
-              index: '/Aibms/BuinessConfiguration/MonitoringSource?code=8',
+              index: '/Aibms/BuinessConfiguration/MonitoringSource?code=2',
               title: '监控来源'
             },
             {
-              index: '/Aibms/BuinessConfiguration/alarmclassification?code=8',
+              index: '/Aibms/BuinessConfiguration/alarmclassification?code=2',
               title: '告警分类'
             },
             {
-              index: '/Aibms/Bconfiguration/Alarmrules?code=8',
+              index: '/Aibms/Bconfiguration/Alarmrules?code=2',
               title: '告警规则'
             },
             {
-              index: '/Aibms/BuinessConfiguration/upgradeAlarm?code=8',
+              index: '/Aibms/BuinessConfiguration/upgradeAlarm?code=2',
               title: '告警升级'
             }
           ]
         },
         {
           icon: 'sidebar-icon icon-zhinengyunwei',
-          index: '/Aibms/alarmnotice?code=8',
+          index: '/Aibms/alarmnotice?code=2',
           title: '告警通知'
         },
         {
           icon: 'sidebar-icon icon-dianshangshujuhutong',
-          index: '/Aibms/Transaction?code=8',
+          index: '/Aibms/Transaction?code=2',
           title: '交易追踪'
         },
         {
@@ -330,19 +330,19 @@ export default {
           title: '其他配置',
           subs: [
             {
-              index: '/Aibms/otherConfiguration/message?code=8',
+              index: '/Aibms/otherConfiguration/message?code=2',
               title: '短信配置'
             },
             {
-              index: '/Aibms/otherConfiguration/email?code=8',
+              index: '/Aibms/otherConfiguration/email?code=2',
               title: '邮件配置'
             },
             {
-              index: '/Aibms/otherConfiguration/maintain?code=8',
+              index: '/Aibms/otherConfiguration/maintain?code=2',
               title: '维护窗口'
             },
             {
-              index: '/Aibms/otherConfiguration/timingList?code=8',
+              index: '/Aibms/otherConfiguration/timingList?code=2',
               title: '定时任务'
             }
           ]
@@ -353,32 +353,32 @@ export default {
           title: '监控平台',
           subs: [
             {
-              url: '/Aibms?code=8&type=Splunk',
+              url: '/Aibms?code=2&type=Splunk',
               index: 'http://10.130.116.100:8000/zh-CN/account/login',
               title: 'Splunk'
             },
             {
-              url: '/Aibms?code=8&type=BPC',
+              url: '/Aibms?code=2&type=BPC',
               index: 'https://10.130.182.223:8443/bpc',
               title: 'BPC'
             },
             {
-              url: '/Aibms?code=8&type=NPM',
+              url: '/Aibms?code=2&type=NPM',
               index: 'https://10.130.182.222:8443/zh-hans/accounts/login',
               title: 'NPM'
             },
             {
-              url: '/Aibms?code=8&type=Prometheus',
+              url: '/Aibms?code=2&type=Prometheus',
               index: 'http://cnzhaplpms040:3000/',
               title: 'Prometheus'
             },
             {
-              url: '/Aibms?code=8&type=Oneagent',
+              url: '/Aibms?code=2&type=Oneagent',
               index: 'https://ugv140.dynatrace-managed.com/login',
               title: 'Oneagent'
             },
             {
-              url: '/Aibms?code=8&type=Solarwind',
+              url: '/Aibms?code=2&type=Solarwind',
               index: 'http://10.130.182.254/Orion',
               title: 'Solarwind'
             }
@@ -423,19 +423,19 @@ export default {
     },
     //    默认左侧菜单栏展开
     getCurrentMune(code) {
-      if (code === 1) {
+      if (code === 0) {
         if (this.sides.arr) {
           let href = this.sides.arr[0].href;
           this.currentIndex = [href];
           this.currentActive = href;
         }
-      } else if (code === 2) {
+      } else if (code === 1) {
         if (this.sides.arr1) {
           let href = this.sides.arr1[0].href;
           this.currentIndex = [href];
           this.currentActive = href;
         }
-      } else if (code === 8) {
+      } else if (code === 2) {
         if (this.AIA) {
           let index = this.AIA[0].index;
           this.currentIndex = [index];

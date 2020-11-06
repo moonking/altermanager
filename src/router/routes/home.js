@@ -4,7 +4,7 @@ let home = [
     redirect: {
       path: '/Aibms/BuinessConfiguration/MonitoringSource',
       query: {
-        code: 8
+        code: 2
       }
     },
     component: resolve => require(['@/components/BasicManagement/index.vue'], resolve)

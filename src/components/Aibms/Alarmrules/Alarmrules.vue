@@ -261,7 +261,7 @@ export default {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/edit',
         query: {
-          code: 8,
+          code: 2,
           ruleId: row.iD
         }
       });
@@ -294,7 +294,7 @@ export default {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/create',
         query: {
-          code: 8
+          code: 2
         }
       });
     },
@@ -318,7 +318,7 @@ export default {
       this.$router.push({
         path: '/Aibms/Bconfiguration/addRules/read',
         query: {
-          code: 8,
+          code: 2,
           ruleId: row.iD
         }
       });

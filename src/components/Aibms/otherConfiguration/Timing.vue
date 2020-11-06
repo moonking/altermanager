@@ -838,7 +838,7 @@ export default {
           this.$router.push({
             path: '/Aibms/otherConfiguration/timingList',
             query: {
-              code: 8
+              code: 2
             }
           })
         } else {
@@ -854,7 +854,7 @@ export default {
       this.$router.push({
         path: '/Aibms/otherConfiguration/timingList',
         query: {
-          code: 8
+          code: 2
         }
       })
     },
@@ -1290,7 +1290,7 @@ export default {
           this.$router.push({
             path: '/Aibms/otherConfiguration/timingList',
             query: {
-              code: 8
+              code: 2
             }
           })
         } else {

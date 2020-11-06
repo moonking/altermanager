@@ -467,7 +467,7 @@ export default {
           this.$router.push({
             path: '/Aibms/BuinessConfiguration/upgradeAlarm',
             query: {
-              code: 8
+              code: 2
             }
           })
         } else {

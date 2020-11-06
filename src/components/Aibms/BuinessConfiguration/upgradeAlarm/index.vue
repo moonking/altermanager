@@ -146,7 +146,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
-          code: 8,
+          code: 2,
           id: row.id,
           read: true
         }
@@ -159,7 +159,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
-          code: 8
+          code: 2
         }
       })
     },
@@ -167,7 +167,7 @@ export default {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
-          code: 8,
+          code: 2,
           id: row.id
         }
       })
