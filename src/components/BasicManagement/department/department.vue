@@ -152,7 +152,7 @@
   </div>
 </template>
 <script>
-import UserSelector from '../../AutomatedRelease/ToolsManagement/UserSelector'
+import UserSelector from './UserSelector'
 import axios from '@/api'
 export default {
   name: 'Department',
