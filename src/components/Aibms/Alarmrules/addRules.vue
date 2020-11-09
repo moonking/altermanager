@@ -711,14 +711,19 @@ export default {
         if (res.data.code === 200) {
           this.classList = res.data.data.records;
           this.totalSize = Number(res.data.data.total);
+          const list = this.classList.filter(
+            (item) =>
+              !item.belongRule ||
+              (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)
+          );
 
           if (!(first === true)) {
             this.typesForm.type = [];
           }
           const checkedLength = this.typesForm.type.length;
-          this.checkAll = checkedLength === this.classList.length;
+          this.checkAll = checkedLength === list.length;
           this.isIndeterminate = !(
-            checkedLength === 0 || checkedLength === this.classList.length
+            checkedLength === 0 || checkedLength === list.length
           );
 
           // const enabledList = this.getEnableClassList(this.classList)
@@ -1308,49 +1313,51 @@ export default {
     },
     // dialog保存
     saveTips() {
-      if (this.tipsForm.mode === 1) {
-        this.noticeInform = [];
-        this.tabsList.forEach((item) => {
-          this.allNotice.forEach((res) => {
-            if (item.value === res.value) {
-              res.selectedArray.forEach((row) => {
-                item.tipsTableData.forEach((result) => {
-                  if (row.userId === result.userId) {
-                    row.checkList = result.checkList;
-                  }
-                });
+      // if (this.tipsForm.mode === 1) {
+      this.noticeInform = [];
+      this.tabsList.forEach((item) => {
+        this.allNotice.forEach((res) => {
+          if (item.value === res.value) {
+            res.selectedArray.forEach((row) => {
+              item.tipsTableData.forEach((result) => {
+                if (row.userId === result.userId) {
+                  row.checkList = result.checkList;
+                }
               });
+            });
+          }
+        });
+      });
+      this.allNotice.forEach((item) => {
+        item.selectedArray.forEach((row) => {
+          this.noticeInform.push(row);
+        });
+      });
+      // } else {
+      // 自定义
+      let promiseTmp = [];
+      if (this.$refs.customFrom) {
+        this.$refs.customFrom.forEach((item) => {
+          promiseTmp.push(item.validate());
+        });
+      }
+      Promise.all(promiseTmp)
+        .then(() => {
+          this.tipsDialog = false;
+          this.customFromList.forEach((item) => {
+            console.log(item)
+            item.department = '-';
+            item.custom = true;
+            if (item.name) {
+              this.noticeInform.push(item);
             }
           });
+          // this.noticeInform = this.customFromList;
+        })
+        .catch((err) => {
+          return err;
         });
-        this.allNotice.forEach((item) => {
-          item.selectedArray.forEach((row) => {
-            this.noticeInform.push(row);
-          });
-        });
-        this.tipsDialog = false;
-      } else {
-        // 自定义
-        let promiseTmp = [];
-        if (this.$refs.customFrom) {
-          this.$refs.customFrom.forEach((item) => {
-            promiseTmp.push(item.validate());
-          });
-        }
-        Promise.all(promiseTmp)
-          .then(() => {
-            this.tipsDialog = false;
-            this.customFromList.forEach((item) => {
-              item.department = '-';
-              item.custom = true;
-              this.noticeInform.push(item);
-            });
-            // this.noticeInform = this.customFromList;
-          })
-          .catch((err) => {
-            return err;
-          });
-      }
+      // }
       console.log(this.noticeInform);
       this.TemporaryCancel = [];
       this.TemporaryAdd = [];
