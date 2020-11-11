@@ -11,25 +11,55 @@
         <el-table-column label="类型">
           <template slot-scope="scope">
             <el-button
-              style="cursor:default;"
-              :type="scope.row.menuType=='1'?'primary':scope.row.menuType=='2'?'success':scope.row.menuType=='3'?'warning':'info'"
+              style="cursor: default"
+              :type="
+                scope.row.menuType == '1'
+                  ? 'primary'
+                  : scope.row.menuType == '2'
+                  ? 'success'
+                  : scope.row.menuType == '3'
+                  ? 'warning'
+                  : 'info'
+              "
               size="small"
-            >{{scope.row.menuType=='1'?'系统':scope.row.menuType=='2'?'菜单':scope.row.menuType=='3'?'按钮':'数据项'}}</el-button>
+              >{{
+                scope.row.menuType == '1'
+                  ? '系统'
+                  : scope.row.menuType == '2'
+                  ? '菜单'
+                  : scope.row.menuType == '3'
+                  ? '按钮'
+                  : '数据项'
+              }}</el-button
+            >
           </template>
         </el-table-column>
         <el-table-column label="权限标识">
           <template slot-scope="scope">
-            <span>{{scope.row.permission}}</span>
+            <span>{{ scope.row.permission }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="230px;">
           <template slot-scope="scope">
             <el-button
-              :type="scope.row.menuType=='1'?'primary':scope.row.menuType=='2'?'success':'warning'"
+              :type="
+                scope.row.menuType == '1'
+                  ? 'primary'
+                  : scope.row.menuType == '2'
+                  ? 'success'
+                  : 'warning'
+              "
               plain
               size="small"
               @click="modifyItem(scope.row)"
-            >{{scope.row.menuType=='1'?'修改系统':scope.row.menuType=='2'?'修改子菜单':'修改'}}</el-button>
+              >{{
+                scope.row.menuType == '1'
+                  ? '修改系统'
+                  : scope.row.menuType == '2'
+                  ? '修改子菜单'
+                  : '修改'
+              }}</el-button
+            >
             <!--   <el-dialog title="修改系统基本信息" :visible.sync="dialogFormVisible1" :modal="false"> -->
             <el-dialog
               center
@@ -43,7 +73,7 @@
                     label="系统名称"
                     prop="name"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
                     <el-input
@@ -52,8 +82,9 @@
                       maxlength="10"
                       :input="inputFun(menuForm.name)"
                     ></el-input>
-                    <span>{{menuNameLength}}</span>/
-                    <span>{{totalNum}}</span>
+                    <span>{{ menuNameLength }}</span
+                    >/
+                    <span>{{ totalNum }}</span>
                   </el-form-item>
                 </div>
                 <div>
@@ -61,37 +92,50 @@
                     label="系统标识"
                     prop="permission"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input v-model="menuForm.permission" disabled="disabled" autocomplete="off"></el-input>
+                    <el-input
+                      v-model="menuForm.permission"
+                      disabled="disabled"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
                 <div>
-                  <span class="spanx disinlne mgr40">*</span>
                   <el-form-item
                     label="系统地址"
                     prop="href"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input v-model="menuForm.href" autocomplete="off"></el-input>
+                    <el-input
+                      v-model="menuForm.href"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
-                <el-form-item label="系统描述" :label-width="formLabelWidth" style="width:96%">
+                <el-form-item
+                  label="系统描述"
+                  :label-width="formLabelWidth"
+                  style="width: 96%"
+                >
                   <el-input
                     v-model="menuForm.remarks"
                     autocomplete="off"
                     maxlength="50"
                     :input="inputFun1(menuForm.remarks)"
                   ></el-input>
-                  <span>{{sysDesLength}}</span>/
-                  <span>{{sysTotalNum}}</span>
+                  <span>{{ sysDesLength }}</span
+                  >/
+                  <span>{{ sysTotalNum }}</span>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer txtcenter">
-                <el-button type="primary" @click="saveSys(menuForm)">保存</el-button>
+                <el-button type="primary" @click="saveSys(menuForm)"
+                  >保存</el-button
+                >
                 <el-button @click="cancle()">取 消</el-button>
               </div>
             </el-dialog>
@@ -108,12 +152,17 @@
                     label="菜单名称"
                     :label-width="formLabelWidth"
                     prop="name"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input v-model="menuForm.name" autocomplete="off" maxlength="10"></el-input>
-                    <span>{{menuNameLength}}</span>/
-                    <span>{{totalNum}}</span>
+                    <el-input
+                      v-model="menuForm.name"
+                      autocomplete="off"
+                      maxlength="10"
+                    ></el-input>
+                    <span>{{ menuNameLength }}</span
+                    >/
+                    <span>{{ totalNum }}</span>
                   </el-form-item>
                 </div>
                 <div>
@@ -121,10 +170,14 @@
                     label="菜单标识"
                     prop="permission"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input v-model="menuForm.permission" disabled="disabled" autocomplete="off"></el-input>
+                    <el-input
+                      v-model="menuForm.permission"
+                      disabled="disabled"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
                 <div>
@@ -132,29 +185,49 @@
                     label="菜单地址"
                     prop="href"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input v-model="menuForm.href" autocomplete="off"></el-input>
+                    <el-input
+                      v-model="menuForm.href"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
                 <el-form-item label="菜单图标" :label-width="formLabelWidth">
                   <div>
-                    <i class="iconfont" :class="menuForm.icon" style="font-size: 20px;"></i>
+                    <icon-svg
+                      class="iconfont"
+                      :icon-class="menuForm.icon"
+                      style="font-size: 20px; margin-left: 8px"
+                    ></icon-svg>
                   </div>
                   <div class="block-icon-box">
-                    <i
-                      v-for="(icon,index) in iconList"
-                      class="block-icon-item iconfont"
-                      :class="iconList[index]"
+                    <span
+                      v-for="(icon, index) in iconList"
+                      @click="selectIcon(menuForm, iconList[index])"
                       :key="index"
-                      @click="selectIcon(menuForm,iconList[index])"
-                    ></i>
+                    >
+                      <icon-svg
+                        :icon-class="iconList[index]"
+                        class="block-icon-item iconfont"
+                      />
+                    </span>
+
+                    <!-- <i
+                        v-for="(icon, index) in iconList"
+                        class="block-icon-item iconfont"
+                        :class="iconList[index]"
+                        :key="index"
+                        @click="selectIcon(menuForm, iconList[index])"
+                      ></i> -->
                   </div>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer txtcenter">
-                <el-button type="primary" @click="saveMenu(menuForm)">保存</el-button>
+                <el-button type="primary" @click="saveMenu(menuForm)"
+                  >保存</el-button
+                >
                 <el-button @click="cancle()">取 消</el-button>
               </div>
             </el-dialog>
@@ -170,13 +243,18 @@
                   <el-form-item
                     label="按钮名称"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                     prop="name"
                   >
-                    <el-input v-model="menuForm.name" autocomplete="off" maxlength="10"></el-input>
-                    <span>{{menuNameLength}}</span>/
-                    <span>{{totalNum}}</span>
+                    <el-input
+                      v-model="menuForm.name"
+                      autocomplete="off"
+                      maxlength="10"
+                    ></el-input>
+                    <span>{{ menuNameLength }}</span
+                    >/
+                    <span>{{ totalNum }}</span>
                   </el-form-item>
                 </div>
                 <div>
@@ -184,42 +262,64 @@
                   <el-form-item
                     label="按钮标识"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                   >
-                    <el-input disabled="disabled" v-model="menuForm.permission" autocomplete="off"></el-input>
+                    <el-input
+                      disabled="disabled"
+                      v-model="menuForm.permission"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
                 <div>
                   <el-form-item
                     label="跳转地址"
                     :label-width="formLabelWidth"
-                    style="width:96%"
+                    style="width: 96%"
                     class="disinlne"
                     prop="href"
                   >
-                    <el-input v-model="menuForm.href" autocomplete="off"></el-input>
+                    <el-input
+                      v-model="menuForm.href"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </div>
               </el-form>
               <div slot="footer" class="dialog-footer txtcenter">
-                <el-button type="primary" @click="saveBtn(menuForm)">保存</el-button>
+                <el-button type="primary" @click="saveBtn(menuForm)"
+                  >保存</el-button
+                >
                 <el-button @click="cancle()">取 消</el-button>
               </div>
             </el-dialog>
             <el-button
-              :type="scope.row.menuType=='2'?'success':'warning'"
+              :type="scope.row.menuType == '2' ? 'success' : 'warning'"
               plain
               size="small"
               v-if="scope.row.menuType != '1'"
-              @click="deleteMenu(scope.row.menuId,scope.row)"
-            >{{scope.row.menuType=='2'?'删除子菜单':'删除'}}</el-button>
+              @click="deleteMenu(scope.row.menuId, scope.row)"
+              >{{
+                scope.row.menuType == '2' ? '删除子菜单' : '删除'
+              }}</el-button
+            >
           </template>
         </el-table-column>
         <el-table-column label="位置修改">
           <template slot-scope="scope">
-            <el-button class="nomal-button" v-if="!scope.row.first" @click="upMove(scope.row)">上移</el-button>
-            <el-button class="nomal-button" v-if="!scope.row.last" @click="downMove(scope.row)">下移</el-button>
+            <el-button
+              class="nomal-button"
+              v-if="!scope.row.first"
+              @click="upMove(scope.row)"
+              >上移</el-button
+            >
+            <el-button
+              class="nomal-button"
+              v-if="!scope.row.last"
+              @click="downMove(scope.row)"
+              >下移</el-button
+            >
           </template>
         </el-table-column>
       </tree-table>
@@ -237,7 +337,7 @@ import axios from '@/api';
 export default {
   name: 'MoreOperation',
   components: { treeTable },
-  data () {
+  data() {
     return {
       rules: {
         name: [
@@ -465,12 +565,13 @@ export default {
     }
   },
   computed: {
-    iconList () {
-      return icons
+    iconList() {
+      let icon = icons.map(item => item.split('-')[1])
+      return icon;
     }
   },
   methods: {
-    getAuth (data) {
+    getAuth(data) {
       let opt = []
       data.forEach(val => {
         opt.push(val.id)
@@ -486,24 +587,24 @@ export default {
       })
     },
 
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       console.log(tab, event)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.currentRow = val
     },
-    handleSelectionChange () { },
+    handleSelectionChange() { },
     // 查看用户
-    showUser () {
+    showUser() {
       this.DetailDate = true
     },
     // 添加用户
-    shouwAddUser () {
+    shouwAddUser() {
       this.addUser = true
     },
 
     // 关闭
-    handleDialogClose () {
+    handleDialogClose() {
       this.$refs.form.resetFields()
       this.dialogFormVisible1 = false
       this.addSystemBox = false
@@ -511,7 +612,7 @@ export default {
       this.addUser = false
       this.toView = false
     },
-    handleDialogClose2 () {
+    handleDialogClose2() {
       this.$refs.form2.resetFields()
       this.dialogFormVisible2 = false
       this.addSystemBox = false
@@ -519,7 +620,7 @@ export default {
       this.addUser = false
       this.toView = false
     },
-    handleDialogClose3 () {
+    handleDialogClose3() {
       this.$refs.form3.resetFields()
       this.dialogFormVisible3 = false
       this.addSystemBox = false
@@ -528,7 +629,7 @@ export default {
       this.toView = false
     },
     // 遍历循环该menuTpye中首项和尾项的，设置不显示
-    loopMenu (menuArr) {
+    loopMenu(menuArr) {
       menuArr.forEach(item => {
         if (item.children[0]) {
           item.children[0].first = true
@@ -540,7 +641,7 @@ export default {
     },
 
     // 获取菜单列表
-    getMenuList () {
+    getMenuList() {
       let systemId = this.$route.query.id
       this.systemId = 'menuId=' + systemId
       axios.menuList(this.systemId)
@@ -561,7 +662,7 @@ export default {
         .catch()
     },
     // 判断点击按钮，来显示对应的弹出框（子菜单，系统，按钮）
-    modifyItem (menuRow) {
+    modifyItem(menuRow) {
       if (menuRow.menuType === '2') {
         this.dialogFormVisible2 = true
       } else if (menuRow.menuType === '3') {
@@ -586,7 +687,7 @@ export default {
       this.oldname = menuRow.name
     },
     // 删除
-    deleteMenu (menuId, row) {
+    deleteMenu(menuId, row) {
       console.log(menuId)
       this.$confirm('此删除操作将被保存, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -620,11 +721,11 @@ export default {
         .catch(() => { })
     },
     // 选择图标
-    selectIcon (menu, icon) {
+    selectIcon(menu, icon) {
       menu.icon = icon
     },
     // 修改按钮保存
-    saveBtn (menu) {
+    saveBtn(menu) {
       this.$refs.form3.validate(valid => {
         if (valid) {
           this.dialogFormVisible3 = false
@@ -651,7 +752,7 @@ export default {
       })
     },
     // 修改菜单保存
-    saveMenu (menu) {
+    saveMenu(menu) {
       this.$refs.form2.validate(valid => {
         if (valid) {
           axios.updateMenuItem(menu.menuId, menu)
@@ -713,7 +814,7 @@ export default {
     //                   }
     //               }
     // },
-    getcpath (item) {
+    getcpath(item) {
       item.forEach(item => {
         if (item.href.indexOf('?') > -1) {
           this.apipath.push({ path: item.href.split('?')[0], name: item.name })
@@ -725,7 +826,7 @@ export default {
         }
       })
     },
-    getLoginerMenu (userId) {
+    getLoginerMenu(userId) {
       let payload = {}
       axios.getLoginMenu(userId).then(res => {
         res.data.data.menus.forEach(item => {
@@ -752,7 +853,7 @@ export default {
       })
     },
     // 修改系统保存
-    saveSys (menu) {
+    saveSys(menu) {
       // console.log(this.$store.state.sides,menu.name)
       // console.log(this.$store.state.sides.arr[0])
       this.$refs.form.validate(valid => {
@@ -813,13 +914,13 @@ export default {
       //      return false;
       //  }
     },
-    cancle () {
+    cancle() {
       this.dialogFormVisible2 = false
       this.dialogFormVisible3 = false
       this.dialogFormVisible1 = false
     },
     // 上移操作处理，调用接口
-    upMoveApi (menu, parentArr) {
+    upMoveApi(menu, parentArr) {
       parentArr.forEach((item, index) => {
         if (item.menuId === menu.menuId) {
           if (index !== 0) {
@@ -849,7 +950,7 @@ export default {
       })
     },
     // 下移操作处理，调用接口
-    downMoveApi (menu, parentArr, parentArrLen) {
+    downMoveApi(menu, parentArr, parentArrLen) {
       parentArr.forEach((item, index) => {
         if (item.menuId === menu.menuId) {
           if (index !== parentArrLen - 1) {
@@ -878,7 +979,7 @@ export default {
       })
     },
     // 点击上移
-    upMove (menu) {
+    upMove(menu) {
       console.log(menu)
       if (menu.parent) {
         let parentArr = menu.parent.children
@@ -889,7 +990,7 @@ export default {
       }
     },
     // 点击下移
-    downMove (menu) {
+    downMove(menu) {
       if (menu.parent) {
         let parentArr = menu.parent.children
         let parentArrLen = parentArr.length
@@ -901,13 +1002,13 @@ export default {
       }
     },
     // 系统名称，菜单名称，按钮名称字数显示
-    inputFun (value) {
+    inputFun(value) {
       if (value) {
         this.menuNameLength = value.length
       }
     },
     // 系统描述字数显示
-    inputFun1 (value) {
+    inputFun1(value) {
       if (value) {
         this.sysDesLength = value.length
       } else {
@@ -915,11 +1016,11 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getMenuList()
   },
   watch: {
-    $route (newValue, oldValue) {
+    $route(newValue, oldValue) {
       this.dialogFormVisible1 = false
       this.dialogFormVisible2 = false
       this.dialogFormVisible3 = false
