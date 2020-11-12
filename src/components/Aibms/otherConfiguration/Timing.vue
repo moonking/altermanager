@@ -52,10 +52,15 @@
       </el-form> -->
       <el-form label-width="140px">
         <el-form-item label="任务名称：">
-          <el-input v-model="name" :style="{ width: '460px' }"></el-input>
+          <el-input
+            :disabled="status === 'read' || taskType === '2'"
+            v-model="name"
+            :style="{ width: '460px' }"
+          ></el-input>
         </el-form-item>
         <el-form-item label="发起地址：">
           <el-input
+            :disabled="status === 'read' || taskType === '2'"
             v-model="url"
             @blur="getUrl"
             :style="{ width: '460px' }"

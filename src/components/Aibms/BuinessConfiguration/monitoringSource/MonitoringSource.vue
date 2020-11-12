@@ -2,7 +2,12 @@
   <div class="aia-content">
     <!-- 筛选 -->
     <div class="search-bar">
-      <el-form :inline="true" :model="sourceModel" label-width="80px" class="search-inline-form">
+      <el-form
+        :inline="true"
+        :model="sourceModel"
+        label-width="80px"
+        class="search-inline-form"
+      >
         <el-form-item>
           <el-input
             v-model="sourceModel.webAdress"
@@ -26,17 +31,29 @@
           </el-select>
         </el-form-item>
         <el-form-item class="search-source">
-          <el-button icon="el-icon-search" class="search-icon" @click.stop="search">搜索</el-button>
+          <el-button
+            icon="el-icon-search"
+            class="search-icon"
+            @click.stop="search"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addSource">新增</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="addSource"
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
     <!-- 表格数据 -->
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table
+      :data="tableData"
+      stripe
+      style="width: 100%"
+      @row-click="sourceDetail"
+    >
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="platform" label="来源" />
       <el-table-column prop="address" label="地址" />
@@ -44,16 +61,32 @@
         <template v-slot="scope">
           <div>
             <i
-              :class="scope.row.status === '1' ? 'el-icon-success' : 'el-icon-error'"
-              :style="{color: scope.row.status === '1' ? 'green' : 'red', fontSize: '20px'}"></i>
+              :class="
+                scope.row.status === '1' ? 'el-icon-success' : 'el-icon-error'
+              "
+              :style="{
+                color: scope.row.status === '1' ? 'green' : 'red',
+                fontSize: '20px',
+              }"
+            ></i>
           </div>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="task-btn-box">
-            <el-link type="primary" :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
-            <el-link type="primary" :underline="false" @click.stop="handleDelete(scope.row)">删除</el-link>
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleEdit(scope.row)"
+              >编辑</el-link
+            >
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleDelete(scope.row)"
+              >删除</el-link
+            >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
                 <icon-svg icon-class="bianji" />
@@ -86,16 +119,28 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      style="text-align: center; margin-top: 92px"
     />
     <!-- 删除提示 -->
-    <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+    <el-dialog
+      center
+      title="删除提示"
+      :visible.sync="confirmDeleteDialogVisible"
+      width="25%"
+    >
       <div style="text-align: center">
         <i class="el-icon-warning" /> 确认删除？
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button size="medium" class="nomal-button" @click="confirmDeleteDialogVisible = false">取消</el-button>
-        <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+        <el-button
+          size="medium"
+          class="nomal-button"
+          @click="confirmDeleteDialogVisible = false"
+          >取消</el-button
+        >
+        <el-button size="medium" type="primary" @click="confirmDelete"
+          >确定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -133,11 +178,11 @@ export default {
     },
     totalSize: 0
   }),
-  created () {
+  created() {
     this.getMonitorList()
   },
   methods: {
-    getMonitorList () {
+    getMonitorList() {
       const params = {
         current: this.page.current,
         size: this.page.size,
@@ -157,10 +202,20 @@ export default {
         }
       })
     },
-    search () {
+    search() {
       this.getMonitorList()
     },
-    handleEdit (row) {
+    sourceDetail(row) {
+      this.$router.push({
+        path: '/Aibms/BuinessConfiguration/addSource',
+        query: {
+          status: 'read',
+          code: 2,
+          id: row.id
+        }
+      })
+    },
+    handleEdit(row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -169,11 +224,11 @@ export default {
         }
       })
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.confirmDeleteDialogVisible = true
     },
-    addSource () {
+    addSource() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -182,15 +237,15 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getMonitorList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getMonitorList()
     },
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteMonitor(id).then(res => {
         if (res.data.success) {
@@ -294,7 +349,6 @@ export default {
 .search-inline-btn {
   width: 100px;
 }
-
 </style>
 <style>
 .notify-style {
