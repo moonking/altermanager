@@ -2,15 +2,8 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
-           <!-- <graph-editor
-        :data="graphData"
-        :sessionCfg="sessionCfg"
-        :mouseCfg="mouseCfg"
-        class="editor"
-        ref="graphEditor"
-      > -->
       <graph-editor
-        :data="tempData"
+        :data="graphData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -181,8 +174,7 @@ export default {
         renderer: 'canvas',
         // 默认边配置
         defaultEdge: {
-          // type: 'line',
-          type: 'line-arrow',
+          type: 'line',
           // color: '#000',
           style: {
             // stroke: '#23bbd6',
