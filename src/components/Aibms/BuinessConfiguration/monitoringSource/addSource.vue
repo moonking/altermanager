@@ -8,20 +8,23 @@
           :label-position="labelPosition"
           label-width="100px"
           :rules="rules"
-          ref="form">
+          ref="form"
+        >
           <el-form-item label="名称：" prop="name">
             <el-input
+              :disabled="$route.query.read !== 'read'"
               v-model="form.name"
               clearable
-              style="width: 632px;"
+              style="width: 632px"
               placeholder="请输入名称"
             />
           </el-form-item>
           <el-form-item label="来源：" prop="source">
             <el-select
+              :disabled="$route.query.read !== 'read'"
               v-model="form.source"
               clearable
-              style="width: 632px;"
+              style="width: 632px"
               placeholder="请选择来源"
             >
               <el-option
@@ -34,8 +37,9 @@
           </el-form-item>
           <el-form-item label="地址：" prop="webAddress">
             <el-input
+              :disabled="$route.query.read !== 'read'"
               v-model="form.webAddress"
-              style="width: 632px;"
+              style="width: 632px"
               clearable
               placeholder="请输入地址"
             />
@@ -65,9 +69,10 @@
           </el-form-item> -->
           <el-form-item label="token：" prop="token">
             <el-input
+              :disabled="$route.query.read !== 'read'"
               v-model="form.token"
               clearable
-              style="width: 632px;"
+              style="width: 632px"
               placeholder="请输入token"
             />
           </el-form-item>
@@ -93,15 +98,40 @@
             :key="domain.key"
             :prop="'domains.' + index + '.url'"
           >
-            <el-input v-model="domain.url" @focus="clearIcon" class="interface-input" >
-              <div  slot="prepend" >
-                <el-select v-model="domain.method" placeholder="请求方式" style="width: 130px;margin-right: 16px">
-                  <el-option :label="method.label" :value="method.value" v-for="method in methodList" :key="method.value"></el-option>
+            <el-input
+              :disabled="$route.query.read !== 'read'"
+              v-model="domain.url"
+              @focus="clearIcon"
+              class="interface-input"
+            >
+              <div slot="prepend">
+                <el-select
+                  :disabled="$route.query.read !== 'read'"
+                  v-model="domain.method"
+                  placeholder="请求方式"
+                  style="width: 130px; margin-right: 16px"
+                >
+                  <el-option
+                    :label="method.label"
+                    :value="method.value"
+                    v-for="method in methodList"
+                    :key="method.value"
+                  ></el-option>
                   <!-- <el-option label="订单号" value="2"></el-option>
                   <el-option label="用户电话" value="3"></el-option> -->
                 </el-select>
-                <el-select v-model="domain.type" placeholder="接口类型" style="width: 130px">
-                  <el-option :label="type.label" :value="type.value" v-for="type in apiTypes" :key="type.value"></el-option>
+                <el-select
+                  :disabled="$route.query.read !== 'read'"
+                  v-model="domain.type"
+                  placeholder="接口类型"
+                  style="width: 130px"
+                >
+                  <el-option
+                    :label="type.label"
+                    :value="type.value"
+                    v-for="type in apiTypes"
+                    :key="type.value"
+                  ></el-option>
                   <!-- <el-option label="订单号" value="2"></el-option>
                   <el-option label="用户电话" value="3"></el-option> -->
                 </el-select>
@@ -114,16 +144,21 @@
             </el-input>
             <!-- 状态icon -->
             <i v-if="loadingStatus" class="status-icon el-icon-loading" />
-            <i v-else
+            <i
+              v-else
               :class="{
-              'el-icon-circle-check' : domain.checkStatus === 'success',
-              'el-icon-circle-close' : domain.checkStatus === 'failed',
+                'el-icon-circle-check': domain.checkStatus === 'success',
+                'el-icon-circle-close': domain.checkStatus === 'failed',
               }"
-              class="status-icon"/>
+              class="status-icon"
+            />
             <!-- 操作icon -->
             <span v-if="!loadingStatus">
               <i class="el-icon-circle-plus-outline" @click="addDomain" />
-              <i class="el-icon-remove-outline" @click.prevent="removeDomain(domain)" />
+              <i
+                class="el-icon-remove-outline"
+                @click.prevent="removeDomain(domain)"
+              />
             </span>
             <i
               v-if="rightOrError"
@@ -134,22 +169,41 @@
         </el-form>
       </div>
       <div class="footer-area">
-        <el-button type="primary" @click.stop="handleSave" style="margin-right: 100px">保存</el-button>
+        <el-button
+          type="primary"
+          @click.stop="handleSave"
+          style="margin-right: 100px"
+          >保存</el-button
+        >
         <el-button @click="handleCancel" class="cancel-button">取消</el-button>
       </div>
       <!-- 删除提示 -->
-      <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+      <el-dialog
+        center
+        title="删除提示"
+        :visible.sync="confirmDeleteDialogVisible"
+        width="25%"
+      >
         <div style="text-align: center">
           <i class="el-icon-warning" /> 确认删除？
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button size="medium" @click="confirmDeleteDialogVisible = false">取消</el-button>
-          <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+          <el-button size="medium" @click="confirmDeleteDialogVisible = false"
+            >取消</el-button
+          >
+          <el-button size="medium" type="primary" @click="confirmDelete"
+            >确定</el-button
+          >
         </div>
       </el-dialog>
     </div>
     <!-- 接口信息diolog -->
-    <el-dialog title="检测详情" :visible.sync="centerDialogVisible" width="30%" center>
+    <el-dialog
+      title="检测详情"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center
+    >
       <span>{{ interfaceTxt }}</span>
     </el-dialog>
   </div>
@@ -262,7 +316,7 @@ export default {
     },
     userRadio: '1'
   }),
-  created () {
+  created() {
     if (this.$route.query.id) {
       this.editId = this.$route.query.id
       this.$route.meta.title = '编辑来源'
@@ -308,7 +362,8 @@ export default {
   },
   methods: {
     // 删除接口信息
-    removeDomain (item) {
+    removeDomain(item) {
+      if (this.$route.query.status === 'read') return
       const index = this.InterfaceForm.domains.indexOf(item)
       if (this.InterfaceForm.domains.length > 1 && index !== -1) {
         if (item.value) {
@@ -319,24 +374,25 @@ export default {
         }
       }
     },
-    clearIcon () {
+    clearIcon() {
       if (this.rightOrError) {
         this.rightOrError = false
       }
     },
-    confirmDelete () {
+    confirmDelete() {
       this.InterfaceForm.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
     },
     // 新增接口信息
-    addDomain () {
+    addDomain() {
+      if (this.$route.query.status === 'read') return
       this.rightOrError = false
       this.InterfaceForm.domains.push({
         key: Date.now()
       });
     },
     // 接口检测
-    handleCheck () {
+    handleCheck() {
       // const params = {
       //   platform: this.form.source,
       //   address: this.form.webAddress,
@@ -416,7 +472,7 @@ export default {
         })
       }
     },
-    handleResponse (res) {
+    handleResponse(res) {
       const domains = this.InterfaceForm.domains
       const data = res.data.data
       const list = this.statusList
@@ -431,10 +487,10 @@ export default {
         })
       }
     },
-    checkUrl (params) {
+    checkUrl(params) {
       return axios.checkInterFace(params)
     },
-    handleUrls (urls) {
+    handleUrls(urls) {
       const result = []
       urls.forEach((url, index) => {
         result.push({
@@ -446,7 +502,7 @@ export default {
       })
       return result
     },
-    addOrEdit (methods) {
+    addOrEdit(methods) {
       const urls = this.handleUrls(this.InterfaceForm.domains)
       console.log(urls)
       const params = {
@@ -482,7 +538,7 @@ export default {
       })
     },
     // 保存
-    handleSave () {
+    handleSave() {
       if (this.editId) {
         this.addOrEdit(axios.editMonitor)
       } else {
@@ -490,19 +546,19 @@ export default {
       }
     },
     // 离开页面
-    handleLeave () {
+    handleLeave() {
       this.$refs['form'].resetFields()
       this.$refs['InterfaceForm'].resetFields()
       this.$router.back()
     },
     // 获取接口详情
-    getInterFaceDetail (url) {
+    getInterFaceDetail(url) {
       this.centerDialogVisible = true
       const index = this.statusList.map(item => item.key).indexOf(url)
       this.interfaceTxt = index !== -1 ? this.statusList[index].text : ''
     },
     // 取消，返回上级路由
-    handleCancel () {
+    handleCancel() {
       let objArr = Object.values(this.form)
       let foundValues = objArr.find(el => el != '')
       if (foundValues || this.InterfaceForm.domains[0].value) {
@@ -517,7 +573,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     const el = document.getElementById('api-items')
     const that = this
     const sortable = new Sortable.create(el, {
@@ -615,7 +671,7 @@ export default {
         }
       }
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         z-index: 1;
         left: -20px;
@@ -623,7 +679,7 @@ export default {
         width: 8px;
         border-radius: 4px;
         height: 30px;
-        background: #00A8E8;
+        background: #00a8e8;
       }
     }
     .footer-area {
@@ -652,6 +708,6 @@ export default {
 </style>
 <style>
 .el-input-group__prepend {
-  background-color: rgba(4, 28, 37, .4)!important;
+  background-color: rgba(4, 28, 37, 0.4) !important;
 }
 </style>

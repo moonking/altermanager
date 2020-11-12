@@ -236,14 +236,14 @@ function errorapi (res) {
       } else {
         localStorage.setItem('bl', 'true')
 
-        setTimeout(() => {
-          localStorage.setItem('bl', 'false')
-        }, 1000)
-        bus.$notify({
-          title: '提示',
-          message: '服务器出错了！',
-          type: 'error'
-        })
+        // setTimeout(() => {
+        //   localStorage.setItem('bl', 'false')
+        // }, 1000)
+        // bus.$notify({
+        //   title: '提示',
+        //   message: '服务器出错了！',
+        //   type: 'error'
+        // })
       }
     }
   }

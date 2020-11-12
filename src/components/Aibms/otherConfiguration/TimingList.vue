@@ -4,21 +4,33 @@
       <div class="operate-bar">
         <el-form inline :model="search" class="demo-form-inline">
           <el-form-item>
-            <el-input v-model="search.name" placeholder="请输入发布任务名称" sortable clearable></el-input>
+            <el-input
+              v-model="search.name"
+              placeholder="请输入发布任务名称"
+              sortable
+              clearable
+            ></el-input>
           </el-form-item>
           <el-form-item class="item-right overHideMargin">
-            <el-button icon="el-icon-search" class="common-btn-style" @click="searchTask">查找</el-button>
+            <el-button
+              icon="el-icon-search"
+              class="common-btn-style"
+              @click="searchTask"
+              >查找</el-button
+            >
             <el-button
               type="primary"
               icon="el-icon-plus"
               class="common-btn-style margin-left-btn"
               @click.prevent="addTask"
-            >新增</el-button>
+              >新增</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
       <div class="cluster-list">
         <el-table
+          @row-click="readJob"
           class="data-list"
           :data="tableData"
           style="width: 100%"
@@ -26,33 +38,99 @@
         >
           <el-table-column label="任务名称" prop="name"></el-table-column>
           <el-table-column label="请求地址" prop="url"></el-table-column>
-          <el-table-column label="定时策略" prop="cronStrategy" :formatter="formatStrategy"></el-table-column>
-          <el-table-column label="定时时间" prop="humanityTime"></el-table-column>
-          <el-table-column label="操作" align="center" prop="operate" width="200px">
+          <el-table-column
+            label="定时策略"
+            prop="cronStrategy"
+            :formatter="formatStrategy"
+          ></el-table-column>
+          <el-table-column
+            label="定时时间"
+            prop="humanityTime"
+          ></el-table-column>
+          <el-table-column
+            label="操作"
+            align="center"
+            prop="operate"
+            width="200px"
+          >
             <template slot-scope="scope">
               <div class="task-btn-box">
-                <span class="special" @click="readJob(scope.row.iD, scope.row.taskType)">
-                  <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
+                <el-link
+                  :underline="false"
+                  @click.stop="
+                    editJob(
+                      scope.row.iD,
+                      scope.row.taskType,
+                      scope.row.applyStatus
+                    )
+                  "
+                  >编辑</el-link
+                >
+                <el-link
+                  :underline="false"
+                  @click.stop="
+                    scope.row.conflict !== 'building' &&
+                      deleteJob(
+                        scope.row.iD,
+                        scope.row.applyStatus,
+                        scope.row.taskType
+                      )
+                  "
+                  >取消发布</el-link
+                >
+                <!-- <span
+                  class="special"
+                  @click="readJob(scope.row.iD, scope.row.taskType)"
+                >
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="查看详情"
+                    placement="top-start"
+                  >
                     <icon-svg icon-class="chakan" />
                   </el-tooltip>
                 </span>
                 <span
                   class="special"
-                  @click="editJob(scope.row.iD, scope.row.taskType,scope.row.applyStatus)"
+                  @click="
+                    editJob(
+                      scope.row.iD,
+                      scope.row.taskType,
+                      scope.row.applyStatus
+                    )
+                  "
                 >
-                  <el-tooltip class="item" effect="dark" content="修改" placement="top-start">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="修改"
+                    placement="top-start"
+                  >
                     <icon-svg icon-class="bianji" />
                   </el-tooltip>
                 </span>
                 <span
                   class="special"
                   :class="scope.row.conflict === 'building' ? 'notClick' : ''"
-                  @click=" scope.row.conflict !== 'building' && deleteJob(scope.row.iD,scope.row.applyStatus,scope.row.taskType)"
+                  @click="
+                    scope.row.conflict !== 'building' &&
+                      deleteJob(
+                        scope.row.iD,
+                        scope.row.applyStatus,
+                        scope.row.taskType
+                      )
+                  "
                 >
-                  <el-tooltip class="item" effect="dark" content="取消发布" placement="top-start">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="取消发布"
+                    placement="top-start"
+                  >
                     <icon-svg icon-class="jilu" />
                   </el-tooltip>
-                </span>
+                </span> -->
               </div>
             </template>
           </el-table-column>
@@ -67,28 +145,40 @@
         </el-table>
       </div>
 
-      <el-dialog center title="取消发布提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+      <el-dialog
+        center
+        title="取消发布提示"
+        :visible.sync="confirmDeleteDialogVisible"
+        width="25%"
+      >
         <div style="text-align: center">
           <i class="el-icon-warning"></i> 是否将该任务取消定时？
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button size="medium" @click="confirmDeleteDialogVisible = false">取消</el-button>
-          <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+          <el-button size="medium" @click="confirmDeleteDialogVisible = false"
+            >取消</el-button
+          >
+          <el-button size="medium" type="primary" @click="confirmDelete"
+            >确定</el-button
+          >
         </span>
       </el-dialog>
 
       <!-- 分页 -->
-      <div class="block" style="text-align: center;width: 100%;padding: 30px 0;">
+      <div
+        class="block"
+        style="text-align: center; width: 100%; padding: 30px 0"
+      >
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currPage"
           :page-size="size"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           layout="prev, pager, next, sizes, total, jumper"
           :total="total"
           v-if="page"
-          style="cursor: pointer;"
+          style="cursor: pointer"
         ></el-pagination>
       </div>
     </div>
@@ -99,7 +189,7 @@
 import axios from '@/api';
 export default {
   name: 'CrontabList',
-  data () {
+  data() {
     return {
       size: 10,
       page: 1,
@@ -140,7 +230,7 @@ export default {
       confirmDeleteDialogVisible: false
     }
   },
-  created () {
+  created() {
     this.getTimingList()
     this.handdleMsg()
   },
@@ -158,7 +248,7 @@ export default {
     //     }
     //   })
     // },
-    handdleMsg (msg) {
+    handdleMsg(msg) {
       let _this = this
       _this.$global.ws.onmessage = function (res) {
         if (res.data.length > 0) {
@@ -177,7 +267,7 @@ export default {
         }
       }
     },
-    formatStrategy (row, column) {
+    formatStrategy(row, column) {
       if (row.cronStrategy === 'cycle') {
         return '周期性'
       } else if (row.cronStrategy === 'once') {
@@ -192,7 +282,7 @@ export default {
       return row.taskType === '2' ? '部署' : '构建'
     },
     // 获取定时任务列表
-    getTimingList () {
+    getTimingList() {
       let data = this.search
       console.log('test aa')
       data.current = this.currPage
@@ -211,15 +301,15 @@ export default {
       })
     },
     // 搜索定时任务
-    searchTask () {
+    searchTask() {
       this.currPage = 1
       this.getTimingList()
     },
-    deleteJob (id) {
+    deleteJob(id) {
       this.confirmDeleteDialogVisible = true
       this.cancleId = id
     },
-    confirmDelete () {
+    confirmDelete() {
       axios.deleteTimingTask(this.cancleId).then(res => {
         if (res.data.code === 200) {
           this.getTimingList()
@@ -237,7 +327,7 @@ export default {
       })
     },
     // 添加定时任务
-    addTask () {
+    addTask() {
       this.$router.push({
         query: {
           code: 2
@@ -245,16 +335,16 @@ export default {
         path: '/Aibms/otherConfiguration/timing/create'
       })
     },
-    readJob (id) {
+    readJob(row) {
       this.$router.push({
         query: {
           code: 2,
-          manageId: id
+          manageId: row.iD
         },
         path: '/Aibms/otherConfiguration/timing/read'
       })
     },
-    editJob (id) {
+    editJob(id) {
       this.$router.push({
         query: {
           code: 2,
@@ -263,15 +353,15 @@ export default {
         path: '/Aibms/otherConfiguration/timing/edit'
       })
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getTimingList()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.currPage = val
       this.getTimingList()
     },
-    getRunPhase (item) {
+    getRunPhase(item) {
       let result = item.runPhase && JSON.parse(item.runPhase)
       try {
         result = result[0].stages[0].name
@@ -281,7 +371,7 @@ export default {
       return result || ''
     },
     // 将状态code转换
-    filterStatus (state) {
+    filterStatus(state) {
       let current = {}
       this.statusList.forEach(item => {
         if (item.systemId === state) {
@@ -294,7 +384,7 @@ export default {
     }
   },
   filters: {
-    status (state) {
+    status(state) {
       if (state === 'FAILURE') {
         return '执行失败'
       } else if (!state || state === 'NOTEXECUTED') {
@@ -368,10 +458,13 @@ export default {
   border: 1px solid #0066ff;
 }
 .task-btn-box {
-  padding: 10px;
+  text-align: center;
+  display: inline-block;
 }
-
-.task-btn-box span {
+.el-link {
+  color: #fff;
+}
+/* .task-btn-box span {
   display: inline-block;
   background: #fff;
   border: 1px solid #0066ff;
@@ -383,7 +476,7 @@ export default {
   margin: 2px 2px;
 
   cursor: pointer;
-}
+} */
 .task-btn-box .disabled {
   display: inline-block;
   font-size: 14px;

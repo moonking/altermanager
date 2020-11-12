@@ -2,7 +2,13 @@
   <div class="aia-content">
     <!-- 筛选 -->
     <div class="search-bar">
-      <el-form :inline="true" ref="searchFrom" :model="searchFrom" label-width="80px" class="search-inline-form">
+      <el-form
+        :inline="true"
+        ref="searchFrom"
+        :model="searchFrom"
+        label-width="80px"
+        class="search-inline-form"
+      >
         <!-- <el-form-item>
           <el-select clearable v-model="searchFrom.Bsystem" placeholder="请选择业务系统">
             <el-option
@@ -14,7 +20,11 @@
           </el-select>
         </el-form-item> -->
         <el-form-item>
-          <el-select clearable v-model="searchFrom.Ttype" placeholder="请选择交易类型">
+          <el-select
+            clearable
+            v-model="searchFrom.Ttype"
+            placeholder="请选择交易类型"
+          >
             <el-option
               v-for="item in typeList"
               :key="item"
@@ -43,7 +53,7 @@
     <el-table
       :data="tableData"
       stripe
-      :header-cell-style="{background:'#f5f5f5'}"
+      :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="tDeatil"
       style="width: 100%"
     >
@@ -52,7 +62,7 @@
       <el-table-column prop="startTime" label="开始时间" />
       <el-table-column prop="duration" label="耗时">
         <template v-slot="scope">
-          <span>{{scope.row.duration|filterTime}}</span>
+          <span>{{ scope.row.duration | filterTime }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="destIp" label="目标地址" />
@@ -66,7 +76,8 @@
             style="color: #fff"
             v-if="scope.row.url !== ''"
             @click.stop="goDynatrace(scope.row.url)"
-          >跳转Dynatrace</el-link>
+            >跳转Dynatrace</el-link
+          >
         </template>
       </el-table-column>
       <template slot="empty">
@@ -79,10 +90,20 @@
       </template>
     </el-table>
     <!-- 交易详情 -->
-    <el-dialog title="交易详情" :visible.sync="tDialog" width="50%" center>
+    <el-dialog
+      class="el-dialog-detail"
+      title="交易详情"
+      :visible.sync="tDialog"
+      width="50%"
+      center
+    >
       <el-form label-width="160px">
-        <el-form-item :label="item.label+'：'" v-for="item in tDetail" :key="item.id">
-          <label for>{{item.value}}</label>
+        <el-form-item
+          :label="item.label + '：'"
+          v-for="item in tDetail"
+          :key="item.id"
+        >
+          <label for>{{ item.value }}</label>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -96,7 +117,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      style="text-align: center; margin-top: 92px"
     />
   </div>
 </template>
@@ -124,18 +145,18 @@ export default {
     totalSize: 0
   }),
   filters: {
-    filterTime (timeStr) {
+    filterTime(timeStr) {
       return common.timer(timeStr);
     }
   },
-  created () {
+  created() {
     this.traceList()
     this.getTraceSystemList()
     this.getTraceTypeList()
   },
   methods: {
     // 获取下拉数据
-    getTraceSystemList () {
+    getTraceSystemList() {
       const data = {
         current: 1,
         name: '',
@@ -143,7 +164,7 @@ export default {
       }
       axios.getSystemList(data).then(res => {
         if (res.data.success) {
-          this.systemList = res.data.data.result.records.map(item => ({name: item.name, systemId: item.systemId}))
+          this.systemList = res.data.data.result.records.map(item => ({ name: item.name, systemId: item.systemId }))
         } else {
           this.$notify.error({
             title: '提示',
@@ -152,7 +173,7 @@ export default {
         }
       })
     },
-    getTraceTypeList () {
+    getTraceTypeList() {
       axios.getTraceTypeList().then(res => {
         if (res.data.success) {
           this.typeList = res.data.data
@@ -165,11 +186,11 @@ export default {
       })
     },
     // 跳转Dynatrace
-    goDynatrace (url) {
+    goDynatrace(url) {
       window.open(url, '_blank');
     },
     // 获取交易列表
-    traceList () {
+    traceList() {
       let startTime =
         Array.isArray(this.searchFrom.searchTime) &&
           this.searchFrom.searchTime.length > 0
@@ -196,13 +217,13 @@ export default {
         }
       });
     },
-    search () {
+    search() {
       this.page.current = 1;
       this.page.size = 10;
       this.traceList();
     },
     // 获取交易详情
-    tDeatil (row) {
+    tDeatil(row) {
       this.tDialog = true;
       axios.traceDetails(row.iD).then(res => {
         if (res.data.success) {
@@ -220,11 +241,11 @@ export default {
       });
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.traceList();
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1;
       this.traceList();
     }
@@ -286,5 +307,11 @@ export default {
 }
 .search-inline-btn {
   width: 100px;
+}
+.el-dialog-detail /deep/ .el-dialog__body {
+  text-align: initial;
+  padding: 25px 25px 30px;
+  overflow-y: auto;
+  height: 500px;
 }
 </style>
