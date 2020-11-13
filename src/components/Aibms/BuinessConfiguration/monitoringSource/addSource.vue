@@ -12,7 +12,7 @@
         >
           <el-form-item label="名称：" prop="name">
             <el-input
-              :disabled="$route.query.read !== 'read'"
+              :disabled="$route.query.status === 'read'"
               v-model="form.name"
               clearable
               style="width: 632px"
@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="来源：" prop="source">
             <el-select
-              :disabled="$route.query.read !== 'read'"
+              :disabled="$route.query.status === 'read'"
               v-model="form.source"
               clearable
               style="width: 632px"
@@ -37,7 +37,7 @@
           </el-form-item>
           <el-form-item label="地址：" prop="webAddress">
             <el-input
-              :disabled="$route.query.read !== 'read'"
+              :disabled="$route.query.status === 'read'"
               v-model="form.webAddress"
               style="width: 632px"
               clearable
@@ -69,7 +69,7 @@
           </el-form-item> -->
           <el-form-item label="token：" prop="token">
             <el-input
-              :disabled="$route.query.read !== 'read'"
+              :disabled="$route.query.status === 'read'"
               v-model="form.token"
               clearable
               style="width: 632px"
@@ -99,14 +99,14 @@
             :prop="'domains.' + index + '.url'"
           >
             <el-input
-              :disabled="$route.query.read !== 'read'"
+              :disabled="$route.query.status === 'read'"
               v-model="domain.url"
               @focus="clearIcon"
               class="interface-input"
             >
               <div slot="prepend">
                 <el-select
-                  :disabled="$route.query.read !== 'read'"
+                  :disabled="$route.query.status === 'read'"
                   v-model="domain.method"
                   placeholder="请求方式"
                   style="width: 130px; margin-right: 16px"
@@ -121,7 +121,7 @@
                   <el-option label="用户电话" value="3"></el-option> -->
                 </el-select>
                 <el-select
-                  :disabled="$route.query.read !== 'read'"
+                  :disabled="$route.query.status === 'read'"
                   v-model="domain.type"
                   placeholder="接口类型"
                   style="width: 130px"

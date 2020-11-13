@@ -715,12 +715,16 @@ export default {
             (item) =>
               !item.belongRule ||
               (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)
-          );
+          ).map(item => item.code);
 
-          if (!(first === true)) {
-            this.typesForm.type = [];
-          }
-          const checkedLength = this.typesForm.type.length;
+          // if (!(first === true)) {
+          //   this.typesForm.type = [];
+          // }
+          let setList = new Set(this.typesForm.type)
+          let setType = new Set(list)
+          let intersect = new Set([...setList].filter(value => setType.has(value)))
+          const checkedLength = intersect.size;
+
           this.checkAll = checkedLength === list.length;
           this.isIndeterminate = !(
             checkedLength === 0 || checkedLength === list.length
@@ -1143,8 +1147,15 @@ export default {
       //   this.checkAll = false
       //   this.isIndeterminate = false
       // }
-      console.log('val: ', val);
-      this.typesForm.type = val ? codes : [];
+
+      if (val) {
+        this.typesForm.type = Array.from(new Set([...this.typesForm.type, ...codes]))
+      } else {
+        let setList = new Set(this.typesForm.type)
+        let setType = new Set(codes)
+        this.typesForm.type = Array.from(new Set([...setList].filter(value => !setType.has(value))))
+      }
+
       this.isIndeterminate = false;
       // codes.forEach(code => {
       //   if (val) {
@@ -1172,7 +1183,7 @@ export default {
         (item) =>
           !item.belongRule ||
           (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)
-      );
+      ).map(item => item.code);
       // let allCheckeds = this.typesForm.type
       // let checkedCount = 0
       // list.forEach(item => {
@@ -1180,9 +1191,11 @@ export default {
       //     checkedCount++
       //   }
       // })
-      const checkedCount = this.typesForm.type.length;
-      console.log('checkedCount: ', checkedCount);
-      console.log('list.length: ', list.length);
+      let setList = new Set(this.typesForm.type)
+      let setType = new Set(list)
+      let intersect = new Set([...setList].filter(value => setType.has(value)))
+      const checkedCount = intersect.size;
+
       this.checkAll = checkedCount === list.length;
       this.isIndeterminate = checkedCount > 0 && checkedCount < list.length;
       // this.classCheckStatus(this.typesForm.type)
