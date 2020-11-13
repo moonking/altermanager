@@ -73,9 +73,6 @@
 import axios from '@/api'
 export default {
   props: {
-    checkedTableData: {
-      type: Array
-    },
     readOnly: {
       required: true,
       default: false,
@@ -83,18 +80,25 @@ export default {
     }
   },
   watch: {
-    // 获取勾选数据
-    checkedTableData(val, oldVal) {
-      if (val.length) {
-        if (this.$route.query.id) {
-          this.hostList = val
-          this.returnSelect()
-          if (this.readOnly) {
-            this.tableData = val
-          }
-        }
-      }
-    }
+    // // 获取勾选数据
+    // checkedTableData(val, oldVal) {
+    //   console.log(val)
+    //   if (val.length) {
+    //     if (this.$route.query.id) {
+    //       this.hostList = val
+    //       this.hostList.forEach((item, index) => {
+    //         if (!item.bl) {
+    //           this.hostList.splice(index, 1)
+    //         }
+    //       })
+    //       console.log(this.hostList)
+    //       // this.returnSelect()
+    //       if (this.readOnly) {
+    //         this.tableData = val
+    //       }
+    //     }
+    //   }
+    // }
   },
   data: () => ({
     tableData: [],
@@ -111,16 +115,22 @@ export default {
     hostList: [],
     checkedHostList: []
   }),
-  created() {
-    if (this.$route.query.id) {
-      if (!this.readOnly) {
+  mounted() {
+    this.$nextTick(() => {
+      this.hostList = this.$parent.checkedTableData
+      if (this.readOnly) {
+        this.tableData = this.$parent.checkedTableData
+      }
+      if (this.$route.query.id) {
+        if (!this.readOnly) {
+          this.getHostTableData()
+          this.getBusinessList()
+        }
+      } else {
         this.getHostTableData()
         this.getBusinessList()
       }
-    } else {
-      this.getHostTableData()
-      this.getBusinessList()
-    }
+    })
   },
   methods: {
     checkSelectable(row) {
@@ -132,6 +142,7 @@ export default {
           this.hostList.forEach(result => {
             this.tableData.forEach((row, index) => {
               if (row.systemId === result.systemId && row.ciitemId === result.ciitemId) {
+                row.bl = true
                 this.$refs.dataTable.toggleRowSelection(this.tableData[index], true)
               }
             })
@@ -174,6 +185,7 @@ export default {
               item.bl = false
             }
           })
+
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
         } else {
@@ -186,30 +198,64 @@ export default {
       this.returnSelect()
     },
     handleSelectionChangeAll(selection) {
+      let isBelongOps = false
+      let num = 0
+      selection.forEach((item) => {
+        if (item.belongOps) {
+          num++
+        }
+      })
+      if (num === selection.length) {
+        isBelongOps = true
+      }
       if (selection.length > 0) {
-        this.tableData.forEach((item) => {
-          if (!item.belongOps) {
-            item.bl = true
-          }
-        })
-        if (this.hostList.length === 0) {
-          this.hostList = selection
-        } else {
-          let ciitemList = this.hostList.map(item => item.ciitemId)
-          let systemList = this.hostList.map(item => item.systemId)
-          let arrayList = []
-          ciitemList.forEach((item) => {
-            systemList.forEach((data) => {
-              arrayList.push(item + data)
-            })
-          })
-          this.tableData.forEach((item, index) => {
-            if (item.bl) {
-              if (!ciitemList.includes(item.ciitemId + item.systemId)) {
-                this.hostList.push(item)
-              }
+        if (isBelongOps) {
+          this.tableData.forEach((item) => {
+            if (!item.belongOps) {
+              item.bl = false
             }
           })
+          this.tableData.forEach((item) => {
+            if (!item.bl) {
+              this.hostList.forEach((items, index) => {
+                if (item.ciitemId + item.systemId == items.ciitemId + items.systemId) {
+                  this.hostList.splice(index, 1)
+                }
+              })
+            }
+          })
+        } else {
+          this.tableData.forEach((item) => {
+            if (!item.belongOps) {
+              item.bl = true
+            }
+          })
+          if (this.hostList.length === 0) {
+            this.hostList = selection
+          } else {
+            let ciitemList = this.hostList.map(item => item.ciitemId)
+            let systemList = this.hostList.map(item => item.systemId)
+            let arrayList = []
+            ciitemList.forEach((item) => {
+              systemList.forEach((data) => {
+                arrayList.push(item + data)
+              })
+            })
+            arrayList = [...new Set(arrayList)]
+            this.tableData.forEach((item, index) => {
+              if (item.bl) {
+                if (!arrayList.includes(item.ciitemId + item.systemId)) {
+                  this.hostList.push(item)
+                }
+              } else {
+                this.hostList.forEach((items, index) => {
+                  if (item.ciitemId + item.systemId == items.ciitemId + items.systemId) {
+                    this.hostList.splice(index, 1)
+                  }
+                })
+              }
+            })
+          }
         }
       } else {
         this.tableData.forEach((item) => {
@@ -218,7 +264,11 @@ export default {
           }
         })
         this.tableData.forEach((item, index) => {
-          this.hostList.splice(index, 1)
+          this.hostList.forEach((items, index) => {
+            if (item.ciitemId + item.systemId == items.ciitemId + items.systemId) {
+              this.hostList.splice(index, 1)
+            }
+          })
         })
       }
     },
@@ -232,11 +282,11 @@ export default {
             arrList.push(item + data)
           })
         })
+        arrList = [...new Set(arrList)]
         let bl = false
         if (arrList.includes(row.ciitemId + row.systemId)) {
           bl = true
         }
-        console.log(bl)
         this.tableData.forEach((item) => {
           if (item.ciitemId === row.ciitemId && item.systemId === row.systemId) {
             if (!item.belongOps) {
@@ -253,7 +303,6 @@ export default {
           }
         })
       }
-
       if (this.hostList.length === 0) {
         this.hostList = selection
       } else {
@@ -265,13 +314,20 @@ export default {
             arrayList.push(item + data)
           })
         })
+
+        arrayList = [...new Set(arrayList)]
+
         this.tableData.forEach((item, index) => {
           if (item.bl) {
-            if (!ciitemList.includes(item.ciitemId + item.systemId)) {
+            if (!arrayList.includes(item.ciitemId + item.systemId)) {
               this.hostList.push(item)
             }
           } else if (!item.bl && arrayList.includes(item.ciitemId + item.systemId)) {
-            this.hostList.splice(index, 1)
+            this.hostList.forEach((items, index) => {
+              if (item.ciitemId + item.systemId == items.ciitemId + items.systemId) {
+                this.hostList.splice(index, 1)
+              }
+            })
           }
         })
       }

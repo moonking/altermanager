@@ -9,6 +9,7 @@
         />
       </el-steps>
       <selectHost
+        v-if="checkedTableData.length > 0"
         :checkedTableData="checkedTableData"
         :readOnly="readOnly"
         ref="selectHost"
@@ -93,6 +94,8 @@ export default {
           if (res.data.success) {
             const resultData = res.data.data
             const { systemList, startDay, endDay, startTime, endTime, categoryList, labels } = resultData
+
+            systemList.forEach((item) => { item.bl = true })
             this.checkedTableData = systemList
             this.checkedLabels = labels
             this.startDay = startDay
