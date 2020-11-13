@@ -64,7 +64,7 @@
             <div class="task-btn-box">
               <span
                 class="special"
-                @click="getSystemDetail(scope.row.systemId)"
+                @click.stop="getSystemDetail(scope.row.systemId)"
               >
                 <el-tooltip
                   class="item"
@@ -75,7 +75,7 @@
                   <icon-svg icon-class="bianji" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
-              <span class="special" @click="showOpen3(scope.row.systemId)">
+              <span class="special" @click.stop="showOpen3(scope.row.systemId)">
                 <el-tooltip
                   class="item"
                   effect="dark"
