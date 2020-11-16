@@ -9,7 +9,14 @@
         />
       </el-steps>
       <selectHost
-        v-if="checkedTableData.length > 0"
+        v-if="checkedTableData.length > 0 && $route.query.id"
+        :checkedTableData="checkedTableData"
+        :readOnly="readOnly"
+        ref="selectHost"
+        v-show="active === 0"
+      />
+      <selectHost
+        v-if="!$route.query.id"
         :checkedTableData="checkedTableData"
         :readOnly="readOnly"
         ref="selectHost"

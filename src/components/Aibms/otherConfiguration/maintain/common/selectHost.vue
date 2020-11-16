@@ -180,9 +180,13 @@ export default {
       }
       axios.getCiSystemList(params).then(res => {
         if (res.data.success) {
+          console.log(res.data.data.records)
           res.data.data.records.forEach((item) => {
             if (!item.belongOps) {
               item.bl = false
+            }
+            if (!this.readOnly && this.$route.query.id) {
+              item.belongOps = false
             }
           })
 
