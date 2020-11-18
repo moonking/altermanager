@@ -4,23 +4,33 @@
     <div class="link-topology-wrapper">
       <div class="level-labels">
         <div :class="['level-label', { noData: levelCount[5] === 0 }]">
-          <p class="level-label-text"><i class="iconfont icon-jiaoyi"></i> 交易类型</p>
+          <p class="level-label-text">
+            <i class="iconfont icon-jiaoyi"></i> 交易类型
+          </p>
           <p><i class="iconfont icon-bianzu"></i></p>
         </div>
         <div :class="['level-label', { noData: levelCount[4] === 0 }]">
-          <p class="level-label-text"><i class="iconfont icon-yingyong"></i> 应用</p>
+          <p class="level-label-text">
+            <i class="iconfont icon-yingyong"></i> 应用
+          </p>
           <p><i class="iconfont icon-bianzu"></i></p>
         </div>
         <div :class="['level-label', { noData: levelCount[3] === 0 }]">
-          <p class="level-label-text"><i class="iconfont icon-quanqiu"></i> 服务</p>
+          <p class="level-label-text">
+            <i class="iconfont icon-quanqiu"></i> 服务
+          </p>
           <p><i class="iconfont icon-bianzu"></i></p>
         </div>
         <div :class="['level-label', { noData: levelCount[2] === 0 }]">
-          <p class="level-label-text"><i class="iconfont icon-jincheng"></i> 进程</p>
+          <p class="level-label-text">
+            <i class="iconfont icon-jincheng"></i> 进程
+          </p>
           <p><i class="iconfont icon-bianzu"></i></p>
         </div>
         <div :class="['level-label', { noData: levelCount[1] === 0 }]">
-          <p class="level-label-text"><i class="iconfont icon-yunzhuji"></i> 主机</p>
+          <p class="level-label-text">
+            <i class="iconfont icon-yunzhuji"></i> 主机
+          </p>
           <p><i class="iconfont icon-bianzu"></i></p>
         </div>
       </div>
@@ -28,9 +38,17 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
-        <graph-editor :data="graphData" :sessionCfg="sessionCfg" :mouseCfg="mouseCfg" class="editor" ref="graphEditor">
+        <graph-editor
+          :data="graphData"
+          :sessionCfg="sessionCfg"
+          :mouseCfg="mouseCfg"
+          class="editor"
+          ref="graphEditor"
+        >
           <template v-slot:tooltip="tooltip">
-            <link-topology-tooltip :alerts="tooltip.editorInfo"></link-topology-tooltip>
+            <link-topology-tooltip
+              :alerts="tooltip.editorInfo"
+            ></link-topology-tooltip>
           </template>
         </graph-editor>
       </div>
@@ -48,7 +66,7 @@ import LinkTopologyTooltip from './LinkTopologyTooltip'
 import axios from '@/api'
 import config from '@/config/index.js'
 export default {
-  data () {
+  data() {
     return {
       // 每一层级上的节点数量
       levelCount: {
@@ -59,7 +77,7 @@ export default {
         5: 0
       },
       // 图鼠标滚轮配置
-      mouseCfg: {zoom: true, move: {x: true, y: false}},
+      mouseCfg: { zoom: true, move: { x: true, y: false } },
       // 图 mock 数据
       tempData: {
         // 点集
@@ -338,7 +356,7 @@ export default {
   },
   methods: {
     // 获取业务数据
-    getData () {
+    getData() {
       const route = this.$route
       const { query } = route
       axios.getTopologyInfoBySystemId(query.systemId).then(res => {
@@ -353,7 +371,7 @@ export default {
       })
     },
     // 初始化websocket
-    initWebSocket () {
+    initWebSocket() {
       const route = this.$route
       const { query } = route
       const url = config.wsTopology + query.systemId
@@ -371,7 +389,7 @@ export default {
           nodeList.forEach(node => {
             // 重置每一个节点告警状态
             const { graph } = me
-            const {ciitemId} = node
+            const { ciitemId } = node
             if (graph) {
               graph.setItemState(ciitemId, 'warning', false)
             }
@@ -411,7 +429,7 @@ export default {
     },
     // 将后台业务数据转换为可渲染的图数据结构
     // 即 data =  { nodes: [], edges: [] }
-    transfromToGraphData (data) {
+    transfromToGraphData(data) {
       let nodes = []
       let edges = []
       data.forEach(item => {
@@ -445,7 +463,7 @@ export default {
       return { nodes, edges }
     },
     // 初始化自定义图事件监听器
-    initGraphListener (graph) {
+    initGraphListener(graph) {
       if (!graph) return
       graph.on('afteritemstatechange', (item, state, enabled) => {
         if (state !== 'warning' || !enabled) return
@@ -513,7 +531,7 @@ export default {
       })
     },
     // 取消节点和边的高亮
-    clearItemHighlight (graph) {
+    clearItemHighlight(graph) {
       const state = 'selected'
       // 置空所有节点和边的高亮状态
       const nodes = graph.getNodes()
@@ -526,8 +544,8 @@ export default {
         graph.setItemState(edge, state, false)
       })
     },
-    // 设置节点和边的高亮
-    setHighlightItem (item, highlight, graph) {
+    // 设置高亮节点和边
+    setHighlightItem(item, highlight, graph) {
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
       const state = 'selected'
@@ -535,21 +553,36 @@ export default {
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
 
-        // 递归遍历节点树
-        const edges = item.getInEdges()
-        edges.forEach(edge => {
-          graph.setItemState(edge, state, highlight)
-          const source = edge.getSource()
-          graph.setItemState(source, state, highlight)
-
-          // 递归设置后续节点高亮
-          this.setHighlightItem(source, highlight, graph)
-        })
+        if ('getEdges' in item) {
+          // 递归遍历节点树
+          const edges = item.getEdges()
+          edges.forEach(edge => {
+            graph.setItemState(edge, state, highlight)
+            if ('getEdges' in edge) {
+              const Tedge = edge.getEdges()
+              // 递归设置后续节点高亮
+              this.setHighlightItem(Tedge, highlight, graph)
+            }
+          })
+        }
+        if ('getSource' in item) {
+          // 递归遍历节点树
+          const sources = item.getSource()
+          sources.forEach(source => {
+            graph.setItemState(source, state, highlight)
+            if ('getSource' in source) {
+              const Tsource = source.getSource()
+              // 递归设置后续节点高亮
+              this.setHighlightItem(Tsource, highlight, graph)
+            }
+          })
+        }
       }
 
       if (isEdge) {
         const target = item.getTarget()
-        graph.setItemState(target, state, highlight)
+        this.setHighlightItem(target, highlight, graph)
+        // graph.setItemState(target, state, highlight)
         graph.setItemState(item, state, highlight)
 
         const source = item.getSource()
@@ -557,7 +590,7 @@ export default {
       }
     },
     // 设置边高亮样式
-    setEdgeHighlightStyle (edge, highlight) {
+    setEdgeHighlightStyle(edge, highlight) {
       // const lineDash = [4, 2, 1, 2]
       const group = edge.getContainer()
       const shape = group.get('children')[0]
@@ -594,7 +627,7 @@ export default {
       // }
     },
     // 清楚边高亮样式
-    clearEdgeHighlightStyle (edge) {
+    clearEdgeHighlightStyle(edge) {
       const group = edge.getContainer()
       const shape = group.get('children')[0]
       // shape.stopAnimate()
@@ -605,16 +638,16 @@ export default {
   },
   computed: {
     // 图数据
-    graphData () {
-      const {topologyData, transfromToGraphData} = this
+    graphData() {
+      const { topologyData, transfromToGraphData } = this
       return transfromToGraphData(topologyData)
     }
   },
-  created () {
+  created() {
     // 获取后台业务数据
     this.getData()
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       const graph = this.$refs.graphEditor
       const instance = graph.getGraphInstance()
@@ -626,15 +659,15 @@ export default {
   components: {
     LinkTopologyTooltip
   },
-  activated () {
+  activated() {
     console.log('actived: ' + this.$router.route)
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       console.log(vm)
     })
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     // 关闭 websocket 连接
     const { ws } = this
     if (ws) ws.close()
@@ -667,7 +700,7 @@ export default {
   min-width: 100px;
   height: 806px;
 }
-.level-labels .level-label{
+.level-labels .level-label {
   display: flex;
   flex-direction: column;
   justify-content: center;
