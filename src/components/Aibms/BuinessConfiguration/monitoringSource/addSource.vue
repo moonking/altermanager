@@ -319,7 +319,11 @@ export default {
   created() {
     if (this.$route.query.id) {
       this.editId = this.$route.query.id
-      this.$route.meta.title = '编辑来源'
+      if (this.$route.query.status === 'read') {
+        this.$route.meta.title = '查看来源'
+      } else {
+        this.$route.meta.title = '编辑来源'
+      }
       axios.getMonitorDetail(this.editId).then(res => {
         if (res.data.success) {
           const sourceDetail = res.data.data

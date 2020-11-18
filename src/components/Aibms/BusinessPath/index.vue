@@ -11,16 +11,17 @@
       >
         <template v-slot:tooltip="tooltip">
           <business-path-tooltip
+            v-if="tooltip.editorInfo"
             :alerts="tooltip.editorInfo"
           ></business-path-tooltip>
         </template>
       </graph-editor>
     </div>
-    <div class="notify-list" v-if="notifyList.length > 0">
+    <!-- <div class="notify-list" v-if="notifyList.length > 0">
       <div class="notify-list-title">
         <div class="notify-list-title-text">
           告警信息
-          <!-- <el-button @click="notifyAlert" size="mini">测试</el-button> -->
+          <el-button @click="notifyAlert" size="mini">测试</el-button>
         </div>
       </div>
       <div class="notify-list-content">
@@ -47,7 +48,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -163,9 +164,9 @@ export default {
         ]
       },
       // 图配置项
-      mouseCfg: {zoom: true, move: true},
+      mouseCfg: { zoom: true, move: true },
       // tooltip 信息
-      alerts: {name: 'test'},
+      alerts: { name: 'test' },
       // graph 实例配置
       sessionCfg: {
         // 是否透明背景
@@ -204,6 +205,11 @@ export default {
             stroke: 'blue',
             strokeOpacity: 1
           },
+          actived: {
+            stroke: '#ff6766',
+            lineWidth: 2,
+            strokeOpacity: 1
+          },
           selected: {
             stroke: '#ff6766',
             lineWidth: 2,
@@ -219,6 +225,11 @@ export default {
           hover: {
             stroke: 'yellow',
             cursor: 'pointer'
+          },
+          actived: {
+            stroke: '#ff6766',
+            // stroke: '#19b868',
+            lineWidth: 4
           },
           selected: {
             stroke: '#ff6766',
@@ -252,37 +263,44 @@ export default {
           //   }
           // }
         },
-        // 布局配置
         layout: {
-          type: 'topology-layout',
-          level: 5,
-          nodeSize: [160, 72],
-          nodeSpace: 60
-
-          // type: 'dagre',
-          // rankdir: 'BT',
-          // ranksep: 50,
-          // nodesep: 30,
-          // controlPoints: true,
-          // workerEnabled: true
-
-          // type: 'force',
-          // linkDistance: 200, // 可选，边长
-          // preventOverlap: true,
-          // nodeSize: 60, // 可选
-
-          // type: 'fruchterman',
-          // gravity: 1, // 可选
-          // speed: 1, // 可选
-
-          // type: 'concentric',
-          // nodeSize: [160, 72],
-          // preventOverlap: true,
-          // minNodeSpacing: 40,
-          // workerEnabled: true
+          // Object，可选，布局的方法及其配置项，默认为 random 布局。
+          type: 'grid',
+          preventOverlap: true,
+          nodeSize: 30
+          // ...                    // 其他配置
         },
-        // fitView: true,
-        // fitViewPadding: [10],
+        // 布局配置
+        // layout: {
+        //   type: 'topology-layout',
+        //   level: 5,
+        //   nodeSize: [160, 72],
+        //   nodeSpace: 60
+
+        //   // type: 'dagre',
+        //   // rankdir: 'BT',
+        //   // ranksep: 50,
+        //   // nodesep: 30,
+        //   // controlPoints: true,
+        //   // workerEnabled: true
+
+        //   // type: 'force',
+        //   // linkDistance: 200, // 可选，边长
+        //   // preventOverlap: true,
+        //   // nodeSize: 60, // 可选
+
+        //   // type: 'fruchterman',
+        //   // gravity: 1, // 可选
+        //   // speed: 1, // 可选
+
+        //   // type: 'concentric',
+        //   // nodeSize: [160, 72],
+        //   // preventOverlap: true,
+        //   // minNodeSpacing: 40,
+        //   // workerEnabled: true
+        // },
+        fitView: true, // 适应画布
+        fitViewPadding: [10],
         // 模式配置
         modes: {
           default: [
@@ -321,8 +339,8 @@ export default {
   },
   computed: {
     // 图数据
-    graphData () {
-      const {systemList, tranformToGraphData} = this
+    graphData() {
+      const { systemList, tranformToGraphData } = this
       return tranformToGraphData(systemList)
     }
   },
@@ -355,11 +373,12 @@ export default {
             <div class="notify-item"><span>时间：</span>${time}</div>
             <div class="notify-item"><span>详情：</span>${description}</div>
           </div>
-          `
+          `,
+        duration: 7500
       });
     },
     // 初始化自定义图事件监听器
-    initCustomGraphListener (graph) {
+    initCustomGraphListener(graph) {
       // 监听鼠标点击节点事件，点击借条跳转到拓扑层级图页面
       graph.on('node:click', (e) => {
         const { item } = e
@@ -397,8 +416,8 @@ export default {
       })
     },
     // 清楚高亮节点和边
-    clearItemHighlight (graph) {
-      const state = 'selected'
+    clearItemHighlight(graph) {
+      const state = 'actived'
       // 置空所有节点和边的高亮状态
       const nodes = graph.getNodes()
       const edges = graph.getEdges()
@@ -411,24 +430,46 @@ export default {
       })
     },
     // 设置高亮节点和边
-    setHighlightItem (item, highlight, graph) {
+    setHighlightItem(item, highlight, graph, sourceId) {
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
-      const state = 'selected'
+      const state = 'actived'
       if (isNode) {
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
-
         // 递归遍历节点树
         const edges = item.getInEdges()
-        edges.forEach(edge => {
-          graph.setItemState(edge, state, highlight)
-          const source = edge.getSource()
-          graph.setItemState(source, state, highlight)
-
-          // 递归设置后续节点高亮
-          this.setHighlightItem(source, highlight, graph)
+        const allEdges = item.getEdges()
+        let targetEdges = []
+        let edgesList = edges.map(item => item._cfg.id);
+        allEdges.forEach((e) => {
+          if (!edgesList.includes(e._cfg.id)) {
+            targetEdges.push(e)
+          }
         })
+        // console.log(edges, targetEdges)
+        if (edges.length > 0) {
+          edges.forEach(edge => {
+            graph.setItemState(edge, state, highlight)
+            if ('getSource' in edge) {
+              if (edge._cfg.model.target === item._cfg.model.id && edge._cfg.model.source !== sourceId) {
+                const source = edge.getSource()
+                this.setHighlightItem(source, highlight, graph, item._cfg.id)
+              }
+            }
+          })
+        }
+        // if (targetEdges.length > 0) {
+        //   targetEdges.forEach((targetE) => {
+        //     graph.setItemState(targetE, state, highlight)
+        //     const target = targetE.getTarget()
+        //     // if (targetE._cfg.model) { }
+        //     console.log(target)
+        //     if (targetE._cfg.model.source === item._cfg.model.id && targetE._cfg.model.target !== sourceId) {
+        //       this.setHighlightItem(target, highlight, graph, item._cfg.id)
+        //     }
+        //   })
+        // }
       }
 
       if (isEdge) {
@@ -438,11 +479,19 @@ export default {
 
         const source = item.getSource()
         this.setHighlightItem(source, highlight, graph)
+        //* ************ */
+        // const target = item.getTarget()
+        // this.setHighlightItem(target, highlight, graph)
+        // // graph.setItemState(target, state, highlight)
+        // graph.setItemState(item, state, highlight)
+
+        // const source = item.getSource()
+        // this.setHighlightItem(source, highlight, graph)
       }
     },
     // 将后台业务数据转换为可渲染的图数据结构
     // 即 data =  { nodes: [], edges: [] }
-    tranformToGraphData (data) {
+    tranformToGraphData(data) {
       const nodes = []
       const edges = []
       data.forEach(system => {
@@ -472,7 +521,7 @@ export default {
       }
     },
     // 获取系统列表
-    getSystemList () {
+    getSystemList() {
       // const param = {
       //   name: '',
       //   current: 1,
@@ -485,7 +534,7 @@ export default {
       })
     },
     // 跳转到层级拓扑图页面
-    goLinkTopology (systemId) {
+    goLinkTopology(systemId) {
       this.$router.push({
         path: '/Aibms/businessPath/linkTopology',
         query: {
