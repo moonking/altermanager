@@ -2,6 +2,8 @@
   <div class="business-path">
     <!-- <p style="height: 48px;line-height: 48px;background-color: #fff;padding: 0 20px;" @click="goLinkTopology">业务路径</p> -->
     <div class="business-path-wrapper">
+      <!-- graphData -->
+      <!-- tempData -->
       <graph-editor
         :data="graphData"
         :sessionCfg="sessionCfg"
@@ -341,6 +343,7 @@ export default {
     // 图数据
     graphData() {
       const { systemList, tranformToGraphData } = this
+      console.log(tranformToGraphData(systemList))
       return tranformToGraphData(systemList)
     }
   },
@@ -430,7 +433,8 @@ export default {
       })
     },
     // 设置高亮节点和边
-    setHighlightItem(item, highlight, graph, sourceId) {
+    setHighlightItem(item, highlight, graph, sourceId, type = 'all') {
+      console.log(type)
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
       const state = 'actived'
@@ -448,28 +452,28 @@ export default {
           }
         })
         // console.log(edges, targetEdges)
-        if (edges.length > 0) {
+        if (edges.length > 0 && (type === 'source' || type === 'all')) {
           edges.forEach(edge => {
             graph.setItemState(edge, state, highlight)
             if ('getSource' in edge) {
               if (edge._cfg.model.target === item._cfg.model.id && edge._cfg.model.source !== sourceId) {
                 const source = edge.getSource()
-                this.setHighlightItem(source, highlight, graph, item._cfg.id)
+                this.setHighlightItem(source, highlight, graph, item._cfg.id, 'source')
               }
             }
           })
         }
-        // if (targetEdges.length > 0) {
-        //   targetEdges.forEach((targetE) => {
-        //     graph.setItemState(targetE, state, highlight)
-        //     const target = targetE.getTarget()
-        //     // if (targetE._cfg.model) { }
-        //     console.log(target)
-        //     if (targetE._cfg.model.source === item._cfg.model.id && targetE._cfg.model.target !== sourceId) {
-        //       this.setHighlightItem(target, highlight, graph, item._cfg.id)
-        //     }
-        //   })
-        // }
+        if (targetEdges.length > 0 && (type === 'target' || type === 'all')) {
+          targetEdges.forEach((targetE) => {
+            graph.setItemState(targetE, state, highlight)
+            const target = targetE.getTarget()
+            // if (targetE._cfg.model) { }
+            console.log(target)
+            if (targetE._cfg.model.source === item._cfg.model.id && targetE._cfg.model.target !== sourceId) {
+              this.setHighlightItem(target, highlight, graph, item._cfg.id, 'target')
+            }
+          })
+        }
       }
 
       if (isEdge) {
