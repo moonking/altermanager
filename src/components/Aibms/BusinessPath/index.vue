@@ -359,7 +359,7 @@ export default {
     // 图数据
     graphData() {
       const { systemList, tranformToGraphData } = this
-      console.log(tranformToGraphData(systemList))
+      // console.log(tranformToGraphData(systemList))
       return tranformToGraphData(systemList)
     }
   },

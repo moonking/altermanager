@@ -77,24 +77,24 @@ export default {
   },
   watch: {
     alerts(value) {
-      console.log('new tooltip value: ', value)
+      // console.log('new tooltip value: ', value)
     }
   },
   computed: {
     alertList() {
       const { alerts } = this
-      console.log(alerts)
+      // console.log(alerts)
       let alertList = []
       try {
         alertList = alerts.businessData.hierarchicalCount.systemLinkLevelList
       } catch (error) {
-        console.log('data error!')
+        // console.log('data error!')
       }
       return alertList
     }
   },
   created() {
-    console.log(this.alerts)
+    // console.log(this.alerts)
   }
 }
 </script>
