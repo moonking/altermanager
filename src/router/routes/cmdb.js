@@ -127,7 +127,7 @@ let cmdb = {
           '@/components/ResourceAllocation/OtherConfiguration.vue'
         ], resolve),
       meta: {
-        title: '其他配置'
+        title: '业务系统'
       }
     },
     {

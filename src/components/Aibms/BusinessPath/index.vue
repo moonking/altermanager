@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data="graphData"
+        :data.sync="tempData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -19,6 +19,9 @@
         </template>
       </graph-editor>
     </div>
+    <!-- <div>
+      <button @click="save">保存</button>
+    </div> -->
     <!-- <div class="notify-list" v-if="notifyList.length > 0">
       <div class="notify-list-title">
         <div class="notify-list-title-text">
@@ -61,8 +64,8 @@
 // import serviceSvg from '../../../../static/img/graph-icons/quanqiu.svg'
 // import appSvg from '../../../../static/img/graph-icons/yingyong.svg'
 import BusinessPathTooltip from './BusinessPathTooltip'
-import config from '@/config/index.js'
 import moment from 'moment'
+import common from '@/utils/commonjs';
 import axios from '@/api'
 export default {
   filters: {
@@ -77,6 +80,1785 @@ export default {
   },
   data() {
     return {
+      copyList: {
+        'nodes': [{
+          'id': 'nodeA1',
+          'text': '',
+          'level': 1,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 686.7195522821866,
+          'y': 274.5909225180387
+        }, {
+          'id': 'nodeA2',
+          'text': '',
+          'level': 1,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 589.9708339092834,
+          'y': 78.38116668803426
+        }, {
+          'id': 'nodeB1',
+          'text': '',
+          'level': 2,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 673.9163277917067,
+          'y': 370.14312203323493
+        }, {
+          'id': 'nodeB2',
+          'text': '',
+          'level': 2,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 647.2059574714002,
+          'y': 183.38380717369802
+        }, {
+          'id': 'nodeB3',
+          'text': '',
+          'level': 2,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 550.8889424819589,
+          'y': 210.65623008833415
+        }, {
+          'id': 'nodeC1',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 788.3457598226171,
+          'y': 314.3155042913321
+        }, {
+          'id': 'nodeC2',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 585.8352628605348,
+          'y': 423.8798075314092
+        }, {
+          'id': 'nodeC3',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 758.4281853061508,
+          'y': 180.758539828413
+        }, {
+          'id': 'nodeC4',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 508.3548609909894,
+          'y': 124.33649921281352
+        }, {
+          'id': 'nodeC5',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 684.5597935967954,
+          'y': 84.01136580508377
+        }, {
+          'id': 'nodeC6',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 160.0207063449825,
+          'y': 58.4057795205504
+        }, {
+          'id': 'nodeC7',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 153.81779378571588,
+          'y': 364.2850378462743
+        }, {
+          'id': 'nodeC8',
+          'text': '',
+          'level': 3,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 193.86026591020527,
+          'y': 233.0275473757079
+        }, {
+          'id': 'nodeD1',
+          'text': '',
+          'level': 4,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 767.5400207358032,
+          'y': 423.00229918351744
+        }, {
+          'id': 'nodeD2',
+          'text': '',
+          'level': 4,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 862.8276173641126,
+          'y': 217.20381023647707
+        }, {
+          'id': 'nodeD3',
+          'text': '',
+          'level': 4,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 597.636247549597,
+          'y': 530.8731500710581
+        }, {
+          'id': 'nodeD4',
+          'text': '',
+          'level': 4,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 466.3112578296069,
+          'y': 399.1790007923136
+        }, {
+          'id': 'nodeD5',
+          'text': '',
+          'level': 4,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 810.8089245852691,
+          'y': 103.7185998532779
+        }, {
+          'id': 'nodeE1',
+          'text': '',
+          'level': 5,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 795.7511584224202,
+          'y': 512.7258875438956
+        }, {
+          'id': 'nodeE2',
+          'text': '',
+          'level': 5,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 694.296281078632,
+          'y': 511.8306252469982
+        }, {
+          'id': 'nodeE3',
+          'text': '',
+          'level': 5,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 871.0119969144661,
+          'y': 410.6685379278947
+        }, {
+          'id': 'nodeE4',
+          'text': '',
+          'level': 5,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 902.8965640315475,
+          'y': 301.3379042616384
+        }, {
+          'id': 'nodeE5',
+          'text': '',
+          'level': 5,
+          'type': 'businessPathNode',
+          'labelColor': '#fff',
+          'style': {
+            'warning': {
+              'stroke': 'red',
+              'strokeOpacity': 1
+            },
+            'hover': {
+              'stroke': 'blue',
+              'strokeOpacity': 1
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 2,
+              'strokeOpacity': 1
+            },
+            'stroke': 'transparent',
+            'fill': '#16161693',
+            'shadowColor': '#333',
+            'shadowBlur': 5
+          },
+          'colors': {
+            'warning': 'orange',
+            'error': 'red'
+          },
+          'x': 491.9864042689381,
+          'y': 486.1145381511426
+        }],
+        'edges': [{
+          'source': 'nodeA1',
+          'target': 'nodeB1',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge1',
+          'startPoint': {
+            'x': 686.7195522821866,
+            'y': 311.0909225180387,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 673.9163277917067,
+            'y': 333.64312203323493,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeA1',
+          'target': 'nodeB2',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge2',
+          'startPoint': {
+            'x': 686.7195522821866,
+            'y': 238.09092251803872,
+            'index': 0,
+            'anchorIndex': 0
+          },
+          'endPoint': {
+            'x': 647.2059574714002,
+            'y': 219.88380717369802,
+            'index': 2,
+            'anchorIndex': 2
+          }
+        }, {
+          'source': 'nodeA2',
+          'target': 'nodeB3',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge3',
+          'startPoint': {
+            'x': 589.9708339092834,
+            'y': 114.88116668803426,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 550.8889424819589,
+            'y': 174.15623008833415,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeB1',
+          'target': 'nodeC1',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge4',
+          'startPoint': {
+            'x': 754.4163277917067,
+            'y': 370.14312203323493,
+            'index': 1,
+            'anchorIndex': 1
+          },
+          'endPoint': {
+            'x': 707.8457598226171,
+            'y': 314.3155042913321,
+            'index': 3,
+            'anchorIndex': 3
+          }
+        }, {
+          'source': 'nodeB1',
+          'target': 'nodeC2',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge5',
+          'startPoint': {
+            'x': 593.4163277917067,
+            'y': 370.14312203323493,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 666.3352628605348,
+            'y': 423.8798075314092,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeB2',
+          'target': 'nodeC3',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge6',
+          'startPoint': {
+            'x': 727.7059574714002,
+            'y': 183.38380717369802,
+            'index': 1,
+            'anchorIndex': 1
+          },
+          'endPoint': {
+            'x': 677.9281853061508,
+            'y': 180.758539828413,
+            'index': 3,
+            'anchorIndex': 3
+          }
+        }, {
+          'source': 'nodeB2',
+          'target': 'nodeC4',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge7',
+          'startPoint': {
+            'x': 566.7059574714002,
+            'y': 183.38380717369802,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 588.8548609909894,
+            'y': 124.33649921281352,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeB3',
+          'target': 'nodeC5',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge8',
+          'startPoint': {
+            'x': 550.8889424819589,
+            'y': 174.15623008833415,
+            'index': 0,
+            'anchorIndex': 0
+          },
+          'endPoint': {
+            'x': 684.5597935967954,
+            'y': 120.51136580508377,
+            'index': 2,
+            'anchorIndex': 2
+          }
+        }, {
+          'source': 'nodeB3',
+          'target': 'nodeC6',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge9',
+          'startPoint': {
+            'x': 470.3889424819589,
+            'y': 210.65623008833415,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 241.0207063449825,
+            'y': 58.4057795205504,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeB3',
+          'target': 'nodeC7',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge10',
+          'startPoint': {
+            'x': 470.3889424819589,
+            'y': 210.65623008833415,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 234.81779378571588,
+            'y': 364.2850378462743,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeB3',
+          'target': 'nodeC8',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge11',
+          'startPoint': {
+            'x': 470.3889424819589,
+            'y': 210.65623008833415,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 274.86026591020527,
+            'y': 233.0275473757079,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeC1',
+          'target': 'nodeD1',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge12',
+          'startPoint': {
+            'x': 788.3457598226171,
+            'y': 350.8155042913321,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 767.5400207358032,
+            'y': 386.50229918351744,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeC1',
+          'target': 'nodeD2',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge13',
+          'startPoint': {
+            'x': 788.3457598226171,
+            'y': 277.8155042913321,
+            'index': 0,
+            'anchorIndex': 0
+          },
+          'endPoint': {
+            'x': 862.8276173641126,
+            'y': 253.70381023647707,
+            'index': 2,
+            'anchorIndex': 2
+          }
+        }, {
+          'source': 'nodeC2',
+          'target': 'nodeD3',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge14',
+          'startPoint': {
+            'x': 585.8352628605348,
+            'y': 460.3798075314092,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 597.636247549597,
+            'y': 494.37315007105815,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeC2',
+          'target': 'nodeD4',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge15',
+          'startPoint': {
+            'x': 505.33526286053484,
+            'y': 423.8798075314092,
+            'index': 3,
+            'anchorIndex': 3
+          },
+          'endPoint': {
+            'x': 546.8112578296069,
+            'y': 399.1790007923136,
+            'index': 1,
+            'anchorIndex': 1
+          }
+        }, {
+          'source': 'nodeC3',
+          'target': 'nodeD5',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge16',
+          'startPoint': {
+            'x': 758.4281853061508,
+            'y': 144.258539828413,
+            'index': 0,
+            'anchorIndex': 0
+          },
+          'endPoint': {
+            'x': 810.8089245852691,
+            'y': 140.2185998532779,
+            'index': 2,
+            'anchorIndex': 2
+          }
+        }, {
+          'source': 'nodeD1',
+          'target': 'nodeE1',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge17',
+          'startPoint': {
+            'x': 767.5400207358032,
+            'y': 459.50229918351744,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 795.7511584224202,
+            'y': 476.2258875438956,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeD1',
+          'target': 'nodeE2',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge18',
+          'startPoint': {
+            'x': 767.5400207358032,
+            'y': 459.50229918351744,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 694.296281078632,
+            'y': 475.3306252469982,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeD1',
+          'target': 'nodeE3',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge19',
+          'startPoint': {
+            'x': 848.0400207358032,
+            'y': 423.00229918351744,
+            'index': 1,
+            'anchorIndex': 1
+          },
+          'endPoint': {
+            'x': 790.5119969144661,
+            'y': 410.6685379278947,
+            'index': 3,
+            'anchorIndex': 3
+          }
+        }, {
+          'source': 'nodeD2',
+          'target': 'nodeE4',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge20',
+          'startPoint': {
+            'x': 362.8276173641126,
+            'y': 353.70381023647707,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 902.8965640315475,
+            'y': 264.8379042616384,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }, {
+          'source': 'nodeD4',
+          'target': 'nodeE5',
+          'type': 'line',
+          'style': {
+            'hover': {
+              'stroke': 'yellow',
+              'cursor': 'pointer'
+            },
+            'actived': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'selected': {
+              'stroke': '#ff6766',
+              'lineWidth': 4
+            },
+            'warning': {
+              'stroke': 'red'
+            },
+            'stroke': '#00a8e8',
+            'lineWidth': 4,
+            'lineAppendWidth': 20,
+            'endArrow': true
+          },
+          'labelCfg': {
+            'refY': 0,
+            'style': {
+              'fill': '#000',
+              'fontSize': 16
+            }
+          },
+          'id': 'edge21',
+          'startPoint': {
+            'x': 266.3112578296069,
+            'y': 235.6790007923136,
+            'index': 2,
+            'anchorIndex': 2
+          },
+          'endPoint': {
+            'x': 191.98640426893803,
+            'y': 149.6145381511426,
+            'index': 0,
+            'anchorIndex': 0
+          }
+        }],
+        'combos': [],
+        'groups': []
+      },
       notifyList: [
         // {
         //   id: 0,
@@ -175,14 +1957,19 @@ export default {
         transparentBg: true,
         // 渲染引擎
         renderer: 'canvas',
+        // 配合tofront 提示层级
+        groupByTypes: false,
         // 默认边配置
         defaultEdge: {
-          type: 'line',
+          // type: 'line',
+          type: 'circle-running',
+          // type: 'line-dash',
+          // type: 'line-arrow',
           // color: '#000',
           style: {
             // stroke: '#23bbd6',
             stroke: '#00a8e8',
-            lineWidth: 4,
+            lineWidth: 2,
             lineAppendWidth: 20,
             // startArrow: true,
             endArrow: true
@@ -244,9 +2031,9 @@ export default {
         },
         // 默认节点配置
         defaultNode: {
-          type: 'businessPathNode',
+          // type: 'businessPathNode',
           labelColor: '#fff',
-          // type: 'iconCircle',
+          type: 'iconCircle',
           style: {
             stroke: 'transparent',
             fill: '#16161693',
@@ -268,10 +2055,17 @@ export default {
         layout: {
           // Object，可选，布局的方法及其配置项，默认为 random 布局。
           type: 'grid',
+          // type: 'topology-layout',
+          // type: 'gForce',
           preventOverlap: true,
           nodeSize: 30
           // ...                    // 其他配置
         },
+        // layout: {
+        //   type: 'fruchterman',
+        //   gravity: 5,
+        //   speed: 5
+        // },
         // 布局配置
         // layout: {
         //   type: 'topology-layout',
@@ -301,8 +2095,8 @@ export default {
         //   // minNodeSpacing: 40,
         //   // workerEnabled: true
         // },
-        fitView: true, // 适应画布
-        fitViewPadding: [10],
+        // fitView: true, // 适应画布
+        // fitViewPadding: [10],
         // 模式配置
         modes: {
           default: [
@@ -427,20 +2221,26 @@ export default {
 
       nodes.forEach(node => {
         graph.setItemState(node, state, false)
+        node.toBack();
       })
       edges.forEach(edge => {
         graph.setItemState(edge, state, false)
+        edge.toBack();
       })
+      // 注意：必须调用以根据新的层级顺序重绘
+      graph.paint();
     },
     // 设置高亮节点和边
     setHighlightItem(item, highlight, graph, sourceId, type = 'all') {
-      console.log(type)
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
       const state = 'actived'
+
       if (isNode) {
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
+        // 将节点提前。
+        item.toFront();
         // 递归遍历节点树
         const edges = item.getInEdges()
         const allEdges = item.getEdges()
@@ -451,7 +2251,6 @@ export default {
             targetEdges.push(e)
           }
         })
-        // console.log(edges, targetEdges)
         if (edges.length > 0 && (type === 'source' || type === 'all')) {
           edges.forEach(edge => {
             graph.setItemState(edge, state, highlight)
@@ -467,8 +2266,6 @@ export default {
           targetEdges.forEach((targetE) => {
             graph.setItemState(targetE, state, highlight)
             const target = targetE.getTarget()
-            // if (targetE._cfg.model) { }
-            console.log(target)
             if (targetE._cfg.model.source === item._cfg.model.id && targetE._cfg.model.target !== sourceId) {
               this.setHighlightItem(target, highlight, graph, item._cfg.id, 'target')
             }
@@ -477,21 +2274,14 @@ export default {
       }
 
       if (isEdge) {
-        const target = item.getTarget()
-        graph.setItemState(target, state, highlight)
+        // const target = item.getTarget()
+        // graph.setItemState(target, state, highlight)
         graph.setItemState(item, state, highlight)
-
         const source = item.getSource()
         this.setHighlightItem(source, highlight, graph)
-        //* ************ */
-        // const target = item.getTarget()
-        // this.setHighlightItem(target, highlight, graph)
-        // // graph.setItemState(target, state, highlight)
-        // graph.setItemState(item, state, highlight)
-
-        // const source = item.getSource()
-        // this.setHighlightItem(source, highlight, graph)
       }
+      // 更改层级后需要重新绘制图
+      graph.paint();
     },
     // 将后台业务数据转换为可渲染的图数据结构
     // 即 data =  { nodes: [], edges: [] }
@@ -572,19 +2362,17 @@ export default {
       console.log('warning style: ', node.getStateStyle())
     },
     initWebSocket() {
-      let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
-      const ws = new WebSocket(url)
+      // let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
+      // const ws = new WebSocket(url)
 
-      ws.onopen = () => {
-        console.log('业务系统ws连接成功！')
-      }
-      ws.onmessage = (event) => {
-        let { data } = event
-        // console.log(data)
+      // ws.onopen = () => {
+      //   console.log('业务系统ws连接成功！')
+      // }
+      this.$global.wsAibms.onmessage = (event) => {
+        let data = common.evil(event.data);
+
         const { systemList } = this
         if (data) {
-          data = JSON.parse(data)
-          console.log(data)
           if (data.aelrtList && data.aelrtList.length > 0) {
             this.notifyList = data.aelrtList
             this.notifyList.forEach((item) => {
@@ -609,7 +2397,6 @@ export default {
                   let alertFlag = false
                   nodeList.forEach(node => {
                     if (node.alertNum > 0) {
-                      console.log('nnmm')
                       alertFlag = true
                     }
                   })
@@ -638,16 +2425,25 @@ export default {
           // this.systemList = JSON.parse(data)
         }
       }
-      ws.onclose = () => {
-        console.log('业务系统ws连接关闭！')
-        ws.close()
-      }
-      ws.onerror = () => {
-        console.log('业务系统ws出错了！')
-      }
+      //   ws.onmessage
+      //   ws.onclose = () => {
+      //     console.log('业务系统ws连接关闭！')
+      //     ws.close()
+      //   }
+      //   ws.onerror = () => {
+      //     console.log('业务系统ws出错了！')
+      //   }
 
-      this.ws = ws
+      //   this.ws = ws
     }
+    // save() {
+    //   // console.log(this.graph.save())
+    //   // console.log(JSON.stringify(this.graph.save()))
+    //   setTimeout(() => {
+    //     this.graph.data(this.copyList);
+    //     this.graph.render();
+    //   }, 10)
+    // }
   },
   created() {
     this.getSystemList()

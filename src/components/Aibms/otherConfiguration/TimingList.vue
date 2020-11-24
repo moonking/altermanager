@@ -11,19 +11,21 @@
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item class="item-right overHideMargin">
-            <el-button
-              icon="el-icon-search"
-              class="common-btn-style"
-              @click="searchTask"
-              >查找</el-button
-            >
+          <el-form-item style="float: right">
             <el-button
               type="primary"
               icon="el-icon-plus"
               class="common-btn-style margin-left-btn"
               @click.prevent="addTask"
               >新增</el-button
+            >
+          </el-form-item>
+          <el-form-item class="item-right overHideMargin">
+            <el-button
+              icon="el-icon-search"
+              class="common-btn-style"
+              @click="searchTask"
+              >查找</el-button
             >
           </el-form-item>
         </el-form>
@@ -403,7 +405,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .tab_box {
   display: flex;
   text-align: left;
@@ -522,7 +524,7 @@ export default {
 .special {
   cursor: pointer;
 }
-*/ .error {
+.error {
   color: #f10;
 }
 .wraning {
@@ -530,6 +532,26 @@ export default {
 }
 .success {
   color: #67c23a;
+}
+.overHideMargin {
+  .el-button {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    &:focus {
+      color: #fff;
+      background: transparent;
+    }
+    &:active {
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+  }
 }
 .demo-form-inline /deep/ .overHideMargin {
   margin-right: 0 !important;
