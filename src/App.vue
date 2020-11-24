@@ -8,24 +8,22 @@
 </template>
 <style>
 /* @import "../static/css/color-dark.css";     深色主题 */
-@import "../static/css/theme-green/color-green.css";
+@import '../static/css/theme-green/color-green.css';
 /* @import "./assets/font-awesome/css/font-awesome.min.css"; */
 /*浅绿色主题*/
 </style>
 <script>
 import vHead from './components/common/Header.vue'
-import {
-  websocketurl,
-  devopswebsocketurl,
-  aibmsWebsocketurl
-} from './config'
+import config from '@/config/index.js'
+import moment from 'moment'
+import common from '@/utils/commonjs';
 export default {
-  provide () {
+  provide() {
     return {
       reload: this.reload
     }
   },
-  data () {
+  data() {
     return {
       iSshow: true,
       isRouterAlive: true,
@@ -40,42 +38,37 @@ export default {
   components: {
     vHead
   },
-  created () {
+  created() {
     // 页面刚进入时开启长连接
-    // this.localSocket()
+    this.localSocket()
   },
-  mounted () {
+  mounted() {
     // this.$nextTick(() => {
     //   this.getAibmsWebsocket()
     // })
+    // this.$nextTick(() => {
+    //   setInterval(() => {
+    //     this.playAudio()
+    //   }, 5000)
+    // })
   },
   methods: {
-    reload () {
+    reload() {
       this.isRouterAlive = false
       this.$nextTick(function () {
         this.isRouterAlive = true
       })
     },
-    cleartime () {
-      if (this.number > 7 || this.devopsnumber > 7 || this.aibmsNum > 7) {
-        let tit = ''
-        if (this.number > 7) {
-          clearInterval(this.timer)
-          tit = 'websocket连接超时！'
-        }
-        if (this.devopsnumber > 7) {
-          clearInterval(this.timerdev)
-          tit = 'websocket连接超时！！'
-        }
-        if (this.aibmsNum > 7) {
-          clearInterval(this.timerAibms)
-          tit = 'websocket连接超时！'
-        }
-        this.$notify({
-          title: '提示',
-          message: tit,
-          type: 'error'
-        })
+    cleartime() {
+      if (this.aibmsNum > 7) {
+        // let tit = ''
+        clearInterval(this.timerAibms)
+        // tit = 'websocket连接超时！'
+        // this.$notify({
+        //   title: '提示',
+        //   message: tit,
+        //   type: 'error'
+        // })
         // localStorage.removeItem('userId');
         // localStorage.removeItem('userName');
         // localStorage.removeItem('userPhoto');
@@ -83,25 +76,39 @@ export default {
         // window.location.hash = '/login';
       }
     },
-    // 连接 devops websocket
-    upwebsocket () {
-      this.$global.ws = new WebSocket(websocketurl)
-      this.$global.setWs(this.$global.ws)
-      this.$global.ws.onopen = () => {
-        console.log('devops websocket已连接...')
-        if (!localStorage.getItem('userId')) {
-          clearInterval(this.timer)
-        }
+    // 播放音频
+    playAudio() {
+      if (!!window.ActiveXObject || 'ActiveXObject' in window) {
+        // IE内核浏览器
+        var OSPlayer = new ActiveXObject('WMPLayer.OCX');
+        OSPlayer.url = '../static/music.mp3';
+        OSPlayer.controls.play();
+      } else {
+        // 非IE内核浏览器
+        var strAudio = document.createElement('audio');
+        strAudio.src = '../static/music.mp3'
+        strAudio.hidden = true
+        strAudio.id = 'audioPlay'
+        // strAudio.muted = true
+        // strAudio.autoplay = 'autoplay'
 
-        if (this.timer) {
-          clearInterval(this.timer)
-        }
+        if (!document.body.contains(document.getElementsByTagName('audio')[0])) { document.body.append(strAudio); }
+        var audio = document.getElementById('audioPlay');
+        audio.play().catch((err) => {
+          console.log(err)
+        })
+        // 浏览器支持 audio
+        // audio.click(() => {
+        // audio.play()
+        // })
       }
     },
     // 链接aibms websocket
-    upAibmsWebsocket () {
-      this.$global.wsAibms = new WebSocket(aibmsWebsocketurl)
+    upAibmsWebsocket() {
+      let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
+      this.$global.wsAibms = new WebSocket(url)
       this.$global.setWsAibms(this.$global.wsAibms)
+      // console.log(this.$global.wsAibms)
       this.$global.wsAibms.onopen = () => {
         console.log('aibms websocket已连接...')
         if (!localStorage.getItem('userId')) {
@@ -111,24 +118,62 @@ export default {
           clearInterval(this.timerAibms)
         }
       }
+      this.$global.wsAibms.onerror = () => {
+        if (this.timerAibms) {
+          console.log('业务系统ws出错了！')
+        }
+      }
+      this.$global.wsAibms.onclose = () => {
+        console.log('业务系统ws关闭了！')
+      }
     },
     // 接受aibms websocket数据
-    getAibmsWebsocket () {
-      const vm = this
+    getAibmsWebsocket() {
       this.$global.wsAibms.onmessage = res => {
-        const notify = this.$notify({
-          title: '告警',
-          dangerouslyUseHTMLString: true,
-          message: '<p>有一条新告警产生，请前往<span style="color:#0066ff;cursor:pointer">查看</span></p>',
-          type: 'warning'
-        })
-        notify.$el.querySelector('span').onclick = () => {
-          vm.getAlarmNoiceDetail(res.data)
-          notify.close()
+        let data = common.evil(res.data);
+        if (data) {
+          if (data.aelrtList && data.aelrtList.length > 0) {
+            this.notifyList = data.aelrtList
+            this.notifyList.forEach((item) => {
+              item.time = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss')
+            })
+
+            this.notifyAlert(data.alert)
+          }
         }
       }
     },
-    getAlarmNoiceDetail (id) {
+    notifyAlert(alert) {
+      let { host, time, description, level } = alert
+      const iconMap = {
+        '1': '#ff0000',
+        '2': '#ff9900',
+        '3': '#ffcc00'
+      };
+      const levelMap = {
+        '1': 'critical',
+        '2': 'warning',
+        '3': 'information'
+      };
+      time = moment(time).format('YYYY-MM-DD hh:mm:ss')
+      this.$notify({
+        customClass: 'notify-style',
+        dangerouslyUseHTMLString: true,
+        message: `
+          <p class="notify-title">
+            有新的<span style="color:${iconMap[level]};font-weight: bold;"> ${levelMap[level]} </span>告警
+          </p>
+          <div class="notify-content">
+            <div class="notify-item"><span>对象：</span>${host}</div>
+            <div class="notify-item"><span>时间：</span>${time}</div>
+            <div class="notify-item"><span>详情：</span>${description}</div>
+          </div>
+          `,
+        duration: 7500
+      });
+      this.playAudio()
+    },
+    getAlarmNoiceDetail(id) {
       this.$router.push({
         path: '/Aibms/alarmnoticeDetail',
         query: {
@@ -137,53 +182,17 @@ export default {
         }
       })
     },
-    upwebsocketdev (type) {
-      if (!type) {
-        setTimeout(() => {
-          this.upwebsocket()
-        }, 0)
-      }
 
-      this.cleartime()
-      this.$global.wsdevops = new WebSocket(devopswebsocketurl)
-      this.$global.setWsOps(this.$global.wsdevops)
-      this.$global.wsdevops.onopen = () => {
-        console.log('websocket已连接...devops')
-        if (!localStorage.getItem('userId')) {
-          clearInterval(this.timerdev)
-        }
-
-        if (this.timerdev) {
-          clearInterval(this.timerdev)
-        }
-      }
-    },
-    localSocket () {
+    localSocket() {
       if ('WebSocket' in window) {
-        this.upwebsocketdev()
         this.upAibmsWebsocket()
-        this.$global.ws.onclose = res => {
-          // 关闭 websocket
-          console.log('连接已关闭...', res)
-          this.timer = setInterval(() => {
-            this.number++
-            this.upwebsocket()
-          }, 3000)
-        }
+        this.getAibmsWebsocket()
         this.$global.wsAibms.onclose = res => {
           // 关闭 websocket
           console.log('连接已关闭...', res)
           this.timerAibms = setInterval(() => {
             this.aibmsNum++
             this.upAibmsWebsocket()
-          }, 3000)
-        }
-        this.$global.wsdevops.onclose = res => {
-          // 关闭 websocket
-          console.log('连接已关闭...devops', res)
-          this.timerdev = setInterval(() => {
-            this.devopsnumber++
-            this.upwebsocketdev('Reconnect')
           }, 3000)
         }
       } else {
@@ -193,7 +202,7 @@ export default {
     }
   },
   watch: {
-    $route (e) {
+    $route(e) {
       //  console.log(this.$route);
       if (e.path == '/login' || e.path == '/err') {
         this.iSshow = false
@@ -207,13 +216,14 @@ export default {
 <style>
 #app {
   color: #585858;
-  font-family: "PingFang SC";
+  font-family: 'PingFang SC';
 }
 .el-submenu__title:hover {
- background-color: #00A8E8 !important;
+  background-color: #00a8e8 !important;
 }
-.el-submenu__title:focus, .el-submenu__title:hover {
-    background-color: #00A8E8 !important;
+.el-submenu__title:focus,
+.el-submenu__title:hover {
+  background-color: #00a8e8 !important;
 }
 
 ul li {

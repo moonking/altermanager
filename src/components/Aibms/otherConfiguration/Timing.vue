@@ -244,17 +244,15 @@
         </el-form-item>
       </el-form>
     </div>
-
-    <div class="btn-group">
-      <button
-        class="cm-btn deep"
-        style="margin-right: 200px"
-        @click="confirmCrontab"
+    <div class="footer-area">
+      <el-button
+        type="primary"
         v-if="status !== 'read'"
+        style="margin-right: 100px"
+        @click.stop="confirmCrontab"
+        >保存</el-button
       >
-        确 定
-      </button>
-      <button class="cm-btn isoutline" @click="cancelConfirm">取 消</button>
+      <el-button @click="cancelConfirm" class="cancel-button">取消</el-button>
     </div>
   </div>
 </template>
@@ -1346,7 +1344,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped  lang="scss">
 .display-box {
   display: flex;
   flex-direction: row;
@@ -1411,5 +1409,26 @@ export default {
 }
 .result-str {
   color: #fff;
+}
+.footer-area {
+  text-align: center;
+  .cancel-button {
+    color: #fff;
+    border: 1px solid #fff;
+    &:hover {
+      border: 1px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    &:focus {
+      color: #fff;
+      background: transparent;
+    }
+    &:active {
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+  }
 }
 </style>

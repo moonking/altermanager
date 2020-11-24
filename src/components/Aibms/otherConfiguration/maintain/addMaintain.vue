@@ -38,13 +38,13 @@
         v-show="active === 1"
       />
       <div class="operation-button">
-        <el-button @click="prev" type="primary" v-if="active === 1"
+        <el-button @click="prev" style="margin-right: 100px" type="primary" v-if="active === 1"
           >上一步</el-button
         >
-        <el-button @click.stop="next" type="primary" v-if="active === 0"
+        <el-button @click.stop="next" style="margin-right: 100px" type="primary" v-if="active === 0"
           >下一步</el-button
         >
-        <el-button @click="save" type="primary" v-if="active === 1 && !readOnly"
+        <el-button @click="save" style="margin-right: 100px" type="primary" v-if="active === 1 && !readOnly"
           >保存</el-button
         >
         <el-button @click="cancel" v-if="!readOnly" class="cancel-button"

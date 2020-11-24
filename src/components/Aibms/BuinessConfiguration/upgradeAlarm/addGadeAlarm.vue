@@ -160,7 +160,7 @@
         </el-dialog>
       </div>
       <div class="button-area" v-if="!readOnly">
-        <el-button type="primary" @click="submitForm">保 存</el-button>
+        <el-button type="primary" style="margin-right: 100px" @click="submitForm">保 存</el-button>
         <el-button @click="turnBack" class="cancle-button">取 消</el-button>
       </div>
     </div>

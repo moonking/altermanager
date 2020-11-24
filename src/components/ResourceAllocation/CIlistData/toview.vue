@@ -350,6 +350,9 @@ export default {
     background-color: #fff;
     .operation-box {
       width: 100%;
+      span{
+        color: #fff;
+      }
     }
   }
   .box-row {

@@ -136,7 +136,7 @@
           <span>{{ scope.row.status === '1' ? '已收到' : '-' }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="交易追踪">
+      <!-- <el-table-column align="center" label="交易追踪">
         <template v-slot="scope">
           <el-link
             v-if="scope.row.platform === 'BPC'"
@@ -145,7 +145,7 @@
             >交易</el-link
           >
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <template slot="empty">
         <div class="blank-page">
           <div class="img-content">

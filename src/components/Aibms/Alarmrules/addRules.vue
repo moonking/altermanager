@@ -169,16 +169,17 @@
         </el-form-item>
       </el-form>
       <div class="op-btns">
-        <el-button type="primary" v-if="active === 1" @click="isActive(0)"
+        <el-button type="primary" style="margin-right: 100px" v-if="active === 1" @click="isActive(0)"
           >上一步</el-button
         >
-        <el-button type="primary" v-if="active !== 1" @click="isActive(1)"
+        <el-button type="primary" style="margin-right: 100px" v-if="active !== 1" @click="isActive(1)"
           >下一步</el-button
         >
         <el-button
           type="primary"
           v-if="active === 1 && status !== 'read'"
           @click="saveAlarm"
+          style="margin-right: 100px"
           >保存</el-button
         >
         <el-button @click="cancel" class="cancel-button">取消</el-button>

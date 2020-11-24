@@ -3,14 +3,21 @@
     <div class="search-bar">
       <el-form :inline="true" :model="formInline" class="search-inline-form">
         <el-form-item>
-          <el-input v-model="formInline.user" placeholder="用户名/真实姓名/手机号码" />
+          <el-input
+            v-model="formInline.user"
+            placeholder="用户名/真实姓名/手机号码"
+          />
         </el-form-item>
         <el-form-item>
-          <el-select v-model="formInline.role" placeholder="请选择角色" multiple>
+          <el-select
+            v-model="formInline.role"
+            placeholder="请选择角色"
+            multiple
+          >
             <el-option
               :label="item.name"
               :value="item.roleId"
-              v-for="(item,index) in systemAllRoleList"
+              v-for="(item, index) in systemAllRoleList"
               :key="index"
             ></el-option>
           </el-select>
@@ -18,26 +25,31 @@
         <el-form-item>
           <el-select v-model="formInline.status" placeholder="请选择状态">
             <el-option label="正常" value="0" />
-            <el-option label="禁用" value="1"/>
-            <el-option label="锁定" value="2"/>
+            <el-option label="禁用" value="1" />
+            <el-option label="锁定" value="2" />
             <el-option label="注销" value="3" />
           </el-select>
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="formInline.radio">在线</el-checkbox>
         </el-form-item>
-        <el-form-item style="margin-left: 30px;">
+        <el-form-item style="margin-left: 30px">
           <!-- <i class="el-icon-menu" style="font-size:30px" @click="formChange"></i>
           <i class="el-icon-tickets" style="font-size:30px" @click="tableChange"></i>-->
           <ul class="tablist">
-            <li :class="{active:shows==1}" @click="formChange">名片</li>
-            <li :class="{active:shows==2}" @click="tableChange">列表</li>
+            <li :class="{ active: shows == 1 }" @click="formChange">名片</li>
+            <li :class="{ active: shows == 2 }" @click="tableChange">列表</li>
           </ul>
         </el-form-item>
       </el-form>
-      <el-form  :inline="true" class="search-inline-btn">
+      <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button icon="el-icon-search" class="common-btn-style nomal-button" @click="onSearchBtn">查找</el-button>
+          <el-button
+            icon="el-icon-search"
+            class="common-btn-style nomal-button"
+            @click="onSearchBtn"
+            >查找</el-button
+          >
         </el-form-item>
         <el-form-item>
           <el-button
@@ -45,7 +57,8 @@
             icon="el-icon-plus"
             class="common-btn-style margin-left-btn"
             @click.prevent="addUserBtn"
-          >新增</el-button>
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -53,12 +66,17 @@
     <div v-if="listForm">
       <div v-if="haveListData">
         <el-row :gutter="20" class="card-main">
-          <el-col :span="6" class="userContainer" v-for="(item,index) in userDataList" :key="index">
+          <el-col
+            :span="6"
+            class="userContainer"
+            v-for="(item, index) in userDataList"
+            :key="index"
+          >
             <div>
               <div class="information">
                 <div class="imgbox cantainerheader">
                   <img :src="item.photo" alt />
-                  <div class="spanbox">{{item.name}}</div>
+                  <div class="spanbox">{{ item.name }}</div>
                 </div>
                 <div class="databox">
                   <ul class="ullist">
@@ -69,17 +87,26 @@
                           <i class="el-icon-edit-outline"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                          <div @click="showDetail(item.userId)" style="width:100%;height:100%">
+                          <div
+                            @click="showDetail(item.userId)"
+                            style="width: 100%; height: 100%"
+                          >
                             <el-dropdown-item divided>
                               <span>查看详情</span>
                             </el-dropdown-item>
                           </div>
-                          <div @click="changeDate(item.userId)" style="width:100%;height:100%">
+                          <div
+                            @click="changeDate(item.userId)"
+                            style="width: 100%; height: 100%"
+                          >
                             <el-dropdown-item divided>
                               <span>修改信息</span>
                             </el-dropdown-item>
                           </div>
-                          <div @click="open2(item.userId)" style="width:100%;height:100%">
+                          <div
+                            @click="open2(item.userId)"
+                            style="width: 100%; height: 100%"
+                          >
                             <el-dropdown-item divided command="loginout">
                               <span>删除该用户</span>
                             </el-dropdown-item>
@@ -88,16 +115,31 @@
                       </el-dropdown>
                     </li>
                     <li class="userli clear-fix">
-                      <icon-svg icon-class="dizhi" class="user-icon white-svg-icon" />
-                      <span class="text-overflow user-content-font">{{item.loginName}}</span>
+                      <icon-svg
+                        icon-class="dizhi"
+                        class="user-icon white-svg-icon"
+                      />
+                      <span class="text-overflow user-content-font">{{
+                        item.loginName
+                      }}</span>
                     </li>
                     <li class="userli clear-fix">
-                      <icon-svg icon-class="mingpian" class="user-icon white-svg-icon" />
-                      <span class="text-overflow user-content-font">{{item.position}}</span>
+                      <icon-svg
+                        icon-class="mingpian"
+                        class="user-icon white-svg-icon"
+                      />
+                      <span class="text-overflow user-content-font">{{
+                        item.telephone
+                      }}</span>
                     </li>
                     <li class="userli clear-fix">
-                      <icon-svg icon-class="shouji" class="user-icon white-svg-icon" />
-                      <span class="text-overflow user-content-font">{{item.mobile}}</span>
+                      <icon-svg
+                        icon-class="shouji"
+                        class="user-icon white-svg-icon"
+                      />
+                      <span class="text-overflow user-content-font">{{
+                        item.mobile
+                      }}</span>
                     </li>
                   </ul>
                   <div>
@@ -116,10 +158,12 @@
                 <div>
                   <ul>
                     <li
-                      v-for="(item,index) in item.sysMenuList"
+                      v-for="(item, index) in item.sysMenuList"
                       :key="index"
                       class="limitbg"
-                    >{{item.name}}</li>
+                    >
+                      {{ item.name }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -127,8 +171,8 @@
           </el-col>
         </el-row>
       </div>
-      <div v-if="noHaveListData" style="color:#909399;margin-top:20px">
-        <p style="text-align:center">暂无数据</p>
+      <div v-if="noHaveListData" style="color: #909399; margin-top: 20px">
+        <p style="text-align: center">暂无数据</p>
       </div>
     </div>
 
@@ -136,9 +180,9 @@
     <div class="table-area">
       <el-table
         :data="userDataList"
-        style="background:#fff"
+        style="background: #fff"
         stripe
-        :header-cell-style="{background:'#f5f5f5'}"
+        :header-cell-style="{ background: '#f5f5f5' }"
         v-if="listTable"
       >
         <el-table-column prop="loginName" label="用户名" />
@@ -150,18 +194,33 @@
           <template slot-scope="scope">
             <div class="task-btn-box">
               <span class="special" @click="showDetail(scope.row.userId)">
-                <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="查看详情"
+                  placement="top-start"
+                >
                   <icon-svg icon-class="chakan" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="changeDate(scope.row.userId)">
-                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="编辑"
+                  placement="top-start"
+                >
                   <icon-svg icon-class="bianji" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="open2(scope.row.userId)">
-                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color "/>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
             </div>
@@ -179,11 +238,11 @@
     >
       <div class="headportraitbox">
         <img :src="detailData.photo" alt />
-        <div class="state" style="float:right">
+        <div class="state" style="float: right">
           <span>状态：</span>
           <el-select
             v-model="detailData.userStatus"
-            style="width:100px"
+            style="width: 100px"
             disabled="disabled"
             clearable
           >
@@ -199,14 +258,25 @@
           <el-input disabled="disabled" v-model="detailData.loginName" />
         </el-form-item>
         <el-form-item label="登录密码：">
-          <el-input disabled="disabled" v-model="detailData.password" type="password" />
+          <el-input
+            disabled="disabled"
+            v-model="detailData.password"
+            type="password"
+          />
         </el-form-item>
         <el-form-item label="真实姓名：">
           <el-input disabled="disabled" v-model="detailData.name" />
         </el-form-item>
         <el-form-item label="性别：">
-          <el-radio label="0" v-model="detailData.sex" disabled="disabled">男</el-radio>
-          <el-radio label="1" v-model="detailData.sex" disabled="disabled">女</el-radio>
+          <el-radio label="0" v-model="detailData.sex" disabled="disabled"
+            >男</el-radio
+          >
+          <el-radio label="1" v-model="detailData.sex" disabled="disabled"
+            >女</el-radio
+          >
+        </el-form-item>
+        <el-form-item label="分机号：">
+          <el-input disabled="disabled" v-model="detailData.telephone" />
         </el-form-item>
         <el-form-item label="手机号码：">
           <el-input disabled="disabled" v-model="detailData.mobile" />
@@ -225,14 +295,16 @@
             size="large"
             v-model="detailData.defaultUser"
             :active-value="1"
-            :inactive-value="0"></el-switch>
+            :inactive-value="0"
+          ></el-switch>
         </el-form-item>
         <el-form-item label="角色：">
           <span
-            v-for="(item,index) in detailData.roleList"
+            v-for="(item, index) in detailData.roleList"
             :key="index"
             class="roleSpan"
-          >{{item.name}}</span>
+            >{{ item.name }}</span
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -247,9 +319,13 @@
       <div class="headportraitbox">
         <img :src="editCurrentPic" alt />
         <i class="el-icon-edit kip" @click="togglebox"></i>
-        <div class="state" style="float:right;margin-right: 10px;">
+        <div class="state" style="float: right; margin-right: 10px">
           <span>状态：</span>
-          <el-select v-model="changeData.userStatus" style="width:100px" clearable>
+          <el-select
+            v-model="changeData.userStatus"
+            style="width: 100px"
+            clearable
+          >
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
             <el-option label="锁定" value="2"></el-option>
@@ -259,27 +335,49 @@
       </div>
       <transition name="fade">
         <ul class="imgBox" v-if="boxshow">
-          <li v-for="(item,index) in list" @click="switchPic(item.img)" :key="index">
+          <li
+            v-for="(item, index) in list"
+            @click="switchPic(item.img)"
+            :key="index"
+          >
             <img :src="item.img" />
           </li>
         </ul>
       </transition>
-      <el-form ref="form2" label-width="100px" :rules="rules2" :model="changeData">
+      <el-form
+        ref="form2"
+        label-width="100px"
+        :rules="rules2"
+        :model="changeData"
+      >
         <el-form-item label="用户名：" prop="loginName">
           <el-input v-model="changeData.loginName" disabled="disabled" />
         </el-form-item>
-        <el-form-item label="登录密码：" style="position: relative;" prop="password">
-          <el-input v-model="changeData.password" :type="registration_data.pwdType" />
+        <el-form-item
+          label="登录密码："
+          style="position: relative"
+          prop="password"
+        >
+          <el-input
+            v-model="changeData.password"
+            :type="registration_data.pwdType"
+          />
           <span @click="changeType()">
-            <icon-svg :icon-class="registration_data.className" class="eye gray-icon-color" />
+            <icon-svg
+              :icon-class="registration_data.className"
+              class="eye gray-icon-color"
+            />
           </span>
         </el-form-item>
         <el-form-item label="真实姓名：" prop="name">
           <el-input v-model="changeData.name" />
         </el-form-item>
-        <el-form-item label="性别：" prop="sex" style="text-align: left;">
+        <el-form-item label="性别：" prop="sex" style="text-align: left">
           <el-radio label="0" v-model="changeData.sex">男</el-radio>
           <el-radio label="1" v-model="changeData.sex">女</el-radio>
+        </el-form-item>
+        <el-form-item label="分机号：" >
+          <el-input  v-model="changeData.telephone" />
         </el-form-item>
         <el-form-item label="手机号码：" prop="mobile">
           <el-input v-model="changeData.mobile" />
@@ -295,24 +393,29 @@
             size="large"
             v-model="changeData.defaultUser"
             :active-value="1"
-            :inactive-value="0"></el-switch>
+            :inactive-value="0"
+          ></el-switch>
         </el-form-item>
-        <el-form-item label="角色：" style="text-align: left;">
+        <el-form-item label="角色：" style="text-align: left">
           <el-checkbox-group v-model="roleIdList">
             <el-checkbox
               :label="item.roleId"
               v-for="item in allRoleList"
               :key="item.roleId"
-            >{{item.name}}</el-checkbox>
+              >{{ item.name }}</el-checkbox
+            >
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item style="margin-left: 0;text-align: center;">
+        <el-form-item style="margin-left: 0; text-align: center">
           <el-button
             :loading="editLoading"
             type="primary"
             @click="changeUserClicke(changeData.userId)"
-          >确认修改</el-button>
-          <el-button class="nomal-button" @click="editInformation = false">取消</el-button>
+            >确认修改</el-button
+          >
+          <el-button class="nomal-button" @click="editInformation = false"
+            >取消</el-button
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -327,9 +430,9 @@
       <div class="headportraitbox">
         <img :src="currentPic" alt />
         <i class="el-icon-edit kip" @click="togglebox"></i>
-        <div class="state" style="float:right">
+        <div class="state" style="float: right">
           <span>状态：</span>
-          <el-select v-model="addUserList.userStatus" style="width:100px">
+          <el-select v-model="addUserList.userStatus" style="width: 100px">
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
             <el-option label="锁定" value="2"></el-option>
@@ -339,27 +442,46 @@
       </div>
       <transition name="fade">
         <ul class="imgBox" v-if="boxshow">
-          <li v-for="(item,index) in list" @click="switchPic(item.img)" :key="index">
+          <li
+            v-for="(item, index) in list"
+            @click="switchPic(item.img)"
+            :key="index"
+          >
             <img :src="item.img" />
           </li>
         </ul>
       </transition>
-      <el-form ref="form" label-width="100px" :model="addUserList" :rules="rules">
+      <el-form
+        ref="form"
+        label-width="100px"
+        :model="addUserList"
+        :rules="rules"
+      >
         <div>
-          <el-form-item label="用户名：" class="disinlne input" prop="loginName">
+          <el-form-item
+            label="用户名："
+            class="disinlne input"
+            prop="loginName"
+          >
             <el-input v-model="addUserList.loginName" />
           </el-form-item>
         </div>
         <div>
           <el-form-item
             label="登录密码："
-            style="position: relative;"
+            style="position: relative"
             class="disinlne input"
             prop="password"
           >
-            <el-input v-model="addUserList.password" :type="registration_data.pwdType" />
+            <el-input
+              v-model="addUserList.password"
+              :type="registration_data.pwdType"
+            />
             <span @click="changeType()">
-              <icon-svg :icon-class="registration_data.className" class="eye gray-icon-color" />
+              <icon-svg
+                :icon-class="registration_data.className"
+                class="eye gray-icon-color"
+              />
             </span>
           </el-form-item>
         </div>
@@ -372,6 +494,14 @@
           <el-form-item label="性别：" class="disinlne input" prop="sex">
             <el-radio v-model="addUserList.sex" label="0">男</el-radio>
             <el-radio v-model="addUserList.sex" label="1">女</el-radio>
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item
+            label="分机号："
+            class="disinlne input"
+          >
+            <el-input v-model="addUserList.telephone" />
           </el-form-item>
         </div>
         <div>
@@ -395,7 +525,8 @@
               size="large"
               v-model="addUserList.defaultUser"
               :active-value="1"
-              :inactive-value="0"></el-switch>
+              :inactive-value="0"
+            ></el-switch>
           </el-form-item>
         </div>
         <div>
@@ -403,9 +534,10 @@
             <el-checkbox-group v-model="roleIdList">
               <el-checkbox
                 :label="item.roleId"
-                v-for="(item,index) in roleDataList"
+                v-for="(item, index) in roleDataList"
                 :key="index"
-              >{{item.name}}</el-checkbox>
+                >{{ item.name }}</el-checkbox
+              >
             </el-checkbox-group>
           </el-form-item>
         </div>
@@ -415,7 +547,8 @@
             class="save-btn-margin-special"
             type="primary"
             @click="addUserClicke()"
-          >确认新增</el-button>
+            >确认新增</el-button
+          >
           <el-button class="nomal-button" @click="noAddUser">取消</el-button>
         </el-form-item>
       </el-form>
@@ -427,13 +560,13 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currPage"
-        :page-sizes="[12,30,50]"
+        :page-sizes="[12, 30, 50]"
         layout="prev, pager, next, sizes, total, jumper"
         :total="total"
         v-if="page"
       ></el-pagination>
     </div>
-     <!-- 删除组件 -->
+    <!-- 删除组件 -->
     <deleteDialog ref="deleteDialog" @confim-delete="confirmDelete" />
   </div>
 </template>
@@ -445,7 +578,7 @@ export default {
   components: {
     deleteDialog
   },
-  data () {
+  data() {
     var validateloginName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入用户名'))
@@ -539,6 +672,7 @@ export default {
         password: '',
         loginName: '',
         mobile: '',
+        telephone: '',
         address: '',
         postion: '',
         status: ''
@@ -549,6 +683,7 @@ export default {
         name: '',
         password: '',
         loginName: '',
+        telephone: '',
         mobile: '',
         address: '',
         position: '',
@@ -643,12 +778,12 @@ export default {
   },
   methods: {
     // 切换图像
-    switchPic (url) {
+    switchPic(url) {
       this.currentPic = url
       this.editCurrentPic = url
     },
     // 显示隐藏密码
-    changeType () {
+    changeType() {
       this.registration_data.pwdType =
         this.registration_data.pwdType === 'password' ? 'text' : 'password'
       this.registration_data.className =
@@ -657,14 +792,14 @@ export default {
           : 'visible'
     },
     // 查询用户
-    onSearchBtn () {
+    onSearchBtn() {
       // console.log(this.formInline.role, this.formInline.status);
       // alert(this.formInline.radio);
       var searchPage = 1
       this.getUserList(searchPage)
     },
     // 获取用户列表
-    getUserList (searchPage) {
+    getUserList(searchPage) {
       if (searchPage) {
         this.current = searchPage
       }
@@ -712,31 +847,32 @@ export default {
       })
     },
     // 获取系统的角色
-    getSystemRole () {
+    getSystemRole() {
       axios.getSystemRole().then(res => {
         this.systemAllRoleList = res.data.data.result
         //          console.log( this.systemAllRoleList);
       })
     },
     // 获取当前登录人的角色
-    getRoleData () {
+    getRoleData() {
       axios.getNowreginRole().then(res => {
         this.roleDataList = res.data.data.result
       })
     },
     // 新增用户
-    addUserBtn () {
+    addUserBtn() {
       this.addUser = true
       this.getRoleData()
     },
     // 确定新增用户
-    addUserClicke () {
+    addUserClicke() {
       this.$refs.form.validate(valid => {
         if (valid) {
           var userStatus = this.addUserList.userStatus
           var email = this.addUserList.email
           var loginName = this.addUserList.loginName
           var mobile = this.addUserList.mobile
+          var telephone = this.addUserList.telephone
           var name = this.addUserList.name
           var password = this.addUserList.password
           var photo = this.currentPic
@@ -748,6 +884,7 @@ export default {
             email: email,
             loginName: loginName,
             mobile: mobile,
+            telephone: telephone,
             name: name,
             password: password,
             photo: photo,
@@ -786,7 +923,7 @@ export default {
       })
     },
     // 取消新增用户
-    noAddUser () {
+    noAddUser() {
       this.boxshow = false
       this.currentPic = 'static/img/Fruit-1.png'
       this.addUserList.userStatus = '0'
@@ -795,17 +932,18 @@ export default {
       this.addUserList.loginName = ''
       this.addUserList.mobile = ''
       this.addUserList.name = ''
+      this.addUserList.telephone = ''
       this.addUserList.password = ''
       this.addUserList.position = ''
       this.addUserList.sex = ''
       this.roleIdList = []
     },
     // 修改图像
-    togglebox () {
+    togglebox() {
       this.boxshow = !this.boxshow
     },
     // 点击表单查看详情
-    showDetail (userId) {
+    showDetail(userId) {
       //   console.log(userId);
       this.DetailDate = true
       let id = userId
@@ -815,11 +953,11 @@ export default {
       })
     },
     // 点击表单删除该用户
-    open2 (userId) {
+    open2(userId) {
       this.currentDeleteItemId = userId
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.userDelete(id).then(res => {
         if (res.data.success) {
@@ -840,7 +978,7 @@ export default {
       })
     },
     // 点击表单修改信息
-    changeDate (userId) {
+    changeDate(userId) {
       this.allRoleList = []
       this.roleList = []
       this.editInformation = true
@@ -861,7 +999,7 @@ export default {
       })
     },
     // 点击修改用户信息确认按钮
-    changeUserClicke (userId) {
+    changeUserClicke(userId) {
       this.currenUser = userId
       if (!this.passChanged) {
         this.handleChangeUserData()
@@ -874,11 +1012,12 @@ export default {
       }
     },
     // 处理修改数据并发送修改请求
-    handleChangeUserData () {
+    handleChangeUserData() {
       var userStatus = this.changeData.userStatus
       var email = this.changeData.email
       var loginName = this.changeData.loginName
       var mobile = this.changeData.mobile
+      var telephone = this.changeData.telephone
       var name = this.changeData.name
       var password = this.changeData.password
       var photo = this.editCurrentPic
@@ -890,6 +1029,7 @@ export default {
         email: email,
         loginName: loginName,
         mobile: mobile,
+        telephone: telephone,
         name: name,
         password: password,
         photo: photo,
@@ -927,51 +1067,51 @@ export default {
       )
     },
     // 去换表单表格
-    formChange (index) {
+    formChange(index) {
       this.shows = 1
       this.listForm = true
       this.listTable = false
     },
-    handleDialogClose () {
+    handleDialogClose() {
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
-    handleDialogClose2 () {
+    handleDialogClose2() {
       this.$refs.form.resetFields()
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
-    handleDialogClose3 () {
+    handleDialogClose3() {
       this.$refs.form2.resetFields()
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
-    tableChange (index) {
+    tableChange(index) {
       this.shows = 2
       this.listForm = false
       this.listTable = true
     },
 
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getUserList()
     },
     // 分页
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       this.current = val
       this.size = 12
       this.getUserList()
     }
   },
-  mounted () {
+  mounted() {
     this.getUserList()
     this.getRoleData()
     this.getSystemRole()
   },
-  created () {
+  created() {
     // var lett = this;
     // document.onkeydown = function(evt) {
     //   evt = evt ? evt : window.event ? window.event : "";
@@ -986,13 +1126,13 @@ export default {
     // };
   },
   watch: {
-    $route (newValue, oldValue) {
+    $route(newValue, oldValue) {
       this.addUser = false
       this.DetailDate = false
       this.editInformation = false
     },
     'changeData.password': {
-      handler (val, old) {
+      handler(val, old) {
         if (val !== old && old !== '') {
           this.passChanged = true
         } else {
@@ -1281,10 +1421,10 @@ export default {
     background-color: #f9fafc;
   }
   .active {
-    border: 1px solid #00A8E8;
+    border: 1px solid #00a8e8;
     /* color: #0066ff; */
     color: #fff !important;
-    background-color: #00A8E8;
+    background-color: #00a8e8;
     /* box-shadow: 1px 1px #aaa; */
   }
 

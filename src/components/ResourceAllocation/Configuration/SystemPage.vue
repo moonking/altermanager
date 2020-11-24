@@ -27,7 +27,7 @@
     >
       <el-form-item label="名称" prop="name">
         <el-input
-          maxlength="40"
+          maxlength="100"
           v-model="sysdata.name"
           :disabled="status === 'watch'"
         ></el-input>
@@ -310,11 +310,11 @@ export default {
       if (value === '') {
         callback(new Error('请输入名称!'))
       } else if (
-        !/^[0-9A-Za-z_-\u4e00-\u9fa5\s]{2,26}$/.test(
+        !/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(
           value
         )
       ) {
-        callback(new Error('请输入合法的名称!包含2-26个由字母数字下划线或中文组成的字符串'))
+        callback(new Error('请输入合法的名称!由字母数字下划线或中文组成的字符串'))
       } else {
         callback()
       }
