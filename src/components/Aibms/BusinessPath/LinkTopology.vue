@@ -38,6 +38,8 @@
         <div class="bgs">
           <div v-for="item in 5" :key="item" class="level-bg"></div>
         </div>
+        <!-- tempData -->
+        <!-- graphData -->
         <graph-editor
           :data="graphData"
           :sessionCfg="sessionCfg"
@@ -186,6 +188,8 @@ export default {
         renderer: 'canvas',
         // width: width,
         // height: height,
+        // 配合tofront 提示层级
+        groupByTypes: false,
         // 默认边配置
         defaultEdge: {
           type: 'cubic-vertical',
@@ -224,6 +228,11 @@ export default {
             lineWidth: 2,
             strokeOpacity: 1
           },
+          actived: {
+            stroke: '#1890ff',
+            lineWidth: 2,
+            strokeOpacity: 1
+          },
           selected: {
             stroke: '#1890ff',
             lineWidth: 2,
@@ -245,6 +254,10 @@ export default {
           hover: {
             stroke: 'yellow',
             cursor: 'pointer'
+          },
+          actived: {
+            stroke: '#1890ff',
+            lineWidth: 2
           },
           selected: {
             stroke: '#1890ff',
@@ -532,62 +545,72 @@ export default {
     },
     // 取消节点和边的高亮
     clearItemHighlight(graph) {
-      const state = 'selected'
+      const state = 'actived'
       // 置空所有节点和边的高亮状态
       const nodes = graph.getNodes()
       const edges = graph.getEdges()
 
       nodes.forEach(node => {
         graph.setItemState(node, state, false)
+        node.toBack();
       })
       edges.forEach(edge => {
         graph.setItemState(edge, state, false)
+        edge.toBack();
       })
     },
     // 设置高亮节点和边
-    setHighlightItem(item, highlight, graph) {
+    setHighlightItem(item, highlight, graph, sourceId, type = 'all') {
       const isNode = item.getType() === 'node'
       const isEdge = item.getType() === 'edge'
-      const state = 'selected'
+      const state = 'actived'
+
       if (isNode) {
         // 设置节点自身高亮
         graph.setItemState(item, state, highlight)
-
-        if ('getEdges' in item) {
-          // 递归遍历节点树
-          const edges = item.getEdges()
+        // 将节点提前。
+        item.toFront();
+        // 递归遍历节点树
+        const edges = item.getInEdges()
+        const allEdges = item.getEdges()
+        let targetEdges = []
+        let edgesList = edges.map(item => item._cfg.id);
+        allEdges.forEach((e) => {
+          if (!edgesList.includes(e._cfg.id)) {
+            targetEdges.push(e)
+          }
+        })
+        if (edges.length > 0 && (type === 'source' || type === 'all')) {
           edges.forEach(edge => {
             graph.setItemState(edge, state, highlight)
-            if ('getEdges' in edge) {
-              const Tedge = edge.getEdges()
-              // 递归设置后续节点高亮
-              this.setHighlightItem(Tedge, highlight, graph)
+            if ('getSource' in edge) {
+              if (edge._cfg.model.target === item._cfg.model.id && edge._cfg.model.source !== sourceId) {
+                const source = edge.getSource()
+                this.setHighlightItem(source, highlight, graph, item._cfg.id, 'source')
+              }
             }
           })
         }
-        if ('getSource' in item) {
-          // 递归遍历节点树
-          const sources = item.getSource()
-          sources.forEach(source => {
-            graph.setItemState(source, state, highlight)
-            if ('getSource' in source) {
-              const Tsource = source.getSource()
-              // 递归设置后续节点高亮
-              this.setHighlightItem(Tsource, highlight, graph)
+        if (targetEdges.length > 0 && (type === 'target' || type === 'all')) {
+          targetEdges.forEach((targetE) => {
+            graph.setItemState(targetE, state, highlight)
+            const target = targetE.getTarget()
+            if (targetE._cfg.model.source === item._cfg.model.id && targetE._cfg.model.target !== sourceId) {
+              this.setHighlightItem(target, highlight, graph, item._cfg.id, 'target')
             }
           })
         }
       }
 
       if (isEdge) {
-        const target = item.getTarget()
-        this.setHighlightItem(target, highlight, graph)
+        // const target = item.getTarget()
         // graph.setItemState(target, state, highlight)
         graph.setItemState(item, state, highlight)
-
         const source = item.getSource()
         this.setHighlightItem(source, highlight, graph)
       }
+      // 更改层级后需要重新绘制图
+      graph.paint();
     },
     // 设置边高亮样式
     setEdgeHighlightStyle(edge, highlight) {
