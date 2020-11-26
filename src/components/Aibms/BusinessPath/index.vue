@@ -183,8 +183,8 @@ export default {
         groupByTypes: false,
         // 默认边配置
         defaultEdge: {
-          type: 'line',
-          // type: 'circle-running',
+          // type: 'line',
+          type: 'circle-running',
           // type: 'line-dash',
           // type: 'line-arrow',
           // color: '#000',
@@ -253,9 +253,9 @@ export default {
         },
         // 默认节点配置
         defaultNode: {
-          // type: 'iconCircle',
-          type: 'businessPathNode',
+          // type: 'businessPathNode',
           labelColor: '#fff',
+          type: 'iconCircle',
           style: {
             stroke: 'transparent',
             fill: '#16161693',
