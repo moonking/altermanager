@@ -37,11 +37,21 @@ export default {
     },
     getBread(newValue, oldValue) {
       if (this.$route.meta.title === '用户管理' || this.$route.meta.title === 'CI列表' || this.$route.meta.title === '业务路径') {
-        console.log(this.$route)
         this.breadlist[0].path = this.$route.fullPath
         this.breadlist[0].meta.title = this.$route.matched[0].meta.title
       }
-
+      if (this.$route.matched[0].meta.title === '基础管理') {
+        this.breadlist[0].path = '/BasicManagement/user?code=0'
+        this.breadlist[0].meta.title = this.$route.matched[0].meta.title
+      }
+      if (this.$route.matched[0].meta.title === '资源配置管理') {
+        this.breadlist[0].path = '/ResourceAllocation/CIlistData?code=1'
+        this.breadlist[0].meta.title = this.$route.matched[0].meta.title
+      }
+      if (this.$route.matched[0].meta.title === 'AIBMS') {
+        this.breadlist[0].path = '/Aibms/businessPath?code=2'
+        this.breadlist[0].meta.title = this.$route.matched[0].meta.title
+      }
       if (Object.keys(this.$route.query).length > 1 || this.$route.path.search('add') > -1 || this.$route.path.search('create') > -1) {
         this.breadlist[1].path = oldValue.fullPath
         this.breadlist[1].meta.title = oldValue.meta.title

@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <!-- 折叠按钮 -->
-
-    <div class="collapse-btn" @click="collapseChage">
+    <div class="collapse-btn" >
+    <!-- <div class="collapse-btn" @click="collapseChage"> -->
       <i class="el-icon-menu" />
     </div>
     <div class="logo">
@@ -29,11 +29,11 @@
     <div class="header-right">
       <div class="header-user-con">
         <!-- 全屏显示 -->
-        <!--<div class="btn-fullscreen" @click="handleFullScreen">
+        <!-- <div class="btn-fullscreen" @click="handleFullScreen">
 					<el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
 						<i class="el-icon-rank"></i>
 					</el-tooltip>
-        </div>-->
+        </div> -->
         <!-- 消息中心 -->
         <!-- 用户头像 -->
         <div class="user-avator">
