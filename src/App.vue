@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive>
-      <v-head v-if="iSshow" />
+      <v-head v-if="iSshow && !full" />
     </keep-alive>
     <router-view v-if="isRouterAlive" />
   </div>
@@ -31,7 +31,8 @@ export default {
       timerAibms: null,
       number: 0,
       devopsnumber: 0,
-      aibmsNum: 0
+      aibmsNum: 0,
+      full: false
     }
   },
   name: 'App',
@@ -41,6 +42,8 @@ export default {
   created() {
     // 页面刚进入时开启长连接
     this.localSocket()
+    common.fullScreen()
+    this.fullBool()
   },
   mounted() {
     // this.$nextTick(() => {
@@ -58,6 +61,20 @@ export default {
       this.$nextTick(function () {
         this.isRouterAlive = true
       })
+    },
+    fullBool() {
+      let that = this
+      document.addEventListener('webkitfullscreenchange', function () {
+        if (document.webkitIsFullScreen) {
+          // 全屏后要执行的代码
+          that.full = true
+          that.iSshow = false
+        } else {
+          // 退出全屏后执行的代码
+          that.full = false
+          that.iSshow = true
+        }
+      }, false);
     },
     cleartime() {
       if (this.aibmsNum > 7) {

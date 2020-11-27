@@ -21,13 +21,13 @@ const Urldata = [
   }
 ]
 // eval
-function evil (fn) {
+function evil(fn) {
   var Fn = Function
   return new Fn('return ' + fn)()
 }
 
 // 修改xml的随机id
-function changexmlid (xml) {
+function changexmlid(xml) {
   let timestamp = randChar() + new Date().valueOf()
   let a = xml.split('process')
   let b = a[2].split('isExecutable')
@@ -38,7 +38,7 @@ function changexmlid (xml) {
 }
 
 // 工作流组件xml名称的替换
-function setxmlname (xml, id, name) {
+function setxmlname(xml, id, name) {
   let a = []
   let b = []
   a = xml.split('task')
@@ -64,7 +64,7 @@ function setxmlname (xml, id, name) {
 }
 
 // 随机字母生成
-function randChar () {
+function randChar() {
   let characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let length = 1
   let result = '' // 返回的结果。
@@ -76,7 +76,7 @@ function randChar () {
 }
 
 // 判断节点名称和脚本是否为空
-function inspectNode (nodeParam, type) {
+function inspectNode(nodeParam, type) {
   let isbl = false
   let num = 0
   let msg = ''
@@ -103,7 +103,7 @@ function inspectNode (nodeParam, type) {
 }
 
 // 判断部分url
-function judgeUrl (Urldata, url) {
+function judgeUrl(Urldata, url) {
   let bl = false
   let Index
   Urldata.forEach((item, index) => {
@@ -116,7 +116,7 @@ function judgeUrl (Urldata, url) {
 }
 
 // 时间转换
-function timer (timeStr) {
+function timer(timeStr) {
   // 将时间的毫秒转换为时分秒
   let time = timeStr ? timeStr / 1000 : 0;
   let str;
@@ -144,7 +144,7 @@ function timer (timeStr) {
 }
 
 // 接口验证
-function Remotelogin (res) {
+function Remotelogin(res) {
   if (res.data.code && res.data.code === 4101) {
     localStorage.removeItem('userId')
     localStorage.removeItem('userName')
@@ -174,7 +174,7 @@ function Remotelogin (res) {
 }
 
 // 错误信息提示
-function errorapi (res) {
+function errorapi(res) {
   if (res) {
     if (res.code && res.code === 'ECONNABORTED') {
       if (localStorage.getItem('bl') === 'true') {
@@ -249,6 +249,26 @@ function errorapi (res) {
   }
 }
 
+// f11 全屏
+function fullScreen() {
+  document.onkeydown = function (e) {
+    if (e && e.key == 'F11') { // 捕捉F11键盘动作
+      e.preventDefault(); // 阻止F11默认动作
+      var el = document.documentElement;
+      var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;// 定义不同浏览器的全屏API
+      // 执行全屏
+      if (typeof rfs != 'undefined' && rfs) {
+        rfs.call(el);
+      } else if (typeof window.ActiveXObject != 'undefined') {
+        var wscript = new ActiveXObject('WScript.Shell');
+        if (wscript != null) {
+          wscript.SendKeys('{F11}');
+        }
+      }
+    }
+  }
+}
+
 export default {
   evil,
   setxmlname,
@@ -258,5 +278,6 @@ export default {
   judgeUrl,
   timer,
   Remotelogin,
-  errorapi
+  errorapi,
+  fullScreen
 }

@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="tempData"
+        :data.sync="graphData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -657,7 +657,7 @@ export default {
       //   }
 
       //   this.ws = ws
-    }
+    },
     // save() {
     //   // console.log(this.graph.save())
     //   // console.log(JSON.stringify(this.graph.save()))
@@ -666,6 +666,24 @@ export default {
     //     this.graph.render();
     //   }, 10)
     // }
+    fullBool() {
+      let that = this
+      let w = window.screen.availWidth
+      let h = window.screen.availHeight
+      let elH = this.$refs.graphEditor.$el.offsetHeight
+      let elW = this.$refs.graphEditor.$el.offsetWidth
+      document.addEventListener('webkitfullscreenchange', function () {
+        if (document.webkitIsFullScreen) {
+          that.graph.changeSize(w, h);
+          that.graph.fitView()
+        } else {
+          that.graph.changeSize(elW, elH);
+          that.graph.fitView()
+        }
+
+        // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
+      }, false);
+    }
   },
   created() {
     this.getSystemList()
@@ -678,6 +696,8 @@ export default {
       this.graph = instance
       // 初始化自定义图事件监听器
       this.initCustomGraphListener(instance)
+      common.fullScreen()
+      this.fullBool()
     })
   },
   components: {
