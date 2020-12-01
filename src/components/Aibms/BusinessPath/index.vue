@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="graphData"
+        :data.sync="tempData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -184,9 +184,9 @@ export default {
         // 默认边配置
         defaultEdge: {
           // type: 'line',
-          type: 'circle-running',
+          // type: 'circle-running',
           // type: 'line-dash',
-          // type: 'line-arrow',
+          type: 'line-arrow',
           // color: '#000',
           style: {
             // stroke: '#23bbd6',
@@ -276,7 +276,7 @@ export default {
         },
         layout: {
           // Object，可选，布局的方法及其配置项，默认为 random 布局。
-          type: 'grid',
+          type: 'random',
           // type: 'topology-layout',
           // type: 'gForce',
           preventOverlap: true,
@@ -323,8 +323,8 @@ export default {
         modes: {
           default: [
             // 'drag-canvas',
-            'drag-node',
-            'contextmenu'
+            'drag-node'
+            // 'contextmenu'
             // 'brush-select',
             // 'click-select',
             // {

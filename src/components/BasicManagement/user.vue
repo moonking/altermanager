@@ -46,7 +46,7 @@
         <el-form-item>
           <el-button
             icon="el-icon-search"
-            class="common-btn-style nomal-button"
+            class="common-btn-style search-el-button"
             @click="onSearchBtn"
             >查找</el-button
           >
@@ -376,8 +376,8 @@
           <el-radio label="0" v-model="changeData.sex">男</el-radio>
           <el-radio label="1" v-model="changeData.sex">女</el-radio>
         </el-form-item>
-        <el-form-item label="分机号：" >
-          <el-input  v-model="changeData.telephone" />
+        <el-form-item label="分机号：">
+          <el-input v-model="changeData.telephone" />
         </el-form-item>
         <el-form-item label="手机号码：" prop="mobile">
           <el-input v-model="changeData.mobile" />
@@ -497,10 +497,7 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item
-            label="分机号："
-            class="disinlne input"
-          >
+          <el-form-item label="分机号：" class="disinlne input">
             <el-input v-model="addUserList.telephone" />
           </el-form-item>
         </div>
@@ -1488,7 +1485,7 @@ export default {
 //   color: red;
 // }
 </style>
-<style scoped>
+<style scoped lang="scss">
 .search-bar {
   display: flex;
   justify-content: space-between;
@@ -1499,5 +1496,26 @@ export default {
 .search-inline-btn {
   width: 230px;
   vertical-align: middle;
+}
+.search-inline-btn {
+  .search-el-button {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:focus {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:active {
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+    }
+  }
 }
 </style>

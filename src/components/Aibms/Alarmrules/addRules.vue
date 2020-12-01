@@ -1,8 +1,8 @@
 <template>
   <div class="aia-content">
     <div class="wrapper_pannel">
-      <div v-if="status === 'edit'" class="wrapper-title">编辑告警规则</div>
-      <div v-if="status === 'create'" class="wrapper-title">新增告警规则</div>
+      <!-- <div v-if="status === 'edit'" class="wrapper-title">编辑告警规则</div>
+      <div v-if="status === 'create'" class="wrapper-title">新增告警规则</div> -->
       <el-steps class="steps-alert" :active="active" align-center>
         <el-step title="告警分类" @click.native="isActive(0)" />
         <el-step title="告警规则" @click.native="isActive(1)" />
@@ -43,6 +43,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择分类：" prop="type">
+          <!-- 分页 -->
+          <el-pagination
+            v-if="totalSize"
+            :current-page.sync="page.current"
+            :page-size.sync="page.size"
+            :page-sizes="[10, 20, 30, 50]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalSize"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
           <span class="tips cursor" v-if="classList.length === 0"
             >请先选择标签</span
           >
@@ -77,18 +88,6 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <!-- 分页 -->
-        <el-pagination
-          v-if="totalSize"
-          :current-page.sync="page.current"
-          :page-size.sync="page.size"
-          :page-sizes="[10, 20, 30, 50]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="totalSize"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          style="text-align: center; margin: 92px 0"
-        />
       </el-form>
       <el-form
         v-if="active === 1"
@@ -169,10 +168,18 @@
         </el-form-item>
       </el-form>
       <div class="op-btns">
-        <el-button type="primary" style="margin-right: 100px" v-if="active === 1" @click="isActive(0)"
+        <el-button
+          type="primary"
+          style="margin-right: 100px"
+          v-if="active === 1"
+          @click="isActive(0)"
           >上一步</el-button
         >
-        <el-button type="primary" style="margin-right: 100px" v-if="active !== 1" @click="isActive(1)"
+        <el-button
+          type="primary"
+          style="margin-right: 100px"
+          v-if="active !== 1"
+          @click="isActive(1)"
           >下一步</el-button
         >
         <el-button
@@ -410,6 +417,16 @@ export default {
         callback();
       }
     };
+    var validateType = (rule, value, callback) => {
+      console.log(this.classList)
+      if (value.length === 0 && this.classList.length !== 0) {
+        callback(new Error('请选择分类！'));
+      } else if (this.classList.length === 0) {
+        callback(new Error('该标签下无分类！'));
+      } else {
+        callback();
+      }
+    };
     return {
       ownerTypes: [],
       // 通知方式
@@ -494,7 +511,7 @@ export default {
           {
             type: 'array',
             required: true,
-            message: '请选择分类！',
+            validator: validateType,
             trigger: 'change'
           }
         ]
@@ -721,12 +738,13 @@ export default {
           // if (!(first === true)) {
           //   this.typesForm.type = [];
           // }
+          console.log(list)
           let setList = new Set(this.typesForm.type)
           let setType = new Set(list)
           let intersect = new Set([...setList].filter(value => setType.has(value)))
           const checkedLength = intersect.size;
 
-          this.checkAll = checkedLength === list.length;
+          this.checkAll = (checkedLength === list.length) && checkedLength !== 0;
           this.isIndeterminate = !(
             checkedLength === 0 || checkedLength === list.length
           );
@@ -1197,7 +1215,7 @@ export default {
       let intersect = new Set([...setList].filter(value => setType.has(value)))
       const checkedCount = intersect.size;
 
-      this.checkAll = checkedCount === list.length;
+      this.checkAll = (checkedCount === list.length) && checkedCount !== 0;
       this.isIndeterminate = checkedCount > 0 && checkedCount < list.length;
       // this.classCheckStatus(this.typesForm.type)
     },
@@ -1576,5 +1594,15 @@ export default {
   color: #fff;
 
   padding-left: 20px;
+}
+.el-pagination {
+  white-space: nowrap;
+  padding: 2px 5px;
+  color: #303133;
+  font-weight: bold;
+  margin-left: 22%;
+}
+.el-pagination /deep/ .el-input__inner {
+  border: 1px solid #dcdfe6 !important;
 }
 </style>

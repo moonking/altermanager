@@ -12,28 +12,41 @@
       :model="confData"
       label-width="120px"
       class="form-style item-block-content"
-      :style="{height: openConfig ? 'auto' : '0' }"
+      :style="{ height: openConfig ? 'auto' : '0' }"
       :class="openConfig ? '' : 'clearMargin'"
     >
       <el-form-item label="数据库：">
-        <el-input v-model="confData.name" disabled class="title-input"></el-input>
+        <el-input
+          v-model="confData.name"
+          disabled
+          class="title-input"
+        ></el-input>
       </el-form-item>
       <el-form-item label="高危语句配置：">
         <div class="config-list-box">
           <el-row></el-row>
-          <el-row :gutter="8" v-for="state in confData.statements" :key="state.riskId">
+          <el-row
+            :gutter="8"
+            v-for="state in confData.statements"
+            :key="state.riskId"
+          >
             <el-col :span="2" class="col-title">
-              <span>{{state.name}}语句:</span>
+              <span>{{ state.name }}语句:</span>
             </el-col>
             <el-col :span="22">
               <ul class="warn-box">
                 <li
                   class="warn-item"
-                  v-for="(item,index) in state.stateList"
+                  v-for="(item, index) in state.stateList"
                   :key="index"
-                  :class="[item.val  ? 'activited' : '', operation === 'detail' ? 'notClick' : '']"
+                  :class="[
+                    item.val ? 'activited' : '',
+                    operation === 'detail' ? 'notClick' : '',
+                  ]"
                   @click="chooseStatement(item)"
-                >{{item.lab}}</li>
+                >
+                  {{ item.lab }}
+                </li>
               </ul>
             </el-col>
           </el-row>
@@ -45,8 +58,9 @@
         v-if="operation !== 'detail'"
         type="primary"
         @click="confirmConfig"
-        style="margin-right: 100px; background: #0066ff;"
-      >确 定</el-button>
+        style="margin-right: 100px; background: #0066ff"
+        >确 定</el-button
+      >
       <el-button @click="cancelPage" class="turn-back">返 回</el-button>
     </div>
   </div>
@@ -56,7 +70,7 @@ import axios from '@/api';
 import { statementTypes } from './util';
 export default {
   name: 'config-page',
-  data () {
+  data() {
     return {
       // 控制是否展开
       openConfig: true,
@@ -67,14 +81,14 @@ export default {
       operation: this.$route.query.operation
     };
   },
-  mounted () {
+  mounted() {
     this.type = this.$route.query.id;
     this.operation = this.$route.query.operation;
     this.getHighrisk(this.type);
   },
   methods: {
     // 确认按钮
-    confirmConfig () {
+    confirmConfig() {
       let jsonArray = [];
       for (let key of this.confData.statements) {
         let obj = {
@@ -138,11 +152,11 @@ export default {
       }
     },
     // 取消按钮
-    cancelPage () {
+    cancelPage() {
       this.$router.go(-1);
     },
     // 获取需要配置的数据库
-    getHighrisk (id) {
+    getHighrisk(id) {
       let params = {
         databaseType: id,
         statementType: ''
@@ -199,7 +213,7 @@ export default {
       });
     },
     // 选中项时回调
-    chooseStatement (item) {
+    chooseStatement(item) {
       if (this.operation !== 'detail') {
         item.val = !item.val;
       }
@@ -212,21 +226,24 @@ export default {
   background: rgba(4, 28, 37, 0.3);
   border: none;
   .turn-back {
-    border: 1px solid #fff;
+    .el-button {
+      border: 1px solid #fff;
       color: #fff;
       &:hover {
-        border: 1px solid #fff;
-        color: #fff;
-        background: transparent;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
       }
       &:focus {
-        color: #fff;
-        background: transparent;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
       }
       &:active {
-        border: 1px solid #fff;
-        background: transparent;
-        color: #fff;
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+      }
     }
   }
   .item-block-title {
@@ -269,7 +286,7 @@ export default {
   }
   .activited {
     background: #0066ff;
-    border: 1px solid #0066ff!important;
+    border: 1px solid #0066ff !important;
     color: #fff !important;
   }
   .notClick {

@@ -18,15 +18,11 @@
             class="nomal-button"
             >批量删除</el-button
           >
-          <el-button @click="checkAll" v-if="delesteBtnSys" class="cm-form-btn"
-            >删除</el-button
-          >
-          <el-button @click="cancleall" v-if="cancleallBtn" class="cm-form-btn"
-            >取消</el-button
-          >
+          <el-button @click="checkAll" v-if="delesteBtnSys">删除</el-button>
+          <el-button @click="cancleall" v-if="cancleallBtn">取消</el-button>
           <el-button
             icon="el-icon-search"
-            class="nomal-button margin-left-btn"
+            class="search-el-button margin-left-btn"
             @click="searchBtn"
             >查找</el-button
           >
@@ -804,5 +800,27 @@ export default {
     height: 30px !important;
     padding: 5px 16px !important;
   }
+}
+.overHideMargin {
+  margin-right: 0 !important;
+    .search-el-button.el-button {
+      border: 1px solid #fff;
+      color: #fff;
+      &:hover {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:focus {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:active {
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+      }
+    }
 }
 </style>

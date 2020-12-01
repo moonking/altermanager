@@ -1,17 +1,31 @@
 <template>
   <div class="bg">
-    <el-form :inline="true" class="demo-form-inline" style="padding:20px 20px 0 20px">
+    <el-form
+      :inline="true"
+      class="demo-form-inline"
+      style="padding: 20px 20px 0 20px"
+    >
       <el-form-item>
-        <el-input v-model="depName" placeholder="输入部门名称过滤搜索" style="width:100%" />
+        <el-input
+          v-model="depName"
+          placeholder="输入部门名称过滤搜索"
+          style="width: 100%"
+        />
       </el-form-item>
       <el-form-item class="item-right margin-zero">
-        <el-button icon="el-icon-refresh" class="nomal-button" @click="getDeptTree">刷新</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          class="search-el-button"
+          @click="getDeptTree"
+          >刷新</el-button
+        >
         <el-button
           type="primary"
           icon="el-icon-plus"
           class="margin-left-btn"
           @click="newDepartment"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-form-item>
     </el-form>
     <!-- 表格 -->
@@ -63,9 +77,24 @@
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
           <span>
-            <el-button type="text" size="mini" @click="() => handleAddChildDept(data.value)">添加子部门</el-button>
-            <el-button type="text" size="mini" @click="() => handleEditDept(data.value)">编辑</el-button>
-            <el-button type="text" size="mini" @click="() => handleDeleteDept(data.value)">删除</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              @click="() => handleAddChildDept(data.value)"
+              >添加子部门</el-button
+            >
+            <el-button
+              type="text"
+              size="mini"
+              @click="() => handleEditDept(data.value)"
+              >编辑</el-button
+            >
+            <el-button
+              type="text"
+              size="mini"
+              @click="() => handleDeleteDept(data.value)"
+              >删除</el-button
+            >
           </span>
         </span>
       </el-tree>
@@ -82,7 +111,12 @@
         <el-form-item label="部门名称" label-width="120px" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="父级部门" label-width="120px" prop="parentId" v-if="shouldShowParentId">
+        <el-form-item
+          label="父级部门"
+          label-width="120px"
+          prop="parentId"
+          v-if="shouldShowParentId"
+        >
           <!-- <el-select v-model="form.parentId" placeholder="请选择父级部门">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
@@ -95,7 +129,11 @@
             clearable
           ></el-cascader>
         </el-form-item>
-        <el-form-item label="部门负责人" label-width="120px" prop="masterUserId">
+        <el-form-item
+          label="部门负责人"
+          label-width="120px"
+          prop="masterUserId"
+        >
           <user-selector
             :selectedList.sync="form.masterUserId"
             :readonly="operateStatus === 'read'"
@@ -117,7 +155,9 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button class="nomal-button" @click="deptInfoDialogVisible = false">取 消</el-button>
+        <el-button class="nomal-button" @click="deptInfoDialogVisible = false"
+          >取 消</el-button
+        >
         <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
     </el-dialog>
@@ -127,9 +167,15 @@
     <el-dialog title="提示" :visible.sync="delSuccess" width="30%" center>
       <span>删除成功</span>
     </el-dialog>
-    <el-dialog title="确认删除" :visible.sync="deleteConfirmDialogVisible" width="30%" center>
+    <el-dialog
+      title="确认删除"
+      :visible.sync="deleteConfirmDialogVisible"
+      width="30%"
+      center
+    >
       <span>
-        <i class="el-icon-warning" :style="{color: '#E6A23C'}"></i> 该操作会同时删除该改部门下所有子部门，确定要删除吗？
+        <i class="el-icon-warning" :style="{ color: '#E6A23C' }"></i>
+        该操作会同时删除该改部门下所有子部门，确定要删除吗？
       </span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="deleteConfirmDialogVisible = false">取 消</el-button>
@@ -142,7 +188,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currPage"
-        :page-sizes="[10,30,50]"
+        :page-sizes="[10, 30, 50]"
         :page-size="100"
         layout="prev, pager, next, sizes, total, jumper"
         :total="total"
@@ -159,7 +205,7 @@ export default {
   components: {
     UserSelector
   },
-  data () {
+  data() {
     return {
       current: '1',
       size: '10',
@@ -228,24 +274,24 @@ export default {
   },
   methods: {
     // 获取列表
-    getRoleLsit (x) {
+    getRoleLsit(x) {
       if (x === 1) {
         this.current = 1;
       }
     },
     // 获取系统列表:
-    getMenuDepartmentList () { },
+    getMenuDepartmentList() { },
     // 部门新增
-    newDepartment () {
+    newDepartment() {
       this.operateStatus = 'add'
       this.deptInfoDialogVisible = true;
     },
     // 部门-查看
-    readDepartment () { },
+    readDepartment() { },
     // 部门-修改
-    editDepartment (id) { },
+    editDepartment(id) { },
     // 部门-删除
-    deletDepartment (id) {
+    deletDepartment(id) {
       // let JobDto = {
       //   current: 1,
       //   size: '10',
@@ -253,20 +299,20 @@ export default {
       // };
     },
     // 关闭
-    handleDialogClose () {
+    handleDialogClose() {
       this.deptInfoDialogVisible = false;
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val;
       this.getRoleLsit();
     },
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       this.current = val;
       this.size = 10;
       this.getRoleLsit();
     },
     // 获取树状结构部门数据
-    getDeptTree () {
+    getDeptTree() {
       axios.queryDeptTree().then(res => {
         // console.log(res);
         if (res.data.code === 200) {
@@ -275,7 +321,7 @@ export default {
       });
     },
     // 处理新增和编辑弹框确定按钮
-    handleSubmit () {
+    handleSubmit() {
       const that = this;
       this.$refs.form.validate().then(res => {
         if (res) {
@@ -292,7 +338,7 @@ export default {
       });
     },
     // 处理添加子部门
-    handleAddChildDept (deptId) {
+    handleAddChildDept(deptId) {
       this.isAddChild = true
       this.operateStatus = 'add'
       // 获取该部门数据
@@ -311,12 +357,12 @@ export default {
       })
     },
     // 处理删除部门事件
-    handleDeleteDept (deptId) {
+    handleDeleteDept(deptId) {
       this.deleteConfirmDialogVisible = true
       this.currentDeleteDeptId = deptId
     },
     // 处理部门编辑事件
-    handleEditDept (deptId) {
+    handleEditDept(deptId) {
       // 获取该部门数据
       this.operateStatus = 'edit'
       axios.queryDept(deptId).then(res => {
@@ -337,7 +383,7 @@ export default {
         }
       })
     },
-    responseDeptDataTransform (data) {
+    responseDeptDataTransform(data) {
       let result = data || {}
       // 父级部门数据结构转换
       let ids = data.parentIds
@@ -351,7 +397,7 @@ export default {
       result.masterUserId = [this.getUserInfoById(data.masterUserId)]
       return result
     },
-    getUserInfoById (userId) {
+    getUserInfoById(userId) {
       let result
       this.userList.forEach(user => {
         if (user.userId === userId) {
@@ -361,7 +407,7 @@ export default {
       return result
     },
     // 新增部门
-    addDept (data) {
+    addDept(data) {
       axios.addDept(data).then(res => {
         console.log(res);
         if (res.data.code === 200) {
@@ -378,7 +424,7 @@ export default {
       });
     },
     // 修改部门
-    updateDept (data) {
+    updateDept(data) {
       axios.updateDept(data).then(res => {
         if (res.data.code === 200) {
           this.$message.success(res.data.message)
@@ -394,7 +440,7 @@ export default {
       })
     },
     // 删除部门
-    confirmDeleteDept () {
+    confirmDeleteDept() {
       axios.deleteDept(this.currentDeleteDeptId).then(res => {
         if (res && res.data && res.data.code === 200) {
           this.$message.success('删除成功!')
@@ -407,13 +453,13 @@ export default {
         this.deleteConfirmDialogVisible = false
       })
     },
-    filterNode (value, data) {
+    filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     }
   },
   computed: {
-    deptDialogTitle () {
+    deptDialogTitle() {
       const status = this.operateStatus
       if (status === 'read') {
         return '部门信息'
@@ -423,7 +469,7 @@ export default {
         return '添加部门'
       }
     },
-    shouldShowParentId () {
+    shouldShowParentId() {
       const status = this.operateStatus
       if (this.deptTree.length <= 0) {
         return false
@@ -436,7 +482,7 @@ export default {
       return true
     }
   },
-  created () {
+  created() {
     // 获取系统当前用户列表
     axios.userList({
       condition: '',
@@ -454,11 +500,11 @@ export default {
     // 获取系统树状列表
     this.getDeptTree()
   },
-  mounted () {
+  mounted() {
     this.getRoleLsit();
   },
   watch: {
-    deptInfoDialogVisible (newValue) {
+    deptInfoDialogVisible(newValue) {
       if (newValue) {
         this.getDeptTree()
       } else {
@@ -469,7 +515,7 @@ export default {
         this.isAddChild = false
       }
     },
-    depName (val) {
+    depName(val) {
       this.$refs.tree.filter(val);
     }
   }
@@ -536,6 +582,28 @@ export default {
       &.special:hover {
         background: #0066ff;
       }
+    }
+  }
+}
+.item-right {
+  margin: 0 !important;
+  .search-el-button {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:focus {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:active {
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
     }
   }
 }

@@ -23,7 +23,7 @@
           <el-form-item class="item-right overHideMargin">
             <el-button
               icon="el-icon-search"
-              class="common-btn-style"
+              class="common-btn-style search-button"
               @click="searchTask"
               >查找</el-button
             >
@@ -538,18 +538,19 @@ export default {
     border: 1px solid #fff;
     color: #fff;
     &:hover {
-      border: 1px solid #fff;
-      color: #fff;
-      background: transparent;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
     }
     &:focus {
-      color: #fff;
-      background: transparent;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
     }
     &:active {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
     }
   }
 }

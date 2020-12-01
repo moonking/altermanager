@@ -15,7 +15,7 @@
             <el-input
               v-model="form.name"
               clearable
-              style="width: 632px;"
+              style="width: 632px"
               maxlength="150"
               :disabled="readOnly"
               placeholder="请输入名称"
@@ -34,23 +34,42 @@
           </el-form-item>
           <br />
           <!-- 动态增加项目 -->
-          <div v-for="(domain, index) in form.domains" :key="domain.key" class="domains-form">
+          <div
+            v-for="(domain, index) in form.domains"
+            :key="domain.key"
+            class="domains-form"
+          >
             <el-form-item
               label="描述"
               :prop="'domains.' + index + '.desc'"
               :rules="{
-                required: true, message: '请输入表达式描述', trigger: 'blur'
-              }">
-              <el-input :disabled="readOnly" type="textarea" v-model="domain.desc" autosize></el-input>
+                required: true,
+                message: '请输入表达式描述',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                :disabled="readOnly"
+                type="textarea"
+                v-model="domain.desc"
+                autosize
+              ></el-input>
             </el-form-item>
             <el-form-item
               :label="'来源：'"
               :prop="'domains.' + index + '.source'"
               :rules="{
-                required: true, message: '请选择来源', trigger: 'change'
+                required: true,
+                message: '请选择来源',
+                trigger: 'change',
               }"
             >
-              <el-select v-model="domain.source" clearable :disabled="readOnly" placeholder="请选择来源">
+              <el-select
+                v-model="domain.source"
+                clearable
+                :disabled="readOnly"
+                placeholder="请选择来源"
+              >
                 <el-option
                   v-for="item in source"
                   :key="item.id"
@@ -63,7 +82,9 @@
               label="表达式："
               :prop="'domains.' + index + '.expression'"
               :rules="{
-                required: true, message: '表达式不能为空', trigger: 'blur'
+                required: true,
+                message: '表达式不能为空',
+                trigger: 'blur',
               }"
             >
               <el-input
@@ -71,10 +92,14 @@
                 :disabled="readOnly"
                 type="textarea"
                 autosize
-                style="width: 280px;"
+                style="width: 280px"
               />
             </el-form-item>
-            <i class="el-icon-circle-plus-outline" v-if="!readOnly" @click="addDomain" />
+            <i
+              class="el-icon-circle-plus-outline"
+              v-if="!readOnly"
+              @click="addDomain"
+            />
             <i
               class="el-icon-remove-outline"
               v-if="!readOnly"
@@ -82,19 +107,38 @@
             />
           </div>
           <el-form-item v-if="!readOnly" class="footer-form">
-            <el-button type="primary" @click.stop="handleSave" style="margin-right: 100px">保存</el-button>
-            <el-button @click="handleCancel" class="cancle-button">取消</el-button>
+            <el-button
+              type="primary"
+              @click.stop="handleSave"
+              style="margin-right: 100px"
+              >保存</el-button
+            >
+            <el-button @click="handleCancel" class="cancle-button"
+              >取消</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
       <!-- 删除提示 -->
-      <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+      <el-dialog
+        center
+        title="删除提示"
+        :visible.sync="confirmDeleteDialogVisible"
+        width="25%"
+      >
         <div style="text-align: center">
           <i class="el-icon-warning" /> 确认删除？
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button size="medium" class="nomal-button" @click="confirmDeleteDialogVisible = false">取消</el-button>
-          <el-button size="medium" type="primary" @click="confirmDelete">确定</el-button>
+          <el-button
+            size="medium"
+            class="nomal-button"
+            @click="confirmDeleteDialogVisible = false"
+            >取消</el-button
+          >
+          <el-button size="medium" type="primary" @click="confirmDelete"
+            >确定</el-button
+          >
         </div>
       </el-dialog>
     </div>
@@ -168,7 +212,7 @@ export default {
     selectValue: '',
     deleteId: -1
   }),
-  created () {
+  created() {
     if (this.$route.query.id) {
       // 查看（只读状态）
       if (this.$route.query.read) {
@@ -207,7 +251,7 @@ export default {
     }
   },
   methods: {
-    handleSave () {
+    handleSave() {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.editId) {
@@ -220,13 +264,13 @@ export default {
         }
       });
     },
-    getselectValue () {
+    getselectValue() {
       this.selectValue = this.$options.filters['valueFilter'](this.selectlabel)
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.back()
     },
-    addOrEdit (methods) {
+    addOrEdit(methods) {
       const params = {
         id: this.editId,
         name: this.form.name,
@@ -262,11 +306,11 @@ export default {
         }
       });
     },
-    confirmDelete () {
+    confirmDelete() {
       this.form.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
     },
-    addDomain () {
+    addDomain() {
       this.form.domains.push({
         source: '',
         expression: '',
@@ -274,7 +318,7 @@ export default {
       });
     },
     // 删除动态信息
-    removeDomain (item) {
+    removeDomain(item) {
       const index = this.form.domains.indexOf(item);
       if (this.form.domains.length > 1 && index !== -1) {
         if (item.source || item.expression) {
@@ -306,9 +350,12 @@ export default {
       & /deep/ .el-textarea__inner {
         min-height: 40px !important;
       }
-      & /deep/ .el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner {
-        background-color: #00A8E8;
-        border: 1px solid #00A8E8;
+      &
+        /deep/
+        .el-radio-button__orig-radio:disabled:checked
+        + .el-radio-button__inner {
+        background-color: #00a8e8;
+        border: 1px solid #00a8e8;
         color: #fff;
       }
       .domains-form {
@@ -332,8 +379,8 @@ export default {
           cursor: pointer;
         }
         .active-class {
-          background: #00A8E8;
-          border: 1px solid #00A8E8;
+          background: #00a8e8;
+          border: 1px solid #00a8e8;
           color: #fff;
         }
       }
@@ -349,11 +396,11 @@ export default {
       span {
         margin-left: 5px;
         font-size: 14px;
-        color: #00A8E8;
+        color: #00a8e8;
         cursor: pointer;
       }
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         z-index: 1;
         left: -20px;
@@ -361,28 +408,31 @@ export default {
         width: 8px;
         border-radius: 4px;
         height: 30px;
-        background: #00A8E8;
+        background: #00a8e8;
       }
     }
     .footer-area {
       padding-left: 30px;
     }
     .cancle-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:hover {
+      .el-button {
         border: 1px solid #fff;
         color: #fff;
-        background: transparent;
-      }
-      &:focus {
-        color: #fff;
-        background: transparent;
-      }
-      &:active {
-        border: 1px solid #fff;
-        background: transparent;
-        color: #fff;
+        &:hover {
+          border: 1px solid #01aef1;
+          color: #01aef1;
+          background-color: #041c25;
+        }
+        &:focus {
+          border: 1px solid #01aef1;
+          color: #01aef1;
+          background-color: #041c25;
+        }
+        &:active {
+          background-color: #041c25;
+          border: 1px solid #01aef1;
+          color: #01aef1;
+        }
       }
     }
   }

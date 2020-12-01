@@ -18,22 +18,39 @@
         @change="handleChange"
         clearable
       />
-      <el-select v-model="sshid2" class="select-tag margin-right20" placeholder="选择关系" clearable>
-        <el-option :label="item.name" :value="item.id" v-for="(item,index) in List" :key="index"></el-option>
+      <el-select
+        v-model="sshid2"
+        class="select-tag margin-right20"
+        placeholder="选择关系"
+        clearable
+      >
+        <el-option
+          :label="item.name"
+          :value="item.id"
+          v-for="(item, index) in List"
+          :key="index"
+        ></el-option>
       </el-select>
       <el-form-item class="item-right">
-        <el-button icon="el-icon-delete" class="nomal-button" @click="dellistRelation">批量删除</el-button>
+        <el-button
+          icon="el-icon-delete"
+          class="nomal-button"
+          @click="dellistRelation"
+          >批量删除</el-button
+        >
         <el-button
           icon="el-icon-search"
-          class="nomal-button margin-left-btn"
+          class="search-el-button margin-left-btn"
           @click="getrelationlist"
-        >查找</el-button>
+          >查找</el-button
+        >
         <el-button
           type="primary"
           icon="el-icon-plus"
           class="margin-left-btn"
           @click.prevent="showdialog"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-form-item>
     </el-form>
     <!-- 表格 -->
@@ -42,7 +59,7 @@
       ref="multipleTable"
       stripe
       @selection-change="handleSelectionChange"
-      :header-cell-style="{background:'#f5f5f5'}"
+      :header-cell-style="{ background: '#f5f5f5' }"
     >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="CI类型-属性">
@@ -60,17 +77,35 @@
         <template slot-scope="scope">
           <div class="task-btn-box">
             <span class="special" @click="viewRelation(scope.row.cirelationId)">
-              <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="查看详情"
+                placement="top-start"
+              >
                 <icon-svg icon-class="chakan" class="whiteness-icon-color" />
               </el-tooltip>
             </span>
             <span class="special" @click="setRelation(scope.row.cirelationId)">
-              <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑"
+                placement="top-start"
+              >
                 <icon-svg icon-class="bianji" class="whiteness-icon-color" />
               </el-tooltip>
             </span>
-            <span class="special" @click="deletRelation(scope.row.cirelationId)">
-              <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+            <span
+              class="special"
+              @click="deletRelation(scope.row.cirelationId)"
+            >
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除"
+                placement="top-start"
+              >
                 <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
               </el-tooltip>
             </span>
@@ -86,35 +121,53 @@
     <!-- 删除 -->
     <!-- 有用户 -->
     <!-- 分页功能 -->
-    <div class="block rolePaginate" style="margin-top: 92px;">
+    <div class="block rolePaginate" style="margin-top: 92px">
       <el-pagination
         v-if="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currPage"
-        :page-sizes="[10,30,50]"
+        :page-sizes="[10, 30, 50]"
         :page-size="100"
         layout="prev, pager, next, sizes, total, jumper"
         :total="total"
       />
     </div>
 
-    <el-dialog center :visible.sync="dialogVisibleDelete" title="提示" width="300px">
-      <div :style="{textAlign: 'center'}">
-        <i class="el-icon-warning"></i>&nbsp;&nbsp;此次删除将影响相关CI类型之间的关系，是否确认删除？
+    <el-dialog
+      center
+      :visible.sync="dialogVisibleDelete"
+      title="提示"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
+        <i class="el-icon-warning"></i
+        >&nbsp;&nbsp;此次删除将影响相关CI类型之间的关系，是否确认删除？
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogVisibleDelete = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="sureDeleteRelation">确 定</el-button>
+        <el-button size="mini" @click="dialogVisibleDelete = false"
+          >取 消</el-button
+        >
+        <el-button type="primary" size="mini" @click="sureDeleteRelation"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
-    <el-dialog center :visible.sync="isDeleteAll" title="批量删除" width="300px">
-      <div :style="{textAlign: 'center'}">
-        <i class="el-icon-warning"></i>&nbsp;&nbsp;此次删除将影响相关CI类型之间的关系，是否确认删除？
+    <el-dialog
+      center
+      :visible.sync="isDeleteAll"
+      title="批量删除"
+      width="300px"
+    >
+      <div :style="{ textAlign: 'center' }">
+        <i class="el-icon-warning"></i
+        >&nbsp;&nbsp;此次删除将影响相关CI类型之间的关系，是否确认删除？
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button size="mini" @click="isDeleteAll = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="delVoucherLsitCancleClick">确 定</el-button>
+        <el-button type="primary" size="mini" @click="delVoucherLsitCancleClick"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -123,7 +176,7 @@
 <script>
 import axios from '@/api';
 export default {
-  data () {
+  data() {
     return {
       isDeleteAll: false,
       isshowerr1: false,
@@ -191,7 +244,7 @@ export default {
   },
   watch: {},
   methods: {
-    setRelation (cirelationId) {
+    setRelation(cirelationId) {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/edit',
         query: {
@@ -200,7 +253,7 @@ export default {
         }
       })
     },
-    dellistRelation (scope) {
+    dellistRelation(scope) {
       if (!this.delrelationidlist) {
         this.$notify({
           title: '提示',
@@ -223,7 +276,7 @@ export default {
       //   })
       //   .catch();
     },
-    viewRelation (cirelationId) {
+    viewRelation(cirelationId) {
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/watch',
         query: {
@@ -232,11 +285,11 @@ export default {
         }
       })
     },
-    showDeleteRelation (id) {
+    showDeleteRelation(id) {
       this.dialogVisibleDelete = true;
       this.deleteCiRelationshipId = id;
     },
-    deletRelation (id) {
+    deletRelation(id) {
       // console.log(scope);
       axios.delCIRelation(id)
         .then(res => {
@@ -247,7 +300,7 @@ export default {
         })
         .catch();
     },
-    sureDeleteRelation () {
+    sureDeleteRelation() {
       axios.deletRelation(this.deleteCiRelationshipId)
         .then(res => {
           if (res.data.success) {
@@ -263,7 +316,7 @@ export default {
         })
         .catch();
     },
-    getcitypelist () {
+    getcitypelist() {
       var name = '';
       let templateId = '';
       var newoptions = [];
@@ -289,8 +342,8 @@ export default {
         }
       });
     },
-    handleChange (value) { },
-    showdialog () {
+    handleChange(value) { },
+    showdialog() {
       // this.num = 0
       // this.sshid3 = ''
       // this.Cirelation = ['', '', '']
@@ -313,7 +366,7 @@ export default {
     //       ? require('static/img/colse.png')
     //       : require('static/img/eyes.png');
     // },
-    delVoucherLsitCancleClick () {
+    delVoucherLsitCancleClick() {
       axios.delCIRelation(this.delrelationidlist)
         .then(res => {
           if (res.data.code == 500) {
@@ -353,31 +406,31 @@ export default {
         })
         .catch();
     },
-    inputFun1 (value) {
+    inputFun1(value) {
       if (value) {
         this.menuNameLength1 = value.length;
       }
     },
-    inputFun2 (value) {
+    inputFun2(value) {
       if (value) {
         this.menuNameLength2 = value.length;
       }
     },
-    inputFun3 (value) {
+    inputFun3(value) {
       if (value) {
         this.menuNameLength3 = value.length;
       }
     },
-    inputFun4 (value) {
+    inputFun4(value) {
       if (value) {
         this.menuNameLength4 = value.length;
       }
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val;
       this.getrelationlist();
     },
-    getrelationlist () {
+    getrelationlist() {
       this.copylist = [];
       let data = {
         citypeId: this.sshid[1],
@@ -465,12 +518,12 @@ export default {
         })
         .catch();
     },
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       // console.log(val, page)
       this.current = val
       this.getrelationlist()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.delrelationidlist = ''
       val.forEach(item => {
         this.delrelationidlist += item.cirelationId + ',';
@@ -482,7 +535,7 @@ export default {
       // console.log(this.delrelationidlist)
     },
     // 获取CI类型属性
-    getCIList () {
+    getCIList() {
       let name = '';
       let templateId = '';
       axios.getCIList(name, templateId).then(res => {
@@ -611,9 +664,9 @@ export default {
       //  console.log(this.options)
     }
   },
-  created () { },
-  updated () { },
-  mounted () {
+  created() { },
+  updated() { },
+  mounted() {
     this.getrelationlist()
     this.getcitypelist()
     this.getCIList()
@@ -728,5 +781,24 @@ export default {
     float: right;
     margin-right: 0;
   }
+}
+.search-el-button {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:focus {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:active {
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+    }
 }
 </style>

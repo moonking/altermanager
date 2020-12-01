@@ -4,25 +4,39 @@
       :inline="true"
       :model="formInline"
       class="demo-form-inline"
-      style="padding:20px 20px 0 20px"
+      style="padding: 20px 20px 0 20px"
     >
       <el-form-item>
-        <el-input v-model="roleName" placeholder="角色名称" style="width:100%" />
+        <el-input
+          v-model="roleName"
+          placeholder="角色名称"
+          style="width: 100%"
+        />
       </el-form-item>
       <el-form-item>
         <el-select v-model="menuId" placeholder="请选择所属系统" clearable>
           <el-option
             :label="item.name"
             :value="item.menuId"
-            v-for="(item,index) in menuSysList"
+            v-for="(item, index) in menuSysList"
             :key="index"
           ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item class="item-right">
-        <el-button icon="el-icon-search" class="common-btn-style nomal-button" @click="getRoleLsit(1)">查找</el-button>
+        <el-button
+          icon="el-icon-search"
+          class="common-btn-style search-el-button "
+          @click="getRoleLsit(1)"
+          >查找</el-button
+        >
         <router-link to="/BasicManagement/addRole?code=0">
-          <el-button type="primary" icon="el-icon-plus" class="common-btn-style margin-left-btn">新增</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            class="common-btn-style margin-left-btn"
+            >新增</el-button
+          >
         </router-link>
       </el-form-item>
     </el-form>
@@ -30,7 +44,7 @@
     <div class="table-area">
       <el-table :data="roleListData" stripe>
         <el-table-column prop="name" label="角色名称" />
-        <el-table-column prop="sysName" label="所属系统"/>
+        <el-table-column prop="sysName" label="所属系统" />
         <el-table-column prop="description" label="角色说明" />
         <el-table-column prop="permission" label="角色标识" />
         <el-table-column prop="createDate" label="创建时间" />
@@ -38,18 +52,33 @@
           <template slot-scope="scope">
             <div class="task-btn-box">
               <span class="special" @click="showUser(scope.row.roleId)">
-                <el-tooltip class="item" effect="dark" content="查看用户" placement="top-start">
-                  <icon-svg icon-class="chakan" class="whiteness-icon-color " />
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="查看用户"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="chakan" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="shouwAddUser(scope.row.roleId)">
-                <el-tooltip class="item" effect="dark" content="添加用户" placement="top-start">
-                  <icon-svg icon-class="jia" class="whiteness-icon-color " />
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="添加用户"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="jia" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="deleteRoleUser(scope.row.roleId)">
-                <el-tooltip class="item" effect="dark" content="删除用户" placement="top-start">
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color " />
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除用户"
+                  placement="top-start"
+                >
+                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
             </div>
@@ -58,18 +87,39 @@
         <el-table-column label="角色操作" width="200px" align="center">
           <template slot-scope="scope">
             <div class="task-btn-box">
-              <span class="special" @click="roleViewBtn(scope.row.roleId,scope.row)">
-                <el-tooltip class="item" effect="dark" content="查看" placement="top-start">
+              <span
+                class="special"
+                @click="roleViewBtn(scope.row.roleId, scope.row)"
+              >
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="查看"
+                  placement="top-start"
+                >
                   <icon-svg icon-class="chakan" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
-              <span class="special" @click="roleClickBtn(scope.row.roleId,scope.row)">
-                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+              <span
+                class="special"
+                @click="roleClickBtn(scope.row.roleId, scope.row)"
+              >
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="编辑"
+                  placement="top-start"
+                >
                   <icon-svg icon-class="bianji" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="deletUser(scope.row.roleId)">
-                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top-start"
+                >
                   <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
                 </el-tooltip>
               </span>
@@ -88,7 +138,10 @@
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item>
-          <el-input v-model="roleDetail" placeholder="用户名/真实姓名/手机号码"></el-input>
+          <el-input
+            v-model="roleDetail"
+            placeholder="用户名/真实姓名/手机号码"
+          ></el-input>
         </el-form-item>
         <el-form-item label="职位：">
           <el-input v-model="rolePosition"></el-input>
@@ -97,10 +150,7 @@
           <el-button type="primary" @click="lookFor()">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-table
-        :data="userData"
-        style="width: 100%"
-      >
+      <el-table :data="userData" style="width: 100%">
         <el-table-column prop="name" label="真实姓名" />
         <el-table-column prop="mobile" label="手机号" />
         <el-table-column prop="roleLists" label="已拥有角色" width="200px" />
@@ -112,7 +162,7 @@
           @size-change="handleUserSizeChange"
           @current-change="handleUserCurrentChange"
           :current-page="currPage"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           :page-size="100"
           layout="prev, pager, next, sizes, total, jumper"
           :total="userTotal"
@@ -121,16 +171,25 @@
       </div>
     </el-dialog>
     <!-- 添加用户 -->
-    <el-dialog center :visible="addUser" size="tiny" :before-close="handleDialogClose" title="添加用户">
+    <el-dialog
+      center
+      :visible="addUser"
+      size="tiny"
+      :before-close="handleDialogClose"
+      title="添加用户"
+    >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item>
-          <el-input v-model="addRoleDetail" placeholder="用户名/真实姓名/手机号码" />
+          <el-input
+            v-model="addRoleDetail"
+            placeholder="用户名/真实姓名/手机号码"
+          />
         </el-form-item>
         <el-form-item label="职位：">
           <el-input v-model="addRolePosition" />
         </el-form-item>
         <el-form-item>
-          <el-button class="nomal-button"  @click="addLookFor">查询</el-button>
+          <el-button class="nomal-button" @click="addLookFor">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="addAllRole">批量添加</el-button>
@@ -153,7 +212,12 @@
         <el-table-column prop="position" label="职位" show-overflow-tooltip />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="mini" @click="addroleUser(scope.row.userId)">添加</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              @click="addroleUser(scope.row.userId)"
+              >添加</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -163,7 +227,7 @@
           @size-change="handleAddSizeChange"
           @current-change="handleAddCurrentChange"
           :current-page="currPage"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           :page-size="100"
           layout="prev, pager, next, sizes, total, jumper"
           :total="addTotal"
@@ -184,7 +248,10 @@
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item>
-          <el-input v-model="delRoleDetail" placeholder="用户名/真实姓名/手机号码" />
+          <el-input
+            v-model="delRoleDetail"
+            placeholder="用户名/真实姓名/手机号码"
+          />
         </el-form-item>
         <el-form-item label="职位：">
           <el-input v-model="delRolePosition" />
@@ -193,7 +260,9 @@
           <el-button class="nomal-button" @click="delLookFor">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="deleteAllSelected">批量删除</el-button>
+          <el-button type="primary" @click="deleteAllSelected"
+            >批量删除</el-button
+          >
         </el-form-item>
       </el-form>
       <el-table
@@ -209,11 +278,16 @@
         <el-table-column label="真实姓名" prop="name">
           <!--<template slot-scope="scope">{{ scope.row.date }}</template>-->
         </el-table-column>
-        <el-table-column prop="delRoleLists" label="已拥有角色" width="200px"/>
+        <el-table-column prop="delRoleLists" label="已拥有角色" width="200px" />
         <el-table-column prop="position" label="职位" show-overflow-tooltip />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="mini" @click="deleteSelected(scope.row.userId)">删除</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              @click="deleteSelected(scope.row.userId)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -222,7 +296,7 @@
           @size-change="handleDelSizeChange"
           @current-change="handleDelCurrentChange"
           :current-page="currPage"
-          :page-sizes="[10,30,50]"
+          :page-sizes="[10, 30, 50]"
           :page-size="100"
           layout="prev, pager, next, sizes, total, jumper"
           :total="delTotal"
@@ -234,29 +308,49 @@
       <span>删除成功</span>
     </el-dialog>
     <!-- 查看 -->
-    <el-dialog center :visible="toView" size="tiny" :before-close="handleDialogClose">
+    <el-dialog
+      center
+      :visible="toView"
+      size="tiny"
+      :before-close="handleDialogClose"
+    >
       <el-tabs v-model="activeName" @tab-click="handleClick" width="500px">
-        <el-tab-pane label="角色信息" name="first" style="width:50%">
+        <el-tab-pane label="角色信息" name="first" style="width: 50%">
           <el-form ref="form" :model="roleNameViewData" label-width="100px">
             <el-form-item label="角色名称：">
-              <el-input v-model="roleNameViewData.name" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.name"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
             <el-form-item label="角色标识：">
-              <el-input v-model="roleNameViewData.permission" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.permission"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
             <el-form-item label="角色说明：">
-              <el-input v-model="roleNameViewData.description" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.description"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
             <el-form-item label="创建人：">
-              <el-input v-model="roleNameViewData.createName" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.createName"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
             <el-form-item label="创建时间：">
-              <el-input v-model="roleNameViewData.createDate" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.createDate"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="权限信息" name="second">
-          <el-button class="systemName active">{{selectedSysName}}</el-button>
+          <el-button class="systemName active">{{ selectedSysName }}</el-button>
           <tree-table
             :data="menuListData"
             class="treebox"
@@ -266,20 +360,37 @@
             <el-table-column label="类型">
               <template slot-scope="scope">
                 <el-button
-                  :type="scope.row.menuType=='1'?'primary':scope.row.menuType=='2'?'success':scope.row.menuType=='3'?'warning':'info'"
+                  :type="
+                    scope.row.menuType == '1'
+                      ? 'primary'
+                      : scope.row.menuType == '2'
+                      ? 'success'
+                      : scope.row.menuType == '3'
+                      ? 'warning'
+                      : 'info'
+                  "
                   size="small"
-                  style="cursor:default;"
-                >{{scope.row.menuType == '1' ? '系统' : scope.row.menuType == '2' ? '菜单' : scope.row.menuType == '3' ? '按钮' : '数据项'}}</el-button>
+                  style="cursor: default"
+                  >{{
+                    scope.row.menuType == '1'
+                      ? '系统'
+                      : scope.row.menuType == '2'
+                      ? '菜单'
+                      : scope.row.menuType == '3'
+                      ? '按钮'
+                      : '数据项'
+                  }}</el-button
+                >
               </template>
             </el-table-column>
             <el-table-column label="权限标识">
               <template slot-scope="scope">
-                <span>{{scope.row.permission}}</span>
+                <span>{{ scope.row.permission }}</span>
               </template>
             </el-table-column>
             <el-table-column label="描述" width="230px;">
               <template slot-scope="scope">
-                <span>{{scope.row.remarks}}</span>
+                <span>{{ scope.row.remarks }}</span>
               </template>
             </el-table-column>
           </tree-table>
@@ -287,7 +398,12 @@
       </el-tabs>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog center :visible="editView" size="tiny" :before-close="handleDialogClose">
+    <el-dialog
+      center
+      :visible="editView"
+      size="tiny"
+      :before-close="handleDialogClose"
+    >
       <el-tabs v-model="editActiveName" @tab-click="handleClick" width="500px">
         <el-tab-pane label="修改基本信息" name="first">
           <el-form ref="form" :model="roleNameViewData" label-width="100px">
@@ -298,11 +414,15 @@
                 maxlength="10"
                 :input="inputFun(roleNameViewData.name)"
               ></el-input>
-              <span>{{menuNameLength}}</span>/
-              <span>{{totalNum}}</span>
+              <span>{{ menuNameLength }}</span
+              >/
+              <span>{{ totalNum }}</span>
             </el-form-item>
             <el-form-item label="角色标识：">
-              <el-input v-model="roleNameViewData.permission" disabled="disabled"></el-input>
+              <el-input
+                v-model="roleNameViewData.permission"
+                disabled="disabled"
+              ></el-input>
             </el-form-item>
             <el-form-item label="角色说明：">
               <el-input v-model="roleNameViewData.description"></el-input>
@@ -314,41 +434,57 @@
               :loading="editLoading"
               type="primary"
               @click="clickBtnChange(roleNameViewData.roleId)"
-            >确认修改</el-button>
+              >确认修改</el-button
+            >
             <el-button type="primary" @click="editView = false">取消</el-button>
           </div>
         </el-tab-pane>
         <el-tab-pane label="修改权限信息" name="second">
           <el-button
             class="systemName"
-            v-for="(item,index) in syslistdata"
+            v-for="(item, index) in syslistdata"
             :key="index"
-            @click="editsys(item,index)"
-            :class="{active : active == index}"
-          >{{item.name}}</el-button>
-          <!-- <el-button type="primary">基础系统</el-button> -->
-          <tree-table
-            :data="menuListData"
-            class="treebox"
+            @click="editsys(item, index)"
+            :class="{ active: active == index }"
+            >{{ item.name }}</el-button
           >
+          <!-- <el-button type="primary">基础系统</el-button> -->
+          <tree-table :data="menuListData" class="treebox">
             <el-table-column label="类型">
               <template slot-scope="scope">
                 <el-button
-                  :type="scope.row.menuType=='1'?'primary':scope.row.menuType=='2'?'success':scope.row.menuType=='3'?'warning':'info'"
+                  :type="
+                    scope.row.menuType == '1'
+                      ? 'primary'
+                      : scope.row.menuType == '2'
+                      ? 'success'
+                      : scope.row.menuType == '3'
+                      ? 'warning'
+                      : 'info'
+                  "
                   size="small"
-                  style="cursor:default;"
-                >{{scope.row.menuType == '1' ? '系统' : scope.row.menuType == '2' ? '菜单' : scope.row.menuType == '3' ? '按钮' : '数据项'}}</el-button>
+                  style="cursor: default"
+                  >{{
+                    scope.row.menuType == '1'
+                      ? '系统'
+                      : scope.row.menuType == '2'
+                      ? '菜单'
+                      : scope.row.menuType == '3'
+                      ? '按钮'
+                      : '数据项'
+                  }}</el-button
+                >
               </template>
             </el-table-column>
             <el-table-column label="权限标识">
               <template slot-scope="scope">
-                <span>{{scope.row.permission}}</span>
+                <span>{{ scope.row.permission }}</span>
               </template>
             </el-table-column>
 
             <el-table-column label="描述" width="230px;">
               <template slot-scope="scope">
-                <span>{{scope.row.remarks}}</span>
+                <span>{{ scope.row.remarks }}</span>
               </template>
             </el-table-column>
             <!--<el-table-column label="位置修改"></el-table-column>-->
@@ -358,7 +494,8 @@
               :loading="editLoading"
               type="primary"
               @click="clickBtnChange(roleNameViewData.roleId)"
-            >确认修改</el-button>
+              >确认修改</el-button
+            >
             <el-button type="primary" @click="editView = false">取消</el-button>
           </div>
         </el-tab-pane>
@@ -372,7 +509,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currPage"
-        :page-sizes="[10,30,50]"
+        :page-sizes="[10, 30, 50]"
         :page-size="100"
         layout="prev, pager, next, sizes, total, jumper"
         :total="total"
@@ -388,7 +525,7 @@ import treeTable from '../treeTable'
 export default {
   name: 'MoreOperation',
   components: { treeTable },
-  data () {
+  data() {
     return {
       activeIndex: '',
       selectedSysName: '',
@@ -526,38 +663,38 @@ export default {
   },
   methods: {
     // 切换系统按钮：
-    delsys (item, index) {
+    delsys(item, index) {
       this.active = index
       this.delmenuid = item.menuId
       this.getMenuList(item.menuId)
     },
-    editsys (item, index) {
+    editsys(item, index) {
       this.active = index
       this.delmenuid = item.menuId
       this.getMenuList(item.menuId)
     },
-    addSelectedRows (selection, row) {
+    addSelectedRows(selection, row) {
       this.addSelectionLength = selection.length
       // console.log(this.addSelectionLength);
     },
-    selectedRows (selection, row) {
+    selectedRows(selection, row) {
       this.delSelectionLength = selection.length
       // console.log(this.delSelectionLength);
     },
-    addSelectedAll (selection) {
+    addSelectedAll(selection) {
       this.addSelectionLength = selection.length
       if (selection !== '') {
         this.addCurrent = this.addCurrent - 1
       }
     },
-    delSelectedAll (selection) {
+    delSelectedAll(selection) {
       this.delSelectionLength = selection.length
       if (selection !== '') {
         this.delCurrent = this.delCurrent - 1
       }
     },
     // 角色名称字数限制：
-    inputFun (value) {
+    inputFun(value) {
       if (value) {
         this.menuNameLength = value.length
       }
@@ -569,7 +706,7 @@ export default {
     //      });
     //    },
     // 获取列表
-    getRoleLsit (x) {
+    getRoleLsit(x) {
       if (x === 1) {
         this.current = 1
       }
@@ -585,12 +722,12 @@ export default {
         this.total = parseInt(res.data.data.result.total)
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       // if(this.editActiveName=='second'||this.activeName=='second'){
       //         this.getMenuList(this.roleNameViewData.menuId);
       // }
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       //        this.selected=val;
       //        console.log(this.selected);
       this.userIds = []
@@ -599,7 +736,7 @@ export default {
       }
       this.userIds = this.userIds.join(',')
     },
-    getAuth (data) {
+    getAuth(data) {
       let opt = []
       data.forEach(val => {
         opt.push(val.id)
@@ -614,7 +751,7 @@ export default {
       })
     },
     // 获取菜单列表
-    getMenuList (menuId) {
+    getMenuList(menuId) {
       let mId = ''
       if (menuId) {
         mId += 'menuId=' + menuId
@@ -628,19 +765,19 @@ export default {
       })
     },
     // 删除用户
-    delLookFor () {
+    delLookFor() {
       this.deleteRoleUser(this.delRoleId)
     },
     // 查询
-    addLookFor () {
+    addLookFor() {
       this.shouwAddUser(this.addRoleId)
     },
     // 用户查询
-    lookFor () {
+    lookFor() {
       this.showUser(this.roleId)
     },
     // 查看用户
-    showUser (roleId, n) {
+    showUser(roleId, n) {
       this.userCurrent = 1
       if (n) {
         this.userCurrent = n
@@ -676,17 +813,17 @@ export default {
       this.rolePosition = ''
     },
     // 查看用户列表分页
-    handleUserSizeChange (val) {
+    handleUserSizeChange(val) {
       this.userSize = val
       this.showUser(this.roleId)
     },
-    handleUserCurrentChange (val, page) {
+    handleUserCurrentChange(val, page) {
       this.userCurrent = val
       this.userSize = page
       this.showUser(this.roleId, val)
     },
     // 添加用户(用户列表)
-    shouwAddUser (roleId, n) {
+    shouwAddUser(roleId, n) {
       this.addCurrent = 1
       if (n) {
         this.addCurrent = n
@@ -724,7 +861,7 @@ export default {
       this.addRolePosition = ''
     },
     // 添加用户（批量提交）
-    addAllRole () {
+    addAllRole() {
       if (this.addSelectionLength === 0) {
         this.$notify({
           title: '提示',
@@ -753,7 +890,7 @@ export default {
       // this.addUser = false
     },
     // 添加用户（提交）
-    addroleUser (userId) {
+    addroleUser(userId) {
       axios.submitAddUser(this.addRoleId, userId).then(res => {
         if (res.status === '200') {
           // console.log(res);
@@ -773,17 +910,17 @@ export default {
       })
     },
     // 添加用户列表分页
-    handleAddSizeChange (val) {
+    handleAddSizeChange(val) {
       this.addSize = val
       this.shouwAddUser(this.addRoleId)
     },
-    handleAddCurrentChange (val, page) {
+    handleAddCurrentChange(val, page) {
       this.addCurrent = val
       this.addSize = page
       this.shouwAddUser(this.addRoleId, val)
     },
     // 删除用户(用户列表)
-    deleteRoleUser (roleId, n) {
+    deleteRoleUser(roleId, n) {
       this.delCurrent = 1
       if (n) {
         this.delCurrent = n
@@ -817,17 +954,17 @@ export default {
         .catch()
     },
     // 删除用户列表分页
-    handleDelSizeChange (val) {
+    handleDelSizeChange(val) {
       this.delSize = val
       this.deleteRoleUser(this.delRoleId)
     },
-    handleDelCurrentChange (val, page) {
+    handleDelCurrentChange(val, page) {
       this.delCurrent = val
       this.delSize = page
       this.deleteRoleUser(this.delRoleId, val)
     },
     // 删除用户（批量选中删除）
-    deleteAllSelected () {
+    deleteAllSelected() {
       if (this.delSelectionLength === 0) {
         this.$notify({
           title: '提示',
@@ -856,7 +993,7 @@ export default {
       })
     },
     // 删除用户（选中删除）
-    deleteSelected (userId) {
+    deleteSelected(userId) {
       axios.deleteRoleUsers(this.delRoleId, userId).then(res => {
         if (res.status === '200') {
           // console.log(res);
@@ -876,7 +1013,7 @@ export default {
       })
     },
     // 获取系统列表:
-    getMenuSysList () {
+    getMenuSysList() {
       axios.getMenuSysList().then(res => {
         this.syslistdata = res.data.data.result
         this.menuSysList = res.data.data.result
@@ -887,7 +1024,7 @@ export default {
       })
     },
     // 角色名称——查看
-    roleViewBtn (id, sp) {
+    roleViewBtn(id, sp) {
       this.activeName = 'first'
       this.$store.dispatch('VIEW', 'view')
       var roleId = id
@@ -912,9 +1049,9 @@ export default {
         )
       })
     },
-    recursionMethon () { },
+    recursionMethon() { },
     // 角色操作-修改
-    roleClickBtn (id, sp) {
+    roleClickBtn(id, sp) {
       this.editActiveName = 'first'
       this.$store.dispatch('VIEW', 'set')
       this.editView = true
@@ -934,7 +1071,7 @@ export default {
       })
     },
     // 角色名称——修改——确认修改
-    clickBtnChange (id) {
+    clickBtnChange(id) {
       // var roleId = id;
       this.menuIds = this.$store.state.menuIds.slice(
         0,
@@ -974,7 +1111,7 @@ export default {
       })
     },
     // 角色名称-删除
-    deletUser (id) {
+    deletUser(id) {
       // 先判断改角色下面是否有用户，如果存在用户，则无法删除
       let JobDto = {
         current: 1,
@@ -1026,7 +1163,7 @@ export default {
       // 删除判断
     },
     // 关闭
-    handleDialogClose () {
+    handleDialogClose() {
       this.active = 0
       this.DetailDate = false
       this.editInformation = false
@@ -1036,16 +1173,16 @@ export default {
       this.deleteUser = false
     },
     // 修改图像
-    togglebox () {
+    togglebox() {
       this.boxshow = !this.boxshow
     },
     // 点击表单查看详情
-    showDetail () {
+    showDetail() {
       this.DetailDate = true
     },
 
     // 有角色
-    alertUser () {
+    alertUser() {
       this.$alert('这是一段内容', '标题名称', {
         confirmButtonText: '确定',
         callback: action => {
@@ -1057,33 +1194,33 @@ export default {
       })
     },
     // 点击表单修改信息
-    changeDate () {
+    changeDate() {
       this.editInformation = true
     },
     // 去换表单表格
-    formChange () {
+    formChange() {
       this.listForm = true
       this.listTable = false
     },
-    tableChange () {
+    tableChange() {
       this.listForm = false
       this.listTable = true
     },
-    onSubmit () {
+    onSubmit() {
       // console.log("submit!");
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.size = val
       this.getRoleLsit()
     },
-    handleCurrentChange (val, page) {
+    handleCurrentChange(val, page) {
       // console.log(val);
       this.current = val
       this.size = 10
       this.getRoleLsit()
     }
   },
-  created () {
+  created() {
     // console.log(this.$route);
 
     // var lett = this;
@@ -1099,14 +1236,14 @@ export default {
     //   }
     // };
   },
-  updated () { },
-  mounted () {
+  updated() { },
+  mounted() {
     //  this.getMenuList();
     this.getRoleLsit()
     this.getMenuSysList()
   },
   watch: {
-    $route (newValue, oldValue) {
+    $route(newValue, oldValue) {
       this.DetailDate = false
       this.addUser = false
       this.deleteUser = false
@@ -1135,6 +1272,25 @@ export default {
   }
   .item-right {
     margin: 0 !important;
+    .search-el-button {
+      border: 1px solid #fff;
+      color: #fff;
+      &:hover {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:focus {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:active {
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+      }
+    }
   }
   .table-area {
     padding: 0 20px;
