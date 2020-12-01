@@ -96,7 +96,10 @@
         <div class="block-content" style="overflow: visible">
           <div v-show="blockSwitch[2]">
             <div class="button-var">
-              <div>变量声明：点击这些变量,即可在输入框中使用</div>
+              <div>
+                <img class="svg-img" src="/static/img/task/tips.svg" alt="" />
+                <span> 变量声明：点击这些变量,即可在输入框中使用</span>
+              </div>
             </div>
             <el-form
               :model="configForm"
@@ -112,6 +115,7 @@
                     :key="index"
                     @click="chooseConfig(item, index)"
                     size="small"
+                    style="font-family: 'PingFang SC'"
                     >{{ item.value }}:{{ item.name }}</el-button
                   >
                 </div>
@@ -568,5 +572,9 @@ export default {
 }
 .op-btns {
   text-align: center;
+}
+.svg-img{
+  height: 16px;
+  vertical-align: middle;
 }
 </style>

@@ -72,10 +72,7 @@
       </el-select>-->
       <!-- </el-form-item> -->
       <el-form-item class="item-right overHideMargin">
-        <el-button
-          icon="el-icon-search"
-          class="nomal-button"
-          @click.stop="search"
+        <el-button icon="el-icon-search" class="search-el-button" @click.stop="search"
           >查找</el-button
         >
         <!-- <el-dropdown trigger="click">
@@ -1291,6 +1288,27 @@ export default {
     background-color: #0280ff;
     background-size: 50%;
     background-position: center center;
+  }
+}
+.overHideMargin {
+  .search-el-button.el-button {
+      border: 1px solid #fff;
+      color: #fff;
+      &:hover {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:focus {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:active {
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+      }
   }
 }
 </style>

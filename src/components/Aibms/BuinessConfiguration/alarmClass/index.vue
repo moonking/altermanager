@@ -313,18 +313,19 @@ export default {
       border: 1px solid #fff;
       color: #fff;
       &:hover {
-        border: 1px solid #fff;
-        color: #fff;
-        background: transparent;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
       }
       &:focus {
-        color: #fff;
-        background: transparent;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
       }
       &:active {
-        border: 1px solid #fff;
-        background: transparent;
-        color: #fff;
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
       }
     }
   }

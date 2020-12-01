@@ -91,7 +91,7 @@
         ></el-input>
         <el-button
           icon="el-icon-search"
-          class="nomal-button item-right"
+          class="search-el-button item-right"
           @click="fuzzySearch"
           >查找</el-button
         >
@@ -120,8 +120,9 @@
                         class="demo-dynamic"
                       >
                         <div
-                          v-for="(domain1,
-                          domainIndex1) in subareaLabelName.extend"
+                          v-for="(
+                            domain1, domainIndex1
+                          ) in subareaLabelName.extend"
                           :key="domainIndex1 + domain1.label"
                         >
                           <el-form-item :label="domain1.label">
@@ -211,8 +212,9 @@
                             <draggable v-model="subarea.extend" @end="onEnd">
                               <transition-group>
                                 <div
-                                  v-for="(domain,
-                                  domainIndex) in subarea.extend"
+                                  v-for="(
+                                    domain, domainIndex
+                                  ) in subarea.extend"
                                   :key="domainIndex + domain.label"
                                 >
                                   <el-form-item
@@ -2584,6 +2586,25 @@ export default {
         width: 260px;
         height: 44px;
         margin-right: 20px;
+      }
+      .search-el-button {
+        border: 1px solid #fff;
+        color: #fff;
+        &:hover {
+          border: 1px solid #01aef1;
+          color: #01aef1;
+          background-color: #041c25;
+        }
+        &:focus {
+          border: 1px solid #01aef1;
+          color: #01aef1;
+          background-color: #041c25;
+        }
+        &:active {
+          background-color: #041c25;
+          border: 1px solid #01aef1;
+          color: #01aef1;
+        }
       }
     }
     .tabs-wrapper {

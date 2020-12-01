@@ -274,26 +274,24 @@ export default {
   padding: 10px 10px;
   box-sizing: border-box;
   .search-source {
-    &:focus {
-      background: none;
-    }
-  }
-  .search-icon {
-    border: 1px solid #fff;
-    color: #fff;
-    &:hover {
+    .el-button {
       border: 1px solid #fff;
       color: #fff;
-      background: transparent;
-    }
-    &:focus {
-      color: #fff;
-      background: transparent;
-    }
-    &:active {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
+      &:hover {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:focus {
+        border: 1px solid #01aef1;
+        color: #01aef1;
+        background-color: #041c25;
+      }
+      &:active {
+        background-color: #041c25;
+        border: 1px solid #01aef1;
+        color: #01aef1;
+      }
     }
   }
   .task-btn-box {
