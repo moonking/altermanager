@@ -542,14 +542,14 @@ export default {
         }
         ul {
           margin: 20px auto;
-          width: 800px;
+          width: 1000px;
           li {
             display: inline-block;
             margin-bottom: 20px;
-            width: 25%;
-            height: 40px;
-            line-height: 40px;
-            padding: 2px 25px;
+            width: 20%;
+            height: 34px;
+            line-height: 34px;
+            padding: 0 25px;
             box-sizing: border-box;
             span {
               width: 100%;
