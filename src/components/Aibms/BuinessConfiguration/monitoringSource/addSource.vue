@@ -201,10 +201,11 @@
     <el-dialog
       title="检测详情"
       :visible.sync="centerDialogVisible"
-      width="30%"
+      width="50%"
       center
+      class="dialog-detail"
     >
-      <span>{{ interfaceTxt }}</span>
+      <span >{{ interfaceTxt }}</span>
     </el-dialog>
   </div>
 </template>
@@ -709,9 +710,11 @@ export default {
     }
   }
 }
-</style>
-<style>
-.el-input-group__prepend {
+.dialog-detail /deep/ .el-dialog__body {
+  height: 500px;
+  overflow-y: auto;
+}
+.interface-form /deep/ .el-input-group__prepend {
   background-color: rgba(4, 28, 37, 0.4) !important;
 }
 </style>
