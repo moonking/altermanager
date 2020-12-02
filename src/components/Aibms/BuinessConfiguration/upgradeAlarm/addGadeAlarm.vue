@@ -154,8 +154,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="cancel" class="cancle-button">取 消</el-button>
             <el-button type="primary" @click="confimAlarm">确 定</el-button>
+            <el-button @click="cancel" class="cancle-button">取 消</el-button>
           </div>
         </el-dialog>
       </div>
@@ -596,24 +596,21 @@ export default {
       text-align: center;
     }
     .cancle-button {
-      .el-button {
+      border: 1px solid #fff;
+      color: #fff;
+      &:hover {
         border: 1px solid #fff;
         color: #fff;
-        &:hover {
-          border: 1px solid #01aef1;
-          color: #01aef1;
-          background-color: #041c25;
-        }
-        &:focus {
-          border: 1px solid #01aef1;
-          color: #01aef1;
-          background-color: #041c25;
-        }
-        &:active {
-          background-color: #041c25;
-          border: 1px solid #01aef1;
-          color: #01aef1;
-        }
+        background: transparent;
+      }
+      &:focus {
+        color: #fff;
+        background: transparent;
+      }
+      &:active {
+        border: 1px solid #fff;
+        background: transparent;
+        color: #fff;
       }
     }
   }

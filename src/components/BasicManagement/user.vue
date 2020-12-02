@@ -234,11 +234,11 @@
       :visible="DetailDate"
       size="tiny"
       :before-close="handleDialogClose"
-      width="450px"
+      width="570px"
     >
       <div class="headportraitbox">
         <img :src="detailData.photo" alt />
-        <div class="state" style="float: right">
+        <div class="state" style="float: right; margin-right: 10px">
           <span>状态：</span>
           <el-select
             v-model="detailData.userStatus"
@@ -406,18 +406,18 @@
             >
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item style="margin-left: 0; text-align: center">
-          <el-button
-            :loading="editLoading"
-            type="primary"
-            @click="changeUserClicke(changeData.userId)"
-            >确认修改</el-button
-          >
-          <el-button class="nomal-button" @click="editInformation = false"
-            >取消</el-button
-          >
-        </el-form-item>
       </el-form>
+      <div class="text-center">
+        <el-button
+          :loading="editLoading"
+          type="primary"
+          @click="changeUserClicke(changeData.userId)"
+          >确认修改</el-button
+        >
+        <el-button class="nomal-button" @click="editInformation = false"
+          >取消</el-button
+        >
+      </div>
     </el-dialog>
     <!--新增用户  -->
     <el-dialog
@@ -425,12 +425,12 @@
       :visible="addUser"
       size="tiny"
       :before-close="handleDialogClose2"
-      width="550px"
+      width="570px"
     >
       <div class="headportraitbox">
         <img :src="currentPic" alt />
         <i class="el-icon-edit kip" @click="togglebox"></i>
-        <div class="state" style="float: right">
+        <div class="state" style="float: right; margin-right: 10px">
           <span>状态：</span>
           <el-select v-model="addUserList.userStatus" style="width: 100px">
             <el-option label="正常" value="0"></el-option>
@@ -538,17 +538,16 @@
             </el-checkbox-group>
           </el-form-item>
         </div>
-        <el-form-item>
-          <el-button
-            :loading="editLoading"
-            class="save-btn-margin-special"
-            type="primary"
-            @click="addUserClicke()"
-            >确认新增</el-button
-          >
-          <el-button class="nomal-button" @click="noAddUser">取消</el-button>
-        </el-form-item>
       </el-form>
+      <div class="text-center">
+        <el-button
+          :loading="editLoading"
+          type="primary"
+          @click="addUserClicke()"
+          >确认新增</el-button
+        >
+        <el-button class="nomal-button" @click="noAddUser">取消</el-button>
+      </div>
     </el-dialog>
     <!--  -->
     <!-- 分页功能 -->
@@ -1185,7 +1184,7 @@ export default {
     font-size: 24px;
   }
   .el-form {
-    margin: 0 20px;
+    margin: 0 40px 0 20px;
     text-align: left;
   }
 
@@ -1396,9 +1395,6 @@ export default {
     padding-right: 10px;
   }
 
-  .input {
-    width: 80% !important;
-  }
   .el-checkbox {
     display: block !important;
     margin-left: 0 !important;
@@ -1494,6 +1490,7 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
+  margin: 0;
   width: 230px;
   vertical-align: middle;
 }
@@ -1517,5 +1514,8 @@ export default {
       color: #01aef1;
     }
   }
+}
+.text-center {
+  text-align: center;
 }
 </style>

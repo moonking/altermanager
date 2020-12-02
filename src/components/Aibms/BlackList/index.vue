@@ -2,31 +2,60 @@
   <div class="black-list">
     <el-form :model="form" label-width="80px" ref="form" :rules="formRules">
       <el-form-item label="业务系统" required prop="system">
-        <el-select v-model="form.system" placeholder="请选择业务系统" @change="handleSelectChange" style="width: 380px;">
-          <el-option :label="system.name" :value="system.systemId" v-for="system in systemList" :key="system.systemId"></el-option>
+        <el-select
+          v-model="form.system"
+          placeholder="请选择业务系统"
+          @change="handleSelectChange"
+          style="width: 380px"
+        >
+          <el-option
+            :label="system.name"
+            :value="system.systemId"
+            v-for="system in systemList"
+            :key="system.systemId"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="黑名单">
         <div class="cilist-container">
-          <span v-for="item in checkedCIs" :key="item" class="ci-item">{{item}}
-            <i class="el-icon-delete" v-if="editStatus" @click="deleteCheckedCI(item)" style="cursor:pointer;"></i>
+          <span v-for="item in checkedCIs" :key="item" class="ci-item"
+            >{{ item }}
+            <i
+              class="el-icon-delete"
+              v-if="editStatus"
+              @click="deleteCheckedCI(item)"
+              style="cursor: pointer"
+            ></i>
           </span>
-          <div v-if="checkedCIs.length === 0" style="width: 200px;height: 40px;line-height: 40px;text-align:center;font-size: 14px;">黑名单为空</div>
+          <div
+            v-if="checkedCIs.length === 0"
+            style="
+              width: 200px;
+              height: 40px;
+              line-height: 40px;
+              text-align: center;
+              font-size: 14px;
+            "
+          >
+            黑名单为空
+          </div>
         </div>
       </el-form-item>
       <el-form-item label="选择类型" prop="type" v-if="editStatus">
         <el-select
-            clearable
-            v-model="form.type"
-            style="width: 380px;"
-            placeholder="请选择标签"
-            @change="handleTypeChange">
-            <el-option
-              v-for="item in ciTypeList"
-              :key="item.citypeId"
-              :label="item.name"
-              :value="item.citypeId"/>
-          </el-select>
+          clearable
+          v-model="form.type"
+          style="width: 380px"
+          placeholder="请选择标签"
+          @change="handleTypeChange"
+        >
+          <el-option
+            v-for="item in ciTypeList"
+            :key="item.citypeId"
+            :label="item.name"
+            :value="item.citypeId"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="选择CI项" prop="checkedCIs" v-if="editStatus">
         <el-select
@@ -36,12 +65,14 @@
           collapse-tags
           placeholder="请选择"
           @change="checkCIChange"
-          style="width: 380px;">
+          style="width: 380px"
+        >
           <el-option
             v-for="item in ciList"
             :key="item.ciitemId"
             :label="item.name"
-            :value="item.name">
+            :value="item.name"
+          >
           </el-option>
         </el-select>
       </el-form-item>
@@ -50,7 +81,7 @@
       </el-form-item> -->
       <el-form-item v-if="editStatus">
         <el-button type="primary" @click="onSubmit">保存</el-button>
-        <el-button @click="cancelEdit">取消</el-button>
+        <el-button @click="cancelEdit" class="cancle-button">取消</el-button>
       </el-form-item>
       <el-form-item v-else>
         <el-button type="primary" @click="setEditStatus">编辑</el-button>
@@ -71,7 +102,7 @@
 <script>
 import axios from '@/api'
 export default {
-  data () {
+  data() {
     return {
       checkedCIs: [],
       isIndeterminate: true,
@@ -85,7 +116,7 @@ export default {
       ciTypeList: [],
       ciList: [],
       formRules: {
-        system: [{required: true, message: '请选择业务系统', trigger: 'change'}]
+        system: [{ required: true, message: '请选择业务系统', trigger: 'change' }]
         // type: [{required: true, message: '请选择类型', trigger: 'change'}],
         // checkedCIs: [{required: true, message: '请选择CI项', trigger: 'blur'}]
       },
@@ -101,7 +132,7 @@ export default {
     }
   },
   methods: {
-    deleteCheckedCI (ci) {
+    deleteCheckedCI(ci) {
       const { checkedCIs } = this
       checkedCIs.forEach((item, index) => {
         if (ci === item) {
@@ -109,7 +140,7 @@ export default {
         }
       })
     },
-    checkCIChange () {
+    checkCIChange() {
       const checks = this.form.checkedCIs
       checks.forEach(item => {
         if (this.checkedCIs.indexOf(item) === -1) {
@@ -118,7 +149,7 @@ export default {
         }
       })
     },
-    handleTypeChange () {
+    handleTypeChange() {
       const chooseType = this.form.type
       // const chooseType = this.activeTab
       console.log('test')
@@ -128,21 +159,21 @@ export default {
         }
       })
     },
-    handleSelectChange (val) {
+    handleSelectChange(val) {
       this.form.type = ''
       this.form.checkedCIs = []
       this.getSystemBlackList(val)
     },
-    cancelEdit () {
+    cancelEdit() {
       this.editStatus = false
     },
-    setEditStatus () {
+    setEditStatus() {
       this.editStatus = true
     },
-    getSystemBlackList (systemId) {
+    getSystemBlackList(systemId) {
       const id = systemId || this.form.system
       axios.getSystemDetail(id).then(res => {
-        const {code, data} = res.data
+        const { code, data } = res.data
         if (code === 200 && data.result.blackList !== '') {
           this.checkedCIs = data.result.blackList.split(',')
         } else {
@@ -150,7 +181,7 @@ export default {
         }
       })
     },
-    getSystemList () {
+    getSystemList() {
       // {"name":"系统名称","englishAbridge":"英文缩写","current":"当前页","size":"每页显示条数"}
       const data = {
         name: '',
@@ -169,7 +200,7 @@ export default {
         }
       })
     },
-    onSubmit () {
+    onSubmit() {
       const form = this.$refs.form
       form.validate().then(res => {
         if (res) {
@@ -193,7 +224,7 @@ export default {
         }
       })
     },
-    getCITypeList () {
+    getCITypeList() {
       axios.getCiTList({
         name: '',
         templateId: '',
@@ -206,14 +237,14 @@ export default {
       })
     }
   },
-  created () {
+  created() {
     this.getSystemList()
     this.getCITypeList()
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .black-list {
   padding: 20px;
 }
@@ -229,7 +260,7 @@ export default {
   width: 900px;
   max-height: 300px;
   font-size: 12px;
-  color: #ddd; 
+  color: #ddd;
   overflow-y: auto;
 }
 .ci-item {
@@ -245,5 +276,23 @@ export default {
 .ci-item:hover {
   background-color: #041c25e0;
   cursor: default;
+}
+.cancle-button {
+  border: 1px solid #fff;
+  color: #fff;
+  &:hover {
+    border: 1px solid #fff;
+    color: #fff;
+    background: transparent;
+  }
+  &:focus {
+    color: #fff;
+    background: transparent;
+  }
+  &:active {
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+  }
 }
 </style>
