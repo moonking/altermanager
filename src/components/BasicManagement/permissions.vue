@@ -110,6 +110,7 @@
     <el-dialog
       center
       :visible="addSystemBox"
+      title="新增系统"
       size="tiny"
       :before-close="handleDialogClose"
       width="630px"

@@ -198,13 +198,13 @@ export default {
   data() {
     var validateEmail = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入邮箱'));
+        callback(new Error('请输入邮箱！'));
       } else if (
         !/^([0-9A-Za-z\-_\\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(
           value
         )
       ) {
-        callback(new Error('请输入正确的email'));
+        callback(new Error('请输入正确的email！'));
       } else {
         callback();
       }
