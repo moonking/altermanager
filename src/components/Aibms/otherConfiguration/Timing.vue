@@ -214,10 +214,16 @@
           </el-form-item>
           <el-form-item class="result-str">{{ onceStr }}</el-form-item>
         </form>
-        <el-form-item v-if="radio === 3">
-          <el-form :model="intervalForm" label-width="140">
-            <el-form-item class="result-str">
-              <!-- 从
+        <el-form
+          :model="intervalForm"
+          label-width="140"
+          v-if="radio === 3"
+          :rules="intervalFormRules"
+          ref="intervalForm"
+          style="margin-left: 20px"
+        >
+          <el-form-item class="result-str">
+            <!-- 从
               <el-input v-model="intervalForm.startTime" type="number" style="width: 100px" @input="maxLimit"></el-input>
               <el-select style="width: 100px" v-model="intervalForm.timeType">
                 <el-option label="秒" value="1"></el-option>
@@ -225,23 +231,73 @@
                 <el-option label="小时" value="3"></el-option>
               </el-select>
               开始， -->
-              每
-              <el-input
-                v-model="intervalForm.interval"
-                type="number"
-                style="width: 100px"
-                min="0"
-                :disabled="status === 'read'"
-              ></el-input>
-              <!-- <el-select style="width: 100px" v-model="intervalForm.timeType">
+            每
+            <el-input
+              v-model="intervalForm.interval"
+              type="number"
+              style="width: 100px"
+              min="0"
+              :disabled="status === 'read'"
+            ></el-input>
+            <!-- <el-select style="width: 100px" v-model="intervalForm.timeType">
                 <el-option label="秒" value="1"></el-option>
                 <el-option label="分钟" value="2"></el-option>
                 <el-option label="小时" value="3"></el-option>
               </el-select> -->
-              分钟执行一次
-            </el-form-item>
-          </el-form>
-        </el-form-item>
+            分钟执行一次
+          </el-form-item>
+          <el-form-item
+            class="result-str"
+            label="持续告警设置："
+            prop="keepAlert"
+          >
+            当critical级别告警已经持续
+            <el-input
+              :disabled="status === 'read'"
+              v-model="intervalForm.keepAlert"
+              placeholder="请输入"
+              :style="{ width: '100px' }"
+            ></el-input>
+            <!-- <el-select
+              v-model="intervalForm.keepAlert"
+              placeholder="请选择"
+              :style="{ width: '100px' }"
+            >
+              <el-option
+                v-for="item in alertTimeArr"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select> -->
+            分钟并且未确认，则下次告警分别在
+            <el-input
+              v-for="(item, index) in alertTimeList"
+              :key="index"
+              :disabled="status === 'read'"
+              v-model="item.value"
+              placeholder="请输入"
+              :style="{ width: '100px' }"
+            ></el-input>
+            <!-- <el-select
+              v-for="(item, index) in alertTimeList"
+              :key="index"
+              v-model="item.value"
+              placeholder="请选择"
+              :style="{ width: '100px' }"
+            >
+              <el-option
+                v-for="item in alertTimeArr"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select> -->
+            分钟后。
+          </el-form-item>
+        </el-form>
       </el-form>
     </div>
     <div class="footer-area">
@@ -263,6 +319,13 @@ import axios from '@/api';
 export default {
   name: 'crontabPage',
   data() {
+    var validateAlertTime = (rule, value, callback) => {
+      if (value !== '' && this.alertTimeList[0].value === '') {
+        callback(new Error('请输入下次告警时间！'));
+      } else {
+        callback();
+      }
+    };
     return {
       code: '',
       name: '',
@@ -289,6 +352,53 @@ export default {
         week: '',
         year: ''
       },
+      intervalFormRules: {
+        keepAlert: [{ required: true, validator: validateAlertTime, trigger: 'blur' }]
+      },
+      alertTimeList: [
+        {
+          key: 'alertAfterOne',
+          value: ''
+        },
+        {
+          key: 'alertAfterTwo',
+          value: ''
+        },
+        {
+          key: 'alertAfterThree',
+          value: ''
+        },
+        {
+          key: 'alertAfterFour',
+          value: ''
+        },
+        {
+          key: 'alertAfterFive',
+          value: ''
+        }
+      ],
+      // alertTimeArr: [
+      //   {
+      //     value: '5',
+      //     label: '5'
+      //   },
+      //   {
+      //     value: '10',
+      //     label: '10'
+      //   },
+      //   {
+      //     value: '15',
+      //     label: '15'
+      //   },
+      //   {
+      //     value: '20',
+      //     label: '20'
+      //   },
+      //   {
+      //     value: '25',
+      //     label: '25'
+      //   }
+      // ],
       alert: false,
       weekAlert: false,
       status: this.$route.params.status,
@@ -297,7 +407,8 @@ export default {
       intervalForm: {
         startTime: 0,
         timeType: '1',
-        interval: 0
+        interval: 0,
+        keepAlert: ''
       },
       relationNum: '',
       relationType: '',
@@ -305,6 +416,20 @@ export default {
     }
   },
   computed: {
+    alertTimeArr() {
+      // eslint-disable-next-line no-unused-vars
+      if (this.intervalForm.interval === 0) return
+      let arr = []
+      for (let i = 1; i < 6; i++) {
+        arr.push(
+          {
+            value: i * this.intervalForm.interval,
+            label: i * this.intervalForm.interval
+          }
+        )
+      }
+      return arr
+    },
     relation() {
       // eslint-disable-next-line no-unused-vars
       let bl = this.url.includes('/mysql/dump')
@@ -495,7 +620,6 @@ export default {
             let length = strList.length
             this.relationType = strList[length - 2]
             this.relationNum = strList[length - 1]
-            console.log(strList)
             this.copyUrl = strList.slice(0, 5).join('/')
           }
 
@@ -504,7 +628,8 @@ export default {
             data.cronExpr,
             data.timePoint,
             data.humanityTime,
-            data.cronStrategy
+            data.cronStrategy,
+            data.stormConfig
           )
         } else {
           this.$notify({
@@ -515,7 +640,7 @@ export default {
       })
     },
     // 处理cron 表达式
-    handleCronExpr(cron, timePoint, humanityTime, cronStrategy) {
+    handleCronExpr(cron, timePoint, humanityTime, cronStrategy, stormConfig) {
       let cronArr = cron.split(' ')
       // 判断是一次还是周期
       if (cronStrategy === 'once') {
@@ -574,6 +699,10 @@ export default {
       } else if (cronStrategy === 'interval') {
         this.radio = 3
         this.intervalForm.interval = cronArr[1].split('/')[1]
+        this.alertTimeList.forEach((item) => {
+          item.value = stormConfig[item.key]
+        })
+        this.intervalForm.keepAlert = stormConfig.keepAlert
       }
     },
     // 一次执行的操作
@@ -809,6 +938,12 @@ export default {
       } else if (radio === 3) {
         const interval = this.intervalForm.interval
         let cronStr = this.handleIntervalCron(interval)
+        let stormConfig = {}
+        stormConfig.dimension = interval
+        stormConfig.keepAlert = this.intervalForm.keepAlert
+        this.alertTimeList.forEach((item) => {
+          stormConfig[item.key] = item.value
+        })
         let params = {
           manageId: this.taskItem,
           name: this.name,
@@ -816,7 +951,8 @@ export default {
           cronExpr: cronStr,
           humanityTime: `每${interval}分钟执行一次`,
           timePoint: '',
-          cronStrategy: 'interval'
+          cronStrategy: 'interval',
+          stormConfig: stormConfig
         }
         if (this.status === 'create') {
           params.id = 0

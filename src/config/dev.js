@@ -4,10 +4,16 @@
  * @date 2019/6/28
  */
 module.exports = {
-  aiaUrl: 'http://111.231.165.249:8075/test_bms/aia/',
-  baserUrl: 'http://111.231.165.249:8075/test_bms/',
-  CiBaseUrl: 'http://111.231.165.249:8075/test_cmdb/',
-  wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
+  // aiaUrl: 'http://111.231.165.249:8075/test_bms/aia/',
+  // baserUrl: 'http://111.231.165.249:8075/test_bms/',
+  // CiBaseUrl: 'http://111.231.165.249:8075/test_cmdb/',
+  // wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
+
+  aiaUrl: 'http://192.168.12.184:8086/aia/',
+  baserUrl: 'http://192.168.12.184:8086/',
+  CiBaseUrl: 'http://192.168.12.184:8086/',
+  wsTopology: 'ws://192.168.12.184:8086/ws/topology/ciitem/'
+
   // wsTopology: 'ws://192.168.43.226:8087/ws/topology/ciitem/'
   // aiaUrl: 'http://111.231.165.249:8086/',
   // baserUrl: 'http://111.231.165.249:8086/',
