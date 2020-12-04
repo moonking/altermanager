@@ -353,7 +353,7 @@ export default {
         year: ''
       },
       intervalFormRules: {
-        keepAlert: [{ required: true, validator: validateAlertTime, trigger: 'blur' }]
+        keepAlert: [{ validator: validateAlertTime, trigger: 'blur' }]
       },
       alertTimeList: [
         {
