@@ -222,7 +222,7 @@
           ref="intervalForm"
           style="margin-left: 20px"
         >
-          <el-form-item class="result-str">
+          <el-form-item class="result-str" style="margin-left: 120px">
             <!-- 从
               <el-input v-model="intervalForm.startTime" type="number" style="width: 100px" @input="maxLimit"></el-input>
               <el-select style="width: 100px" v-model="intervalForm.timeType">
@@ -583,6 +583,8 @@ export default {
     },
     //  清空执行方式的下拉框
     handleClearType() {
+      this.alert = false
+      this.weekAlert = false
       this.rangWeek = ''
       this.rangDay = ''
       this.relationNum = ''
@@ -853,8 +855,9 @@ export default {
       let cron = []
       const radio = this.radio
       if (radio === 1) {
+        console.log(this.alert, this.weekAlert)
         // 将存储好的cron需求元素合并成cron表达式
-        if (this.alert && this.weekAlert) {
+        if (this.alert || this.weekAlert) {
           if (this.cronObj.year) {
             cron.unshift(this.cronObj.year)
           }
@@ -972,7 +975,7 @@ export default {
         if (result.data.code === 200) {
           this.$notify({
             type: 'success',
-            message: result.data.data
+            message: '新增成功'
           })
           this.$router.push({
             path: '/Aibms/otherConfiguration/timingList',
@@ -1145,6 +1148,7 @@ export default {
       let year = this.formatYear(this.startDate, this.endDate)
       if (val !== '' && val) {
         let isRepeat = this.handleJudgeRepeat(val)
+
         if (isRepeat) {
           this.alert = false
           alertStr = '输入数值中存在重复值！'
@@ -1424,7 +1428,7 @@ export default {
         if (res.data.code === 200) {
           this.$notify({
             type: 'success',
-            message: res.data.data
+            message: '修改成功'
           })
           this.$router.push({
             path: '/Aibms/otherConfiguration/timingList',
