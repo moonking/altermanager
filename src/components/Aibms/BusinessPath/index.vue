@@ -106,33 +106,33 @@ export default {
         // 点集
         nodes: [
           // 主机
-          { id: 'nodeA1', text: '\ue60e', level: 1 },
-          { id: 'nodeA2', text: '\ue60e', level: 1 },
+          { id: 'nodeA1', text: '\ue60e', level: 1, label: 'NBSOA', width: 160 },
+          { id: 'nodeA2', text: '\ue60e', level: 1, label: 'pioneer团险', width: 160 },
           // 进程
-          { id: 'nodeB1', text: '\ue6d8', level: 2 },
-          { id: 'nodeB2', text: '\ue6d8', level: 2 },
-          { id: 'nodeB3', text: '\ue6d8', level: 2 },
+          { id: 'nodeB1', text: '\ue6d8', level: 2, label: 'IB_Cloud', width: 160 },
+          { id: 'nodeB2', text: '\ue6d8', level: 2, label: 'SIS_Cloud ', width: 160 },
+          { id: 'nodeB3', text: '\ue6d8', level: 2, label: 'ICSP呼叫中心', width: 160 },
           // 服务
-          { id: 'nodeC1', text: '\ue663', level: 3 },
-          { id: 'nodeC2', text: '\ue663', level: 3 },
-          { id: 'nodeC3', text: '\ue663', level: 3 },
-          { id: 'nodeC4', text: '\ue663', level: 3 },
-          { id: 'nodeC5', text: '\ue663', level: 3 },
-          { id: 'nodeC6', text: '\ue663', level: 3 },
-          { id: 'nodeC7', text: '\ue663', level: 3 },
-          { id: 'nodeC8', text: '\ue663', level: 3 },
-          // 应用
-          { id: 'nodeD1', text: '\ue650', level: 4 },
-          { id: 'nodeD2', text: '\ue650', level: 4 },
-          { id: 'nodeD3', text: '\ue650', level: 4 },
-          { id: 'nodeD4', text: '\ue650', level: 4 },
-          { id: 'nodeD5', text: '\ue650', level: 4 },
-          // 交易
-          { id: 'nodeE1', text: '\ue605', level: 5 },
-          { id: 'nodeE2', text: '\ue605', level: 5 },
-          { id: 'nodeE3', text: '\ue605', level: 5 },
-          { id: 'nodeE4', text: '\ue605', level: 5 },
-          { id: 'nodeE5', text: '\ue605', level: 5 }
+          { id: 'nodeC1', text: '\ue663', level: 3, label: 'NB新单中后端系统', width: 210 },
+          { id: 'nodeC2', text: '\ue663', level: 3, label: 'Eservice易服务系统', width: 220 },
+          { id: 'nodeC3', text: '\ue663', level: 3, label: 'ISP客户交互服务平台系统', width: 265 },
+          { id: 'nodeC4', text: '\ue663', level: 3, label: 'SMS短信系统', width: 160 },
+          { id: 'nodeC5', text: '\ue663', level: 3, label: 'lservice爱服务系统', width: 220 },
+          { id: 'nodeC6', text: '\ue663', level: 3, label: 'SIS生产服务路径图', width: 200 },
+          // { id: 'nodeC7', text: '\ue663', level: 3 },
+          // { id: 'nodeC8', text: '\ue663', level: 3 },
+          // // 应用
+          // { id: 'nodeD1', text: '\ue650', level: 4 },
+          // { id: 'nodeD2', text: '\ue650', level: 4 },
+          // { id: 'nodeD3', text: '\ue650', level: 4 },
+          // { id: 'nodeD4', text: '\ue650', level: 4 },
+          // { id: 'nodeD5', text: '\ue650', level: 4 },
+          // // 交易
+          // { id: 'nodeE1', text: '\ue605', level: 5 },
+          // { id: 'nodeE2', text: '\ue605', level: 5 },
+          // { id: 'nodeE3', text: '\ue605', level: 5 },
+          // { id: 'nodeE4', text: '\ue605', level: 5 },
+          { id: 'nodeE5', text: '\ue605', level: 5, label: 'InstantBuy生产服务路径图', width: 275 }
         ],
         // 边集
         edges: [
@@ -149,22 +149,22 @@ export default {
 
           { source: 'nodeB3', target: 'nodeC5' },
           { source: 'nodeB3', target: 'nodeC6' },
-          { source: 'nodeB3', target: 'nodeC7' },
-          { source: 'nodeB3', target: 'nodeC8' },
+          // { source: 'nodeB3', target: 'nodeC7' },
+          // { source: 'nodeB3', target: 'nodeC8' },
 
-          { source: 'nodeC1', target: 'nodeD1' },
-          { source: 'nodeC1', target: 'nodeD2' },
+          // { source: 'nodeC1', target: 'nodeD1' },
+          // { source: 'nodeC1', target: 'nodeD2' },
 
-          { source: 'nodeC2', target: 'nodeD3' },
-          { source: 'nodeC2', target: 'nodeD4' },
+          // { source: 'nodeC2', target: 'nodeD3' },
+          // { source: 'nodeC2', target: 'nodeD4' },
 
-          { source: 'nodeC3', target: 'nodeD5' },
+          // { source: 'nodeC3', target: 'nodeD5' },
 
-          { source: 'nodeD1', target: 'nodeE1' },
-          { source: 'nodeD1', target: 'nodeE2' },
-          { source: 'nodeD1', target: 'nodeE3' },
+          // { source: 'nodeD1', target: 'nodeE1' },
+          // { source: 'nodeD1', target: 'nodeE2' },
+          // { source: 'nodeD1', target: 'nodeE3' },
 
-          { source: 'nodeD2', target: 'nodeE4' },
+          // { source: 'nodeD2', target: 'nodeE4' },
 
           { source: 'nodeD4', target: 'nodeE5' }
         ]
@@ -190,8 +190,9 @@ export default {
           // color: '#000',
           style: {
             // stroke: '#23bbd6',
-            stroke: '#00a8e8',
-            lineWidth: 2,
+            // stroke: '#00a8e8',
+            stroke: '#4EBBC5',
+            lineWidth: 4,
             lineAppendWidth: 20,
             // startArrow: true,
             endArrow: true
@@ -217,9 +218,10 @@ export default {
             strokeOpacity: 1
           },
           actived: {
-            stroke: '#ff6766',
-            lineWidth: 2,
-            strokeOpacity: 1
+            // stroke: '#ff6766',
+            // lineWidth: 2,
+            // strokeOpacity: 1,
+            fill: '#376E6193'
           },
           selected: {
             stroke: '#ff6766',
@@ -238,7 +240,8 @@ export default {
             cursor: 'pointer'
           },
           actived: {
-            stroke: '#ff6766',
+            stroke: '#408272',
+            // stroke: '#ff6766',
             // stroke: '#19b868',
             lineWidth: 4
           },
@@ -254,8 +257,10 @@ export default {
         // 默认节点配置
         defaultNode: {
           // type: 'businessPathNode',
+          type: 'aibmsPathNode',
           labelColor: '#fff',
-          type: 'iconCircle',
+          // iconColor:'#000',
+          // type: 'iconCircle',
           style: {
             stroke: 'transparent',
             fill: '#16161693',
@@ -722,7 +727,7 @@ export default {
 .business-path {
   flex: 1 1 auto;
   width: 100%;
-  height: 606px;
+  height: 100%;
   box-sizing: border-box;
   position: relative;
   /* background-color: green; */
