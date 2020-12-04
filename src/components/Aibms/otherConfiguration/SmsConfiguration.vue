@@ -122,9 +122,11 @@
                     :clickNum="clickMsgNum"
                     :StringList="StringList"
                     :placeholderText="
-                      msgForm.noticeType !== 'ALERT_AGGREGATION'
-                        ? placeholderMsg
-                        : polymerization
+                      msgForm.noticeType === 'ALERT_AGGREGATION'
+                        ? polymerization
+                        : msgForm.noticeType === 'ALERT_STORM'
+                        ? stormPlaceholder
+                        : placeholderMsg
                     "
                     :inputH="8"
                     :textContent.sync="MsgText"
@@ -201,7 +203,8 @@ export default {
       typeList: [
         { value: 'ALERT', label: '普通模板' },
         { value: 'ALERT_UPGRADE', label: '升级模板' },
-        { value: 'ALERT_AGGREGATION', label: '聚合模板' }
+        { value: 'ALERT_AGGREGATION', label: '聚合模板' },
+        { value: 'ALERT_STORM', label: '风暴模板' }
       ],
       firstUrl: '',
       isSubmit: false,
@@ -211,6 +214,7 @@ export default {
       blockSwitch: { 1: true, 2: false },
       placeholderMsg: '例如：您好，关于[[$DATE]]告警信息的邮件，请查阅',
       polymerization: '例如：您好，主机:[[$HOSTNAME]]###描述:[[$message]]###,ps:###里面的为聚合内容',
+      stormPlaceholder: '例如：您好，主机：[[$host]]描述：[[$message]]告警持续时间：[[$duration]]告警发生次数：[[$times]]',
       msgForm: {
         apiUrl: '',
         noticeType: 'ALERT'
@@ -267,6 +271,11 @@ export default {
         },
         {
           noticeType: 'ALERT_AGGREGATION',
+          subject: '',
+          content: ''
+        },
+        {
+          noticeType: 'ALERT_STORM',
           subject: '',
           content: ''
         }
