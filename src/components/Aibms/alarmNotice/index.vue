@@ -383,7 +383,7 @@ export default {
   position: relative;
   width: 100%;
   height: 94%;
-  padding: 10px 0;
+  padding: 10px 10px;
   box-sizing: border-box;
   .search-button {
     .el-button {

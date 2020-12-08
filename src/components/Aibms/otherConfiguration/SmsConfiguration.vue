@@ -503,6 +503,7 @@ export default {
 
 <style lang="scss" scoped>
 .temp {
+  margin: 10px;
   .wrapper_pannel {
     width: 100%;
     background-color: rgba(4, 28, 37, 0.3);
