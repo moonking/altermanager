@@ -1,88 +1,88 @@
 <template>
   <div class="containBox aibms-role">
-    <div>
-      <el-form :inline="true" v-model="formInline" class="demo-form-inline">
-        <el-form-item>
-          <el-input
-            type="text"
-            placeholder="业务系统名称"
-            clearable
-            v-model="searchSystemName"
-          />
-        </el-form-item>
+    <el-form :inline="true" v-model="formInline" class="demo-form-inline">
+      <el-form-item>
+        <el-input
+          type="text"
+          placeholder="业务系统名称"
+          clearable
+          v-model="searchSystemName"
+        />
+      </el-form-item>
 
-        <el-form-item class="item-right overHideMargin">
-          <el-button
-            @click="allSystembtnde"
-            icon="el-icon-close"
-            class="nomal-button"
-            >批量删除</el-button
-          >
-          <el-button @click="checkAll" v-if="delesteBtnSys">删除</el-button>
-          <el-button @click="cancleall" v-if="cancleallBtn">取消</el-button>
-          <el-button
-            icon="el-icon-search"
-            class="search-el-button margin-left-btn"
-            @click="searchBtn"
-            >查找</el-button
-          >
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            class="margin-left-btn"
-            @click.prevent="addSystembtn"
-            >新增</el-button
-          >
-        </el-form-item>
-        <el-form-item class="form-btn"></el-form-item>
-      </el-form>
-      <el-table
-        :data="systemListData"
-        @row-click="systemDetail"
-        stripe
-        class="table-css non-border"
-        style="width: 100%; font-size: 0.9rem"
-        :header-cell-style="{ background: '#f5f5f5' }"
-        @selection-change="handleSelectionChange"
-        center="true"
-      >
-        <el-table-column type="selection" v-if="allSysDeleteShow" />
-        <el-table-column label="业务系统名称" prop="name" />
-        <el-table-column label="英文缩写" prop="englishAbridge" />
-        <el-table-column label="类型" prop="type" />
-        <!-- <el-table-column label="url" prop="url" />
+      <el-form-item class="item-right overHideMargin">
+        <el-button
+          @click="allSystembtnde"
+          icon="el-icon-close"
+          class="nomal-button"
+          >批量删除</el-button
+        >
+        <el-button @click="checkAll" v-if="delesteBtnSys">删除</el-button>
+        <el-button @click="cancleall" v-if="cancleallBtn">取消</el-button>
+        <el-button
+          icon="el-icon-search"
+          class="search-el-button margin-left-btn"
+          @click="searchBtn"
+          >查找</el-button
+        >
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          class="margin-left-btn"
+          @click.prevent="addSystembtn"
+          >新增</el-button
+        >
+      </el-form-item>
+      <el-form-item class="form-btn"></el-form-item>
+    </el-form>
+    <el-table
+      :data="systemListData"
+      @row-click="systemDetail"
+      stripe
+      class="table-css non-border"
+      style="width: 100%; font-size: 0.9rem"
+      :header-cell-style="{ background: '#f5f5f5' }"
+      @selection-change="handleSelectionChange"
+      center="true"
+      height="84%"
+    >
+      <el-table-column type="selection" v-if="allSysDeleteShow" />
+      <el-table-column label="业务系统名称" prop="name" />
+      <el-table-column label="英文缩写" prop="englishAbridge" />
+      <el-table-column label="类型" prop="type" />
+      <!-- <el-table-column label="url" prop="url" />
         <el-table-column label="代码库凭证" prop="vName" /> -->
-        <el-table-column label="负责人" prop="opsPerson" />
-        <!-- <el-table-column label="开发负责人" prop="devPerson" /> -->
-        <!-- <el-table-column label="描述" prop="remarks" /> -->
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <div class="task-btn-box">
-              <span
-                class="special"
-                @click.stop="getSystemDetail(scope.row.systemId)"
+      <el-table-column label="负责人" prop="opsPerson" />
+      <!-- <el-table-column label="开发负责人" prop="devPerson" /> -->
+      <!-- <el-table-column label="描述" prop="remarks" /> -->
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <div class="task-btn-box">
+            <span
+              class="special"
+              @click.stop="getSystemDetail(scope.row.systemId)"
+            >
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑"
+                placement="top-start"
               >
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="编辑"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="bianji" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-              <span class="special" @click.stop="showOpen3(scope.row.systemId)">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="删除"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-            </div>
-            <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+                <icon-svg icon-class="bianji" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+            <span class="special" @click.stop="showOpen3(scope.row.systemId)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除"
+                placement="top-start"
+              >
+                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+          </div>
+          <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <el-button
                 class="cm-form-btn cm-edit-btn-light"
                 :style="{backgroundSize: '40%', backgroundPosition: 'center'}"
@@ -97,24 +97,23 @@
                 @click="open3(scope.row.systemId)"
               ></el-button>
             </el-tooltip>-->
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currPage"
-          :page-sizes="[10, 30, 50]"
-          layout="prev, pager, next, sizes, total, jumper"
-          :total="total"
-          v-if="pageShow"
-          style="cursor: pointer; margin: 10px"
-        ></el-pagination>
-      </div>
-      <div class="clear"></div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currPage"
+        :page-sizes="[10, 30, 50]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total "
+        v-if="total&& total > 10"
+        class="absolute-center"
+        style="cursor: pointer"
+      ></el-pagination>
     </div>
-
+    <div class="clear"></div>
     <el-dialog
       center
       :visible.sync="dialogVisibleDelete"
@@ -276,7 +275,8 @@ export default {
       axios.getSystemList(JobDto).then(res => {
         if (res.data.code == 200) {
           this.systemListData = res.data.data.result.records
-          this.total = parseInt(res.data.data.result.total)
+          this.total = Number(res.data.data.result.total)
+          console.log(this.total, typeof this.total)
           if (this.total == 0) {
             this.page = false
             this.pageShow = false
@@ -451,7 +451,7 @@ export default {
       axios.getEnvList(JobDto).then(res => {
         if (res.data.code == 200) {
           this.envListData = res.data.data.result.records
-          this.total1 = parseInt(res.data.data.result.total)
+          this.total1 = Number(res.data.data.result.total)
           //  console.log(this.envListData);
           if (this.total1 == 0) {
             this.page = false
@@ -619,8 +619,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .containBox {
+  position: relative;
   padding: 10px;
-  overflow: auto;
+  height: 91%;
   font-size: 1rem;
   .tabs-list {
     & /deep/ .el-tabs__header {
@@ -803,24 +804,24 @@ export default {
 }
 .overHideMargin {
   margin-right: 0 !important;
-    .search-el-button.el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
-      }
-      &:focus {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
-      }
-      &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
+  .search-el-button.el-button {
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
     }
+    &:focus {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:active {
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+    }
+  }
 }
 </style>

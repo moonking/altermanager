@@ -3406,7 +3406,7 @@ export default {
     padding: 1rem;
     border: 1px solid lightgray;
     height: 11rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     .icon-border {
       height: 4.3rem;
       border: 1px solid lightgray;

@@ -97,6 +97,7 @@
       :data="tableData"
       @row-click="noticeDetail"
       style="width: 100%"
+      height="82%"
     >
       <!-- <el-table-column type="selection" width="55"> </el-table-column> -->
       <el-table-column
@@ -158,7 +159,7 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize"
+      v-if="totalSize && totalSize > 10"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
       :page-sizes="[10, 20, 30]"
@@ -166,7 +167,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align: center; margin-top: 92px"
+     class="absolute-center"
     />
   </div>
 </template>
@@ -381,6 +382,7 @@ export default {
 .aia-content {
   position: relative;
   width: 100%;
+  height: 94%;
   padding: 10px 0;
   box-sizing: border-box;
   .search-button {
@@ -390,15 +392,15 @@ export default {
       &:hover {
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041C25;
+        background-color: #041c25;
       }
       &:focus {
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041C25;
+        background-color: #041c25;
       }
       &:active {
-        background-color: #041C25;
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
       }

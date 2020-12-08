@@ -33,6 +33,7 @@
       <div class="cluster-list">
         <el-table
           @row-click="readJob"
+          height="82%"
           class="data-list"
           :data="tableData"
           style="width: 100%"
@@ -165,25 +166,20 @@
           >
         </span>
       </el-dialog>
-
-      <!-- 分页 -->
-      <div
-        class="block"
-        style="text-align: center; width: 100%; padding: 30px 0"
-      >
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currPage"
-          :page-size="size"
-          :page-sizes="[10, 30, 50]"
-          layout="prev, pager, next, sizes, total, jumper"
-          :total="total"
-          v-if="page"
-          style="cursor: pointer"
-        ></el-pagination>
-      </div>
     </div>
+    <!-- 分页 -->
+    <el-pagination
+      v-if="total && total > 10"
+      :current-page="currPage"
+      :page-size="size"
+      :page-sizes="[10, 20, 30]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      style="cursor: pointer"
+      class="absolute-center"
+    />
   </div>
 </template>
 
@@ -414,7 +410,9 @@ export default {
   min-width: 20%;
 }
 .cluster-manage {
+  position: relative;
   width: 100%;
+  height: 94%;
   padding: 10px 0;
   box-sizing: border-box;
 }

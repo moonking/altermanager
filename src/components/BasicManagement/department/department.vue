@@ -186,6 +186,7 @@
     <!-- 分页功能 -->
     <div class="block rolePaginate">
       <el-pagination
+        v-if="total && total > 10"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currPage"

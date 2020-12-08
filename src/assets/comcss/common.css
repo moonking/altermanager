@@ -200,13 +200,21 @@ body .el-table th.gutter {
 .el-table thead {
   font-size: 14px !important;
   color: #777 !important;
-  font-family: 'microsoft yahei';
+  font-family: "microsoft yahei";
 }
 .el-table thead tr th .cell {
-  font-weight: 500!important;
+  font-weight: 500 !important;
 }
 
 /* 强制margin为0 */
 .margin-zero {
-  margin:0!important;
+  margin: 0 !important;
+}
+
+.absolute-center {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  right: 0;
 }

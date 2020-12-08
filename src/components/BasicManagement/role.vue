@@ -26,7 +26,7 @@
       <el-form-item class="item-right">
         <el-button
           icon="el-icon-search"
-          class="common-btn-style search-el-button "
+          class="common-btn-style search-el-button"
           @click="getRoleLsit(1)"
           >查找</el-button
         >
@@ -41,93 +41,91 @@
       </el-form-item>
     </el-form>
     <!-- 表格 -->
-    <div class="table-area">
-      <el-table :data="roleListData" stripe>
-        <el-table-column prop="name" label="角色名称" />
-        <el-table-column prop="sysName" label="所属系统" />
-        <el-table-column prop="description" label="角色说明" />
-        <el-table-column prop="permission" label="角色标识" />
-        <el-table-column prop="createDate" label="创建时间" />
-        <el-table-column label="用户操作" width="200px" align="center">
-          <template slot-scope="scope">
-            <div class="task-btn-box">
-              <span class="special" @click="showUser(scope.row.roleId)">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="查看用户"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="chakan" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-              <span class="special" @click="shouwAddUser(scope.row.roleId)">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="添加用户"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="jia" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-              <span class="special" @click="deleteRoleUser(scope.row.roleId)">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="删除用户"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="角色操作" width="200px" align="center">
-          <template slot-scope="scope">
-            <div class="task-btn-box">
-              <span
-                class="special"
-                @click="roleViewBtn(scope.row.roleId, scope.row)"
+    <el-table :data="roleListData" stripe height="84%" style="padding: 0 20px">
+      <el-table-column prop="name" label="角色名称" />
+      <el-table-column prop="sysName" label="所属系统" />
+      <el-table-column prop="description" label="角色说明" />
+      <el-table-column prop="permission" label="角色标识" />
+      <el-table-column prop="createDate" label="创建时间" />
+      <el-table-column label="用户操作" width="200px" align="center">
+        <template slot-scope="scope">
+          <div class="task-btn-box">
+            <span class="special" @click="showUser(scope.row.roleId)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="查看用户"
+                placement="top-start"
               >
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="查看"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="chakan" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-              <span
-                class="special"
-                @click="roleClickBtn(scope.row.roleId, scope.row)"
+                <icon-svg icon-class="chakan" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+            <span class="special" @click="shouwAddUser(scope.row.roleId)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="添加用户"
+                placement="top-start"
               >
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="编辑"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="bianji" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-              <span class="special" @click="deletUser(scope.row.roleId)">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="删除"
-                  placement="top-start"
-                >
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
-                </el-tooltip>
-              </span>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+                <icon-svg icon-class="jia" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+            <span class="special" @click="deleteRoleUser(scope.row.roleId)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除用户"
+                placement="top-start"
+              >
+                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="角色操作" width="200px" align="center">
+        <template slot-scope="scope">
+          <div class="task-btn-box">
+            <span
+              class="special"
+              @click="roleViewBtn(scope.row.roleId, scope.row)"
+            >
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="查看"
+                placement="top-start"
+              >
+                <icon-svg icon-class="chakan" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+            <span
+              class="special"
+              @click="roleClickBtn(scope.row.roleId, scope.row)"
+            >
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑"
+                placement="top-start"
+              >
+                <icon-svg icon-class="bianji" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+            <span class="special" @click="deletUser(scope.row.roleId)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除"
+                placement="top-start"
+              >
+                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+              </el-tooltip>
+            </span>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
     <!-- 查看用户 -->
     <el-dialog
       center
@@ -164,7 +162,7 @@
           :current-page="currPage"
           :page-sizes="[10, 30, 50]"
           :page-size="100"
-          layout="prev, pager, next, sizes, total, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="userTotal"
           style="text-align: center"
         />
@@ -229,7 +227,7 @@
           :current-page="currPage"
           :page-sizes="[10, 30, 50]"
           :page-size="100"
-          layout="prev, pager, next, sizes, total, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="addTotal"
         />
       </div>
@@ -298,7 +296,7 @@
           :current-page="currPage"
           :page-sizes="[10, 30, 50]"
           :page-size="100"
-          layout="prev, pager, next, sizes, total, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="delTotal"
           v-if="delPag"
         ></el-pagination>
@@ -504,17 +502,17 @@
     <!-- 删除 -->
     <!-- 有用户 -->
     <!-- 分页功能 -->
-    <div class="block rolePaginate">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currPage"
-        :page-sizes="[10, 30, 50]"
-        :page-size="100"
-        layout="prev, pager, next, sizes, total, jumper"
-        :total="total"
-      ></el-pagination>
-    </div>
+    <el-pagination
+      class="absolute-center"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currPage"
+      :page-sizes="[10, 30, 50]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      style="    bottom: 10px;"
+    ></el-pagination>
   </div>
 </template>
 <script>
@@ -719,7 +717,7 @@ export default {
       axios.roleList(JobDto).then(res => {
         //        console.log(res);
         this.roleListData = res.data.data.result.records
-        this.total = parseInt(res.data.data.result.total)
+        this.total = Number(res.data.data.result.total)
       })
     },
     handleClick(tab, event) {
@@ -794,7 +792,7 @@ export default {
       axios.getUsersInRole(JobDto)
         .then(res => {
           this.userData = res.data.data.result.records
-          this.userTotal = parseInt(res.data.data.result.total)
+          this.userTotal = Number(res.data.data.result.total)
           if (this.userTotal === 0) {
             this.userPag = false
           } else {
@@ -842,7 +840,7 @@ export default {
         .then(res => {
           // console.log(res);
           this.addUserData = res.data.data.result.records
-          this.addTotal = parseInt(res.data.data.result.total)
+          this.addTotal = Number(res.data.data.result.total)
           if (this.addTotal === 0) {
             this.addPag = false
           } else {
@@ -937,7 +935,7 @@ export default {
       axios.getUsersInRole(JobDto)
         .then(res => {
           this.delUserData = res.data.data.result.records
-          this.delTotal = parseInt(res.data.data.result.total)
+          this.delTotal = Number(res.data.data.result.total)
           if (this.delTotal === 0) {
             this.delPag = false
           } else {
@@ -1256,6 +1254,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .bg {
+  position: relative;
+  height: 84%;
   margin: 10px;
   background: rgba(4, 28, 37, 0.3);
   border-radius: 5px;
@@ -1291,9 +1291,6 @@ export default {
         color: #01aef1;
       }
     }
-  }
-  .table-area {
-    padding: 0 20px;
   }
 
   .txtcenter {

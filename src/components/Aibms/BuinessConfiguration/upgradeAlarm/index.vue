@@ -25,29 +25,47 @@
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addXClassification">新增</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="addXClassification"
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
     <!-- 表格数据 -->
     <el-table
+      height="82%"
       @row-click="alarmDetail"
       :data="tableData"
       stripe
-      :header-cell-style="{background:'#f5f5f5'}"
+      :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
     >
       <el-table-column prop="name" label="名称" />
       <el-table-column label="告警升级规则">
         <template v-slot="scope">
-          {{`${scope.row.categoryName}等告警分类在过去${scope.row.period}分钟内${scope.row.type}告警${scope.row.count}次，即升级为${scope.row.level}`}}
+          {{
+            `${scope.row.categoryName}等告警分类在过去${scope.row.period}分钟内${scope.row.type}告警${scope.row.count}次，即升级为${scope.row.level}`
+          }}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="operation" label="操作" width="150">
         <template v-slot="scope">
           <div class="task-btn-box">
-            <el-link type="primary" :underline="false" @click.stop="handleEdit(scope.row)">编辑</el-link>
-            <el-link type="primary" :underline="false" @click.stop="handleDelete(scope.row)">删除</el-link>
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleEdit(scope.row)"
+              >编辑</el-link
+            >
+            <el-link
+              type="primary"
+              :underline="false"
+              @click.stop="handleDelete(scope.row)"
+              >删除</el-link
+            >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
                 <icon-svg icon-class="bianji" />
@@ -72,7 +90,7 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize"
+      v-if="totalSize && totalSize > 10"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
       :page-sizes="[10, 20, 30]"
@@ -80,7 +98,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align:center;margin-top:92px"
+      class="absolute-center"
     />
     <!-- 删除组件 -->
     <deleteDialog ref="deleteDialog" @confim-delete="confirmDelete" />
@@ -107,12 +125,12 @@ export default {
     totalSize: 0,
     currentDeleteItemId: -1
   }),
-  created () {
+  created() {
     this.getUpgradeList()
   },
   methods: {
     // 获取列表数据
-    getUpgradeList () {
+    getUpgradeList() {
       const params = {
         name: this.alarmModel.name,
         sortName: this.alarmModel.classification,
@@ -133,16 +151,16 @@ export default {
       })
     },
     // 分页
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getUpgradeList()
     },
     // 表格每页数量
-    handleSizeChange () {
+    handleSizeChange() {
       this.page.current = 1
       this.getUpgradeList()
     },
     // 详情
-    alarmDetail (row) {
+    alarmDetail(row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -152,10 +170,10 @@ export default {
         }
       })
     },
-    search () {
+    search() {
       this.getUpgradeList()
     },
-    addXClassification () {
+    addXClassification() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -163,7 +181,7 @@ export default {
         }
       })
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -172,11 +190,11 @@ export default {
         }
       })
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
-    confirmDelete () {
+    confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteUpgrade(id).then(res => {
         if (res.data.success) {
@@ -204,6 +222,7 @@ export default {
 .aia-content {
   position: relative;
   width: 100%;
+  height: 94%;
   padding: 10px;
   box-sizing: border-box;
   .search-source {
@@ -213,15 +232,15 @@ export default {
       &:hover {
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041C25;
+        background-color: #041c25;
       }
       &:focus {
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041C25;
+        background-color: #041c25;
       }
       &:active {
-        background-color: #041C25;
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
       }
