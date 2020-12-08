@@ -58,6 +58,7 @@
       :data="sshListData"
       ref="multipleTable"
       stripe
+      height="84%"
       @selection-change="handleSelectionChange"
       :header-cell-style="{ background: '#f5f5f5' }"
     >
@@ -121,18 +122,17 @@
     <!-- 删除 -->
     <!-- 有用户 -->
     <!-- 分页功能 -->
-    <div class="block rolePaginate" style="margin-top: 92px">
-      <el-pagination
-        v-if="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currPage"
-        :page-sizes="[10, 30, 50]"
-        :page-size="100"
-        layout="prev, pager, next, sizes, total, jumper"
-        :total="total"
-      />
-    </div>
+    <el-pagination
+      v-if="total && total > 10"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currPage"
+      :page-sizes="[10, 30, 50]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      class="absolute-center"
+    />
 
     <el-dialog
       center
@@ -512,6 +512,7 @@ export default {
                 cirelationId: item.cirelationId
               });
             });
+
             this.sshListData = this.copylist;
             this.total = Number(res.data.data.result.total);
           }
@@ -675,6 +676,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .bg {
+  position: relative;
+  height: 90%;
   padding: 10px;
   .rolePaginate {
     & /deep/ .el-pagination {
@@ -783,22 +786,22 @@ export default {
   }
 }
 .search-el-button {
-    border: 1px solid #fff;
-    color: #fff;
-    &:hover {
-      border: 1px solid #01aef1;
-      color: #01aef1;
-      background-color: #041c25;
-    }
-    &:focus {
-      border: 1px solid #01aef1;
-      color: #01aef1;
-      background-color: #041c25;
-    }
-    &:active {
-      background-color: #041c25;
-      border: 1px solid #01aef1;
-      color: #01aef1;
-    }
+  border: 1px solid #fff;
+  color: #fff;
+  &:hover {
+    border: 1px solid #01aef1;
+    color: #01aef1;
+    background-color: #041c25;
+  }
+  &:focus {
+    border: 1px solid #01aef1;
+    color: #01aef1;
+    background-color: #041c25;
+  }
+  &:active {
+    background-color: #041c25;
+    border: 1px solid #01aef1;
+    color: #01aef1;
+  }
 }
 </style>

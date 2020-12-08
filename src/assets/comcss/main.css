@@ -35,7 +35,7 @@ a {
   width: auto;
   height: 100%;
   padding: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 .content-collapse {
@@ -48,6 +48,10 @@ a {
   border: 1px solid #ddd;
   border-radius: 2px;
   margin: 10px;
+}
+
+.relative {
+  position: relative;
 }
 
 .crumbs {

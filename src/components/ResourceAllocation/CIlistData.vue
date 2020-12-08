@@ -72,7 +72,10 @@
       </el-select>-->
       <!-- </el-form-item> -->
       <el-form-item class="item-right overHideMargin">
-        <el-button icon="el-icon-search" class="search-el-button" @click.stop="search"
+        <el-button
+          icon="el-icon-search"
+          class="search-el-button"
+          @click.stop="search"
           >查找</el-button
         >
         <!-- <el-dropdown trigger="click">
@@ -264,36 +267,37 @@
         </el-select>-->
       </div>
       <div class="list-box" style="margin-top: 20px">
-        <div v-if="changeTab">
-          <el-table
-            :data="CiDataList"
-            stripe
-            @selection-change="handleSelectionChange"
-            class="table-wrapper"
-          >
-            <el-table-column type="selection" align="center" />
-            <el-table-column label="名称">
-              <template slot-scope="scope">
-                <span v-html="scope.row.name"></span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="citypeName" label="CI类型" />
-            <el-table-column label="数据来源">
-              <template slot-scope="scope">
-                <span>{{ dataFromMap[scope.row.dataFrom] }}</span>
-              </template>
-            </el-table-column>
-            <!-- <el-table-column label="环境">
+        <el-table
+          v-if="changeTab"
+          :data="CiDataList"
+          stripe
+          @selection-change="handleSelectionChange"
+          class="table-wrapper"
+          height="86%"
+        >
+          <el-table-column type="selection" align="center" />
+          <el-table-column label="名称">
+            <template slot-scope="scope">
+              <span v-html="scope.row.name"></span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="citypeName" label="CI类型" />
+          <el-table-column label="数据来源">
+            <template slot-scope="scope">
+              <span>{{ dataFromMap[scope.row.dataFrom] }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column label="环境">
               <template slot-scope="scope">
                 <span>{{ scope.row.Envname }}</span>
               </template>
             </el-table-column> -->
-            <el-table-column label="业务系统">
-              <template slot-scope="scope">
-                <span>{{ scope.row.sName }}</span>
-              </template>
-            </el-table-column>
-            <!-- <el-table-column label="关键字">
+          <el-table-column label="业务系统">
+            <template slot-scope="scope">
+              <span>{{ scope.row.sName }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column label="关键字">
               <template slot-scope="scope">
                 <div v-if="scope.row.keywords == ''">
                   <span>无</span>
@@ -307,53 +311,53 @@
                 </div>
               </template>
             </el-table-column> -->
-            <el-table-column label="操作" align="center" width="200px">
-              <template slot-scope="scope">
-                <div class="task-btn-box">
-                  <span class="special" @click="toview(scope.row.ciitemId)">
-                    <el-tooltip
-                      class="item"
-                      effect="dark"
-                      content="查看详情"
-                      placement="top-start"
-                    >
-                      <icon-svg
-                        icon-class="chakan"
-                        class="whiteness-icon-color"
-                      />
-                    </el-tooltip>
-                  </span>
-                  <span class="special" @click="edit(scope.row.ciitemId)">
-                    <el-tooltip
-                      class="item"
-                      effect="dark"
-                      content="编辑"
-                      placement="top-start"
-                    >
-                      <icon-svg
-                        icon-class="bianji"
-                        class="whiteness-icon-color"
-                      />
-                    </el-tooltip>
-                  </span>
-                  <span
-                    class="special"
-                    @click="showOpen2(scope.row.ciitemId, '1')"
+          <el-table-column label="操作" align="center" width="200px">
+            <template slot-scope="scope">
+              <div class="task-btn-box">
+                <span class="special" @click="toview(scope.row.ciitemId)">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="查看详情"
+                    placement="top-start"
                   >
-                    <el-tooltip
-                      class="item"
-                      effect="dark"
-                      content="删除"
-                      placement="top-start"
-                    >
-                      <icon-svg
-                        icon-class="shanchu"
-                        class="whiteness-icon-color"
-                      />
-                    </el-tooltip>
-                  </span>
-                </div>
-                <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+                    <icon-svg
+                      icon-class="chakan"
+                      class="whiteness-icon-color"
+                    />
+                  </el-tooltip>
+                </span>
+                <span class="special" @click="edit(scope.row.ciitemId)">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="编辑"
+                    placement="top-start"
+                  >
+                    <icon-svg
+                      icon-class="bianji"
+                      class="whiteness-icon-color"
+                    />
+                  </el-tooltip>
+                </span>
+                <span
+                  class="special"
+                  @click="showOpen2(scope.row.ciitemId, '1')"
+                >
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="删除"
+                    placement="top-start"
+                  >
+                    <icon-svg
+                      icon-class="shanchu"
+                      class="whiteness-icon-color"
+                    />
+                  </el-tooltip>
+                </span>
+              </div>
+              <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
                   <el-button
                     @click="edit(scope.row.ciitemId)"
                     class="cm-form-btn cm-edit-btn-light"
@@ -374,34 +378,33 @@
                     @click="open2(scope.row.ciitemId,'1')"
                   ></el-button>
                 </el-tooltip>-->
-              </template>
-            </el-table-column>
-          </el-table>
+            </template>
+          </el-table-column>
+        </el-table>
 
-          <div class="block">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="currPage"
-              :page-sizes="[10, 30, 50]"
-              layout="prev, pager, next, sizes, total, jumper"
-              :total="total"
-              v-if="page"
-            ></el-pagination>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currPage"
+          :page-sizes="[10, 30, 50]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          style="bottom: -12%"
+          class="absolute-center"
+          v-if="total && total > 10"
+        ></el-pagination>
+        <el-dialog :visible.sync="centerDialogVisible" width="25%" center>
+          <div style="width: 100%; text-align: center">
+            <h3>确认删除</h3>
           </div>
-          <el-dialog :visible.sync="centerDialogVisible" width="25%" center>
-            <div style="width: 100%; text-align: center">
-              <h3>确认删除</h3>
-            </div>
 
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="centerDialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="deleteData(item.ciitemId)"
-                >确 定</el-button
-              >
-            </span>
-          </el-dialog>
-        </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="centerDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="deleteData(item.ciitemId)"
+              >确 定</el-button
+            >
+          </span>
+        </el-dialog>
       </div>
       <!-- <div class="box-chart aibms-color-bg" v-if="!changeTab">
         <div class="box-title">
@@ -1038,6 +1041,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .bg {
+  position: relative;
+  height: 90%;
   border-radius: 5px;
   /* padding-bottom: 30px; */
   padding: 10px;
@@ -1060,6 +1065,7 @@ export default {
     }
   }
   .content-wrapper {
+    height: 86%;
     position: relative;
     .tablist {
       text-align: center;
@@ -1112,6 +1118,7 @@ export default {
       top: 20px;
     }
     .list-box {
+      height: 100%;
       .table-wrapper {
         .task-btn-box {
           /* padding: 10px; */
@@ -1292,23 +1299,23 @@ export default {
 }
 .overHideMargin {
   .search-el-button.el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
-      }
-      &:focus {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
-      }
-      &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:focus {
+      border: 1px solid #01aef1;
+      color: #01aef1;
+      background-color: #041c25;
+    }
+    &:active {
+      background-color: #041c25;
+      border: 1px solid #01aef1;
+      color: #01aef1;
+    }
   }
 }
 </style>

@@ -48,6 +48,7 @@
     <el-table
       :data="tableData"
       stripe
+      height="82%"
       @row-click="classDetail"
       :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
@@ -109,7 +110,7 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize"
+      v-if="totalSize && totalSize > 10"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
       :page-sizes="[10, 20, 30]"
@@ -117,7 +118,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align: center; margin-top: 92px"
+      class="absolute-center"
     />
     <!-- 删除提示 -->
     <el-dialog
@@ -306,6 +307,7 @@ export default {
 .aia-content {
   position: relative;
   width: 100%;
+  height: 94%;
   padding: 10px 0;
   box-sizing: border-box;
   .search-type {

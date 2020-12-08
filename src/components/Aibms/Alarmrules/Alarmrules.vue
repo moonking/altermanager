@@ -71,6 +71,7 @@
       :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="ruleDeatil"
       style="width: 100%"
+      height="82%"
     >
       <el-table-column prop="name" label="规则名称" />
       <el-table-column prop="level" label="级别">
@@ -137,7 +138,7 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize"
+      v-if="totalSize && totalSize > 10"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
       :page-sizes="[10, 20, 30]"
@@ -145,7 +146,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      style="text-align: center; margin-top: 92px"
+      class="absolute-center"
     />
     <!-- 删除组件 -->
     <deleteDialog ref="deleteDialog" @confim-delete="confirmDelete" />
@@ -340,6 +341,7 @@ export default {
 .aia-content {
   position: relative;
   width: 100%;
+  height: 94%;
   padding: 10px 10px;
   box-sizing: border-box;
   .search-rule {
