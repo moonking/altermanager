@@ -833,7 +833,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } 00:00 执行`
+            } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -903,7 +903,7 @@ export default {
       } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
           let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${this.onceTime
-          }`
+            }`
           let validate = this.verdictDate(fullDate)
           let cronStr = this.handleOnceCron(fullDate, 2)
           let params = {
@@ -1268,7 +1268,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } ${val} 执行`
+            } ${val} 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 ${val} 执行`
         } else {
@@ -1280,7 +1280,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } 00:00 执行`
+            } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -1533,6 +1533,7 @@ export default {
 }
 .cronPage {
   padding: 0;
+  background-color: rgba(4, 28, 37, 0.3);
   margin: 10px;
 }
 .headtitle {

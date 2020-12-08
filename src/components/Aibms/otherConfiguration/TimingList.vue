@@ -413,12 +413,11 @@ export default {
   position: relative;
   width: 100%;
   height: 94%;
-  padding: 10px 0;
+  padding: 10px 10px;
   box-sizing: border-box;
 }
 .cluster-manage .wrapper {
   width: 100%;
-  padding-left: 5px;
 }
 .wrapper .operate-bar {
   width: 100%;

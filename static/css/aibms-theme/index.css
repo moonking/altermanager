@@ -5090,6 +5090,7 @@ body {
     height: 100%;
     overflow: auto; }
   .el-dialog__wrapper {
+    overflow-y: auto;
     position: fixed;
     top: 0;
     right: 0;
