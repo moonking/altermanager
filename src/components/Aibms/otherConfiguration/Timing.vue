@@ -857,7 +857,7 @@ export default {
         this.$notify({
           type: 'warning',
           title: '提示',
-          message: `时间不可超过${this.intervalForm.interval}min，请重新填写！`
+          message: '时间不可超过59min，请重新填写！'
         })
         return
       }
