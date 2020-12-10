@@ -511,7 +511,7 @@
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
-      style="    bottom: 10px;"
+      style="bottom: 10px"
     ></el-pagination>
   </div>
 </template>
@@ -1275,20 +1275,23 @@ export default {
     .search-el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

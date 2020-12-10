@@ -237,6 +237,7 @@
               type="number"
               style="width: 100px"
               min="0"
+              max="59"
               :disabled="status === 'read'"
             ></el-input>
             <!-- <el-select style="width: 100px" v-model="intervalForm.timeType">
@@ -833,7 +834,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } 00:00 执行`
+          } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -852,10 +853,18 @@ export default {
         })
         return
       }
+      if (this.intervalForm.interval > 59) {
+        this.$notify({
+          type: 'warning',
+          title: '提示',
+          message: `时间不可超过${this.intervalForm.interval}min，请重新填写！`
+        })
+        return
+      }
       let cron = []
       const radio = this.radio
       if (radio === 1) {
-        console.log(this.alert, this.weekAlert)
+        // console.log(this.alert, this.weekAlert)
         // 将存储好的cron需求元素合并成cron表达式
         if (this.alert || this.weekAlert) {
           if (this.cronObj.year) {
@@ -878,9 +887,9 @@ export default {
             // code: this.taskItem,
             cronExpr: cronStr,
             humanityTime: this.str,
-            timePoint: `${moment(this.startDate).format('YYYY-MM-DD')} ${moment(
+            timePoint: `${this.startDate ? moment(this.startDate).format('YYYY-MM-DD') : ''} ${this.endDate ? moment(
               this.endDate
-            ).format('YYYY-MM-DD')}`,
+            ).format('YYYY-MM-DD') : ''}`,
             cronStrategy: 'cycle',
             name: this.name,
             url: this.url
@@ -903,7 +912,7 @@ export default {
       } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
           let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${this.onceTime
-            }`
+          }`
           let validate = this.verdictDate(fullDate)
           let cronStr = this.handleOnceCron(fullDate, 2)
           let params = {
@@ -1018,8 +1027,10 @@ export default {
         }
         if (this.weekAlert) {
           // 对输入数字的验证
-          if (val.indexOf(',') > -1) {
-            dataSource = this.handleMatchVal(val, reg1)
+          if (val.toString().length !== 1) {
+            if (val.indexOf(',') > -1) {
+              dataSource = this.handleMatchVal(val, reg1)
+            }
           } else {
             // 只有单个值时的处理
             dataSource = this.handleSingleVal(val, reg2)
@@ -1050,20 +1061,24 @@ export default {
     },
     // 校验重复
     handleJudgeRepeat(val) {
-      let hash = {}
-      let temp = val.split(',')
-      let newTemp = temp.filter(item => item)
-      for (let i in newTemp) {
-        if (hash[newTemp[i]]) {
-          hash[newTemp[i]] += 1
-        } else {
-          hash[newTemp[i]] = 1
+      let status = false
+      if (val.toString().length !== 1) {
+        let hash = {}
+        let temp = val.split(',')
+        let newTemp = temp.filter(item => item)
+        for (let i in newTemp) {
+          if (hash[newTemp[i]]) {
+            hash[newTemp[i]] += 1
+          } else {
+            hash[newTemp[i]] = 1
+          }
         }
+
+        let repeatState = Object.values(hash)
+        status = repeatState.some(item => {
+          return item > 1
+        })
       }
-      let repeatState = Object.values(hash)
-      let status = repeatState.some(item => {
-        return item > 1
-      })
       return status
     },
     // 多个数值验证
@@ -1268,7 +1283,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } ${val} 执行`
+          } ${val} 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 ${val} 执行`
         } else {
@@ -1280,7 +1295,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } 00:00 执行`
+          } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -1291,10 +1306,12 @@ export default {
     // 多数的处理
     handleWeeks() {
       let week = []
-      if (this.rangWeek.indexOf(',') > -1) {
-        let strArr = this.rangWeek.split(',')
-        for (let k of strArr) {
-          week.push(this.formatWeek(k * 1))
+      if (this.rangWeek.toString().length !== 1) {
+        if (this.rangWeek.indexOf(',') > -1) {
+          let strArr = this.rangWeek.split(',')
+          for (let k of strArr) {
+            week.push(this.formatWeek(k * 1))
+          }
         }
       } else {
         week.push(this.formatWeek(this.rangWeek * 1))

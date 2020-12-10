@@ -1296,7 +1296,7 @@ export default {
             type: 'success'
           });
           this.$router.push({
-            path: '/Aibms/Bconfiguration/Alarmrules',
+            path: '/Aibms/BuinessConfiguration/Alarmrules',
             query: {
               code: 2
             }
@@ -1320,7 +1320,7 @@ export default {
             type: 'success'
           });
           this.$router.push({
-            path: '/Aibms/Bconfiguration/Alarmrules',
+            path: '/Aibms/BuinessConfiguration/Alarmrules',
             query: {
               code: 2
             }
@@ -1337,7 +1337,7 @@ export default {
     // dialog关闭
     cancel() {
       this.$router.push({
-        path: '/Aibms/Bconfiguration/Alarmrules',
+        path: '/Aibms/BuinessConfiguration/Alarmrules',
         query: {
           code: 2
         }

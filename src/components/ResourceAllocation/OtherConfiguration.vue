@@ -104,7 +104,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currPage"
+        :current-page="current"
         :page-sizes="[10, 30, 50]"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total "
@@ -239,8 +239,6 @@ export default {
       CiDataList: '',
       BatchDeleteShow: false,
       pageShow: true,
-      currPage: 1,
-      currPageenv: 1,
       pageShow1: true,
       total: 0,
       total1: 0,
@@ -255,28 +253,50 @@ export default {
 
       // 删除弹窗
       dialogVisibleDelete: false,
-      deleteSystemId: ''
+      deleteSystemId: '',
+      callNum: 0
     }
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          name: this.searchSystemName,
+          current: this.current,
+          size: this.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { name, current, size } = params
+        this.searchSystemName = name
+        this.current = current
+        this.size = size
+      }
+      return params
+    },
     checkAll() {
       this.isDeleteAll = true
     },
     // 业务系统列表
-    getBsystemListData(searchPage) {
-      if (searchPage) {
-        this.current = searchPage
+    getBsystemListData(params) {
+      if (params === undefined) {
+        params = {
+          name: this.searchSystemName,
+          current: this.current,
+          size: this.size
+        }
       }
-      let JobDto = {
-        name: this.searchSystemName,
-        current: this.current,
-        size: this.size
-      }
-      axios.getSystemList(JobDto).then(res => {
+      axios.getSystemList(params).then(res => {
         if (res.data.code == 200) {
           this.systemListData = res.data.data.result.records
           this.total = Number(res.data.data.result.total)
           console.log(this.total, typeof this.total)
+          this.callNum++
           if (this.total == 0) {
             this.page = false
             this.pageShow = false
@@ -293,11 +313,12 @@ export default {
     // 搜索业务系统
     searchBtn() {
       this.systemListData = []
-      var searchPage = 1
-      this.getBsystemListData(searchPage)
+      this.current = 1
+      this.getBsystemListData()
     },
     systemDetail(row) {
       console.log(row)
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/watch',
         query: {
@@ -320,6 +341,7 @@ export default {
     },
     // 获取业务系统详情
     getSystemDetail(systemId) {
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/SystemPage/edit',
         query: {
@@ -611,8 +633,9 @@ export default {
     }
   },
   mounted() {
+    let params = this.getParams()
     this.getEnvListData()
-    this.getBsystemListData()
+    this.getBsystemListData(params)
     this.getVoucherData()
   }
 }

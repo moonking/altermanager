@@ -159,8 +159,9 @@
           </div>
         </el-dialog>
       </div>
-      <div class="button-area" v-if="!readOnly">
+      <div class="button-area">
         <el-button
+          v-if="!readOnly"
           type="primary"
           style="margin-right: 100px"
           @click="submitForm"

@@ -41,7 +41,7 @@
         <el-button
           icon="el-icon-search"
           class="search-el-button margin-left-btn"
-          @click="getrelationlist"
+          @click="searchShip"
           >查找</el-button
         >
         <el-button
@@ -126,7 +126,7 @@
       v-if="total && total > 10"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currPage"
+      :current-page="current"
       :page-sizes="[10, 30, 50]"
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
@@ -213,7 +213,6 @@ export default {
       //   value: 'label',
       //   children: 'cities'
       // },
-      currPage: 1,
       current: '1',
       delrelationidlist: '',
       size: '10',
@@ -239,12 +238,43 @@ export default {
 
       // 删除弹框是否显示
       dialogVisibleDelete: false,
-      deleteCiRelationshipId: ''
+      deleteCiRelationshipId: '',
+      callNum: 0
     };
   },
   watch: {},
   methods: {
+    searchShip() {
+      this.current = 1
+      this.getrelationlist()
+    },
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          citypeId: this.sshid[1],
+          relatype: this.sshid2,
+          current: this.current,
+          size: this.size,
+          sshid: this.sshid
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { citypeId, relatype, current, size, sshid } = params
+        this.sshid[1] = citypeId
+        this.sshid2 = relatype
+        this.current = current
+        this.size = size
+        this.sshid = sshid
+      }
+      return params
+    },
     setRelation(cirelationId) {
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/edit',
         query: {
@@ -277,6 +307,7 @@ export default {
       //   .catch();
     },
     viewRelation(cirelationId) {
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/CIrelationPage/watch',
         query: {
@@ -430,17 +461,21 @@ export default {
       this.size = val;
       this.getrelationlist();
     },
-    getrelationlist() {
+    getrelationlist(params) {
       this.copylist = [];
-      let data = {
-        citypeId: this.sshid[1],
-        relatype: this.sshid2,
-        current: this.current,
-        size: this.size
+      if (params === undefined) {
+        params = {
+          citypeId: this.sshid[1],
+          relatype: this.sshid2,
+          current: this.current,
+          size: this.size
+        }
       }
-      axios.getrelationlist(data)
+      console.log(params)
+      axios.getrelationlist(params)
         .then(res => {
           if (res.data.success) {
+            this.callNum++
             res.data.data.result.records.forEach(item => {
               //          {name:"运行",id:"1"},
               // {name:"连接",id:"2"},
@@ -668,7 +703,8 @@ export default {
   created() { },
   updated() { },
   mounted() {
-    this.getrelationlist()
+    let params = this.getParams()
+    this.getrelationlist(params)
     this.getcitypelist()
     this.getCIList()
   }

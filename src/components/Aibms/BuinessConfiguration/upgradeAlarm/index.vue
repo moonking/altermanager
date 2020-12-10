@@ -123,24 +123,52 @@ export default {
       size: 10
     },
     totalSize: 0,
-    currentDeleteItemId: -1
+    currentDeleteItemId: -1,
+    callNum: 0
   }),
   created() {
-    this.getUpgradeList()
+    let params = this.getParams()
+    this.getUpgradeList(params)
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          name: this.alarmModel.name,
+          sortName: this.alarmModel.classification,
+          current: this.page.current,
+          size: this.page.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { name, sortName, current, size } = params
+        this.alarmModel.name = name
+        this.alarmModel.classification = sortName
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
     // 获取列表数据
-    getUpgradeList() {
-      const params = {
-        name: this.alarmModel.name,
-        sortName: this.alarmModel.classification,
-        current: this.page.current,
-        size: this.page.size
+    getUpgradeList(params) {
+      if (params === undefined) {
+        params = {
+          name: this.alarmModel.name,
+          sortName: this.alarmModel.classification,
+          current: this.page.current,
+          size: this.page.size
+        }
       }
       axios.getUpgradeList(params).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify({
             title: '提示',
@@ -161,6 +189,7 @@ export default {
     },
     // 详情
     alarmDetail(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -171,6 +200,7 @@ export default {
       })
     },
     search() {
+      this.page.current = 1
       this.getUpgradeList()
     },
     addXClassification() {
@@ -182,6 +212,7 @@ export default {
       })
     },
     handleEdit(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
         query: {
@@ -229,20 +260,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

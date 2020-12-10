@@ -106,8 +106,9 @@
               @click.prevent="removeDomain(domain)"
             />
           </div>
-          <el-form-item v-if="!readOnly" class="footer-form">
+          <el-form-item  class="footer-form">
             <el-button
+              v-if="!readOnly"
               type="primary"
               @click.stop="handleSave"
               style="margin-right: 100px"
@@ -213,44 +214,47 @@ export default {
     deleteId: -1
   }),
   created() {
-    if (this.$route.query.id) {
-      // 查看（只读状态）
-      if (this.$route.query.read) {
-        this.$route.meta.title = '查看分类'
-        this.readOnly = true
-      } else {
-        this.$route.meta.title = '编辑分类'
-      }
-      this.editId = this.$route.query.id
-      axios.getAlarmDetail(this.editId).then(res => {
-        if (res.data.success) {
-          const sourceDetail = res.data.data
-          const { name, label, extend } = sourceDetail
-          this.form.name = name
-          this.selectValue = label
-          this.selectlabel = this.$options.filters['labelFilter'](label)
-          const matcheList = JSON.parse(extend)
-          if (matcheList && matcheList.length) {
-            this.form.domains = []
-            this.form.domains = matcheList.map(item => {
-              return { source: item.source, expression: item.expression, desc: item.desc }
-            });
-          }
-        } else {
-          this.$notify({
-            title: '提示',
-            type: 'error',
-            message: res.data.message
-          });
-        }
-      });
-    } else {
-      this.$route.meta.title = '新增分类'
-      this.selectValue = '1'
-      this.selectlabel = '交易类型'
-    }
+    this.init()
   },
   methods: {
+    init() {
+      if (this.$route.query.id) {
+      // 查看（只读状态）
+        if (this.$route.query.read) {
+          this.$route.meta.title = '查看分类'
+          this.readOnly = true
+        } else {
+          this.$route.meta.title = '编辑分类'
+        }
+        this.editId = this.$route.query.id
+        axios.getAlarmDetail(this.editId).then(res => {
+          if (res.data.success) {
+            const sourceDetail = res.data.data
+            const { name, label, extend } = sourceDetail
+            this.form.name = name
+            this.selectValue = label
+            this.selectlabel = this.$options.filters['labelFilter'](label)
+            const matcheList = JSON.parse(extend)
+            if (matcheList && matcheList.length) {
+              this.form.domains = []
+              this.form.domains = matcheList.map(item => {
+                return { source: item.source, expression: item.expression, desc: item.desc }
+              });
+            }
+          } else {
+            this.$notify({
+              title: '提示',
+              type: 'error',
+              message: res.data.message
+            });
+          }
+        });
+      } else {
+        this.$route.meta.title = '新增分类'
+        this.selectValue = '1'
+        this.selectlabel = '交易类型'
+      }
+    },
     handleSave() {
       this.$refs['form'].validate(valid => {
         if (valid) {

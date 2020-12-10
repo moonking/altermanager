@@ -99,7 +99,7 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize&&totalSize>10"
+      v-if="totalSize && totalSize > 10"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
       :page-sizes="[10, 20, 30]"
@@ -107,7 +107,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-        class="absolute-center"
+      class="absolute-center"
     />
     <!-- 删除组件 -->
     <deleteDialog ref="deleteDialog" @confim-delete="confirmDelete" />
@@ -133,25 +133,53 @@ export default {
       size: 10
     },
     totalSize: 0,
-    currentDeleteItemId: -1
+    currentDeleteItemId: -1,
+    callNum: 0
   }),
   created() {
-    this.getMaintenanceList()
+    let params = this.getParams()
+    this.getMaintenanceList(params)
     this.getBusinessList()
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          systemName: this.searchFrom.businessValue,
+          hostIp: this.searchFrom.ipAddress,
+          current: this.page.current,
+          size: this.page.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { systemName, hostIp, current, size } = params
+        this.searchFrom.businessValue = systemName
+        this.searchFrom.ipAddress = hostIp
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
     // 维护窗口列表
-    getMaintenanceList() {
-      const params = {
-        systemName: this.searchFrom.businessValue,
-        hostIp: this.searchFrom.ipAddress,
-        current: this.page.current,
-        size: this.page.size
+    getMaintenanceList(params) {
+      if (params === undefined) {
+        params = {
+          systemName: this.searchFrom.businessValue,
+          hostIp: this.searchFrom.ipAddress,
+          current: this.page.current,
+          size: this.page.size
+        }
       }
       axios.getMaintenanceList(params).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify.error({
             title: '提示',
@@ -181,9 +209,11 @@ export default {
       })
     },
     search() {
+      this.page.current = 1
       this.getMaintenanceList()
     },
     handleEdit(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -221,6 +251,7 @@ export default {
       })
     },
     maintainDeatil(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
         query: {
@@ -279,20 +310,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

@@ -192,7 +192,7 @@ export default {
     },
     getAlarmNoiceDetail(id) {
       this.$router.push({
-        path: '/Aibms/alarmnoticeDetail',
+        path: '/Aibms/alarmnotice/alarmnoticeDetail',
         query: {
           code: 2,
           id: id

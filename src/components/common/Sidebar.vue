@@ -305,7 +305,7 @@ export default {
               title: '告警分类'
             },
             {
-              index: '/Aibms/Bconfiguration/Alarmrules?code=2',
+              index: '/Aibms/BuinessConfiguration/Alarmrules?code=2',
               title: '告警规则'
             },
             {

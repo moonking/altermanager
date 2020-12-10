@@ -25,7 +25,7 @@ let aibms = {
       }
     },
     {
-      path: '/Aibms/Bconfiguration/Alarmrules',
+      path: '/Aibms/BuinessConfiguration/Alarmrules',
       component: resolve =>
         require([
           '@/components/Aibms/Alarmrules/Alarmrules.vue'
@@ -35,7 +35,7 @@ let aibms = {
       }
     },
     {
-      path: '/Aibms/Bconfiguration/addRules/:status',
+      path: '/Aibms/BuinessConfiguration/addRules/:status',
       component: resolve =>
         require([
           '@/components/Aibms/Alarmrules/addRules.vue'
@@ -115,7 +115,7 @@ let aibms = {
       }
     },
     {
-      path: '/Aibms/alarmnoticeDetail',
+      path: '/Aibms/alarmnotice/alarmnoticeDetail',
       component: resolve =>
         require([
           '@/components/Aibms/alarmNotice/noticeDetail.vue'

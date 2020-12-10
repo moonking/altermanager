@@ -8,6 +8,7 @@
               v-model="search.name"
               placeholder="请输入发布任务名称"
               sortable
+              style="width: 200px"
               clearable
             ></el-input>
           </el-form-item>
@@ -30,10 +31,10 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="cluster-list">
         <el-table
-          @row-click="readJob"
+          stripe
           height="82%"
+          @row-click="readJob"
           class="data-list"
           :data="tableData"
           style="width: 100%"
@@ -146,7 +147,6 @@
             </div>
           </div>
         </el-table>
-      </div>
 
       <el-dialog
         center
@@ -225,11 +225,13 @@ export default {
         }
       ],
       tableData: [],
-      confirmDeleteDialogVisible: false
+      confirmDeleteDialogVisible: false,
+      callNum: 0
     }
   },
   created() {
-    this.getTimingList()
+    let params = this.getParams()
+    this.getTimingList(params)
     this.handdleMsg()
   },
   methods: {
@@ -246,6 +248,27 @@ export default {
     //     }
     //   })
     // },
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          name: this.search.name,
+          current: this.currPage,
+          size: this.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { name, current, size } = params
+        this.search.name = name
+        this.currPage = current
+        this.size = size
+      }
+      return params
+    },
     handdleMsg(msg) {
       let _this = this
       _this.$global.ws.onmessage = function (res) {
@@ -280,16 +303,19 @@ export default {
       return row.taskType === '2' ? '部署' : '构建'
     },
     // 获取定时任务列表
-    getTimingList() {
-      let data = this.search
-      console.log('test aa')
-      data.current = this.currPage
-      data.size = this.size
-      console.log(data)
-      axios.getTimingList(data).then(res => {
+    getTimingList(params) {
+      if (params === undefined) {
+        params = {
+          name: this.search.name,
+          current: this.currPage,
+          size: this.size
+        }
+      }
+      axios.getTimingList(params).then(res => {
         if (res.data.code === 200) {
           this.tableData = res.data.data.records
           this.total = parseInt(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify({
             type: 'error',
@@ -334,6 +360,7 @@ export default {
       })
     },
     readJob(row) {
+      this.setSession()
       this.$router.push({
         query: {
           code: 2,
@@ -343,6 +370,7 @@ export default {
       })
     },
     editJob(id) {
+      this.setSession()
       this.$router.push({
         query: {
           code: 2,

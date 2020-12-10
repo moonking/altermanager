@@ -8,14 +8,19 @@ module.exports = {
   // baserUrl: 'http://111.231.165.249:8086/',
   // CiBaseUrl: 'http://111.231.165.249:8087/',
   // wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
+
+  // eproe-test
   aiaUrl: 'http://111.231.165.249:8075/test_bms/aia/',
   baserUrl: 'http://111.231.165.249:8075/test_bms/',
   CiBaseUrl: 'http://111.231.165.249:8075/test_cmdb/',
   wsTopology: 'ws://111.231.165.249:8087/ws/topology/ciitem/'
+
+  // // aia-test
   // aiaUrl: 'http://10.131.111.167:8075/test_bms/aia/',
   // baserUrl: 'http://10.131.111.167:8075/test_bms/',
   // CiBaseUrl: 'http://10.131.111.167:8075/test_cmdb/',
   // wsTopology: 'ws://10.131.111.167:8087/ws/topology/ciitem/'
+
   // aiaUrl: 'http://111.231.165.249:8075/test_bms/aia/',
   // baserUrl: 'http://111.231.165.249:8075/test_bms/',
   // CiBaseUrl: 'http://111.231.165.249:8075/test_cmdb/',
