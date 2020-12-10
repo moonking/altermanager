@@ -119,13 +119,14 @@
                         icon-class="dizhi"
                         class="user-icon white-svg-icon"
                       />
+                      <!-- <img class="svg-img" src="/static/img/task/telphone.svg" alt="" /> -->
                       <span class="text-overflow user-content-font">{{
                         item.loginName
                       }}</span>
                     </li>
                     <li class="userli clear-fix">
                       <icon-svg
-                        icon-class="mingpian"
+                        icon-class="telphone"
                         class="user-icon white-svg-icon"
                       />
                       <span class="text-overflow user-content-font">{{

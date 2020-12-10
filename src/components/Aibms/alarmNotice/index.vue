@@ -167,7 +167,7 @@
       :total="totalSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-     class="absolute-center"
+      class="absolute-center"
     />
   </div>
 </template>
@@ -247,15 +247,51 @@ export default {
     },
     startTime: '',
     endTime: '',
-    businessList: []
+    businessList: [],
+    callNum: 0
   }),
   created() {
-    this.getAlarmList() // 获取列表数据
+    let params = this.getParams()
+    this.getAlarmList(params) // 获取列表数据
     // this.getTopologyList() // 获取拓扑下拉框
     // this.getlabelList() // 获取标签下拉框数据
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          system: this.alarmModel.systemValue,
+          topology: this.alarmModel.topologyValue,
+          upgrade: this.alarmModel.upgradeValue,
+          platform: this.alarmModel.origin,
+          label: this.alarmModel.labelValue,
+          alarmDate: this.alarmModel.alarmDate,
+          startTime: this.startTime,
+          endTime: this.endTime,
+          current: this.page.current,
+          size: this.page.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { system, topology, upgrade, platform, label, alarmDate, current, size } = params
+        this.alarmModel.alarmDate = alarmDate
+        this.splitDate()
+        this.alarmModel.systemValue = system
+        this.alarmModel.topologyValue = topology
+        this.alarmModel.upgradeValue = upgrade
+        this.alarmModel.origin = platform
+        this.alarmModel.labelValue = label
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
     getBusinessList() {
       const params = {
         name: '',
@@ -298,22 +334,25 @@ export default {
         }
       })
     },
-    getAlarmList() {
-      const params = {
-        system: this.alarmModel.systemValue,
-        topology: this.alarmModel.topologyValue,
-        upgrade: this.alarmModel.upgradeValue,
-        platform: this.alarmModel.origin,
-        label: this.alarmModel.labelValue,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        current: this.page.current,
-        size: this.page.size
+    getAlarmList(params) {
+      if (params === undefined) {
+        params = {
+          system: this.alarmModel.systemValue,
+          topology: this.alarmModel.topologyValue,
+          upgrade: this.alarmModel.upgradeValue,
+          platform: this.alarmModel.origin,
+          label: this.alarmModel.labelValue,
+          startTime: this.startTime,
+          endTime: this.endTime,
+          current: this.page.current,
+          size: this.page.size
+        }
       }
       axios.getNoticeList(params).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify({
             title: '提示',
@@ -338,8 +377,8 @@ export default {
         this.addZero(seconds)
     },
     splitDate() {
-      this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[0]) : ''
-      this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(this.alarmModel.alarmDate[1]) : ''
+      this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
+      this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''
     },
     // 分页
     handleCurrentChange() {
@@ -351,6 +390,7 @@ export default {
       this.getAlarmList()
     },
     search() {
+      this.page.current = 1
       this.getAlarmList()
     },
     hadleTrack(row) {
@@ -366,8 +406,9 @@ export default {
       return row.level === value
     },
     noticeDetail(row) {
+      this.setSession()
       this.$router.push({
-        path: '/Aibms/alarmnoticeDetail',
+        path: '/Aibms/alarmnotice/alarmnoticeDetail',
         query: {
           code: 2,
           id: row.code
@@ -389,20 +430,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

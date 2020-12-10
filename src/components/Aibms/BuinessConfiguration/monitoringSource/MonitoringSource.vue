@@ -177,23 +177,52 @@ export default {
       current: 1,
       size: 10
     },
-    totalSize: 0
+    totalSize: 0,
+    callNum: 0
   }),
   created() {
-    this.getMonitorList()
+    let params = this.getParams()
+    this.getMonitorList(params)
   },
   methods: {
-    getMonitorList() {
-      const params = {
-        current: this.page.current,
-        size: this.page.size,
-        platform: this.sourceModel.sourceValue,
-        address: this.sourceModel.webAdress
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          current: this.page.current,
+          size: this.page.size,
+          platform: this.sourceModel.sourceValue,
+          address: this.sourceModel.webAdress
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
       }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { current, size, platform, address } = params
+        this.sourceModel.sourceValue = platform
+        this.sourceModel.webAdress = address
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
+    getMonitorList(params) {
+      if (params === undefined) {
+        params = {
+          current: this.page.current,
+          size: this.page.size,
+          platform: this.sourceModel.sourceValue,
+          address: this.sourceModel.webAdress
+        }
+      }
+
       axios.getMonitorList(params).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify({
             title: '提示',
@@ -204,9 +233,11 @@ export default {
       })
     },
     search() {
+      this.page.current = 1
       this.getMonitorList()
     },
     sourceDetail(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -217,6 +248,7 @@ export default {
       })
     },
     handleEdit(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
         query: {
@@ -279,20 +311,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

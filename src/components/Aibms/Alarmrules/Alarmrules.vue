@@ -201,7 +201,8 @@ export default {
       size: 10
     },
     totalSize: 0,
-    currentDeleteItemId: -1
+    currentDeleteItemId: -1,
+    callNum: 0
   }),
   filters: {
     labelFilter: label => {
@@ -236,31 +237,62 @@ export default {
     }
   },
   created() {
-    this.AlarmrulesList()
+    let params = this.getParams()
+    this.AlarmrulesList(params)
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          name: this.searchFrom.rulesName,
+          level: this.searchFrom.level,
+          label: this.searchFrom.label,
+          current: this.page.current,
+          size: this.page.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { name, level, label, current, size } = params
+        this.searchFrom.rulesName = name
+        this.searchFrom.level = level
+        this.searchFrom.label = label
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
     // 告警规则列表
-    AlarmrulesList() {
-      let params = {
-        name: this.searchFrom.rulesName || '',
-        level: this.searchFrom.level || '',
-        label: this.searchFrom.label || '',
-        current: this.page.current,
-        size: this.page.size
-      };
+    AlarmrulesList(params) {
+      if (params === undefined) {
+        params = {
+          name: this.searchFrom.rulesName || '',
+          level: this.searchFrom.level || '',
+          label: this.searchFrom.label || '',
+          current: this.page.current,
+          size: this.page.size
+        }
+      }
       axios.alarmRuleList(params).then(res => {
         if (res.data.code === 200) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         }
       })
     },
     search() {
+      this.page.current = 1
       this.AlarmrulesList()
     },
     handleEdit(row) {
+      this.setSession()
       this.$router.push({
-        path: '/Aibms/Bconfiguration/addRules/edit',
+        path: '/Aibms/BuinessConfiguration/addRules/edit',
         query: {
           code: 2,
           ruleId: row.iD
@@ -293,7 +325,7 @@ export default {
     },
     addRule() {
       this.$router.push({
-        path: '/Aibms/Bconfiguration/addRules/create',
+        path: '/Aibms/BuinessConfiguration/addRules/create',
         query: {
           code: 2
         }
@@ -316,8 +348,9 @@ export default {
       });
     },
     ruleDeatil(row) {
+      this.setSession()
       this.$router.push({
-        path: '/Aibms/Bconfiguration/addRules/read',
+        path: '/Aibms/BuinessConfiguration/addRules/read',
         query: {
           code: 2,
           ruleId: row.iD
@@ -348,20 +381,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041C25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041C25;
       }
       &:active {
-        background-color: #041C25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

@@ -14,12 +14,14 @@
             clearable
             :fetch-suggestions="querySearch"
             :trigger-on-focus="false"
+            style="width: 200px"
             class="inline-input"
             placeholder="请输入告警分类"
           />
         </el-form-item>
         <el-form-item>
           <el-select
+            style="width: 200px"
             v-model="alarmModel.sourceValue"
             clearable
             placeholder="请选择来源"
@@ -159,6 +161,7 @@ export default {
     labelFilter: label => labelMap[label]
   },
   data: () => ({
+    callNum: 0,
     classList: [],
     sourceList: [
       {
@@ -189,10 +192,34 @@ export default {
     currentDeleteItemId: -1
   }),
   created() {
+    let params = this.getParams()
     this.getClassList()
-    this.getAlarmList()
+    this.getAlarmList(params)
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          name: this.alarmModel.alarmClass,
+          source: this.alarmModel.sourceValue,
+          current: this.page.current,
+          size: this.page.size
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { name, source, current, size } = params
+        this.alarmModel.alarmClass = name
+        this.alarmModel.sourceValue = source
+        this.page.current = current
+        this.page.size = size
+      }
+      return params
+    },
     getClassList() {
       axios.geAlarmNameList().then(res => {
         if (res.data.success) {
@@ -217,18 +244,21 @@ export default {
         return (classList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
-    getAlarmList() {
-      const params = {
-        name: this.alarmModel.alarmClass,
-        source: this.alarmModel.sourceValue,
-        label: '',
-        current: this.page.current,
-        size: this.page.size
+    getAlarmList(params) {
+      if (params === undefined) {
+        params = {
+          name: this.alarmModel.alarmClass,
+          source: this.alarmModel.sourceValue,
+          label: '',
+          current: this.page.current,
+          size: this.page.size
+        }
       }
       axios.getAlarmList(params).then(res => {
         if (res.data.success) {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
+          this.callNum++
         } else {
           this.$notify({
             title: '提示',
@@ -248,6 +278,7 @@ export default {
       this.getAlarmList()
     },
     search() {
+      this.page.current = 1
       this.getAlarmList()
     },
     addType() {
@@ -259,6 +290,7 @@ export default {
       })
     },
     handleEdit(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
@@ -290,6 +322,7 @@ export default {
       this.confirmDeleteDialogVisible = false
     },
     classDetail(row) {
+      this.setSession()
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
         query: {
@@ -314,20 +347,23 @@ export default {
     .el-button {
       border: 1px solid #fff;
       color: #fff;
-      &:hover {
-        border: 1px solid #01aef1;
-        color: #01aef1;
-        background-color: #041c25;
+      &:link {
+        border: 1px solid #fff;
+        color: #fff;
       }
-      &:focus {
+      &:visited {
+        border: 1px solid #fff;
+        color: #fff;
+        background-color: transparent !important;
+      }
+      &:hover {
+        background-color: #041c25;
         border: 1px solid #01aef1;
         color: #01aef1;
-        background-color: #041c25;
       }
       &:active {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
+        border: 1px solid #fff;
+        color: #fff;
       }
     }
   }

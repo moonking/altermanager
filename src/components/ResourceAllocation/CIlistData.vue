@@ -385,7 +385,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currPage"
+          :current-page="current"
           :page-sizes="[10, 30, 50]"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
@@ -520,9 +520,8 @@ export default {
       options: [],
       selectedOptions2: [],
       value5: '',
-      currPage: 1,
-      total: 0,
       current: 1,
+      total: 0,
       size: 10,
       bgColor: 0,
       changeTab: true,
@@ -548,11 +547,13 @@ export default {
         '1': 'Prometheus',
         '2': 'Dynatrace',
         '3': 'Bpc'
-      }
+      },
+      callNum: 0
     }
   },
   mounted() {
-    this.getCiDataList()
+    let params = this.getParams()
+    this.getCiDataList(params)
     this.getCiTypeList()
   },
   components: {
@@ -563,6 +564,37 @@ export default {
 
   },
   methods: {
+    setSession() {
+      if (this.callNum > 1) {
+        const params = {
+          citypeId: this.citypeId, // 所属ci分类ID
+          keyword: this.keyword, // 关键字
+          dataFrom: this.dataFrom, // 数据来源   1手动添加 2导入 3服务器获取
+          environment: this.environment, // 环境     1测试环境 2预生产环境 3生产环境
+          current: this.current, // 当前页码
+          size: this.size, // 每页展示条数
+          systemId: this.systemId, // 业务组
+          selectedOptions2: this.selectedOptions2
+        }
+        sessionStorage.setItem('search', JSON.stringify(params))
+      }
+    },
+    getParams() {
+      let params
+      if (sessionStorage.getItem('search') !== null) {
+        params = JSON.parse(sessionStorage.getItem('search'))
+        const { citypeId, keyword, dataFrom, environment, current, size, systemId, selectedOptions2 } = params
+        this.citypeId = citypeId // 所属ci分类ID
+        this.keyword = keyword // 关键字
+        this.dataFrom = dataFrom // 数据来源   1手动添加 2导入 3服务器获取
+        this.environment = environment// 环境     1测试环境 2预生产环境 3生产环境
+        this.current = current // 当前页码
+        this.size = size // 每页展示条数
+        this.systemId = systemId // 业务组
+        this.selectedOptions2 = selectedOptions2
+      }
+      return params
+    },
     // 查询按钮状态控制
     hanldeStatus(val) {
       this.canClick = val
@@ -672,7 +704,7 @@ export default {
     }, // 点击编辑
     edit(id) {
       let ciitemId = id
-
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/CIlistData/edit?code=1',
         query: { ciitemId: ciitemId }
@@ -681,7 +713,7 @@ export default {
     // 点击查看
     toview(id) {
       let ciitemId = id
-
+      this.setSession()
       this.$router.push({
         path: '/ResourceAllocation/CIlistData/toview?code=1',
         query: { ciitemId: ciitemId }
@@ -794,7 +826,8 @@ export default {
                 })
                 this.BatchDeleteShow = false
                 this.delesteBtn = false
-                this.getCiDataList(1)
+                this.current = 1
+                this.getCiDataList()
                 this.isSureBatch = false
               } else {
                 // console.log(111);
@@ -830,7 +863,6 @@ export default {
     // 分页
     handleCurrentChange(val, page) {
       this.current = val
-
       this.size = 10
       this.getCiDataList()
     },
@@ -917,26 +949,27 @@ export default {
       })
     },
     // 获取列表
-    getCiDataList(searchPage) {
-      if (searchPage) {
-        this.current = searchPage
+    getCiDataList(params) {
+      if (params === undefined) {
+        console.log('undefined')
+        params = {
+          citypeId: this.citypeId, // 所属ci分类ID
+          keyword: this.keyword, // 关键字
+          dataFrom: this.dataFrom, // 数据来源   1手动添加 2导入 3服务器获取
+          environment: this.environment, // 环境     1测试环境 2预生产环境 3生产环境
+          current: this.current, // 当前页码
+          size: this.size, // 每页展示条数
+          systemId: this.systemId // 业务组
+        }
       }
-      let JobDto = {
-        citypeId: this.citypeId, // 所属ci分类ID
-        keyword: this.keyword, // 关键字
-        dataFrom: this.dataFrom, // 数据来源   1手动添加 2导入 3服务器获取
-        environment: this.environment, // 环境     1测试环境 2预生产环境 3生产环境
-        current: this.current, // 当前页码
-        size: this.size, // 每页展示条数
-        systemId: this.systemId // 业务组
-      }
-      axios.getCiDataList(JobDto).then(res => {
+      console.log(params)
+      axios.getCiDataList(params).then(res => {
         if (res) {
           if (res.data.code == 200) {
             this.CiDataList = res.data.data.result.records
             this.changeColor(res.data.data.result.records)
             this.total = parseInt(res.data.data.result.total)
-
+            this.callNum++
             if (this.total == 0) {
               this.page = false
             } else {
@@ -993,8 +1026,8 @@ export default {
     // 搜索
     search() {
       this.CiDataList = []
-      var searchPage = 1
-      this.getCiDataList(searchPage)
+      this.current = 1
+      this.getCiDataList()
       if (this.selectedOptions2) {
         this.selectOption = {
           citypeId: this.selectedOptions2[1],

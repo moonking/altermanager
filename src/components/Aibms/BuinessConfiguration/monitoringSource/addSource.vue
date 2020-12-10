@@ -171,6 +171,7 @@
       <div class="footer-area">
         <el-button
           type="primary"
+          v-if="$route.query.status !== 'read'"
           @click.stop="handleSave"
           style="margin-right: 100px"
           >保存</el-button
@@ -205,7 +206,7 @@
       center
       class="dialog-detail"
     >
-      <span >{{ interfaceTxt }}</span>
+      <span>{{ interfaceTxt }}</span>
     </el-dialog>
   </div>
 </template>
@@ -564,18 +565,19 @@ export default {
     },
     // 取消，返回上级路由
     handleCancel() {
-      let objArr = Object.values(this.form)
-      let foundValues = objArr.find(el => el != '')
-      if (foundValues || this.InterfaceForm.domains[0].value) {
-        const answer = window.confirm(
-          '页面相关数据还未保存，是否离开当前页面!'
-        )
-        if (answer) {
-          this.handleLeave()
-        }
-      } else {
-        this.handleLeave()
-      }
+      this.handleLeave()
+      // let objArr = Object.values(this.form)
+      // let foundValues = objArr.find(el => el != '')
+      // if (foundValues || this.InterfaceForm.domains[0].value) {
+      //   const answer = window.confirm(
+      //     '页面相关数据还未保存，是否离开当前页面!'
+      //   )
+      //   if (answer) {
+      //     this.handleLeave()
+      //   }
+      // } else {
+      //   this.handleLeave()
+      // }
     }
   },
   mounted() {

@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="tempData"
+        :data.sync="graphData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"

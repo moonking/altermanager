@@ -83,13 +83,12 @@ Vue.directive('sortable', {
 })
 // 使用钩子函数对路由进行权限跳转
 Vue.use(router)
-
+Vue.prototype.fromUrl = ''
 router.beforeEach((to, from, next) => {
   // to: Route: 即将要进入的目标 路由对象
   // from: Route: 当前导航正要离开的路由
   // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
   // 全局判断从哪个页面进入
-  Vue.prototype.fromUrl = from
   let id = localStorage.getItem('userId')
   let token = localStorage.getItem('token')
   let isLogin = false
@@ -99,7 +98,14 @@ router.beforeEach((to, from, next) => {
   } else if (token && id != null) {
     isLogin = true
   }
+  if (Object.keys(to.query).length !== 1) {
+    Vue.prototype.fromUrl = from
+  }
   console.log('from: ', from, ' to: ', to, ', isLogin: ', isLogin)
+  // || (Object.keys(to.query).length === 1 && (to.path.search('add') > -1 || to.path.search('create') > -1))
+  if (Vue.prototype.fromUrl.path !== to.path && Object.keys(to.query).length === 1) {
+    sessionStorage.removeItem('search')
+  }
   if (!isLogin) {
     if (to.path !== '/login') {
       // 如果未登录（本地存储无用户数据），并且要跳到登录页面

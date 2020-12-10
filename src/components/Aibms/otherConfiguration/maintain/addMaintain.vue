@@ -47,7 +47,7 @@
         <el-button @click="save" style="margin-right: 100px" type="primary" v-if="active === 1 && !readOnly"
           >保存</el-button
         >
-        <el-button @click="cancel" v-if="!readOnly" class="cancel-button"
+        <el-button @click="cancel"  class="cancel-button"
           >取消</el-button
         >
       </div>
