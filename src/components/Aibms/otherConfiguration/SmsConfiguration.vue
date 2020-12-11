@@ -304,6 +304,7 @@ export default {
       }
     },
     chooseType() {
+      console.log(this.template, this.msgForm)
       this.template.forEach((item) => {
         if (item.noticeType === this.msgForm.noticeType) {
           this.MsgText.content = item.content
@@ -336,7 +337,7 @@ export default {
         }),
         axios.smsDetail()
       ]).then((res) => {
-        console.log(res[0]);
+        console.log(res[1]);
         if (res[1].data.code === 200) {
           let smsData = res[1].data.data;
           let bl = false
@@ -357,7 +358,7 @@ export default {
           this.formatData(JSON.stringify(smsData.params));
           this.msgForm.apiUrl = smsData.config.apiUrl || '';
           this.id = smsData.id || '';
-          this.template = smsData.template || []
+          this.template = Object.assign(smsData.template)
         }
       });
     },
