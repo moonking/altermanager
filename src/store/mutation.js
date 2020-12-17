@@ -1,4 +1,4 @@
-export default{
+export default {
   GET_ID: (state, payload) => {
     state.menuIds = payload
   },
@@ -20,22 +20,25 @@ export default{
   GET_TAGSLIST: (state, payload) => {
     state.tags = payload
   },
-  changeUserPic (state, userPhoto) {
-    		state.userPhoto = userPhoto
+  changeUserPic(state, userPhoto) {
+    state.userPhoto = userPhoto
   },
-  editMenu (state, menuName) {
+  editMenu(state, menuName) {
     state.menuName = menuName
   },
-  getCheckValue (state, checkValue) {
+  getCheckValue(state, checkValue) {
     state.checkValue = checkValue
   },
-  mId (state, mId) {
+  mId(state, mId) {
     state.mId = mId
   },
-  setDeployCheckTaskList (state, payload) {
+  setDeployCheckTaskList(state, payload) {
     state.tempDeployCheckTaskList = payload
   },
-  setBuildCheckTaskList (state, payload) {
+  setBuildCheckTaskList(state, payload) {
     state.tempBuildCheckTaskList = payload
+  },
+  setIsfull(state, payload) {
+    state.isfull = payload
   }
 }

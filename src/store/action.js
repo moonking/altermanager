@@ -14,7 +14,7 @@ export default {
   VIEW: ({ state, commit }, payload) => {
     commit('VIEW', payload)
   },
-  GET_SIDE ({ state, commit }, payload) {
+  GET_SIDE({ state, commit }, payload) {
     let setname = function (sub) {
       for (var j in sub) {
         if (sub[j].name == payload.oldname) {
@@ -113,16 +113,19 @@ export default {
     // console.log(payload)
     commit('GET_TAGSLIST', payload)
   },
-  changeUserPic ({ state, commit }, userPhoto) {
+  changeUserPic({ state, commit }, userPhoto) {
     commit('changeUserPic', userPhoto)
   },
-  editMenu ({ state, commit }, menuName) {
+  editMenu({ state, commit }, menuName) {
     commit('editMenu', menuName)
   },
-  getCheckValue ({ state, commit }, checkValue) {
+  getCheckValue({ state, commit }, checkValue) {
     commit('getCheckValue', checkValue)
   },
-  mId ({ state, commit }, mId) {
+  mId({ state, commit }, mId) {
     commit('mId', mId)
+  },
+  setIsfull({ state, commit }, mId) {
+    commit('setIsfull', mId)
   }
 }

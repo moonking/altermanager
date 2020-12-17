@@ -358,7 +358,8 @@ export default {
           this.formatData(JSON.stringify(smsData.params));
           this.msgForm.apiUrl = smsData.config.apiUrl || '';
           this.id = smsData.id || '';
-          this.template = Object.assign(smsData.template)
+          this.template = Object.assign(this.template, smsData.template)
+          console.log(this.template)
         }
       });
     },
@@ -550,7 +551,7 @@ export default {
             }
           }
           div {
-            margin-left: 90px;
+            margin-left: 44px;
             margin-bottom: 20px;
             font-size: 12px;
             color: #fff;

@@ -555,7 +555,7 @@ export default {
             }
           }
           div {
-            margin-left: 90px;
+            margin-left: 44px;
             margin-bottom: 20px;
             font-size: 12px;
             color: #fff;
