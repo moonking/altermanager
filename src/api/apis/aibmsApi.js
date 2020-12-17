@@ -219,6 +219,14 @@ export function getAlarmDetail (id) {
     method: 'GET'
   })
 }
+// 告警通知批量确认
+export function batchHandleNotice (params) {
+  return request({
+    url: baserUrl + 'api/alarmInform/multiple/updateStatus',
+    method: 'PUT',
+    data: params
+  })
+}
 // 获取告警通知列表
 export function getNoticeList (params) {
   return request({

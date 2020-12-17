@@ -7,6 +7,7 @@
             v-model="alarmModel.systemValue"
             clearable
             placeholder="请选择业务系统"
+            style="width: 150px"
           >
             <el-option
               v-for="item in businessList"
@@ -21,7 +22,7 @@
             v-model="alarmModel.topologyValue"
             clearable
             placeholder="请选择标签"
-            style="width: 160px"
+            style="width: 150px"
           >
             <el-option
               v-for="item in topologyList"
@@ -36,7 +37,7 @@
             v-model="alarmModel.origin"
             clearable
             placeholder="请选择来源"
-            style="width: 160px"
+            style="width: 150px"
           >
             <el-option
               v-for="item in originList"
@@ -51,7 +52,7 @@
             v-model="alarmModel.upgradeValue"
             clearable
             placeholder="是否为升级告警"
-            style="width: 160px"
+            style="width: 150px"
           >
             <el-option
               v-for="item in upgradeList"
@@ -70,6 +71,11 @@
             end-placeholder="结束日期"
             @change="splitDate"
           />
+        </el-form-item>
+        <el-form-item class="search-button">
+          <el-button @click="batchHandle" class="search-icon"
+            >批量处理</el-button
+          >
         </el-form-item>
         <!-- <el-form-item>
           <el-select v-model="alarmModel.labelValue" clearable placeholder="请选择标签">
@@ -98,8 +104,11 @@
       @row-click="noticeDetail"
       style="width: 100%"
       height="82%"
+      @select="choose"
+      @select-all="choose"
     >
-      <!-- <el-table-column type="selection" width="55"> </el-table-column> -->
+      <el-table-column type="selection" :selectable="checkSelection" width="55">
+      </el-table-column>
       <el-table-column
         prop="level"
         label="级别"
@@ -248,7 +257,8 @@ export default {
     startTime: '',
     endTime: '',
     businessList: [],
-    callNum: 0
+    callNum: 0,
+    selectArr: []
   }),
   created() {
     let params = this.getParams()
@@ -258,6 +268,34 @@ export default {
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
+    choose(val, row) {
+      this.selectArr = val.map(item => item.code)
+    },
+    // handleSelectionChange(val, row) {
+    //   console.log(val, row)
+    // },
+    batchHandle() {
+      const num = this.selectArr.length
+      if (num === 0) {
+        this.$notify.warning({
+          title: '提示',
+          message: '请勾选要确认的告警！'
+        })
+      } else {
+        axios.batchHandleNotice(this.selectArr).then(res => {
+          if (res.data.success) {
+            this.getAlarmList()
+            this.$notify.success({
+              title: '提示',
+              message: `成功批量处理告警${num}条`
+            })
+          }
+        })
+      }
+    },
+    checkSelection(row, index) {
+      return row.status === '0'
+    },
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -353,6 +391,18 @@ export default {
           this.tableData = res.data.data.records
           this.totalSize = Number(res.data.data.total)
           this.callNum++
+          let bl = res.data.data.records.some((item) => {
+            return item.status === '0'
+          })
+          if (!bl) {
+            document.getElementsByClassName(
+              'el-table-column--selection'
+            )[0].childNodes[0].style.display = 'none';
+          } else {
+            document.getElementsByClassName(
+              'el-table-column--selection'
+            )[0].childNodes[0].style.display = 'block';
+          }
         } else {
           this.$notify({
             title: '提示',

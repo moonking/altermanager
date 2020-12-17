@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <v-sidebar class="sidebar" v-if="!full"></v-sidebar>
-    <div :class="{ 'content-collapse': collapse, 'content-box': !full }">
+    <div   :class="[collapse?'content-collapse':'', full?'linkstyle':'content-box']">
       <!-- <v-tags></v-tags> -->
-      <div :class="{'content': !full }">
+      <div :class="[full?'linkstyle':'content']">
         <vBreadcrumb v-if="!full" />
         <transition
           name="mode"
@@ -93,12 +93,19 @@ export default {
     fullBool() {
       let that = this
       document.addEventListener('webkitfullscreenchange', function () {
+        // const el = document.getElementsByClassName('editor')[0]
+        // const style = window.getComputedStyle(el)
+        // const { width, height } = style
+        // console.log(width, height)
         if (document.webkitIsFullScreen) {
           // 全屏后要执行的代码
           that.full = true
+          that.$store.dispatch('setIsfull', true);
         } else {
+          console.log(111110)
           // 退出全屏后执行的代码
           that.full = false
+          that.$store.dispatch('setIsfull', false);
         }
       }, false);
     },
@@ -154,5 +161,8 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+.linkstyle {
+  height: 100%;
 }
 </style>

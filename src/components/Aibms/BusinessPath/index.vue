@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="graphData"
+        :data.sync="tempData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -328,7 +328,8 @@ export default {
         modes: {
           default: [
             // 'drag-canvas',
-            'drag-node'
+            // 是否可拖拽
+            // 'drag-node'
             // 'contextmenu'
             // 'brush-select',
             // 'click-select',
@@ -677,17 +678,28 @@ export default {
       let h = window.screen.availHeight
       let elH = this.$refs.graphEditor.$el.offsetHeight
       let elW = this.$refs.graphEditor.$el.offsetWidth
+      let bl = false
       document.addEventListener('webkitfullscreenchange', function () {
         if (document.webkitIsFullScreen) {
           that.graph.changeSize(w, h);
           that.graph.fitView()
+          bl = true
         } else {
           that.graph.changeSize(elW, elH);
           that.graph.fitView()
+          bl = true
         }
 
         // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
       }, false);
+      if (bl) return
+      if (this.$store.state.isfull) {
+        that.graph.changeSize(w, h);
+        that.graph.fitView()
+      } else {
+        that.graph.changeSize(elW, elH);
+        that.graph.fitView()
+      }
     }
   },
   created() {
@@ -699,10 +711,10 @@ export default {
       const graph = this.$refs.graphEditor
       const instance = graph.getGraphInstance()
       this.graph = instance
-      // 初始化自定义图事件监听器
-      this.initCustomGraphListener(instance)
       common.fullScreen()
       this.fullBool()
+      // 初始化自定义图事件监听器
+      this.initCustomGraphListener(instance)
     })
   },
   components: {
@@ -727,7 +739,8 @@ export default {
 .business-path {
   flex: 1 1 auto;
   width: 100%;
-  height: 100%;
+  overflow: hidden;
+  height: 94%;
   box-sizing: border-box;
   position: relative;
   /* background-color: green; */

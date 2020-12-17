@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <!-- 折叠按钮 -->
-    <div class="collapse-btn" >
-    <!-- <div class="collapse-btn" @click="collapseChage"> -->
+    <!-- <div class="collapse-btn" >
+    <div class="collapse-btn" @click="collapseChage"> </div>
       <i class="el-icon-menu" />
-    </div>
+    </div> -->
     <div class="logo">
       <img src="../../assets/aia-logo.png" />
     </div>

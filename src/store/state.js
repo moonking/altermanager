@@ -9,7 +9,7 @@ try {
   }
 }
 
-export default{
+export default {
   menuIds: '', // 所选菜单的id(全部)
   typeIds: [],
   datas: [], // 角色所属系统下面勾选的菜单
@@ -23,5 +23,6 @@ export default{
   view: '',
   isAuthorized: false,
   tempDeployCheckTaskList: [],
-  tempBuildCheckTaskList: []
+  tempBuildCheckTaskList: [],
+  isfull: false
 }

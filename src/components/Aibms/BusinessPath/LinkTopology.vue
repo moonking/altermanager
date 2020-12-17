@@ -41,7 +41,7 @@
         <!-- tempData -->
         <!-- graphData -->
         <graph-editor
-          :data="graphData"
+          :data="tempData"
           :sessionCfg="sessionCfg"
           :mouseCfg="mouseCfg"
           class="editor"
@@ -67,6 +67,7 @@
 import LinkTopologyTooltip from './LinkTopologyTooltip'
 import axios from '@/api'
 import config from '@/config/index.js'
+import common from '@/utils/commonjs';
 export default {
   data() {
     return {
@@ -329,7 +330,7 @@ export default {
             // 'hover-edge',
             // 'select-node',
             // 'add-edge'
-            'contextmenu'
+            // 'contextmenu'
           ],
           move: ['drag-canvas'],
           addEdge: ['add-edge']
@@ -657,6 +658,54 @@ export default {
       // 清空 lineDash
       shape.attr('lineWidth', 1)
       shape.attr('stroke', '#666')
+    },
+    goBack() {
+      let that = this
+      window.addEventListener('keydown', (evt) => {
+        evt = evt || (window.event ? window.event : '');
+        var keyCode = evt.keyCode
+          ? evt.keyCode
+          : evt.which
+            ? evt.which
+            : evt.charCode;
+        if (keyCode == 37) {
+          that.$router.back()
+        }
+      }, false)
+    },
+    fullBool() {
+      let that = this
+      let w = window.screen.availWidth
+      let h = window.screen.availHeight
+
+      // let h = window.screen.height
+      // let w = window.screen.width
+      let elH, elW
+
+      let bl = false
+      document.addEventListener('webkitfullscreenchange', function () {
+        if (document.webkitIsFullScreen) {
+          that.graph.changeSize(w, h);
+          that.graph.fitView()
+          bl = true
+        } else {
+          const el = document.getElementsByClassName('link-topology-wrapper')[0]
+          const style = window.getComputedStyle(el)
+          const { width, height } = style
+          elH = Number(height.substring(0, height.length - 2))
+          elW = Number(width.substring(0, width.length - 2))
+          that.graph.changeSize(elW, elH);
+          that.graph.fitView()
+          bl = true
+        }
+
+        // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
+      }, false);
+      if (bl) return
+      if (this.$store.state.isfull) {
+        that.graph.changeSize(w, h);
+        that.graph.fitView()
+      }
     }
   },
   computed: {
@@ -677,6 +726,9 @@ export default {
       this.graph = instance
       // 初始化自定义图事件监听器
       this.initGraphListener(instance)
+      common.fullScreen()
+      this.fullBool()
+      this.goBack()
     })
   },
   components: {
@@ -721,7 +773,6 @@ export default {
 .level-labels {
   width: 140px;
   min-width: 100px;
-  height: 806px;
 }
 .level-labels .level-label {
   display: flex;
@@ -748,8 +799,8 @@ export default {
 }
 .topology-graph-container {
   flex: 1 1 auto;
-  height: 806px;
-  /* overflow: hidden; */
+  height: 100%;
+  overflow: hidden;
 
   position: relative;
 }
@@ -761,7 +812,6 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-
   width: 100%;
   height: 100%;
 }
