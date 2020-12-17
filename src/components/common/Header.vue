@@ -750,6 +750,7 @@ body {
 .header .logo {
   float: left;
   width: 12%;
+  margin-left: 34px;
   line-height: 68px;
 }
 
