@@ -164,6 +164,14 @@ export default {
         id: 3,
         value: 'Prometheus',
         label: 'Prometheus'
+      }, {
+        id: 4,
+        value: 'Splunk',
+        label: 'Splunk'
+      }, {
+        id: 5,
+        value: 'ARMS',
+        label: 'ARMS'
       }
     ],
     tableData: [],
