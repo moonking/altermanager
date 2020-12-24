@@ -106,19 +106,19 @@ export default {
         // 点集
         nodes: [
           // 主机
-          { id: 'nodeA1', text: '\ue60e', level: 1, label: 'NBSOA', width: 160 },
-          { id: 'nodeA2', text: '\ue60e', level: 1, label: 'pioneer团险', width: 160 },
+          { id: 'nodeA1', 'x': 134.68908242194001, 'y': 502.7204398553431, text: '\ue60e', level: 1, label: 'NBSOA', width: 160 },
+          { id: 'nodeA2', 'x': 1159.673519018211, 'y': 214.16512213484611, text: '\ue60e', level: 1, label: 'pioneer团险', width: 160 },
           // 进程
-          { id: 'nodeB1', text: '\ue6d8', level: 2, label: 'IB_Cloud', width: 160 },
-          { id: 'nodeB2', text: '\ue6d8', level: 2, label: 'SIS_Cloud ', width: 160 },
-          { id: 'nodeB3', text: '\ue6d8', level: 2, label: 'ICSP呼叫中心', width: 160 },
+          { id: 'nodeB1', 'x': 549.509218124129, 'y': 541.0761579271064, text: '\ue6d8', level: 2, label: 'IB_Cloud', width: 160 },
+          { id: 'nodeB2', 'x': 493.3951017081313, 'y': 406.1142337486526, text: '\ue6d8', level: 2, label: 'SIS_Cloud ', width: 160 },
+          { id: 'nodeB3', 'x': 826.9419137584748, 'y': 154.88458450998326, text: '\ue6d8', level: 2, label: 'ICSP呼叫中心', width: 160 },
           // 服务
-          { id: 'nodeC1', text: '\ue663', level: 3, label: 'NB新单中后端系统', width: 210 },
-          { id: 'nodeC2', text: '\ue663', level: 3, label: 'Eservice易服务系统', width: 220 },
-          { id: 'nodeC3', text: '\ue663', level: 3, label: 'ISP客户交互服务平台系统', width: 265 },
-          { id: 'nodeC4', text: '\ue663', level: 3, label: 'SMS短信系统', width: 160 },
-          { id: 'nodeC5', text: '\ue663', level: 3, label: 'lservice爱服务系统', width: 220 },
-          { id: 'nodeC6', text: '\ue663', level: 3, label: 'SIS生产服务路径图', width: 200 },
+          { id: 'nodeC1', 'x': 1074.5749446580758, 'y': 406.9287038261034, text: '\ue663', level: 3, label: 'NB新单中后端系统', width: 210 },
+          { id: 'nodeC2', 'x': 906.4105357578459, 'y': 577.5068390186066, text: '\ue663', level: 3, label: 'Eservice易服务系统', width: 220 },
+          { id: 'nodeC3', 'x': 791.0329313032521, 'y': 303.25277162266633, text: '\ue663', level: 3, label: 'ISP客户交互服务平台系统', width: 265 },
+          { id: 'nodeC4', 'x': 145.5547409856935, 'y': 185.13069438918006, text: '\ue663', level: 3, label: 'SMS短信系统', width: 160 },
+          { id: 'nodeC5', 'x': 396.10205300119617, 'y': 89.13298767923595, text: '\ue663', level: 3, label: 'lservice爱服务系统', width: 220 },
+          { id: 'nodeC6', 'x': 468.3533926323165, 'y': 246.89502648466095, text: '\ue663', level: 3, label: 'SIS生产服务路径图', width: 200 },
           // { id: 'nodeC7', text: '\ue663', level: 3 },
           // { id: 'nodeC8', text: '\ue663', level: 3 },
           // // 应用
@@ -132,7 +132,7 @@ export default {
           // { id: 'nodeE2', text: '\ue605', level: 5 },
           // { id: 'nodeE3', text: '\ue605', level: 5 },
           // { id: 'nodeE4', text: '\ue605', level: 5 },
-          { id: 'nodeE5', text: '\ue605', level: 5, label: 'InstantBuy生产服务路径图', width: 275 }
+          { id: 'nodeE5', 'x': 103.23902143273199, 'y': 330.2901596003162, text: '\ue605', level: 5, label: 'InstantBuy生产服务路径图', width: 275 }
         ],
         // 边集
         edges: [
@@ -279,15 +279,15 @@ export default {
           //   }
           // }
         },
-        layout: {
-          // Object，可选，布局的方法及其配置项，默认为 random 布局。
-          type: 'random',
-          // type: 'topology-layout',
-          // type: 'gForce',
-          preventOverlap: true,
-          nodeSize: 30
-          // ...                    // 其他配置
-        },
+        // layout: {
+        //   // Object，可选，布局的方法及其配置项，默认为 random 布局。
+        //   type: 'random',
+        //   // type: 'topology-layout',
+        //   // type: 'gForce',
+        //   preventOverlap: true,
+        //   nodeSize: 30
+        //   // ...                    // 其他配置
+        // },
         // layout: {
         //   type: 'fruchterman',
         //   gravity: 5,
@@ -666,12 +666,13 @@ export default {
     },
     // save() {
     //   // console.log(this.graph.save())
-    //   // console.log(JSON.stringify(this.graph.save()))
+    //   console.log(JSON.stringify(this.graph.save()))
     //   setTimeout(() => {
+    //     // this.graph.data(data);
     //     this.graph.data(this.tempData);
     //     this.graph.render();
     //   }, 10)
-    // }
+    // },
     fullBool() {
       let that = this
       let w = window.screen.availWidth
