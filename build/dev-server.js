@@ -15,7 +15,7 @@ var webpackConfig = process.env.NODE_ENV === 'testing'
   : process.env.NODE_ENV === 'production'
   ? require('./webpack.prod.conf')
   : process.env.NODE_ENV === 'devlop'
-  ? require('./webpack.devlop.conf')
+  ? require('./webpack.develop.conff')
   : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic

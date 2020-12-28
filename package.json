@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "devtest": "webpack-dev-server --inline --progress --config build/webpack.devtest.conf.js",
-    "dev:develop": "webpack-dev-server --inline --progress --config build/webpack.dev_lop.conf.js",
+    "dev:test": "webpack-dev-server --inline --progress --config build/webpack.devetest.conf.js",
+    "dev:develop": "webpack-dev-server --inline --progress --config build/webpack.deve_lop.conf.js",
     "build-prod": "cross-env NODE_ENV=production node build/build.js",
     "build-test": "cross-env NODE_ENV=testing node build/build.js",
     "build-develop": "cross-env NODE_ENV=devlop node build/build.js",

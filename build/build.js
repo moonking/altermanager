@@ -12,7 +12,7 @@ var webpackConfig = process.env.NODE_ENV === 'testing'
 : process.env.NODE_ENV === 'production'
 ? require('./webpack.prod.conf')
 : process.env.NODE_ENV === 'devlop'
-? require('./webpack.devlop.conf')
+? require('./webpack.develop.conf')
 : require('./webpack.dev.conf')
 
 var config = process.env.NODE_ENV === 'testing'
