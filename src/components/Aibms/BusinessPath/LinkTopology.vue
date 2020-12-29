@@ -41,7 +41,7 @@
         <!-- tempData -->
         <!-- graphData -->
         <graph-editor
-          :data="tempData"
+          :data="graphData"
           :sessionCfg="sessionCfg"
           :mouseCfg="mouseCfg"
           class="editor"

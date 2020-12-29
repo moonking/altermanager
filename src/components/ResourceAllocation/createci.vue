@@ -1,11 +1,11 @@
 <template>
   <div class="containBox deep-aibms-color-bg">
-    <!-- <el-button
-      size="small"
+    <el-button
+       class="margin-left-btn nomal-button"
       plain
       style="float: right;position: relative;z-index:100"
       @click="getFromExcel"
-    >EXCEL导入</el-button>-->
+    >EXCEL导入</el-button>
     <el-row :gutter="20">
       <el-col :span="5">
         <el-input class="search" v-model="ciName" placeholder="请输入CI类型名称" clearable></el-input>
