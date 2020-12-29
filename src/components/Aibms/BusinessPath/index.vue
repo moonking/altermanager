@@ -322,7 +322,7 @@ export default {
         //   // minNodeSpacing: 40,
         //   // workerEnabled: true
         // },
-        // fitView: true, // 适应画布
+        fitView: true, // 适应画布
         // fitViewPadding: [10],
         // 模式配置
         modes: {
