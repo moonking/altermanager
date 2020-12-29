@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="tempData"
+        :data.sync="graphData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -517,12 +517,13 @@ export default {
       const nodes = []
       const edges = []
       data.forEach(system => {
-        const { name, systemId, callNodes } = system
+        const { name, systemId, callNodes ,x,y,width} = system
         // id: 'nodeA1', nodeName: 'testName', label: 'user', ip: '127.0.0.1', img: hostSvg
         let node = {
           id: systemId,
           label: name,
-          businessData: system
+          businessData: system,
+          x,y,width
         }
         nodes.push(node)
 
@@ -597,6 +598,7 @@ export default {
       //   console.log('业务系统ws连接成功！')
       // }
       this.$global.wsAibms.onmessage = (event) => {
+        console.log(event)
         let data = common.evil(event.data);
 
         const { systemList } = this
@@ -609,10 +611,11 @@ export default {
             this.notifyAlert(data.alert)
           } else {
             this.wsData = data
-            let alertsList = []
+            let alertsList = [] 
             data.forEach(item => {
               const { systemId } = item
               systemList.forEach((system, index) => {
+            
                 if (systemId === system.systemId) {
                   // system = item
                   // 重置每一个节点告警状态
