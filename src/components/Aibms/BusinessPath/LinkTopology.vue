@@ -399,22 +399,25 @@ export default {
         const nodeList = me.topologyData
         data = data && JSON.parse(data)
         const alertNodes = []
-        data.forEach(item => {
-          nodeList.forEach(node => {
-            // 重置每一个节点告警状态
-            const { graph } = me
-            const { ciitemId } = node
-            if (graph) {
-              graph.setItemState(ciitemId, 'warning', false)
-            }
-            // 挂载告警数据
-            if (ciitemId === item.ciitemId) {
-              alertNodes.push(ciitemId)
-              node.alerts = item.alertData
-              node.status = item.level ? `s${item.level}` : 's1'
-            }
+
+        if (data.length > 0) {
+          data.forEach(item => {
+            nodeList.forEach(node => {
+              // 重置每一个节点告警状态
+              const { graph } = me
+              const { ciitemId } = node
+              if (graph) {
+                graph.setItemState(ciitemId, 'warning', false)
+              }
+              // 挂载告警数据
+              if (ciitemId === item.ciitemId) {
+                alertNodes.push(ciitemId)
+                node.alerts = item.alertData
+                node.status = item.level ? `s${item.level}` : 's1'
+              }
+            })
           })
-        })
+        }
         const temp = JSON.parse(JSON.stringify(nodeList))
         let normalNodes = temp.filter(node => node.alerts.length === 0)
         let warningNodes = temp.filter(node => node.alerts.length > 0)
@@ -668,8 +671,13 @@ export default {
           : evt.which
             ? evt.which
             : evt.charCode;
-        if (keyCode == 37) {
-          that.$router.back()
+        if (keyCode == 37) { 
+          this.$router.push({
+            path: '/Aibms/businessPath',
+            query: {
+              code: 2
+            }
+          })
         }
       }, false)
     },
@@ -690,13 +698,16 @@ export default {
           bl = true
         } else {
           const el = document.getElementsByClassName('link-topology-wrapper')[0]
-          const style = window.getComputedStyle(el)
-          const { width, height } = style
-          elH = Number(height.substring(0, height.length - 2))
-          elW = Number(width.substring(0, width.length - 2))
-          that.graph.changeSize(elW, elH);
-          that.graph.fitView()
-          bl = true
+          if (el) {
+            const style = window.getComputedStyle(el)
+            const { width, height } = style
+            elH = Number(height.substring(0, height.length - 2))
+            elW = Number(width.substring(0, width.length - 2))
+            that.graph.changeSize(elW, elH);
+            that.graph.fitView()
+            bl = true
+          }
+
         }
 
         // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
