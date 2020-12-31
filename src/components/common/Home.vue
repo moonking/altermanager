@@ -101,8 +101,7 @@ export default {
           // 全屏后要执行的代码
           that.full = true
           that.$store.dispatch('setIsfull', true);
-        } else {
-          console.log(111110)
+        } else { 
           // 退出全屏后执行的代码
           that.full = false
           that.$store.dispatch('setIsfull', false);
