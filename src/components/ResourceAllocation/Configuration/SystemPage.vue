@@ -780,7 +780,7 @@ export default {
           callNodes.forEach(node => {
             callNodesData.push({ systemId: node.systemId })
           })
-          this.hostTableSelected = JSON.parse(data.hosts)
+          this.hostTableSelected = JSON.parse(data.hosts||'[]')
           this.sysdata = data
           this.sysdata.userId = JSON.parse(data.opsPerson).userId
           if (callNodesData.length > 0) this.callNodes = callNodesData
