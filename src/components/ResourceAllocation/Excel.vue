@@ -3,36 +3,57 @@
     <div class="cometitle"></div>
     <el-row>
       <el-col>
-        <div class="grid-content bg-purple" style=" margin-top: 16px;">
+        <div class="grid-content bg-purple" style="margin-top: 16px">
           <!-- <span class="bluespan"></span>选择CI类型 -->
           <div class="item-block-title paddingTop" @click="changeState(1)">
             <div class="item-block-title-mark"></div>
             <span class="item-block-title-font">选择CI类型</span>
             <i
               class="icons el-icon-arrow-right"
-              :style="{transform: excelStatus[1] ? 'rotate(90deg)' : 'rotate(0)'}"
+              :style="{
+                transform: excelStatus[1] ? 'rotate(90deg)' : 'rotate(0)',
+              }"
             ></i>
           </div>
           <el-form
             label="设置CI类型"
             class="form-style item-block-content white-color"
-            :style="{height: excelStatus[1] ? 'auto' : 0}"
+            :style="{ height: excelStatus[1] ? 'auto' : 0 }"
           >
-            <span class="red">*</span>
-            <span style="    margin: 0 40px 0 10px;">CI类型:</span>
-            <el-select v-model="sshid" placeholder="请选择要下载的CI类型模板" clearable>
-              <el-option
-                :label="item.name"
-                :value="item.citypeId"
-                v-for="(item,index) in CIList"
-                :key="index"
-              ></el-option>
-            </el-select>
-            <el-button
-              type="primary"
-              style="margin-left: 22px; "
-              @click="getexcelmodel"
-            >下载模板</el-button>
+            <div>
+              <span class="red">*</span>
+              <span style="margin: 0 40px 0 10px">CI来源:</span>
+              <el-select v-model="source" placeholder="请选择CI来源" clearable>
+                <el-option
+                  :label="item.name"
+                  :value="item.sourceId"
+                  v-for="(item, index) in sourceList"
+                  :key="index"
+                ></el-option>
+              </el-select>
+            </div>
+            <div style="margin-top: 16px">
+              <span class="red">*</span>
+              <span style="margin: 0 40px 0 10px">CI类型:</span>
+              <el-select
+                v-model="sshid"
+                placeholder="请选择要下载的CI类型模板"
+                clearable
+              >
+                <el-option
+                  :label="item.name"
+                  :value="item.citypeId"
+                  v-for="(item, index) in CIList"
+                  :key="index"
+                ></el-option>
+              </el-select>
+              <el-button
+                type="primary"
+                style="margin-left: 22px"
+                @click="getexcelmodel"
+                >下载模板</el-button
+              >
+            </div>
           </el-form>
         </div>
       </el-col>
@@ -61,22 +82,30 @@
             <span class="item-block-title-font white-color">上传文件</span>
             <i
               class="icons el-icon-arrow-right"
-              :style="{transform: excelStatus[2] ? 'rotate(90deg)' : 'rotate(0)'}"
+              :style="{
+                transform: excelStatus[2] ? 'rotate(90deg)' : 'rotate(0)',
+              }"
             ></i>
           </div>
           <el-form
             label="设置CI类型"
-            :style="{height: excelStatus[2] ? 'auto' : 0}"
+            :style="{ height: excelStatus[2] ? 'auto' : 0 }"
             class="form-style upload item-block-content"
           >
             <el-form-item>
               <span class="red">*</span>
-              <span style="margin: 0 24px 0 10px;" class="white-color">导入格式:</span>
-              <el-select v-model="sshidtype" placeholder="请选择导入格式" clearable>
+              <span style="margin: 0 24px 0 10px" class="white-color"
+                >导入格式:</span
+              >
+              <el-select
+                v-model="sshidtype"
+                placeholder="请选择导入格式"
+                clearable
+              >
                 <el-option
                   :label="item.name"
                   :value="item.citypeId"
-                  v-for="(item,index) in CIListtype"
+                  v-for="(item, index) in CIListtype"
                   :key="index"
                 ></el-option>
               </el-select>
@@ -92,7 +121,9 @@
                 :auto-upload="false"
               >
                 <el-button slot="trigger" type="primary">上传</el-button>
-                <el-button class="posa" type="primary" @click="submitUpload">开始导入</el-button>
+                <el-button class="posa" type="primary" @click="submitUpload"
+                  >开始导入</el-button
+                >
               </el-upload>
             </el-form-item>
           </el-form>
@@ -143,37 +174,44 @@
       <span class="item-block-title-font">导入结果</span>
       <i
         class="icons el-icon-arrow-right"
-        :style="{transform: excelStatus[3] ? 'rotate(90deg)' : 'rotate(0)'}"
+        :style="{ transform: excelStatus[3] ? 'rotate(90deg)' : 'rotate(0)' }"
       ></i>
     </div>
     <el-form
       label="执行结果"
       class="form-style item-block-content"
-      :style="{height: excelStatus[3] ? 'auto' : 0}"
+      :style="{ height: excelStatus[3] ? 'auto' : 0 }"
     >
-      <el-row style="padding-left: 10px;">
+      <el-row style="padding-left: 10px">
         <!-- <el-col> -->
-        <el-col v-if="snum+fnum+unum>0">
+        <el-col v-if="snum + fnum + unum > 0">
           <el-form>
             <!-- <div
               style="text-indent: 9%; font-size: 34px; font-weight: 600;margin-bottom: 22px; color: #00FF00;"
             >导入成功</div>-->
-            <span style="    margin-left: 20%;">
-              本次导入总计:
-              <span style="font-size: 18px;  color: #3E444A;">{{snum+fnum+unum}} 条,</span>
-              <span style="font-size: 18px;  color: #00FF00;">成功: {{snum}} 条,</span>
+            <span style="margin-left: 20%">
+              
+              <span style="font-size: 18px; color: #fff"
+                >本次导入总计: {{ snum + fnum + unum }} 条,</span
+              >
+              <span style="font-size: 18px; color: #00ff00"
+                >成功: {{ snum }} 条,</span
+              >
               <span
                 v-if="this.updateNum != 0"
-                style="font-size: 18px;  color: #1E90FF;"
-              >已覆盖: {{unum}} 条,</span>
-              <span style="font-size: 18px;  color: #DC143C;">失败: {{fnum}} 条</span>
+                style="font-size: 18px; color: #1e90ff"
+                >已覆盖: {{ unum }} 条,</span
+              >
+              <span style="font-size: 18px; color: #dc143c"
+                >失败: {{ fnum }} 条</span
+              >
             </span>
           </el-form>
         </el-col>
-        <el-col v-if="unum>0">
-          <div style="    margin-left: 20%;">
+        <el-col v-if="unum > 0">
+          <div style="margin-left: 20%;color:#fff">
             本次覆盖数据名称有:
-            <span style="font-size: 18px;">{{this.ciName}}</span>
+            <span style="font-size: 18px">{{ this.ciName }}</span>
             <!-- <span v-for=""></span> -->
           </div>
         </el-col>
@@ -186,8 +224,23 @@
 <script>
 import axios from '@/api';
 export default {
-  data () {
+  data() {
     return {
+      sourceList: [
+        {
+          name: 'Promtheus',
+          sourceId: '1'
+        },
+        {
+          name: 'Dynatrace',
+          sourceId: '2'
+        },
+        {
+          name: 'BPC',
+          sourceId: '3'
+        }
+      ],
+      source: '',
       sshid: '',
       excelStatus: { '1': true, '2': true, '3': true }, // 控制块
       successNum: 0,
@@ -234,10 +287,10 @@ export default {
   },
   methods: {
     // 点击标签显示或隐藏
-    changeState (num) {
+    changeState(num) {
       this.excelStatus[num] = !this.excelStatus[num]
     },
-    submitUpload () {
+    submitUpload() {
       this.upload()
       this.$refs.upload.submit()
     },
@@ -247,11 +300,11 @@ export default {
     // handlePreview(file) {
     //   console.log(file);
     // }
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       // console.log(val);
     },
     // 环境下拉列表
-    envtablist () {
+    envtablist() {
       let data = {
         name: '',
         environmentType: ''
@@ -266,7 +319,7 @@ export default {
         .catch()
     },
     // 拉取excel模板
-    getexcelmodel () {
+    getexcelmodel() {
       // console.log(this.sshid)
       if (!this.sshid) {
         this.$notify({
@@ -283,7 +336,7 @@ export default {
     //  submitUpload() {
     //     this.$refs.upload.submit();
     //   },
-    beforeUpload (file) {
+    beforeUpload(file) {
       // console.log(file)
       // 这里是重点，将文件转化为formdata数据上传
       //   let fd = new FormData()
@@ -291,7 +344,7 @@ export default {
       //  this.filedata = fd
     },
     // 脚本上传
-    upload () {
+    upload() {
       let AUTH_TOKEN = (function () {
         return localStorage.getItem('token')
       })()
@@ -308,6 +361,14 @@ export default {
           //  console.log(item)
         }
       })
+      if (!this.source) {
+        this.$notify({
+          title: '提示',
+          message: '请选择CI来源',
+          type: 'warning'
+        })
+        return false
+      }
       // console.log(files);
       if (!files) {
         this.$notify({
@@ -317,6 +378,8 @@ export default {
         })
         return false
       }
+
+      fd.append('source', this.source)
       fd.append('file', files)
       let config = {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -394,7 +457,7 @@ export default {
           }
         })
     },
-    getwidth () {
+    getwidth() {
       var x = document.getElementsByClassName('el-upload')
       x[0].style.width = '80px'
       x[0].style.height = '33px'
@@ -402,25 +465,24 @@ export default {
       x[0].style.position = 'relative'
       x[0].style.left = '567px'
     },
-    handleRemove (file, fileList) {
+    handleRemove(file, fileList) {
       // console.log(file, fileList);
     },
-    handlePreview (file) {
+    handlePreview(file) {
       // console.log(file)
       this.resid = file.uid
       // console.log(file);
     },
-    handleExceed (files, fileList) {
+    handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
+        `当前限制选择 3 个文件，本次选择了 ${files.length
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       )
     },
     // beforeRemove(file, fileList) {
     //   return this.$confirm(`确定移除 ${ file.name }？`);
     // },
-    getcitypelist () {
+    getcitypelist() {
       let data = {}
       data.cigroupId = ''
       data.name = ''
@@ -435,9 +497,9 @@ export default {
         .catch()
     }
   },
-  created () { },
-  updated () { },
-  mounted () {
+  created() { },
+  updated() { },
+  mounted() {
     this.getcitypelist()
     this.getwidth()
     this.envtablist()
@@ -452,7 +514,7 @@ export default {
   padding-bottom: 30px;
 }
 .item-block-title > .icons {
-  color: #00A8E8;
+  color: #00a8e8;
 }
 .el-upload--text {
   color: #97a8be;
@@ -460,7 +522,7 @@ export default {
   text-align: center;
 }
 .upload-demo /deep/ .el-upload--text {
-  background-color: transparent!important;
+  background-color: transparent !important;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   left: 0 !important;
