@@ -248,6 +248,7 @@
             分钟执行一次
           </el-form-item>
           <el-form-item
+            v-if="showKeepAlert"
             class="result-str"
             label="持续告警设置："
             prop="keepAlert"
@@ -344,6 +345,7 @@ export default {
       onceStr: '', // 一次执行的信息
       startDate: '',
       endDate: '',
+      showKeepAlert: false,
       cronObj: {
         second: '',
         minute: '',
@@ -544,8 +546,17 @@ export default {
     }
   },
   methods: {
+    getKeepAlert() {
+      let urlArr = this.url.split('/')
+      if (urlArr.length > 0 && urlArr[urlArr.length - 1] === 'alert' && urlArr[urlArr.length - 2] === 'job') {
+        this.showKeepAlert = true
+      } else {
+        this.showKeepAlert = false
+      }
+    },
     getUrl() {
       this.copyUrl = this.url
+      this.getKeepAlert()
     },
     // 拼接url
     getUrlRelation() {
@@ -617,6 +628,7 @@ export default {
           // this.taskType = data.taskType
           this.name = data.name
           this.url = data.url
+          this.getKeepAlert()
           this.code = data.code
           if (this.relation) {
             strList = this.url.split('/')
@@ -634,6 +646,7 @@ export default {
             data.cronStrategy,
             data.stormConfig
           )
+
         } else {
           this.$notify({
             type: 'error',
@@ -834,7 +847,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } 00:00 执行`
+            } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -912,7 +925,7 @@ export default {
       } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
           let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${this.onceTime
-          }`
+            }`
           let validate = this.verdictDate(fullDate)
           let cronStr = this.handleOnceCron(fullDate, 2)
           let params = {
@@ -1283,7 +1296,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } ${val} 执行`
+            } ${val} 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 ${val} 执行`
         } else {
@@ -1295,7 +1308,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-          } 00:00 执行`
+            } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -1549,7 +1562,7 @@ export default {
   width: 140px;
 }
 .cronPage {
-  padding: 0;
+  padding: 0 0 30px;
   background-color: rgba(4, 28, 37, 0.3);
   margin: 10px;
 }
