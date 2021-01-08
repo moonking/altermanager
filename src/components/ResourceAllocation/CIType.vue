@@ -633,8 +633,8 @@
               ></el-input>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
-              <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
               必填项不能为空
@@ -684,8 +684,8 @@
               ></el-input>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
-              <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
               必填项不能为空
@@ -749,8 +749,8 @@
               ></el-input>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
-              <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
               必填项不能为空
@@ -810,8 +810,8 @@
               ></el-input>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
-              <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
               必填项不能为空
@@ -862,8 +862,8 @@
               ></el-input>
             </div>
             <div class="attributeItem">
-              <el-checkbox label="多选" v-model="form.moreSelect"></el-checkbox>
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="多选" v-model="form.moreSelect"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
               <!-- <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox> -->
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
@@ -901,8 +901,8 @@
                 name="type"
               ></el-checkbox>
               <br />
-              <el-checkbox label="必填" v-model="form.required"></el-checkbox>
-              <el-checkbox label="只读" v-model="form.readOnly"></el-checkbox>
+              <el-checkbox  label="必填" v-model="form.required"></el-checkbox>
+              <el-checkbox  label="只读" v-model="form.readOnly"></el-checkbox>
             </div>
             <p style="font-size: 12px; color: red" v-show="isRequiredInput">
               必填项不能为空
@@ -2727,6 +2727,7 @@ export default {
           .top-content {
             margin: 20px 0;
             .gx-box {
+              color: #fff;
               ul {
                 margin: 10px;
                 li {
@@ -2895,5 +2896,8 @@ export default {
 .el-tree-node:focus > .el-tree-node__content {
   background: #00a8e8;
   color: #fff;
+}
+.el-checkbox  .el-checkbox__label{
+  color: #666 !important;
 }
 </style>
