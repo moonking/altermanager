@@ -1675,6 +1675,7 @@ export default {
           margin: 20px;
           .top-content {
             .gx-box {
+              color: #fff;
               ul {
                 margin: 10px;
                 li {
