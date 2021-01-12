@@ -612,7 +612,6 @@ export default {
         graph.setItemState(item, state, highlight)
         const source = item.getSource()
         const target = item.getTarget()
-        console.log(source)
         this.setHighlightItem(source, highlight, graph, source._cfg.id, 'source')
         this.setHighlightItem(target, highlight, graph, target._cfg.id, 'target')
       }
