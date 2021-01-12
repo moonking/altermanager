@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="graphData"
+        :data.sync="tempData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -506,7 +506,9 @@ export default {
         // graph.setItemState(target, state, highlight)
         graph.setItemState(item, state, highlight)
         const source = item.getSource()
-        this.setHighlightItem(source, highlight, graph)
+        const target = item.getTarget()
+        this.setHighlightItem(source, highlight, graph, source._cfg.id, 'source')
+        this.setHighlightItem(target, highlight, graph, target._cfg.id, 'target')
       }
       // 更改层级后需要重新绘制图
       graph.paint();
@@ -523,7 +525,9 @@ export default {
           id: systemId,
           label: name,
           businessData: system,
-          x, y, width
+          x,
+          y,
+          width
         }
         nodes.push(node)
 
@@ -615,7 +619,6 @@ export default {
             data.forEach(item => {
               const { systemId } = item
               systemList.forEach((system, index) => {
-
                 if (systemId === system.systemId) {
                   // system = item
                   // 重置每一个节点告警状态
@@ -698,7 +701,6 @@ export default {
             that.graph.fitView()
             bl = true
           }
-
         }
 
         // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
