@@ -41,7 +41,7 @@
         <!-- tempData -->
         <!-- graphData -->
         <graph-editor
-          :data="graphData"
+          :data="tempData"
           :sessionCfg="sessionCfg"
           :mouseCfg="mouseCfg"
           class="editor"
@@ -611,7 +611,10 @@ export default {
         // graph.setItemState(target, state, highlight)
         graph.setItemState(item, state, highlight)
         const source = item.getSource()
-        this.setHighlightItem(source, highlight, graph)
+        const target = item.getTarget()
+        console.log(source)
+        this.setHighlightItem(source, highlight, graph, source._cfg.id, 'source')
+        this.setHighlightItem(target, highlight, graph, target._cfg.id, 'target')
       }
       // 更改层级后需要重新绘制图
       graph.paint();
@@ -663,7 +666,6 @@ export default {
       shape.attr('stroke', '#666')
     },
     goBack() {
-      let that = this
       window.addEventListener('keydown', (evt) => {
         evt = evt || (window.event ? window.event : '');
         var keyCode = evt.keyCode
@@ -671,7 +673,7 @@ export default {
           : evt.which
             ? evt.which
             : evt.charCode;
-        if (keyCode == 37) { 
+        if (keyCode == 37) {
           this.$router.push({
             path: '/Aibms/businessPath',
             query: {
@@ -707,7 +709,6 @@ export default {
             that.graph.fitView()
             bl = true
           }
-
         }
 
         // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);

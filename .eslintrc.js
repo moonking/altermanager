@@ -27,7 +27,7 @@ module.exports = {
     //语句强制分号结尾
     "semi": ["off", "always"],
     //
-    "space-before-function-paren":"off",
+    "space-before-function-paren": "off",
     //强制使用===
     "eqeqeq": "off",
     //文字间的空格和tabs

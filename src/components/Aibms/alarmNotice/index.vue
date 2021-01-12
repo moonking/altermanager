@@ -144,7 +144,7 @@
       <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">
         <template v-slot="scope">
-          <span>{{ scope.row.status === '1' ? '已收到' : '-' }}</span>
+          <span>{{ scope.row.status === "1" ? "已收到" : "-" }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column align="center" label="交易追踪">
