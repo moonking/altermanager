@@ -5,7 +5,7 @@
       <!-- graphData -->
       <!-- tempData -->
       <graph-editor
-        :data.sync="tempData"
+        :data.sync="graphData"
         :sessionCfg="sessionCfg"
         :mouseCfg="mouseCfg"
         class="editor"
@@ -322,7 +322,7 @@ export default {
         //   // minNodeSpacing: 40,
         //   // workerEnabled: true
         // },
-        // fitView: true, // 适应画布
+        fitView: true, // 适应画布
         // fitViewPadding: [10],
         // 模式配置
         modes: {
@@ -519,12 +519,15 @@ export default {
       const nodes = []
       const edges = []
       data.forEach(system => {
-        const { name, systemId, callNodes } = system
+        const { name, systemId, callNodes, x, y, width } = system
         // id: 'nodeA1', nodeName: 'testName', label: 'user', ip: '127.0.0.1', img: hostSvg
         let node = {
           id: systemId,
           label: name,
-          businessData: system
+          businessData: system,
+          x,
+          y,
+          width
         }
         nodes.push(node)
 
@@ -599,6 +602,7 @@ export default {
       //   console.log('业务系统ws连接成功！')
       // }
       this.$global.wsAibms.onmessage = (event) => {
+        console.log(event)
         let data = common.evil(event.data);
 
         const { systemList } = this
@@ -679,8 +683,7 @@ export default {
       let that = this
       let w = window.screen.availWidth
       let h = window.screen.availHeight
-      let elH = this.$refs.graphEditor.$el.offsetHeight
-      let elW = this.$refs.graphEditor.$el.offsetWidth
+
       let bl = false
       document.addEventListener('webkitfullscreenchange', function () {
         if (document.webkitIsFullScreen) {
@@ -688,9 +691,16 @@ export default {
           that.graph.fitView()
           bl = true
         } else {
-          that.graph.changeSize(elW, elH);
-          that.graph.fitView()
-          bl = true
+          let el = document.getElementsByClassName('editor-container')[0]
+          if (el) {
+            const style = window.getComputedStyle(el)
+            const { width, height } = style
+            let elH = Number(height.substring(0, height.length - 2))
+            let elW = Number(width.substring(0, width.length - 2))
+            that.graph.changeSize(elW, elH);
+            that.graph.fitView()
+            bl = true
+          }
         }
 
         // that.graph.changeSize(window.screen.availWidth, window.screen.availHeight);
@@ -700,8 +710,15 @@ export default {
         that.graph.changeSize(w, h);
         that.graph.fitView()
       } else {
-        that.graph.changeSize(elW, elH);
-        that.graph.fitView()
+        let el = document.getElementsByClassName('editor-container')[0]
+        if (el) {
+          const style = window.getComputedStyle(el)
+          const { width, height } = style
+          let elH = Number(height.substring(0, height.length - 2))
+          let elW = Number(width.substring(0, width.length - 2))
+          that.graph.changeSize(elW, elH);
+          that.graph.fitView()
+        }
       }
     }
   },
