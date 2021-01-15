@@ -195,7 +195,7 @@
         v-if="status === 'edit'"
         size="medium"
         type="primary"
-        @click="addSystemclick('2')"
+        @click="addSystemclick('edit')"
         >保存</el-button
       >
       <el-button
@@ -652,7 +652,7 @@ export default {
       this.callNodes.splice(index, 1)
     },
     // 确认新增业务系统
-    addSystemclick(num) {
+    addSystemclick(type) {
       let that = this
       const nodes = this.callNodes
       const nodesData = []
@@ -691,6 +691,7 @@ export default {
             userId: this.sysdata.userId,
             username: this.userList.filter(item => item.userId == this.sysdata.userId)[0].name,
             phone: this.userList.filter(item => item.userId == this.sysdata.userId)[0].mobile,
+            telephone: this.userList.filter(item => item.userId == this.sysdata.userId)[0].telephone,
             email: this.userList.filter(item => item.userId == this.sysdata.userId)[0].email,
             url: this.sysdata.url,
             voucherId: this.sysdata.voucherId,
@@ -701,7 +702,7 @@ export default {
             hosts: hostsData,
             callNodes: nodesData
           }
-          if (num && num === '2') {
+          if (type && type === 'edit') {
             axios.getEditSystemList(data, this.$route.query.id).then(function (res) {
               if (res.data.code == 200) {
                 that.$notify({
@@ -780,7 +781,7 @@ export default {
           callNodes.forEach(node => {
             callNodesData.push({ systemId: node.systemId })
           })
-          this.hostTableSelected = JSON.parse(data.hosts||'[]')
+          this.hostTableSelected = JSON.parse(data.hosts || '[]')
           this.sysdata = data
           this.sysdata.userId = JSON.parse(data.opsPerson).userId
           if (callNodesData.length > 0) this.callNodes = callNodesData
