@@ -139,7 +139,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="platform" label="来源" />
-      <el-table-column prop="alarmAddress" label="告警对象" />
+      <el-table-column prop="alarmAddress" label="告警对象" min-width="80%" show-overflow-tooltip/>
       <el-table-column prop="alarmType" label="类型" />
       <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">

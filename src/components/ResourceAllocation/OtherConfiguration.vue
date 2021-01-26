@@ -47,7 +47,7 @@
       height="84%"
     >
       <el-table-column type="selection" v-if="allSysDeleteShow" />
-      <el-table-column label="业务系统名称" prop="name" />
+      <el-table-column label="业务系统名称" prop="name" show-overflow-tooltip />
       <el-table-column label="英文缩写" prop="englishAbridge" />
       <el-table-column label="类型" prop="type" />
       <!-- <el-table-column label="url" prop="url" />
