@@ -634,7 +634,7 @@ export default {
       checkedRole: '',
       roleDataList: '',
       userDataList: '',
-      detailData: '',
+      detailData: {},
       total: 0, // 页数
       page: true,
       userStatus: '',
@@ -942,11 +942,11 @@ export default {
     // 点击表单查看详情
     showDetail(userId) {
       //   console.log(userId);
-      this.DetailDate = true
       let id = userId
       axios.userDetail(id).then(res => {
         this.detailData = res.data.data.result
         this.editCurrentPic = res.data.data.result.photo
+        this.DetailDate = true
       })
     },
     // 点击表单删除该用户

@@ -276,7 +276,7 @@
           height="86%"
         >
           <el-table-column type="selection" align="center" />
-          <el-table-column label="名称">
+          <el-table-column label="名称" show-overflow-tooltip>
             <template slot-scope="scope">
               <span v-html="scope.row.name"></span>
             </template>

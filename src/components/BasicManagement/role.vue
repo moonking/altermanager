@@ -44,7 +44,7 @@
     <el-table :data="roleListData" stripe height="84%" style="padding: 0 20px">
       <el-table-column prop="name" label="角色名称" />
       <el-table-column prop="sysName" label="所属系统" />
-      <el-table-column prop="description" label="角色说明" />
+      <el-table-column prop="description" label="角色说明" show-overflow-tooltip />
       <el-table-column prop="permission" label="角色标识" />
       <el-table-column prop="createDate" label="创建时间" />
       <el-table-column label="用户操作" width="200px" align="center">
