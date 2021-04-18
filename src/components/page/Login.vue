@@ -85,6 +85,7 @@ export default {
   },
 
   methods: {
+    // 登录验证
     submitForm() {
       let username = this.form.loginName;
       let password = this.form.password;
@@ -157,10 +158,12 @@ export default {
         });
       }
     },
+    // api地址选择
     changeImg() {
       this.form.img_src =
         axios.baseurl() + 'kaptcha?' + Math.floor(Math.random() * 100);
     },
+    // 修改verify
     parseVerify(verify) {
       if (!verify) {
         verify = {};

@@ -91,6 +91,7 @@ export default {
     }
   },
   watch: {
+    // 开始时间
     startingTime(val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
@@ -99,6 +100,7 @@ export default {
         }
       }
     },
+    // 结束时间
     endingTime(val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
@@ -107,6 +109,7 @@ export default {
         }
       }
     },
+    // 起始时间记录
     sTime(val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
@@ -116,6 +119,7 @@ export default {
         }
       }
     },
+    // 结束时间记录
     eTime(val, oldVal) {
       if (val.length) {
         if (this.$route.query.id) {
@@ -144,6 +148,7 @@ export default {
     tomorrow: ''
   }),
   methods: {
+    // 对日期时间做分割判断
     getPpickerTime() {
       let startHour = this.dateModel.startTime.split(':')[0];
       let endHour = this.dateModel.endTime.split(':')[0]
@@ -165,7 +170,9 @@ export default {
         this.tomorrow = ''
       }
     },
+    // 补零
     addZero: num => ('00' + num).substr(('00' + num).length - 2, 2),
+    // 日期格式修改
     dateFormat(date) {
       const year = date.getFullYear()
       const mouth = date.getMonth() + 1
@@ -180,6 +187,7 @@ export default {
       // this.addZero(minutes) + ':' +
       // this.addZero(seconds)
     },
+    // 日期格式分割
     splitDate() {
       this.startDay = this.dateModel.daterange != null ? this.dateFormat(this.dateModel.daterange[0]) : ''
       this.endDay = this.dateModel.daterange != null ? this.dateFormat(this.dateModel.daterange[1]) : ''

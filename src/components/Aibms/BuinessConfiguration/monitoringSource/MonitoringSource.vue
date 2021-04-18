@@ -193,6 +193,7 @@ export default {
     this.getMonitorList(params)
   },
   methods: {
+    // 将search信息缓存至session
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -204,6 +205,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 将缓存在session的信息回显至search
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -216,6 +218,7 @@ export default {
       }
       return params
     },
+    //  获取监控来源列表
     getMonitorList(params) {
       if (params === undefined) {
         params = {
@@ -240,10 +243,12 @@ export default {
         }
       })
     },
+    // 搜索
     search() {
       this.page.current = 1
       this.getMonitorList()
     },
+    // 跳转至监控来源详情
     sourceDetail(row) {
       this.setSession()
       this.$router.push({
@@ -255,6 +260,7 @@ export default {
         }
       })
     },
+    // 跳转到详情页面
     handleEdit(row) {
       this.setSession()
       this.$router.push({
@@ -265,10 +271,12 @@ export default {
         }
       })
     },
+    // 关闭删除dialog
     handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.confirmDeleteDialogVisible = true
     },
+    // 跳转到新增页面
     addSource() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addSource',
@@ -286,6 +294,7 @@ export default {
       this.page.current = 1
       this.getMonitorList()
     },
+    //  删除监控来源
     confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteMonitor(id).then(res => {

@@ -571,6 +571,7 @@ export default {
     }
   },
   methods: {
+    // 获取权限
     getAuth(data) {
       let opt = []
       data.forEach(val => {
@@ -590,6 +591,7 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event)
     },
+    // 分页
     handleCurrentChange(val) {
       this.currentRow = val
     },
@@ -612,6 +614,7 @@ export default {
       this.addUser = false
       this.toView = false
     },
+    // 关闭
     handleDialogClose2() {
       this.$refs.form2.resetFields()
       this.dialogFormVisible2 = false
@@ -620,6 +623,7 @@ export default {
       this.addUser = false
       this.toView = false
     },
+    // 关闭
     handleDialogClose3() {
       this.$refs.form3.resetFields()
       this.dialogFormVisible3 = false
@@ -814,6 +818,7 @@ export default {
     //                   }
     //               }
     // },
+    // 递归添加路径和名称
     getcpath(item) {
       item.forEach(item => {
         if (item.href.indexOf('?') > -1) {
@@ -826,6 +831,7 @@ export default {
         }
       })
     },
+    // 递归选择登录目录
     getLoginerMenu(userId) {
       let payload = {}
       axios.getLoginMenu(userId).then(res => {
@@ -914,6 +920,7 @@ export default {
       //      return false;
       //  }
     },
+    // 关闭
     cancle() {
       this.dialogFormVisible2 = false
       this.dialogFormVisible3 = false

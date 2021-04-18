@@ -50,6 +50,7 @@ export default {
     //                     }
     //                 }
     //   },
+    // 获取路径名称和url
     getcpath (item) {
       item.forEach(item => {
         if (item.href.indexOf('?') > -1) {
@@ -62,6 +63,7 @@ export default {
         }
       })
     },
+    // 获取登录用户权限菜单
     getLoginerMenu (userId) {
       axios.getLoginMenu(userId).then(res => {
         let payload = {}
@@ -144,6 +146,7 @@ export default {
     showTags () {
       return this.tagsList.length > 0
     },
+    // tags处理 name
     tags () {
       let arr = []
       for (var i = 0; i < this.$store.state.tags.length; i++) {

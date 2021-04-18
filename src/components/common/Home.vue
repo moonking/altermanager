@@ -90,6 +90,7 @@ export default {
     AIAindex
   },
   methods: {
+    // 全屏
     fullBool() {
       let that = this
       document.addEventListener('webkitfullscreenchange', function () {
@@ -101,14 +102,14 @@ export default {
           // 全屏后要执行的代码
           that.full = true
           that.$store.dispatch('setIsfull', true);
-        } else { 
+        } else {
           // 退出全屏后执行的代码
           that.full = false
           that.$store.dispatch('setIsfull', false);
         }
       }, false);
     },
-
+    // 获取tags列表
     getTagsList() {
       // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
       bus.$on('tags', msg => {

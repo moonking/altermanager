@@ -286,6 +286,7 @@ export default {
     this.init();
   },
   watch: {
+    // 短信文本监听
     MsgText: {
       handler(val) {
         this.handleContent(val)
@@ -294,6 +295,7 @@ export default {
     }
   },
   methods: {
+    // 判断是否第一次进入
     checkUrl() {
       if (!this.isFirst) {
         if (this.msgForm.apiUrl === this.firstUrl) {
@@ -303,6 +305,7 @@ export default {
         }
       }
     },
+    // 选择模板类型
     chooseType() {
       console.log(this.template, this.msgForm)
       this.template.forEach((item) => {
@@ -311,6 +314,7 @@ export default {
         }
       })
     },
+    // 文本处理
     handleContent(val) {
       this.template.forEach((item) => {
         if (item.noticeType === this.msgForm.noticeType) {
@@ -318,6 +322,7 @@ export default {
         }
       })
     },
+    // 短信测试dialog打开
     handleTest() {
       this.$refs.smsForm.validate((valid) => {
         if (valid) {
@@ -327,6 +332,7 @@ export default {
     },
     init() {
       Promise.all([
+        // 获取用户列表
         axios.userList({
           online: false,
           condition: '', /// 姓名、手机、登录名
@@ -335,6 +341,7 @@ export default {
           current: 1, // 当前页
           size: 1000 // 每页显示条数
         }),
+        // 短信配置详情
         axios.smsDetail()
       ]).then((res) => {
         console.log(res[1]);
@@ -363,12 +370,15 @@ export default {
         }
       });
     },
+    // 选择参数
     chooseConfig(item, index) {
       this.clickMsgNum = index;
     },
+    // 是否展开
     switchBlock(index) {
       return (this.blockSwitch[index] = !this.blockSwitch[index]);
     },
+    // 修改数据格式
     formatData(str) {
       let arr = [];
       arr = str.slice(1, -1).replace(/\"/g, '').split(',');
@@ -380,6 +390,7 @@ export default {
         });
       });
     },
+    // 第一次保存短信配置
     FirstSaveMsg() {
       let params = {
         id: this.id,
@@ -405,6 +416,7 @@ export default {
         }
       });
     },
+    // 保存短信配置
     saveMsg() {
       let params = {
         id: this.id,
@@ -430,6 +442,7 @@ export default {
         }
       });
     },
+    // 测试短信
     testMsg() {
       this.$refs.testForm.validate((valid) => {
         if (valid) {
@@ -470,6 +483,7 @@ export default {
         }
       });
     },
+    // 提交短信配置
     submit() {
       if (!this.isSubmit) {
         this.$notify({

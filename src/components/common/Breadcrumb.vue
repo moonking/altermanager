@@ -23,6 +23,7 @@ export default {
     this.getBread()
   },
   methods: {
+    // 获取初始列表
     createList() {
       this.$route.matched.forEach((item) => {
         this.breadlist.push(
@@ -35,6 +36,7 @@ export default {
         )
       })
     },
+    // 面包屑修改
     getBread(newValue, oldValue) {
       if (this.$route.meta.title === '用户管理' || this.$route.meta.title === 'CI列表' || this.$route.meta.title === '业务路径') {
         this.breadlist[0].path = this.$route.fullPath

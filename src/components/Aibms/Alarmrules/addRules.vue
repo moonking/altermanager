@@ -636,6 +636,7 @@ export default {
     checkboxT(row, index) {
       return this.status !== 'read';
     },
+    // 是否已有code
     isOwner(code) {
       return this.ownerTypes.indexOf(code) !== -1;
     },
@@ -681,13 +682,13 @@ export default {
         this.noticeInform.push(res);
       });
     },
-    getEnableClassList(classList) {
-      return classList.filter(
-        (item) =>
-          !item.belongRule ||
-          (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)
-      );
-    },
+    // getEnableClassList(classList) {
+    //   return classList.filter(
+    //     (item) =>
+    //       !item.belongRule ||
+    //       (item.belongRule && this.ownerTypes.indexOf(item.code) !== -1)
+    //   );
+    // },
     // 分类勾选状态
     classCheckStatus(type) {
       let bl = true;
@@ -1146,6 +1147,7 @@ export default {
       //   }
       // ];
     },
+    // 全选
     handleCheckAllChange(val) {
       const { classList } = this;
       // const checkedLength = this.typesForm.type.length
@@ -1197,6 +1199,7 @@ export default {
       // this.typesForm.type = temp
       // this.isIndeterminate = false
     },
+    // 修改选择状态
     handlecheckedClassChange(value) {
       const list = this.classList.filter(
         (item) =>
@@ -1231,6 +1234,7 @@ export default {
     handleClick(tab) {
       this.AutoSelect();
     },
+    // 步骤条进度显示
     isActive(num) {
       if (num === 1) {
         if (this.$refs.typesForm) {

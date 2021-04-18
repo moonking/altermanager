@@ -326,6 +326,7 @@ export default {
       } else {
         this.$route.meta.title = '编辑来源'
       }
+      //  查询监控来源详情
       axios.getMonitorDetail(this.editId).then(res => {
         if (res.data.success) {
           const sourceDetail = res.data.data
@@ -380,11 +381,13 @@ export default {
         }
       }
     },
+    // 清除error标记
     clearIcon() {
       if (this.rightOrError) {
         this.rightOrError = false
       }
     },
+    // 关闭删除dialog
     confirmDelete() {
       this.InterfaceForm.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
@@ -478,6 +481,7 @@ export default {
         })
       }
     },
+    // 处理返回值，添加状态
     handleResponse(res) {
       const domains = this.InterfaceForm.domains
       const data = res.data.data
@@ -493,9 +497,11 @@ export default {
         })
       }
     },
+    // 返回url检测结果
     checkUrl(params) {
       return axios.checkInterFace(params)
     },
+    // 过滤url
     handleUrls(urls) {
       const result = []
       urls.forEach((url, index) => {
@@ -508,6 +514,7 @@ export default {
       })
       return result
     },
+    // 添加或修改监控来源
     addOrEdit(methods) {
       const urls = this.handleUrls(this.InterfaceForm.domains)
       console.log(urls)
@@ -583,6 +590,7 @@ export default {
   mounted() {
     const el = document.getElementById('api-items')
     const that = this
+    // 排序组件调用
     const sortable = new Sortable.create(el, {
       onUpdate: function (event) {
         let newIndex = event.newIndex,

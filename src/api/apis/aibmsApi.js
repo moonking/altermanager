@@ -277,6 +277,7 @@ export function getTraceSystemList () {
     method: 'GET'
   })
 }
+// 交易追踪列表
 export function getTraceTypeList () {
   return request({
     url: baserUrl + 'api/trace/types',

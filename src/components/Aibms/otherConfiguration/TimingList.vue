@@ -248,6 +248,7 @@ export default {
     //     }
     //   })
     // },
+    // search数据缓存
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -258,6 +259,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // search数据回显
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -269,6 +271,7 @@ export default {
       }
       return params
     },
+    // websocket数据处理 状态处理
     handdleMsg(msg) {
       let _this = this
       _this.$global.ws.onmessage = function (res) {
@@ -288,6 +291,7 @@ export default {
         }
       }
     },
+    // 定时策略选择
     formatStrategy(row, column) {
       if (row.cronStrategy === 'cycle') {
         return '周期性'
@@ -299,9 +303,9 @@ export default {
         return '-'
       }
     },
-    formatPurposes: function (row, column) {
-      return row.taskType === '2' ? '部署' : '构建'
-    },
+    // formatPurposes: function (row, column) {
+    //   return row.taskType === '2' ? '部署' : '构建'
+    // },
     // 获取定时任务列表
     getTimingList(params) {
       if (params === undefined) {
@@ -329,10 +333,12 @@ export default {
       this.currPage = 1
       this.getTimingList()
     },
+    // 删除任务dialog显示
     deleteJob(id) {
       this.confirmDeleteDialogVisible = true
       this.cancleId = id
     },
+    // 是否删除
     confirmDelete() {
       axios.deleteTimingTask(this.cancleId).then(res => {
         if (res.data.code === 200) {
@@ -359,6 +365,7 @@ export default {
         path: '/Aibms/otherConfiguration/timing/create'
       })
     },
+    // 跳转至定时任务详情
     readJob(row) {
       this.setSession()
       this.$router.push({
@@ -369,6 +376,7 @@ export default {
         path: '/Aibms/otherConfiguration/timing/read'
       })
     },
+    // 修改定时任务
     editJob(id) {
       this.setSession()
       this.$router.push({
@@ -379,10 +387,12 @@ export default {
         path: '/Aibms/otherConfiguration/timing/edit'
       })
     },
+    // 翻页
     handleSizeChange(val) {
       this.size = val
       this.getTimingList()
     },
+    // 分页
     handleCurrentChange(val) {
       this.currPage = val
       this.getTimingList()

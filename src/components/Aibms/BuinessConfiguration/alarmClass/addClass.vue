@@ -227,6 +227,7 @@ export default {
           this.$route.meta.title = '编辑分类'
         }
         this.editId = this.$route.query.id
+        // 获取告警详情
         axios.getAlarmDetail(this.editId).then(res => {
           if (res.data.success) {
             const sourceDetail = res.data.data
@@ -255,12 +256,15 @@ export default {
         this.selectlabel = '交易类型'
       }
     },
+    // 保存表单
     handleSave() {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.editId) {
+            // 编辑告警分类
             this.addOrEdit(axios.editAlarm)
           } else {
+            // 新增告警分类
             this.addOrEdit(axios.addAlarm)
           }
         } else {
@@ -268,12 +272,15 @@ export default {
         }
       });
     },
+    // 获取标签
     getselectValue() {
       this.selectValue = this.$options.filters['valueFilter'](this.selectlabel)
     },
+    // 返回上一级
     handleCancel() {
       this.$router.back()
     },
+    //  新增或编辑告警分类
     addOrEdit(methods) {
       const params = {
         id: this.editId,
@@ -310,10 +317,12 @@ export default {
         }
       });
     },
+    // 关闭删除dialog
     confirmDelete() {
       this.form.domains.splice(this.deleteId, 1)
       this.confirmDeleteDialogVisible = false
     },
+    // 添加域
     addDomain() {
       this.form.domains.push({
         source: '',

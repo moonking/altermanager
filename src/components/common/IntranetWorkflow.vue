@@ -535,6 +535,7 @@ export default {
         })
       })
     },
+    // 大小拖拽
     Drag () {
       let _this = this
       _this.oDiv = document.getElementById('div1')
@@ -558,6 +559,7 @@ export default {
         }
       }
     },
+    // 开始拖拽
     doDrag (ev) {
       var oEvent = ev || event
       var t = oEvent.clientY - this.mouseStart.y + this.bottomStart.y
@@ -573,6 +575,7 @@ export default {
       }
       this.oDiv2.style.height = h + 'px'
     },
+    // 停止拖拽
     stopDrag () {
       if (this.bottom.releaseCapture) {
         this.bottom.onmousemove = null

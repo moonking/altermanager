@@ -130,6 +130,7 @@ export default {
     this.getUpgradeList(params)
   },
   methods: {
+    // 将search数据放在session中
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -141,6 +142,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 将session中的数据拿出来回显
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -198,10 +200,12 @@ export default {
         }
       })
     },
+    // 搜索
     search() {
       this.page.current = 1
       this.getUpgradeList()
     },
+    // 新增告警升级
     addXClassification() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addGadeAlarm',
@@ -210,6 +214,7 @@ export default {
         }
       })
     },
+    // 修改告警升级
     handleEdit(row) {
       this.setSession()
       this.$router.push({
@@ -220,12 +225,15 @@ export default {
         }
       })
     },
+    // 打开删除dialog
     handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
+    // 删除选择
     confirmDelete() {
       const id = this.currentDeleteItemId
+      // 告警升级删除
       axios.deleteUpgrade(id).then(res => {
         if (res.data.success) {
           this.$notify.success({

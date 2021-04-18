@@ -330,6 +330,7 @@ export default {
     };
   },
   methods: {
+    // 数字监听
     inputFun(value) {
       if (value) {
         this.menuNameLength = value.length;
@@ -374,16 +375,19 @@ export default {
         this.menuNameLength1 = value.length;
       }
     },
+    // 实时显示输入框已输入字数
     inputFun2(value) {
       if (value) {
         this.menuNameLength2 = value.length;
       }
     },
+    // 实时显示输入框已输入字数
     inputFun3(value) {
       if (value) {
         this.menuNameLength3 = value.length;
       }
     },
+    // 实时显示输入框已输入字数
     inputFun4(value) {
       if (value) {
         this.menuNameLength4 = value.length;
@@ -409,6 +413,7 @@ export default {
     //           }
     //       }).catch()
     //   },
+    // 数组处理
     uniq(array) {
       let temp = {};
       let r = [];

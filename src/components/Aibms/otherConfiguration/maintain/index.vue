@@ -142,6 +142,7 @@ export default {
     this.getBusinessList()
   },
   methods: {
+    // 将查询的数据储存在session中
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -153,6 +154,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 将储存在session中的数据取出回显
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -208,10 +210,12 @@ export default {
         }
       })
     },
+    // 搜索
     search() {
       this.page.current = 1
       this.getMaintenanceList()
     },
+    // 跳转至修改维持窗口
     handleEdit(row) {
       this.setSession()
       this.$router.push({
@@ -222,6 +226,7 @@ export default {
         }
       });
     },
+    // 跳转至新增维护窗口
     addRule() {
       this.$router.push({
         path: '/Aibms/otherConfiguration/addMaintain',
@@ -230,6 +235,7 @@ export default {
         }
       });
     },
+    //  开启/关闭维护窗口
     openRule(scope) {
       const params = {
         id: scope.id,
@@ -250,6 +256,7 @@ export default {
         }
       })
     },
+    // 跳转至维护窗口详情
     maintainDeatil(row) {
       this.setSession()
       this.$router.push({
@@ -270,12 +277,15 @@ export default {
       this.page.current = 1
       this.getMaintenanceList()
     },
+    // 打开删除dialog
     handleDelete(row) {
       this.currentDeleteItemId = row.id
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
+    // 删除选择
     confirmDelete() {
       const id = this.currentDeleteItemId
+      // 删除维护窗口
       axios.deleteMaintenance(id).then(res => {
         if (res.data.success) {
           this.$notify.success({

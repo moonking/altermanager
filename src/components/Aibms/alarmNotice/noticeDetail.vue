@@ -188,6 +188,7 @@ export default {
   },
   methods: {
     LevelFilter: level => levelMap[level],
+    // 查询告警通知详情
     getNoticeDetail() {
       axios.getNoticeDetail(this.$route.query.id).then(res => {
         if (res.data.success) {
@@ -220,10 +221,12 @@ export default {
         }
       })
     },
+    // 是否展开
     switchBlock(index) {
       // eslint-disable-next-line no-return-assign
       return this.blockSwitch[index] = !this.blockSwitch[index]
     },
+    // 修改告警通知
     confirm() {
       if (this.alarmForm.status == '1') {
         const params = {

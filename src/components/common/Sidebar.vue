@@ -410,6 +410,7 @@ export default {
     goOther(url) {
       window.open(url, '_blank');
     },
+    // 左侧菜单栏获取
     getReturnSides(item) {
       if (item.children && item.children.length > 0) {
         item.children.forEach(d => {
@@ -466,6 +467,7 @@ export default {
     //     .catch(function(err) {}); "GET",
     //     url: "h
     // },
+    // 登录是动态返回菜单栏
     getLoginerMenu(userId) {
       //    默认左侧菜单栏展开
       let code = parseInt(this.$route.query.code);

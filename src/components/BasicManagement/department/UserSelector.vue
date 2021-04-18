@@ -105,6 +105,7 @@ export default {
   },
   mounted () {},
   methods: {
+    // 用户选择
     handleChoose () {
       let map = {}
       const list = this.dataCandidates
@@ -119,6 +120,7 @@ export default {
       }
       this.isSelecting = true
     },
+    // 用户选中状态储存
     selectUser () {
       if (this.userSelected) {
         const list = this.dataCandidates
@@ -144,6 +146,7 @@ export default {
         this.isSelect = true
       }
     },
+    // 删除用户选中状态
     deleteSeletedUser (people, index) {
       let list = this.selectedList.slice(0, this.selectedList.length)
       list.splice(index, 1)
@@ -154,9 +157,11 @@ export default {
       }
       this.$emit('update:selectedList', list)
     },
+    // 单选
     changeSingle () {
       this.isSelecting = true
     },
+    // 为全选状态修改
     shouldShowLine (index) {
       if (!this.isOrdered) {
         return false

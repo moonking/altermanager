@@ -951,6 +951,7 @@ export default {
     //     this.options.push({label:item.label,value:item.value,children:[]})
     //   })
     // },
+    // 获取环境
     getviewenv (n, typeid) {
       axios.envtablist(n).then(res => {
         this.envoptions[0] = n
@@ -1003,6 +1004,7 @@ export default {
         }
       })
     },
+    // 获取环境列表
     envtablist (val) {
       // // console.log(val)
       let data = {
@@ -1023,6 +1025,7 @@ export default {
         }
       }).catch()
     },
+    // 获取cl列表
     getCIlist () {
       this.allList = []
 
@@ -1167,9 +1170,11 @@ export default {
         this.chartType = 'editChart'
       }
     },
+    // 返回上一级
     go () {
       this.$router.go(-1)
     },
+    // ci详情
     toviewData () {
       let id = this.$route.query.ciitemId
       this.itemId = id
@@ -1246,6 +1251,7 @@ export default {
         //  },200)
       })
     },
+    // ci类型保存
     save () {
       let bl = false
       let envval = ''

@@ -1063,35 +1063,39 @@ export default {
         }
       )
     },
-    // 去换表单表格
+    // 取消表单表格
     formChange(index) {
       this.shows = 1
       this.listForm = true
       this.listTable = false
     },
+    // 取消表单表格
     handleDialogClose() {
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
+    // 取消表单表格
     handleDialogClose2() {
       this.$refs.form.resetFields()
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
+    // 取消表单表格
     handleDialogClose3() {
       this.$refs.form2.resetFields()
       this.DetailDate = false
       this.editInformation = false
       this.addUser = false
     },
+    // table切换
     tableChange(index) {
       this.shows = 2
       this.listForm = false
       this.listTable = true
     },
-
+    // 分页
     handleSizeChange(val) {
       this.size = val
       this.getUserList()

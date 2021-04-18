@@ -43,6 +43,7 @@ export default {
     }
   },
   created () {
+    // 代码编辑器初始化
     this.$nextTick().then(() => {
       window.require('ace/ext/old_ie')
       window.require('ace/ext/language_tools')

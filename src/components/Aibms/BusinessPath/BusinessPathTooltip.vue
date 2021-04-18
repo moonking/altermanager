@@ -64,6 +64,7 @@ export default {
     return {}
   },
   methods: {
+    // 跳转至修改业务系统
     goSystemEdit() {
       const { alerts } = this
       this.$router.push({
@@ -81,6 +82,7 @@ export default {
     }
   },
   computed: {
+    // 告警列表
     alertList() {
       const { alerts } = this
       // console.log(alerts)

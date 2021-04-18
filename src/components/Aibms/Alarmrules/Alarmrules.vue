@@ -241,6 +241,7 @@ export default {
     this.AlarmrulesList(params)
   },
   methods: {
+    // 将search信息放在session中
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -253,6 +254,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 从session中拿取缓存的数据
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -285,10 +287,12 @@ export default {
         }
       })
     },
+    // 搜索
     search() {
       this.page.current = 1
       this.AlarmrulesList()
     },
+    // 跳转至修改页面 同时缓存search信息
     handleEdit(row) {
       this.setSession()
       this.$router.push({
@@ -299,10 +303,12 @@ export default {
         }
       });
     },
+    // 删除
     handleDelete(row) {
       this.currentDeleteItemId = row.iD
       this.$refs.deleteDialog.confirmDeleteDialogVisible = true
     },
+    // 删除
     confirmDelete() {
       const id = this.currentDeleteItemId
       axios.alarmRuleDelete(id).then(res => {
@@ -323,6 +329,7 @@ export default {
         this.$refs.deleteDialog.confirmDeleteDialogVisible = false
       })
     },
+    // 跳转添加告警规则
     addRule() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addRules/create',
@@ -331,6 +338,7 @@ export default {
         }
       });
     },
+    // 打开告警规则
     openRule(scope) {
       let params = {
         ID: scope.iD,
@@ -347,6 +355,7 @@ export default {
         }
       });
     },
+    // 规则详情
     ruleDeatil(row) {
       this.setSession()
       this.$router.push({

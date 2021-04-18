@@ -436,6 +436,7 @@ export default {
       this.dialogFormVisible = false
       this.checkedAlarmList = this.checkedAlarms
     },
+    // 提交表单
     submitForm() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
@@ -453,6 +454,7 @@ export default {
         }
       })
     },
+    // 新增或修改告警升级
     addOrEdit(methods) {
       const params = {
         id: this.editId,
@@ -485,12 +487,15 @@ export default {
         }
       })
     },
+    // 返回上一级
     turnBack() {
       this.$router.back()
     },
+    // 关闭告警分类dialog
     cancel() {
       this.dialogFormVisible = false
     },
+    // 打开告警分类
     openAlarmDialog() {
       if (this.form.alarmLevel) {
         this.dialogFormVisible = true

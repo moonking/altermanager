@@ -304,10 +304,12 @@ export default {
     handleDialogClose() {
       this.deptInfoDialogVisible = false;
     },
+    // 翻页
     handleSizeChange(val) {
       this.size = val;
       this.getRoleLsit();
     },
+    // 分页
     handleCurrentChange(val, page) {
       this.current = val;
       this.size = 10;
@@ -385,6 +387,7 @@ export default {
         }
       })
     },
+    // 返回数据处理
     responseDeptDataTransform(data) {
       let result = data || {}
       // 父级部门数据结构转换
@@ -399,6 +402,7 @@ export default {
       result.masterUserId = [this.getUserInfoById(data.masterUserId)]
       return result
     },
+    // 获取用户
     getUserInfoById(userId) {
       let result
       this.userList.forEach(user => {

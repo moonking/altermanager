@@ -133,9 +133,11 @@ export default {
     })
   },
   methods: {
+    // 是否可选
     checkSelectable(row) {
       return !row.belongOps
     },
+    // 返回选中值
     returnSelect() {
       setTimeout(() => {
         this.$nextTick(() => {
@@ -150,9 +152,11 @@ export default {
         })
       }, 300)
     },
+    // 搜索
     search() {
       this.getHostTableData()
     },
+    // 告警通知业务下拉框数据
     getBusinessList() {
       const params = {
         name: '',
@@ -171,6 +175,7 @@ export default {
         }
       })
     },
+    // 获取系统列表
     getHostTableData() {
       const params = {
         name: this.searchFrom.businessValue,
@@ -201,6 +206,7 @@ export default {
       })
       this.returnSelect()
     },
+    // 全选判断去重
     handleSelectionChangeAll(selection) {
       let isBelongOps = false
       let num = 0
@@ -276,6 +282,7 @@ export default {
         })
       }
     },
+    // 单选逻辑去重
     handleSelectionChange(selection, row) {
       if (selection.length > 0) {
         let ciitemIdList = selection.map(item => item.ciitemId)
