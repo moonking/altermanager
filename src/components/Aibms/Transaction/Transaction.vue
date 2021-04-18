@@ -174,6 +174,7 @@ export default {
         }
       })
     },
+    // 交易追踪列表
     getTraceTypeList() {
       axios.getTraceTypeList().then(res => {
         if (res.data.success) {
@@ -218,6 +219,7 @@ export default {
         }
       });
     },
+    // 搜索
     search() {
       this.page.current = 1;
       this.page.size = 10;

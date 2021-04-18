@@ -200,6 +200,7 @@ export default {
     }
   },
   methods: {
+    // 跳转操作记录
     navClick () {
       console.log(this.$route.path)
       this.$router.push({

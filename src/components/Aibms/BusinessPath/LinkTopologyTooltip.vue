@@ -72,6 +72,7 @@ export default {
     }
   },
   methods: {
+    // 获取不同等级的颜色
     getLevelColor (level) {
       const { colorMap } = this
       level = level + ''
@@ -79,6 +80,7 @@ export default {
     }
   },
   computed: {
+    // 告警详情展示
     alertInfo () {
       const { alerts } = this
       const result = alerts ? alerts.businessData : null

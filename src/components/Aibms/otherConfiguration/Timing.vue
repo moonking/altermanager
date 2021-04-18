@@ -419,6 +419,7 @@ export default {
     }
   },
   computed: {
+    // 告警时间
     alertTimeArr() {
       // eslint-disable-next-line no-unused-vars
       if (this.intervalForm.interval === 0) return
@@ -433,11 +434,13 @@ export default {
       }
       return arr
     },
+    // 是否是/mysql/dump
     relation() {
       // eslint-disable-next-line no-unused-vars
       let bl = this.url.includes('/mysql/dump')
       return bl
     },
+    // 结束日期处理
     endPickOptions() {
       return {
         disabledDate: time => {
@@ -449,6 +452,7 @@ export default {
         }
       }
     },
+    // 开始时间处理
     startPickOptions() {
       return {
         disabledDate: time => {
@@ -463,6 +467,7 @@ export default {
         }
       }
     },
+    // 时间范围选择
     pickOptions() {
       return {
         disabledDate(time) {
@@ -546,6 +551,7 @@ export default {
     }
   },
   methods: {
+    // 获取持续告警
     getKeepAlert() {
       let urlArr = this.url.split('/')
       if (urlArr.length > 0 && urlArr[urlArr.length - 1] === 'alert' && urlArr[urlArr.length - 2] === 'job') {
@@ -554,6 +560,7 @@ export default {
         this.showKeepAlert = false
       }
     },
+    // url判断
     getUrl() {
       this.copyUrl = this.url
       this.getKeepAlert()
@@ -566,15 +573,15 @@ export default {
       strList[length + 1] = this.relationNum
       this.url = strList.join('/')
     },
-    maxLimit(val) {
-      const typeMaxCountMap = {
-        '1': 60,
-        '2': 60,
-        '3': 24
-      }
-      const time = typeMaxCountMap[this.intervalForm.timeType]
-      this.intervalForm.startTime = val > time ? time : val
-    },
+    // maxLimit(val) {
+    //   const typeMaxCountMap = {
+    //     '1': 60,
+    //     '2': 60,
+    //     '3': 24
+    //   }
+    //   const time = typeMaxCountMap[this.intervalForm.timeType]
+    //   this.intervalForm.startTime = val > time ? time : val
+    // },
     // 清空日期的选择
     handleClearDate(num) {
       if (num === 1) {
@@ -646,7 +653,6 @@ export default {
             data.cronStrategy,
             data.stormConfig
           )
-
         } else {
           this.$notify({
             type: 'error',
@@ -751,6 +757,7 @@ export default {
 
       return cur
     },
+    // 一次执行中，日期的选择
     chooseOnceDate(val) {
       this.onceDate = val
       let year = this.handleOnceYear(val, '')
@@ -760,6 +767,7 @@ export default {
         this.onceStr = `${year} 00:00执行`
       }
     },
+    // 一次执行中，时间的选择
     chooseOnceTime(val) {
       let year = this.handleOnceYear(this.onceDate, '')
       if (val) {
@@ -771,6 +779,7 @@ export default {
         this.onceStr = `${year} 00:00 执行`
       }
     },
+    // 年份处理
     handleOnceYear(val) {
       let date
       if (val) {
@@ -847,7 +856,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } 00:00 执行`
+          } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {
@@ -925,7 +934,7 @@ export default {
       } else if (radio === 2) {
         if (this.onceDate && this.onceTime) {
           let fullDate = `${moment(this.onceDate).format('YYYY-MM-DD')} ${this.onceTime
-            }`
+          }`
           let validate = this.verdictDate(fullDate)
           let cronStr = this.handleOnceCron(fullDate, 2)
           let params = {
@@ -989,9 +998,11 @@ export default {
         }
       }
     },
+    // cron表达式处理 一天
     handleIntervalCron(interval) {
       return `0 0/${interval} * * * ?`
     },
+    // 保存cron表达式
     saveCronTask(params) {
       axios.addTimingTask(params).then(result => {
         if (result.data.code === 200) {
@@ -1296,7 +1307,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } ${val} 执行`
+          } ${val} 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 ${val} 执行`
         } else {
@@ -1308,7 +1319,7 @@ export default {
         if (this.rangWeek) {
           let week = this.handleWeeks()
           this.str = `${year}, 每周${week.length > 0 ? week.join(',') : ''
-            } 00:00 执行`
+          } 00:00 执行`
         } else if (this.rangDay) {
           this.str = `${year}, 每月${this.rangDay}号 00:00 执行`
         } else {

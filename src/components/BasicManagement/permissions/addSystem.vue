@@ -415,6 +415,7 @@ export default {
     }
   },
   methods: {
+    // 获取权限
     getAuth(data) {
       let opt = [];
       data.forEach(val => {
@@ -431,9 +432,10 @@ export default {
       });
     },
 
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
+    // handleClick(tab, event) {
+    //   console.log(tab, event);
+    // },
+    // 翻页
     handleCurrentChange(val) {
       this.currentRow = val;
     },
@@ -456,6 +458,7 @@ export default {
       this.addUser = false;
       this.toView = false;
     },
+    // 关闭
     handleDialogClose2() {
       this.$refs.form2.resetFields();
       this.dialogFormVisible3 = false;
@@ -676,6 +679,7 @@ export default {
         this.menuNameLength = 0;
       }
     },
+    // 实时显示输入框已输入字数
     inputFun1(value) {
       if (value) {
         this.menuPermissionLength = value.length;
@@ -683,6 +687,7 @@ export default {
         this.menuPermissionLength = 0;
       }
     },
+    // 实时显示输入框已输入字数
     inputFun2(value) {
       if (value) {
         this.btnNameLength = value.length;
@@ -690,7 +695,7 @@ export default {
         this.btnNameLength = 0;
       }
     },
-
+    // 实时显示输入框已输入字数
     inputFun3(value) {
       if (value) {
         this.btnPermissionLength = value.length;
@@ -698,7 +703,7 @@ export default {
         this.btnPermissionLength = 0;
       }
     },
-
+    // 遍历循环该menuTpye中首项和尾项的，设置不显示
     loopMenu(menuArr) {
       menuArr.forEach(item => {
         if (item.children[0]) {

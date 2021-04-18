@@ -370,9 +370,11 @@ export default {
     }
   },
   methods: {
+    // 关闭通知
     closeNotify(index) {
       this.notifyList.splice(index, 1)
     },
+    // 告警通知弹出
     notifyAlert(alert) {
       let { host, time, description, level } = alert
       const iconMap = {
@@ -570,6 +572,7 @@ export default {
         }
       })
     },
+    // 修改系统颜色
     setSystemAlertStyle(systemId) {
       const { graph, systemList } = this
       if (!graph) return
@@ -594,6 +597,7 @@ export default {
       console.log(node.getStates())
       console.log('warning style: ', node.getStateStyle())
     },
+    // 初始化websocket
     initWebSocket() {
       // let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
       // const ws = new WebSocket(url)
@@ -679,6 +683,7 @@ export default {
     //     this.graph.render();
     //   }, 10)
     // },
+    // 全屏展示
     fullBool() {
       let that = this
       let w = window.screen.availWidth

@@ -87,6 +87,7 @@ export default {
     this.getMaintenanceDetail()
   },
   methods: {
+    // 获取维护窗口详情
     getMaintenanceDetail() {
       //  查看或编辑
       if (this.$route.query.id) {
@@ -121,9 +122,11 @@ export default {
         this.$route.meta.title = '新增维护窗口'
       }
     },
+    // 返回上一级
     prev() {
       this.active--
     },
+    // 下一级
     next() {
       if (this.active === 0) {
         if (this.$refs.selectHost.hostList.length) {
@@ -142,6 +145,7 @@ export default {
       //   }
       // }
     },
+    // 新增或修改维护窗口
     addOrEdit(methods) {
       const params = {
         id: this.editId,
@@ -173,6 +177,7 @@ export default {
         }
       })
     },
+    // 保存新增或修改维护窗口
     save() {
       this.$refs.selectDate.$refs['dateFrom'].validate((valid) => {
         if (valid) {
@@ -186,6 +191,7 @@ export default {
         }
       })
     },
+    // 跳转至维护窗口列表
     cancel() {
       this.$router.replace({
         path: '/Aibms/otherConfiguration/maintain',

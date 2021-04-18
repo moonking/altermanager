@@ -666,25 +666,30 @@ export default {
       this.delmenuid = item.menuId
       this.getMenuList(item.menuId)
     },
+    // 编辑系统
     editsys(item, index) {
       this.active = index
       this.delmenuid = item.menuId
       this.getMenuList(item.menuId)
     },
+    // 添加选中行
     addSelectedRows(selection, row) {
       this.addSelectionLength = selection.length
       // console.log(this.addSelectionLength);
     },
+    // 删除选中行
     selectedRows(selection, row) {
       this.delSelectionLength = selection.length
       // console.log(this.delSelectionLength);
     },
+    // 全选
     addSelectedAll(selection) {
       this.addSelectionLength = selection.length
       if (selection !== '') {
         this.addCurrent = this.addCurrent - 1
       }
     },
+    // 反选
     delSelectedAll(selection) {
       this.delSelectionLength = selection.length
       if (selection !== '') {
@@ -725,6 +730,7 @@ export default {
       //         this.getMenuList(this.roleNameViewData.menuId);
       // }
     },
+    // userid合并
     handleSelectionChange(val) {
       //        this.selected=val;
       //        console.log(this.selected);
@@ -734,6 +740,7 @@ export default {
       }
       this.userIds = this.userIds.join(',')
     },
+    // 获取选中id
     getAuth(data) {
       let opt = []
       data.forEach(val => {

@@ -159,6 +159,7 @@ export default {
     }
   },
   methods: {
+    // 输入数字判断
     inputFun (value) {
       if (value) {
         this.roleNameLength = value.length
@@ -166,6 +167,7 @@ export default {
         this.roleNameLength = 0
       }
     },
+    // 输入数字判断
     inputFun1 (value) {
       if (value) {
         this.roleDescriptionLength = value.length
@@ -173,6 +175,7 @@ export default {
         this.roleDescriptionLength = 0
       }
     },
+    // 输入数字判断
     inputFun2 (value) {
       if (value) {
         this.rolePermissionLength = value.length
@@ -180,6 +183,7 @@ export default {
         this.rolePermissionLength = 0
       }
     },
+    // 删除系统
     delsys (item, index) {
       // console.log(this.$store.state.checkValue);
       if (this.$store.state.checkValue) {
@@ -349,6 +353,7 @@ export default {
       })
     }
   },
+  // 页面数据监听
   beforeRouteLeave (to, from, next) {
     let bl = checkModification(this.isbl)
     if (bl) {

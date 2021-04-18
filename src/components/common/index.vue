@@ -156,10 +156,12 @@ export default {
     this.macBase = JSON.parse(localStorage.getItem('verify')).macBase
   },
   computed: {
+    //   权限判断
     isAuthorized () {
       const verify = JSON.parse(localStorage.getItem('verify'))
       return verify.code === 200
     },
+    // License日期获取
     getLicenseDays () {
       const verify = JSON.parse(localStorage.getItem('verify'))
       let result = parseInt(verify.days)

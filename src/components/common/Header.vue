@@ -333,6 +333,7 @@ export default {
     error: function () {
       console.log('连接错误')
     },
+    // 获取websocket信息
     getMessage: function (msg) {
       if (msg) {
         let result = JSON.parse(msg.data)

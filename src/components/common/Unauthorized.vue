@@ -36,6 +36,7 @@ export default {
     getVerifyMsg () {
       return `抱歉，您没有权限进入${this.$route.query.system}系统`
     },
+    // 判断verify
     getApplyCode () {
       let info = JSON.parse(localStorage.getItem('verify'))
       const applyCode = info.macBase || ''

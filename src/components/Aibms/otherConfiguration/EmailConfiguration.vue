@@ -307,12 +307,14 @@ export default {
     };
   },
   watch: {
+    // 文本内容监听
     ContentText: {
       handler(val) {
         this.handleContent(val)
       },
       deep: true
     },
+    // 主题监听
     ThemeText: {
       handler(val) {
         this.handleTheme(val)
@@ -324,6 +326,7 @@ export default {
     this.init();
   },
   methods: {
+    // 选择类型
     chooseType() {
       this.template.forEach((item) => {
         if (item.noticeType === this.emailForm.noticeType) {
@@ -332,6 +335,7 @@ export default {
         }
       })
     },
+    // 本文内容显示
     handleContent(val) {
       this.template.forEach((item) => {
         if (item.noticeType === this.emailForm.noticeType) {
@@ -339,6 +343,7 @@ export default {
         }
       })
     },
+    // 主题内容显示
     handleTheme(val) {
       this.template.forEach((item) => {
         if (item.noticeType === this.emailForm.noticeType) {
@@ -346,6 +351,7 @@ export default {
         }
       })
     },
+    // 邮件模板配置校验
     handleTest() {
       Promise.all([
         this.$refs.mailform.validate(),
@@ -372,6 +378,7 @@ export default {
         });
     },
     init() {
+      // 获取用户列表
       Promise.all([
         axios.userList({
           online: false,
@@ -381,6 +388,7 @@ export default {
           current: 1, // 当前页
           size: 1000 // 每页显示条数
         }),
+        // 获取邮件配置
         axios.emailConfig()
       ]).then((res) => {
         console.log(res[0]);
@@ -401,6 +409,7 @@ export default {
         }
       });
     },
+    // 选择变量
     chooseConfig(item, index) {
       if (this.clickContent === 0) {
         this.clickThemeNum = index;
@@ -409,6 +418,7 @@ export default {
       }
       //   item.isClick = !item.isClick;
     },
+    // 数据格式解析
     formatData(str) {
       let arr = [];
       arr = str.slice(1, -1).replace(/\"/g, '').split(',');
@@ -420,12 +430,15 @@ export default {
         });
       });
     },
+    // 主题或文本储存
     chooseCont(val) {
       this.clickContent = val;
     },
+    // 配置选择
     switchBlock(index) {
       return (this.blockSwitch[index] = !this.blockSwitch[index]);
     },
+    // 保存邮箱配置
     saveEmail() {
       Promise.all([
         this.$refs.mailform.validate(),
@@ -460,6 +473,7 @@ export default {
         }
       });
     },
+    // 邮箱测试
     testEmail() {
       this.$refs.testForm.validate((valid) => {
         if (valid) {

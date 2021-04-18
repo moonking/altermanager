@@ -1,3 +1,4 @@
+// 接口整合
 import * as bmsApi from './apis/bmsApi';
 import * as cmdbApi from './apis/cmdbApi';
 import * as aibmsApi from './apis/aibmsApi';

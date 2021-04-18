@@ -139,7 +139,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="platform" label="来源" />
-      <el-table-column prop="alarmAddress" label="告警对象" min-width="80%" show-overflow-tooltip/>
+      <el-table-column
+        prop="alarmAddress"
+        label="告警对象"
+        min-width="80%"
+        show-overflow-tooltip
+      />
       <el-table-column prop="alarmType" label="类型" />
       <el-table-column prop="startTime" label="开始时间" width="230" />
       <el-table-column label="状态" width="90">
@@ -182,6 +187,7 @@
 </template>
 
 <script>
+// 告警通知主页
 import axios from '@/api'
 const iconMap = {
   '1': 's1-color',
@@ -201,6 +207,7 @@ export default {
     LevelFilter: level => levelMap[level]
   },
   data: () => ({
+    // 告警来源
     originList: [
       {
         id: 1,
@@ -216,6 +223,7 @@ export default {
         label: 'Prometheus'
       }
     ],
+    // 告警
     alarmModel: {
       systemValue: '',
       topologyValue: '',
@@ -261,19 +269,21 @@ export default {
     selectArr: []
   }),
   created() {
-    let params = this.getParams()
+    let params = this.getParams() // 获取缓存的数据，回填到search中
     this.getAlarmList(params) // 获取列表数据
     // this.getTopologyList() // 获取拓扑下拉框
     // this.getlabelList() // 获取标签下拉框数据
     this.getBusinessList() // 获取业务系统下拉框数据
   },
   methods: {
+    // 选中项code
     choose(val, row) {
       this.selectArr = val.map(item => item.code)
     },
     // handleSelectionChange(val, row) {
     //   console.log(val, row)
     // },
+    // 批量处理
     batchHandle() {
       const num = this.selectArr.length
       if (num === 0) {
@@ -293,9 +303,11 @@ export default {
         })
       }
     },
+    // 默认不选中
     checkSelection(row, index) {
       return row.status === '0'
     },
+    // 将查询数据放在session中
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -313,6 +325,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 获取session中缓存的数据
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -330,6 +343,7 @@ export default {
       }
       return params
     },
+    //  获取业务系统下拉框数据
     getBusinessList() {
       const params = {
         name: '',
@@ -348,30 +362,33 @@ export default {
         }
       })
     },
-    getTopologyList() {
-      axios.getCiTypeListFirst('', '').then(res => {
-        if (res.data.success) {
-          this.topologyList = res.data.data.result.map(item => item.name)
-        } else {
-          this.$notify.error({
-            title: '提示',
-            message: res.data.message
-          })
-        }
-      })
-    },
-    getlabelList() {
-      axios.getlabelList().then(res => {
-        if (res.data.success) {
-          this.labelList = res.data.data
-        } else {
-          this.$notify.error({
-            title: '提示',
-            message: res.data.message
-          })
-        }
-      })
-    },
+    //  获取拓扑下拉框
+    // getTopologyList() {
+    //   axios.getCiTypeListFirst('', '').then(res => {
+    //     if (res.data.success) {
+    //       this.topologyList = res.data.data.result.map(item => item.name)
+    //     } else {
+    //       this.$notify.error({
+    //         title: '提示',
+    //         message: res.data.message
+    //       })
+    //     }
+    //   })
+    // },
+    // 获取标签下拉框数据
+    // getlabelList() {
+    //   axios.getlabelList().then(res => {
+    //     if (res.data.success) {
+    //       this.labelList = res.data.data
+    //     } else {
+    //       this.$notify.error({
+    //         title: '提示',
+    //         message: res.data.message
+    //       })
+    //     }
+    //   })
+    // },
+    //  获取列表数据
     getAlarmList(params) {
       if (params === undefined) {
         params = {
@@ -412,7 +429,9 @@ export default {
         }
       })
     },
+    // 补零
     addZero: num => ('00' + num).substr(('00' + num).length - 2, 2),
+    // 时间处理
     dateFormat(date) {
       const year = date.getFullYear()
       const mouth = date.getMonth() + 1
@@ -426,6 +445,7 @@ export default {
         this.addZero(minutes) + ':' +
         this.addZero(seconds)
     },
+    // 时间分割
     splitDate() {
       this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
       this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''
@@ -439,12 +459,13 @@ export default {
       this.page.current = 1
       this.getAlarmList()
     },
+    // 搜索
     search() {
       this.page.current = 1
       this.getAlarmList()
     },
+    // 跳转至交易追踪
     hadleTrack(row) {
-      console.log(row)
       this.$router.push({
         path: '/Aibms/Transaction',
         query: {
@@ -452,9 +473,11 @@ export default {
         }
       })
     },
+    // 告警等级
     filterLevel(value, row) {
       return row.level === value
     },
+    // 跳转到通知详情
     noticeDetail(row) {
       this.setSession()
       this.$router.push({

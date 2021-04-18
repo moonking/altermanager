@@ -81,6 +81,7 @@
 import axios from '@/api';
 export default {
   created () {
+    // 获取License详情
     axios.getLicenseDetail()
       .then(res => {
         if (res.data.success) {

@@ -132,6 +132,7 @@ export default {
     }
   },
   methods: {
+    // 删除选中的ci
     deleteCheckedCI(ci) {
       const { checkedCIs } = this
       checkedCIs.forEach((item, index) => {
@@ -140,6 +141,7 @@ export default {
         }
       })
     },
+    // 添加选中项
     checkCIChange() {
       const checks = this.form.checkedCIs
       checks.forEach(item => {
@@ -149,6 +151,7 @@ export default {
         }
       })
     },
+    // 获取CI项黑名单列表
     handleTypeChange() {
       const chooseType = this.form.type
       // const chooseType = this.activeTab
@@ -159,17 +162,21 @@ export default {
         }
       })
     },
+    // 选择业务系统
     handleSelectChange(val) {
       this.form.type = ''
       this.form.checkedCIs = []
       this.getSystemBlackList(val)
     },
+    // 关闭dialog
     cancelEdit() {
       this.editStatus = false
     },
+    // 打开编辑dialog
     setEditStatus() {
       this.editStatus = true
     },
+    // 业务系统详情
     getSystemBlackList(systemId) {
       const id = systemId || this.form.system
       axios.getSystemDetail(id).then(res => {
@@ -181,6 +188,7 @@ export default {
         }
       })
     },
+    // 获取业务系统列表
     getSystemList() {
       // {"name":"系统名称","englishAbridge":"英文缩写","current":"当前页","size":"每页显示条数"}
       const data = {
@@ -200,6 +208,7 @@ export default {
         }
       })
     },
+    // 新增修改黑名单
     onSubmit() {
       const form = this.$refs.form
       form.validate().then(res => {
@@ -224,6 +233,7 @@ export default {
         }
       })
     },
+    // 获取ci类型列表
     getCITypeList() {
       axios.getCiTList({
         name: '',

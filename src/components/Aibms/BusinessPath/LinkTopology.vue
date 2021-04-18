@@ -664,6 +664,7 @@ export default {
       shape.attr('lineWidth', 1)
       shape.attr('stroke', '#666')
     },
+    // 返回上一级
     goBack() {
       window.addEventListener('keydown', (evt) => {
         evt = evt || (window.event ? window.event : '');
@@ -682,6 +683,7 @@ export default {
         }
       }, false)
     },
+    // 全屏图大小调整
     fullBool() {
       let that = this
       let w = window.screen.availWidth

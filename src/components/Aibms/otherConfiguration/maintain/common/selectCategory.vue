@@ -118,18 +118,19 @@ export default {
     // this.getlabelList()
   },
   methods: {
-    getlabelList () {
-      axios.getlabelList().then(res => {
-        if (res.data.success) {
-          this.labelList = res.data.data
-        } else {
-          this.$notify.error({
-            title: '提示',
-            message: res.data.message
-          })
-        }
-      })
-    },
+    // getlabelList () {
+    //   axios.getlabelList().then(res => {
+    //     if (res.data.success) {
+    //       this.labelList = res.data.data
+    //     } else {
+    //       this.$notify.error({
+    //         title: '提示',
+    //         message: res.data.message
+    //       })
+    //     }
+    //   })
+    // },
+    // 获取告警分类列表
     getAlarmList () {
       const params = {
         name: '',
@@ -162,6 +163,7 @@ export default {
         }
       })
     },
+    // 获取告警分类列表
     getNewLabelList () {
       this.getAlarmList()
     },

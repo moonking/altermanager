@@ -197,6 +197,7 @@ export default {
     this.getAlarmList(params)
   },
   methods: {
+    // 将search数据缓存至session
     setSession() {
       if (this.callNum > 1) {
         const params = {
@@ -208,6 +209,7 @@ export default {
         sessionStorage.setItem('search', JSON.stringify(params))
       }
     },
+    // 将缓存数据取出回显至search
     getParams() {
       let params
       if (sessionStorage.getItem('search') !== null) {
@@ -220,6 +222,7 @@ export default {
       }
       return params
     },
+    // 获取联想输入信息
     getClassList() {
       axios.geAlarmNameList().then(res => {
         if (res.data.success) {
@@ -239,11 +242,13 @@ export default {
       const results = queryString ? alarmClassList.filter(this.createFilter(queryString)) : alarmClassList
       cb(results)
     },
+    // 查找输入字符
     createFilter(queryString) {
       return (classList) => {
         return (classList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
+    // 获取告警分类列表
     getAlarmList(params) {
       if (params === undefined) {
         params = {
@@ -281,6 +286,7 @@ export default {
       this.page.current = 1
       this.getAlarmList()
     },
+    // 跳转至新增分类
     addType() {
       this.$router.push({
         path: '/Aibms/BuinessConfiguration/addClass',
@@ -289,6 +295,7 @@ export default {
         }
       })
     },
+    // 跳转至编辑分类
     handleEdit(row) {
       this.setSession()
       this.$router.push({
@@ -299,10 +306,12 @@ export default {
         }
       })
     },
+    // 关闭删除dialog
     handleDelete(row) {
       this.currentDeleteItemId = row.iD
       this.confirmDeleteDialogVisible = true
     },
+    // 删除告警分类
     confirmDelete() {
       const id = this.currentDeleteItemId
       axios.deleteAlarm(id).then(res => {
@@ -321,6 +330,7 @@ export default {
       })
       this.confirmDeleteDialogVisible = false
     },
+    // 告警分类详情
     classDetail(row) {
       this.setSession()
       this.$router.push({
