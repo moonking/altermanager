@@ -7,20 +7,12 @@ const rm = require('rimraf')
 const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
-var webpackConfig = process.env.NODE_ENV === 'testing'
-? require('./webpack.btest.conf')
-: process.env.NODE_ENV === 'production'
+var webpackConfig = process.env.NODE_ENV === 'production'
 ? require('./webpack.prod.conf')
-: process.env.NODE_ENV === 'devlop'
-? require('./webpack.develop.conf')
 : require('./webpack.dev.conf')
 
-var config = process.env.NODE_ENV === 'testing'
-? require('../config').test
-: process.env.NODE_ENV === 'production'
+var config = process.env.NODE_ENV === 'production'
 ? require('../config').build
-: process.env.NODE_ENV === 'devlop'
-? require('../config').devlop
 : require('../config').dev
 
 var spinner = ora(`building for ${ process.env.NODE_ENV  }...`)

@@ -5,10 +5,10 @@
  */
 module.exports = {
   // eproe-prod
-  aiaUrl: 'http://114.55.218.127:8075/test_bms/aia/',
-  baserUrl: 'http://114.55.218.127:8075/test_bms/',
-  CiBaseUrl: 'http://114.55.218.127:8075/test_cmdb/',
-  wsTopology: 'ws://114.55.218.127:8087/ws/topology/ciitem/'
+  aiaUrl: 'http://118.25.108.64:8075/bms/aia/',
+  baserUrl: 'http://118.25.108.64:8075/bms/',
+  CiBaseUrl: 'http://118.25.108.64:8075/cmdb/',
+  wsTopology: 'ws://118.25.108.64:8087/ws/topology/ciitem/'
 
   // // AIA-prod
   // aiaUrl: 'http://10.200.190.41:8075/bms/aia/',

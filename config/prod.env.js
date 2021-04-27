@@ -1,7 +1,4 @@
 'use strict'
-const merge = require('webpack-merge')
-const devlopEnv = require('./devlop.env') 
-
-module.exports = merge(devlopEnv, {
+module.exports = {
   NODE_ENV: '"production"'
-})
+}
