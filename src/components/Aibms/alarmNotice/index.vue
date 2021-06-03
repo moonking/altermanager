@@ -189,6 +189,8 @@
 <script>
 // 告警通知主页
 import axios from '@/api'
+import moment from "moment";
+import common from '@/utils/commonjs';
 const iconMap = {
   '1': 's1-color',
   '2': 's2-color',

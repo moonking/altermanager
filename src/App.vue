@@ -122,7 +122,7 @@ export default {
     },
     // 链接aibms websocket
     upAibmsWebsocket() {
-      let url = config.wsTopology.replace('ciitem', 'system').substring(0, config.wsTopology.length - 1)
+      let url = config.wsTopology.substring(0, config.wsTopology.length - 1)
       this.$global.wsAibms = new WebSocket(url)
       this.$global.setWsAibms(this.$global.wsAibms)
       // console.log(this.$global.wsAibms)

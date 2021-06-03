@@ -8,10 +8,10 @@ let aibms = {
       path: '/Aibms',
       component: resolve =>
         require([
-          '@/components/Aibms/BusinessPath/index.vue'
+          '@/components/Aibms/alarmNotice/index.vue'
         ], resolve),
       meta: {
-        title: '业务路径'
+        title: '告警通知'
       }
     },
     {

@@ -910,7 +910,7 @@ export default {
   /* background:khaki; */
 }
 </style>
-<style>
+
 .notify-style {
   width: 360px;
   height: 160px;
@@ -920,6 +920,7 @@ export default {
   color: #fff;
   box-shadow: 0 0 10px #000 !important;
 }
+<style>
 .notify-title {
   font-size: 14px;
   font-weight: bold;

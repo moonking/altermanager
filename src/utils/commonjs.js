@@ -20,9 +20,10 @@ const Urldata = [
     'url': 'api/loginout', 'msg': '登出失败，请稍后再试。'
   }
 ]
-// eval
+
+//计算表达式的值 ,Javascript替代eval方法,eval 这个方法将json字符串转换成对象数组
 function evil(fn) {
-  var Fn = Function
+  var Fn = Function  //一个变量指向Function，防止有些前端编译工具报错
   return new Fn('return ' + fn)()
 }
 

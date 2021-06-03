@@ -276,21 +276,21 @@ export default {
         }
       ],
       AIA: [
-        {
-          icon: 'sidebar-icon icon-zixitongyinyong ',
-          index: '0',
-          title: '业务路径',
-          subs: [
-            {
-              index: '/Aibms/businessPath?code=2',
-              title: '业务拓扑'
-            },
-            {
-              index: '/Aibms/blackList?code=2',
-              title: '黑名单'
-            }
-          ]
-        },
+        // {
+        //   icon: 'sidebar-icon icon-zixitongyinyong ',
+        //   index: '0',
+        //   title: '业务路径',
+        //   subs: [
+        //     {
+        //       index: '/Aibms/businessPath?code=2',
+        //       title: '业务拓扑'
+        //     },
+        //     {
+        //       index: '/Aibms/blackList?code=2',
+        //       title: '黑名单'
+        //     }
+        //   ]
+        // },
         {
           icon: 'sidebar-icon icon-xitongyingyongfuwuqi',
           index: '1',
@@ -319,11 +319,11 @@ export default {
           index: '/Aibms/alarmnotice?code=2',
           title: '告警通知'
         },
-        {
-          icon: 'sidebar-icon icon-dianshangshujuhutong',
-          index: '/Aibms/Transaction?code=2',
-          title: '交易追踪'
-        },
+        // {
+        //   icon: 'sidebar-icon icon-dianshangshujuhutong',
+        //   index: '/Aibms/Transaction?code=2',
+        //   title: '交易追踪'
+        // },
         {
           icon: 'sidebar-icon icon-quanbuxitong',
           index: '2',

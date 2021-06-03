@@ -71,6 +71,7 @@ Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
 
 // Vue.use(Sortable)
 Vue.use(ElementUI, { size: 'max' })
+// 将axios放在vue实例上
 Vue.prototype.$axios = axios
 axios.defaults.withCredentials = true
 

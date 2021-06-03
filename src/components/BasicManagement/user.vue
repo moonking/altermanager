@@ -22,17 +22,17 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
-          <el-select v-model="formInline.status" placeholder="请选择状态">
-            <el-option label="正常" value="0" />
-            <el-option label="禁用" value="1" />
-            <el-option label="锁定" value="2" />
-            <el-option label="注销" value="3" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-checkbox v-model="formInline.radio">在线</el-checkbox>
-        </el-form-item>
+<!--        <el-form-item>-->
+<!--          <el-select v-model="formInline.status" placeholder="请选择状态">-->
+<!--            <el-option label="正常" value="0" />-->
+<!--            <el-option label="禁用" value="1" />-->
+<!--            <el-option label="锁定" value="2" />-->
+<!--            <el-option label="注销" value="3" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-checkbox v-model="formInline.radio">在线</el-checkbox>-->
+<!--        </el-form-item>-->
         <el-form-item style="margin-left: 30px">
           <!-- <i class="el-icon-menu" style="font-size:30px" @click="formChange"></i>
           <i class="el-icon-tickets" style="font-size:30px" @click="tableChange"></i>-->
@@ -155,11 +155,11 @@
         <span>12345</span>
               </div>-->
               <div class="systempermissions">
-                <div class="systype">系统权限:</div>
+                <div class="systype">角色:</div>
                 <div>
                   <ul>
                     <li
-                      v-for="(item, index) in item.sysMenuList"
+                      v-for="(item, index) in item.roleList"
                       :key="index"
                       class="limitbg"
                     >

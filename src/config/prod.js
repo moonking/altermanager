@@ -8,7 +8,7 @@ module.exports = {
   aiaUrl: 'http://118.25.108.64:8075/bms/aia/',
   baserUrl: 'http://118.25.108.64:8075/bms/',
   CiBaseUrl: 'http://118.25.108.64:8075/cmdb/',
-  wsTopology: 'ws://118.25.108.64:8087/ws/topology/ciitem/'
+  wsTopology: 'ws://118.25.108.64:8087/ws/topology/system/'
 
   // // AIA-prod
   // aiaUrl: 'http://10.200.190.41:8075/bms/aia/',

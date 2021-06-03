@@ -6,46 +6,46 @@
       class="demo-form-inline"
       style="padding: 20px 20px 0 20px"
     >
-      <el-form-item>
-        <el-input
-          v-model="roleName"
-          placeholder="角色名称"
-          style="width: 100%"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="menuId" placeholder="请选择所属系统" clearable>
-          <el-option
-            :label="item.name"
-            :value="item.menuId"
-            v-for="(item, index) in menuSysList"
-            :key="index"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item class="item-right">
-        <el-button
-          icon="el-icon-search"
-          class="common-btn-style search-el-button"
-          @click="getRoleLsit(1)"
-          >查找</el-button
-        >
-        <router-link to="/BasicManagement/addRole?code=0">
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            class="common-btn-style margin-left-btn"
-            >新增</el-button
-          >
-        </router-link>
-      </el-form-item>
+<!--      <el-form-item>-->
+<!--        <el-input-->
+<!--          v-model="roleName"-->
+<!--          placeholder="角色名称"-->
+<!--          style="width: 100%"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item>-->
+<!--        <el-select v-model="menuId" placeholder="请选择所属系统" clearable>-->
+<!--          <el-option-->
+<!--            :label="item.name"-->
+<!--            :value="item.menuId"-->
+<!--            v-for="(item, index) in menuSysList"-->
+<!--            :key="index"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item class="item-right">-->
+<!--        <el-button-->
+<!--          icon="el-icon-search"-->
+<!--          class="common-btn-style search-el-button"-->
+<!--          @click="getRoleLsit(1)"-->
+<!--          >查找</el-button-->
+<!--        >-->
+<!--        <router-link to="/BasicManagement/addRole?code=0">-->
+<!--          <el-button-->
+<!--            type="primary"-->
+<!--            icon="el-icon-plus"-->
+<!--            class="common-btn-style margin-left-btn"-->
+<!--            >新增</el-button-->
+<!--          >-->
+<!--        </router-link>-->
+<!--      </el-form-item>-->
     </el-form>
     <!-- 表格 -->
     <el-table :data="roleListData" stripe height="84%" style="padding: 0 20px">
       <el-table-column prop="name" label="角色名称" />
-      <el-table-column prop="sysName" label="所属系统" />
-      <el-table-column prop="description" label="角色说明" show-overflow-tooltip />
-      <el-table-column prop="permission" label="角色标识" />
+<!--      <el-table-column prop="sysName" label="所属系统" />-->
+<!--      <el-table-column prop="description" label="角色说明" show-overflow-tooltip />-->
+<!--      <el-table-column prop="permission" label="角色标识" />-->
       <el-table-column prop="createDate" label="创建时间" />
       <el-table-column label="用户操作" width="200px" align="center">
         <template slot-scope="scope">
@@ -83,48 +83,48 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="角色操作" width="200px" align="center">
-        <template slot-scope="scope">
-          <div class="task-btn-box">
-            <span
-              class="special"
-              @click="roleViewBtn(scope.row.roleId, scope.row)"
-            >
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="查看"
-                placement="top-start"
-              >
-                <icon-svg icon-class="chakan" class="whiteness-icon-color" />
-              </el-tooltip>
-            </span>
-            <span
-              class="special"
-              @click="roleClickBtn(scope.row.roleId, scope.row)"
-            >
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="编辑"
-                placement="top-start"
-              >
-                <icon-svg icon-class="bianji" class="whiteness-icon-color" />
-              </el-tooltip>
-            </span>
-            <span class="special" @click="deletUser(scope.row.roleId)">
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="删除"
-                placement="top-start"
-              >
-                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
-              </el-tooltip>
-            </span>
-          </div>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="角色操作" width="200px" align="center">-->
+<!--        <template slot-scope="scope">-->
+<!--          <div class="task-btn-box">-->
+<!--            <span-->
+<!--              class="special"-->
+<!--              @click="roleViewBtn(scope.row.roleId, scope.row)"-->
+<!--            >-->
+<!--              <el-tooltip-->
+<!--                class="item"-->
+<!--                effect="dark"-->
+<!--                content="查看"-->
+<!--                placement="top-start"-->
+<!--              >-->
+<!--                <icon-svg icon-class="chakan" class="whiteness-icon-color" />-->
+<!--              </el-tooltip>-->
+<!--            </span>-->
+<!--            <span-->
+<!--              class="special"-->
+<!--              @click="roleClickBtn(scope.row.roleId, scope.row)"-->
+<!--            >-->
+<!--              <el-tooltip-->
+<!--                class="item"-->
+<!--                effect="dark"-->
+<!--                content="编辑"-->
+<!--                placement="top-start"-->
+<!--              >-->
+<!--                <icon-svg icon-class="bianji" class="whiteness-icon-color" />-->
+<!--              </el-tooltip>-->
+<!--            </span>-->
+<!--            <span class="special" @click="deletUser(scope.row.roleId)">-->
+<!--              <el-tooltip-->
+<!--                class="item"-->
+<!--                effect="dark"-->
+<!--                content="删除"-->
+<!--                placement="top-start"-->
+<!--              >-->
+<!--                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />-->
+<!--              </el-tooltip>-->
+<!--            </span>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
     <!-- 查看用户 -->
     <el-dialog
