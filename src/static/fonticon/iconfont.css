@@ -1,0 +1,132 @@
+.svg-icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: #00A8E8;
+  overflow: hidden;
+  color:#00A8E8
+  }
+.special:hover .svg-icon{
+  fill: #fff;
+  color:#fff
+}
+.template-icon-size {
+  width: .7em!important; 
+  height: .7em!important;
+}
+.whiteness-icon-color {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: #fff;
+  color:#fff
+}
+.white-middle-icon-color {
+  width: 1.3em; height: 1.3em;
+  vertical-align: -0.15em;
+  fill: #fff;
+  color:#fff
+}
+.gray-icon-color {
+  fill: #666!important;
+  color:#666!important;
+}
+.forbidden-icon-color {
+  fill: #666!important;
+  color:#666!important;
+  cursor:not-allowed !important
+}
+.allowed-icon-color {
+  fill: #00A8E8!important;
+  color:#00A8E8!important;
+  cursor:pointer !important
+}
+.task-operation-color {
+  width: 1.6em; height: 1.6em;
+  fill: #ffa367!important;
+  color:#ffa367!important;
+  vertical-align:middle
+}
+.middle-operation-color {
+  width: 1.6em; height: 1.6em;
+  fill: #00A8E8!important;
+  color:#00A8E8!important;
+  vertical-align:middle
+}
+.success-operation-color {
+  width: 1.6em; height: 1.6em;
+  fill: #49bc71!important;
+  color:#49bc71!important;
+  vertical-align:middle
+}
+.white-icon-color {
+  width: 1.6em; height: 1.6em;
+  fill: #fff!important;
+  color:#fff!important;
+  vertical-align:middle
+}
+.right-status-icon {
+  width: 1.6em; height: 1.6em;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  fill: #49bc71!important;
+  color:#49bc71!important;
+  background: #fff;
+  border-radius: 50%;
+}
+.error-status-icon {
+  width: 1.6em; height: 1.6em;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  fill: #F56C6C!important;
+  color:#F56C6C!important;
+  background: #fff;
+  border-radius: 50%;
+}
+.implement-right-icon {
+  width: 2em; height: 2em;
+  fill: #49bc71!important;
+  color:#49bc71!important;
+  vertical-align:middle;
+}
+.error-right-icon {
+  width: 2em; height: 2em;
+  fill: #F56C6C!important;
+  color:#F56C6C!important;
+  vertical-align:middle;
+}
+.already-finished-icon {
+  width: 2em; height: 2em;
+  fill: #00A8E8!important;
+  color:#00A8E8!important;
+  vertical-align:middle;
+}
+.wait-right-icon {
+  width: 2em; height: 2em;
+  fill: #999!important;
+  color:#999!important;
+  vertical-align:middle;
+}
+.user-icon {
+  width: 1.4em; height: 1.4em;
+  display: block;
+  float: left;
+  fill: #00A8E8!important;
+  color:#00A8E8!important;
+}
+.white-svg-icon {
+  fill: #fff!important;
+  color:#fff!important;
+}
+.helath-icon {
+  width: 3.5em; height: 3.5em;
+  fill: #49bc71!important;
+  color:#49bc71!important;
+  vertical-align:middle;
+}
+.unhelath-icon{
+  width: 3.5em; height: 3.5em;
+  fill: #F56C6C!important;
+  color:#F56C6C!important;
+  vertical-align:middle;
+}
