@@ -9,6 +9,7 @@ module.exports = {
   CiBaseUrl: 'http://118.25.108.64:8075/cmdb/',
   wsTopology: 'ws://118.25.108.64:8087/ws/topology/system/'
 
+
   // aiaUrl: 'http://192.168.12.184:8086/aia/',
   // baserUrl: 'http://192.168.12.184:8086/',
   // CiBaseUrl: 'http://192.168.12.184:8086/',
