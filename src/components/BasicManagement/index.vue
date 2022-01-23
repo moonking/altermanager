@@ -234,7 +234,7 @@ export default {
       display: flex;
 
       .grid-content {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         margin: 20px auto;
         width: 90%;
 

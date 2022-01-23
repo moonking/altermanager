@@ -1,11 +1,11 @@
 <template>
-  <div class="bg aibms-bg aibms-color-bg">
-    <div class="headerTop">角色说明</div>
+  <div class="bg aibms-bg">
+    <h3>角色说明</h3>
     <el-form
       :model="ruleForm2"
       :rules="rules"
       ref="ruleForm2"
-      label-width="100px"
+      label-width="140px"
       class="demo-ruleForm"
     >
       <div>
@@ -56,11 +56,11 @@
     <div class="headerTop">选择系统——设置权限</div>
     <div class="sysNameBtn">
       <el-button
-        class="systemName nomal-button"
         v-for="(item,index) in syslistdata"
         :key="index"
         @click="delsys(item,index)"
-        :class="{active : active == index}"
+        :class="active == index?'save-btn common-btn':'cancel-button'"
+        style="width:auto;"
       >{{item.name}}</el-button>
     </div>
     <tree-table
@@ -107,8 +107,8 @@
       </el-table-column>
     </tree-table>
     <div class="footer">
-      <el-button class="save-btn-margin" type="primary" @click="submitForm">确认新增</el-button>
-      <el-button class="nomal-button" @click="resetForm">取消</el-button>
+      <el-button class="save-btn common-btn" @click="submitForm">确认新增</el-button>
+      <el-button class="cancel-button" @click="resetForm">取消</el-button>
     </div>
   </div>
 </template>
@@ -390,6 +390,32 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+h3 {
+      position: relative;
+      font-size: 28px;
+      font-weight: 500;
+      height: 24px;
+      line-height: 40px;
+      margin-left: 10px;
+      color: #BFF3FF;
+      span {
+        margin-left: 5px;
+        font-size: 14px;
+        color: #00E5FF;
+        cursor: pointer;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
+      }
+    }
 .bg {
   margin: 10px;
   border-radius: 5px;
@@ -421,6 +447,7 @@ export default {
     text-indent: 20px;
     font-size: 16px;
     width: 100%;
+    color: #BFF3FF !important;
   }
   .demo-ruleForm {
     padding: 20px;
@@ -429,6 +456,7 @@ export default {
     }
   }
   .footer {
+    font-size:0;
     width: 80%;
     text-align: center;
     padding: 30px 0 20px;

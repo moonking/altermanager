@@ -1794,7 +1794,7 @@ export default {
   .box-font {
     height: 40px;
     cursor: pointer;
-    border: 1px solid #fff;
+    border: 1px solid #436382;
   }
   .active {
     background-color: #00A8E8;

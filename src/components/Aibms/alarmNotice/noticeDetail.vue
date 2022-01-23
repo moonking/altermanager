@@ -22,26 +22,24 @@
             label-width="100px"
             ref="alarmform"
             label-position="right"
+            style="width: 700px"
           >
             <el-form-item label="级别：">
               <el-input
                 v-model="alarmForm.level"
                 :disabled="true"
-                style="width: 280px"
               />
             </el-form-item>
             <el-form-item label="对象：">
               <el-input
                 v-model="alarmForm.object"
                 :disabled="true"
-                style="width: 280px"
               />
             </el-form-item>
             <el-form-item label="时间：">
               <el-input
                 v-model="alarmForm.date"
                 :disabled="true"
-                style="width: 280px"
               />
             </el-form-item>
             <el-form-item label="详情：">
@@ -50,14 +48,12 @@
                 :disabled="true"
                 type="textarea"
                 autosize
-                style="width: 280px"
               />
             </el-form-item>
             <el-form-item label="状态：">
               <el-select
                 v-model="alarmForm.status"
                 @change="confirm"
-                style="width: 280px"
                 placeholder="请确认您已接收告警"
                 :disabled="alarmForm.status == '1'"
               >
@@ -257,7 +253,7 @@ export default {
   margin: 10px;
   .wrapper_pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .block-item {
@@ -268,21 +264,21 @@ export default {
         .item-block-title-font {
           position: relative;
           margin-left: 18px;
-          height: 24px;
-          line-height: 24px;
-          font-size: 16px;
+          height: 40px;
+          line-height: 40px;
+          font-size: 28px;
           font-weight: 500;
           color: #fff;
           &:before {
             content: '';
             position: absolute;
             z-index: 1;
-            left: -18px;
-            top: -3px;
-            width: 8px;
-            border-radius: 4px;
-            height: 30px;
-            background: #0066ff;
+            left: -30px;
+            top: 10px;
+            width: 18px;
+            border-radius: 9px;
+            height: 18px;
+            background: #00E5FF;
           }
         }
       }
@@ -299,23 +295,26 @@ export default {
           margin-bottom: 5px;
           padding-right: 20px;
           .new-set-text {
-            height: 30px;
-            line-height: 30px;
+            height: 60px;
+            line-height: 40px;
             padding-bottom: 5px;
-            border-bottom: 1px solid #041c25;
+            // border-bottom: 1px solid #041c25;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            color: #fff;
+            color: #BFF3FF;
+            font-size: 20px;
             span {
               display: inline-block;
               width: 96px;
+              height: 40px;
               margin: 3px 20px 0 3px;
-              box-shadow: 0px 0px 7px 0px rgba(255, 255, 255, 0.9);
-              color: #0066ff;
+              // box-shadow: 0px 0px 7px 0px rgba(255, 255, 255, 0.9);
+              color: #00E5FF;
               background: #041c25;
               border-radius: 5px;
               text-align: center;
+              border:1px solid #436382;
             }
           }
         }

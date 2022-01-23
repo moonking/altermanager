@@ -1,12 +1,13 @@
 <template>
   <div class="aia-content">
-    <div class="search-bar">
-      <div class="search-inline-input">
-        <el-input v-model="searchText" placeholder="模糊搜索"  @change=search></el-input>
+    <div class="search-bar t-box-between">
+      <div class="t-box">
+        <div class="search-inline-input">
+          <el-input v-model="searchText" placeholder="模糊搜索"  @change=search></el-input>
 
-      </div>
+        </div>
 
-      <el-button icon="el-icon-edit" class="search-icon" @click="dialogVsible = true">特定配置</el-button>
+      <el-button icon="el-icon-edit" class="search-icon search-btn" @click="dialogVsible = true">特定配置</el-button>
 
       <el-dialog title="批量设置特殊时间区间" :visible.sync="dialogVsible">
         <el-form :model="configData" ref="configData" >
@@ -54,11 +55,13 @@
         </el-form>
       </el-dialog>
 
-      <el-button icon="el-icon-edit" class="search-icon" @click="level1">7*24</el-button>
-       <el-button icon="el-icon-edit" class="search-icon" @click="leve2">5*8</el-button>
-       <el-button @click="addSystem() "  type="primary" style="float: right" icon="el-icon-plus">批量导入</el-button>
-       <el-button @click="addOneSystem() "  type="primary" style="float: right" icon="el-icon-plus">新增</el-button>
-
+      <el-button icon="el-icon-edit" class="search-icon search-btn" @click="level1">7*24</el-button>
+       <el-button icon="el-icon-edit" class="search-icon search-btn" @click="leve2">5*8</el-button>
+       </div>
+       <div class="t-box">
+        <el-button @click="addSystem() " class="common-btn" icon="el-icon-plus">批量导入</el-button>
+        <el-button @click="addOneSystem() "  class="save-btn common-btn" icon="el-icon-plus">新增</el-button>
+      </div>
 <!--      <el-form :inline="true" class="search-inline-btn">
         <el-form-item class="search-button">
           <el-button icon="el-icon-search" @click="search" class="search-icon"
@@ -73,11 +76,11 @@
       ref="filterTable"
       :data="tableData"
       style="width: 100%"
-      height="82%"
+      height="74%"
       @select="choose"
       @select-all="choose"
     >
-      <el-table-column align="center" type="selection" width="55">
+      <el-table-column align="center" type="selection" width="60">
       </el-table-column>
 
       <el-table-column align="center" prop="appname" label="业务系统名称" >
@@ -101,7 +104,12 @@
       <el-table-column align="center"prop="openswitch" label="特殊配置开关"  show-overflow-tooltip >
           <template v-slot="scope">
           <div class="rule-box" @click.stop="openRule(scope.row)">
-            <el-switch size="large" v-model="scope.row.status" />
+            <!-- <el-switch size="large" v-model="scope.row.status" /> -->
+            <icon-svg
+              icon-class="open"
+              style="font-size: 24px; margin-left: 10px;vertical-align: middle;"
+              :style="{color: scope.row.status == 1?'#00E5FF':'#434C5D'}"
+            />
           </div>
 
         </template>
@@ -113,14 +121,16 @@
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-edit-outline"
               @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+              ></el-link
             >
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-close"
               @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+              ></el-link
             >
           </div>
         </template>
@@ -398,8 +408,9 @@ export default {
       //   status: scope.status
       // }
       console.log(scope)
-      axios.systemStatusSwitch(scope.code, scope.status).then(res => {
+      axios.systemStatusSwitch(scope.code, scope.status == 1?0:1).then(res => {
         if (res.data.success) {
+          scope.status = !scope.status
           this.$notify({
             title: '提示',
             message: scope.status ? '已开启！' : '已关闭!',
@@ -501,14 +512,14 @@ export default {
   box-sizing: border-box;
   .search-button {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -518,13 +529,13 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
   }
   .el-link {
-    color: #fff !important;
+    // color: #fff !important;
   }
   .header-icon {
     cursor: pointer;
@@ -538,12 +549,13 @@ export default {
     display: none;
   }
   .search-icon {
-    border: 1px solid #fff;
-    color: #fff;
-    &:hover {
-      background: #0066ff;
-      border: 1px solid #0066ff;
-    }
+    margin-left: 28px;
+    // border: 1px solid #436382;
+    // color: #fff;
+    // &:hover {
+    //   background: #0066ff;
+    //   border: 1px solid #0066ff;
+    // }
   }
   .s1-color {
     color: #ff0000 !important;
@@ -584,6 +596,7 @@ export default {
 <style scoped>
 .search-bar {
   display: flex;
+  margin-bottom:24px;
   /* justify-content: space-between; */
 }
 .search-inline-form {

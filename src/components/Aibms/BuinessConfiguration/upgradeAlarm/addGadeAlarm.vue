@@ -6,7 +6,7 @@
         <el-form
           :model="form"
           :label-position="labelPosition"
-          label-width="100px"
+          label-width="120px"
           :rules="rules"
           :inline="true"
           ref="form"
@@ -114,7 +114,7 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="search"
+              <el-button class="search-btn" icon="el-icon-search" @click="search"
                 >搜索</el-button
               >
             </el-form-item>
@@ -154,8 +154,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="confimAlarm">确 定</el-button>
-            <el-button @click="cancel" class="cancle-button">取 消</el-button>
+            <el-button type="primary" @click="confimAlarm" class="save-btn common-btn">确 定</el-button>
+            <el-button @click="cancel" class="cancel-button">取 消</el-button>
           </div>
         </el-dialog>
       </div>
@@ -163,11 +163,11 @@
         <el-button
           v-if="!readOnly"
           type="primary"
-          style="margin-right: 100px"
+          class="save-btn common-btn"
           @click="submitForm"
           >保 存</el-button
         >
-        <el-button @click="turnBack" class="cancle-button">取 消</el-button>
+        <el-button @click="turnBack" class="cancel-button">取 消</el-button>
       </div>
     </div>
   </div>
@@ -517,20 +517,21 @@ export default {
   padding: 10px;
   .content {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px;
     overflow: visible;
     .form-area {
       margin: 10px;
       .wihte-color {
-        color: #fff;
+        font-size: 24px;
+        // color: #fff;
       }
       .alarm-class {
         h4 {
-          font-size: 14px;
+          font-size: 20px;
           font-weight: 500;
           margin-left: 20px;
-          color: #fff;
+          color: #BFF3FF;
           line-height: 40px;
           padding: 0 12px 0 0;
           box-sizing: border-box;
@@ -574,38 +575,40 @@ export default {
     }
     h3 {
       position: relative;
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 500;
-      height: 24px;
-      line-height: 24px;
+      height: 40px;
+      line-height: 40px;
       margin-left: 10px;
-      color: #fff;
+      color: #BFF3FF;
       span {
         margin-left: 5px;
-        font-size: 14px;
-        color: #00a8e8;
+        font-size: 24px;
         cursor: pointer;
+        color: #BFF3FF;
+        font-weight: normal;
       }
       &:before {
-        content: '';
+         content: '';
         position: absolute;
         z-index: 1;
-        left: -20px;
-        top: -3px;
-        width: 8px;
-        border-radius: 4px;
-        height: 30px;
-        background: #00a8e8;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
       }
     }
     .button-area {
       text-align: center;
+      font-size: 0;
     }
     .cancle-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:hover {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background: transparent;
       }
@@ -614,7 +617,7 @@ export default {
         background: transparent;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         background: transparent;
         color: #fff;
       }
@@ -640,5 +643,8 @@ export default {
 .s5-color {
   color: #ffff88 !important;
   fill: #ffff88 !important;
+}
+.dialog-footer{
+  font-size:0;
 }
 </style>

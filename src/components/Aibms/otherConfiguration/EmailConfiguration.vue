@@ -18,7 +18,7 @@
         >
           <el-form
             :model="emailForm"
-            label-width="100px"
+            label-width="160px"
             ref="mailform"
             label-position="right"
             :rules="emailFormRules"
@@ -96,14 +96,17 @@
         <div class="block-content" style="overflow: visible">
           <div v-show="blockSwitch[2]">
             <div class="button-var">
-              <div>
-                <img class="svg-img" src="/static/img/task/tips.svg" alt="" />
+              <div class="font24 font-color">
+                <icon-svg
+                  icon-class="tips"
+                />
+                <!-- <img class="svg-img" src="/static/img/task/tips.svg" alt="" /> -->
                 <span> 变量声明：点击这些变量,即可在输入框中使用</span>
               </div>
             </div>
             <el-form
               :model="configForm"
-              label-width="100px"
+              label-width="160px"
               ref="configform"
               label-position="right"
               :rules="configFormRules"
@@ -126,7 +129,7 @@
                     :clickNum="clickThemeNum"
                     :StringList="StringList"
                     :placeholderText="placeholderTheme"
-                    :inputH="0"
+                    :inputH="3"
                     :textContent.sync="ThemeText"
                   />
                 </div>
@@ -153,15 +156,13 @@
 
       <div class="op-btns">
         <el-button
-          type="primary"
           @click="handleTest"
-          :style="{ marginRight: '60px' }"
+          class="save-btn common-btn"
           >测试</el-button
         >
         <el-button
-          type="primary"
           @click="saveEmail"
-          :style="{ marginRight: '60px' }"
+           class="save-btn common-btn"
           >保存</el-button
         >
       </div>
@@ -176,11 +177,11 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="testDialogVisible = false" size="small"
+        <el-button class="cancel-button" @click="testDialogVisible = false" size="small"
           >取 消</el-button
         >
         <el-button
-          type="primary"
+          class="save-btn common-btn"
           @click="testEmail"
           :loading="isTesting"
           size="small"
@@ -526,19 +527,19 @@ export default {
   margin: 10px;
   .wrapper_pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .block-item {
       margin-bottom: 20px;
       .item-block-title {
         margin-bottom: 20px;
-        .item-block-title-mark {
-          background: #00a8e8;
-        }
-        .item-block-title-font {
-          color: #fff;
-        }
+        // .item-block-title-mark {
+        //   background: #00a8e8;
+        // }
+        // .item-block-title-font {
+        //   color: #fff;
+        // }
       }
       .block-content {
         /* padding: 20px 0 20px 56px; */
@@ -571,8 +572,8 @@ export default {
           div {
             margin-left: 44px;
             margin-bottom: 20px;
-            font-size: 12px;
-            color: #fff;
+            // font-size: 12px;
+            // color: #fff;
           }
         }
       }
@@ -587,9 +588,13 @@ export default {
 }
 .op-btns {
   text-align: center;
+  font-size: 0;
 }
 .svg-img{
   height: 16px;
   vertical-align: middle;
+}
+.dialog-footer{
+  font-size: 0;
 }
 </style>

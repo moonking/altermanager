@@ -1,33 +1,34 @@
 <template>
   <div class="aia-content">
+  
    <div class="wrapper-pannel">
+   <h3>新增业务系统</h3>
+    <el-form :model="configData" ref="configData" label-width="160px" label-position="right">
 
-    <el-form :model="configData" ref="configData" label-width="120px" label-position="left">
-
-      <el-form-item label="新增业务系统"></el-form-item>
+      <!-- <el-form-item label="新增业务系统"></el-form-item> -->
 
           <el-form-item prop="appname" label="业务系统名称">
-<el-col :span="4">
+<el-col :span="10">
         <el-input v-model="configData.appname"></el-input>
 </el-col>
            </el-form-item>
 
       <el-form-item prop="ipaddress" label="IP地址">
-<el-col :span="4">
+<el-col :span="10">
         <el-input v-model="configData.ipaddress"></el-input>
 </el-col>
       </el-form-item>
 
       <el-form-item prop="hostname" label="主机名">
-        <el-col :span="4">
+        <el-col :span="10">
         <el-input v-model="configData.hostname"></el-input>
         </el-col>
       </el-form-item>
 
       <el-form-item prop="timelevel" label="运维级别">
-        <el-col :span="4">
+        <el-col :span="10">
         <!-- <el-input v-model="configData.timelevel"></el-input> -->
-          <el-select v-model="configData.timelevel" placeholder="请选择">
+          <el-select v-model="configData.timelevel" placeholder="请选择" style="width: 100%">
             <el-option
             v-for="item in options"
             :key="item.value"
@@ -36,9 +37,8 @@
           </el-select>
         </el-col>
       </el-form-item>
-
-    <el-form-item label="特殊时间周期设置" label-width="200px"></el-form-item>
-
+  <!-- <h3>特殊时间周期设置</h3> -->
+       <div class="font24 font-color" style="margin-top:-10px;margin-bottom:10px;">特殊时间周期设置</div>
       <el-form-item
       v-for="(timelist,index) in configData.timelists"
       :label="'时间周期' + String(Number(index)+1)"
@@ -56,8 +56,13 @@
           value-format="yyyy-MM-dd HH:mm:ss"
          placeholder="选择结束日期">
          </el-date-picker>
-         <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button>
-         <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button>
+            <i class="el-icon-circle-plus-outline add-icon-btn" @click="addList" />
+            <i
+                class="el-icon-remove-outline add-icon-btn"
+                @click.prevent="removeList(timelist)"
+              />
+         <!-- <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button> -->
+         <!-- <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button> -->
       </el-form-item>
 
       <el-form-item>
@@ -68,7 +73,7 @@
           <!-- <el-button @click.stop="next" style="margin-right: 100px" type="primary" v-if="active === 0"
             >下一步</el-button
           > -->
-          <el-button @click="save" style="margin-right: 100px" type="primary"
+          <el-button @click="save" class="save-btn common-btn"
             >保存</el-button
           >
           <el-button @click="cancel"  class="cancel-button"
@@ -197,36 +202,75 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+  h3 {
+      position: relative;
+      margin-bottom:20px;
+      font-size: 28px;
+      font-weight: 500;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 10px;
+      color: #BFF3FF;
+      span {
+        margin-left: 5px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #BFF3FF;
+        font-weight: normal;
+        .check-interface {
+          width: 1.3em;
+          height: 1.3em;
+          font-size: 24px;
+          vertical-align: middle;
+          margin-right: 2px;
+        }
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
+      }
+    }
   .wrapper-pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .operation-button {
       margin-top: 12px;
       text-align: center;
+      font-size:0;
       .el-button {
-        margin-right: 12px;
+        // margin-right: 12px;
       }
       .cancel-button {
-        color: #fff;
-        border: 1px solid #fff;
-        &:hover {
-          border: 1px solid #fff;
-          color: #fff;
-          background: transparent;
-        }
-        &:focus {
-          color: #fff;
-          background: transparent;
-        }
-        &:active {
-          border: 1px solid #fff;
-          background: transparent;
-          color: #fff;
-        }
+        // color: #fff;
+        // border: 1px solid #436382;
+        // &:hover {
+        //   border: 1px solid #436382;
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:focus {
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:active {
+        //   border: 1px solid #436382;
+        //   background: transparent;
+        //   color: #fff;
+        // }
       }
     }
   }
+}
+.add-icon-btn{
+  margin-top: 0;
 }
 </style>

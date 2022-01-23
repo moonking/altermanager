@@ -91,14 +91,14 @@
           />
         </el-form-item>
         <el-form-item class="search-button">
-          <el-button @click="batchHandle" class="search-icon"
+          <el-button @click="batchHandle" class="common-btn add-btn"
             >批量处理</el-button
           >
         </el-form-item>
 
         </el-form-item>
        <el-form-item class="search-button">
-          <el-button @click="readAll" class="search-icon"
+          <el-button @click="readAll" class="common-btn add-btn"
             >全部标记为已读</el-button
           >
         </el-form-item>
@@ -116,7 +116,7 @@
 
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item class="search-button">
-          <el-button icon="el-icon-search" @click="search" class="search-icon"
+          <el-button icon="el-icon-search" @click="search" class="common-btn add-btn"
             >搜索</el-button
           >
         </el-form-item>
@@ -526,9 +526,9 @@ export default {
         this.addZero(seconds)
     },
     // 时间分割
-    splitDate() {      
-        this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
-        this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''     
+    splitDate() {
+      this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
+      this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''
     },
     // 分页
     handleCurrentChange() {
@@ -581,14 +581,14 @@ export default {
   box-sizing: border-box;
   .search-button {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -598,7 +598,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
@@ -618,7 +618,7 @@ export default {
     display: none;
   }
   .search-icon {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     &:hover {
       background: #0066ff;
@@ -670,7 +670,7 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>
 <style>

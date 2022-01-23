@@ -10,8 +10,8 @@
       v-show="active === 1"
     /> -->
     <div class="wrapper-pannel">
-      <el-form :model="sourceForm" :rules="ruleForm" ref="sourceForm" label-width="110px">
-        <el-form-item style="width: 100%" label="告警来源:" prop="source">
+      <el-form :model="sourceForm" :rules="ruleForm" ref="sourceForm" label-width="160px">
+        <el-form-item style="width: 100%" label="告警来源：" prop="source">
           <el-select  v-model="sourceForm.source" placeholder="请选择告警来源">
             <el-option v-for="item in sourcedata"
                     :key="item.id"
@@ -36,11 +36,9 @@
         <!-- <el-button @click.stop="next" style="margin-right: 100px" type="primary" v-if="active === 0"
           >下一步</el-button
         > -->
-        <el-button @click="save" style="margin-right: 100px" type="primary"
-          >保存</el-button
+        <el-button @click="save" class="save-btn common-btn">保存</el-button
         >
-        <el-button @click="cancel"  class="cancel-button"
-          >取消</el-button
+        <el-button @click="cancel"  class="cancel-button">取消</el-button
         >
       </div>
     </div>
@@ -204,32 +202,33 @@ export default {
   box-sizing: border-box;
   .wrapper-pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .operation-button {
       margin-top: 12px;
+      font-size: 0;
       text-align: center;
       .el-button {
-        margin-right: 12px;
+        // margin-right: 12px;
       }
       .cancel-button {
-        color: #fff;
-        border: 1px solid #fff;
-        &:hover {
-          border: 1px solid #fff;
-          color: #fff;
-          background: transparent;
-        }
-        &:focus {
-          color: #fff;
-          background: transparent;
-        }
-        &:active {
-          border: 1px solid #fff;
-          background: transparent;
-          color: #fff;
-        }
+        // color: #fff;
+        // border: 1px solid #436382;
+        // &:hover {
+        //   border: 1px solid #436382;
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:focus {
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:active {
+        //   border: 1px solid #436382;
+        //   background: transparent;
+        //   color: #fff;
+        // }
       }
     }
   }

@@ -34,13 +34,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item class="search-type">
-          <el-button icon="el-icon-search" @click="search">搜索</el-button>
-        </el-form-item>
+
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
+        <el-form-item class="search-type">
+          <el-button icon="el-icon-search" class="search-icon search-btn" @click="search">搜索</el-button>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addType"
+          <el-button type="primary" class="common-btn add-btn" icon="el-icon-plus" @click="addType"
             >新增</el-button
           >
         </el-form-item>
@@ -50,7 +51,7 @@
     <el-table
       :data="tableData"
       stripe
-      height="82%"
+      height="74%"
       @row-click="classDetail"
       :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
@@ -79,14 +80,16 @@
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-edit-outline"
               @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+              ></el-link
             >
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-close"
               @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+              ></el-link
             >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
@@ -364,32 +367,32 @@ export default {
   box-sizing: border-box;
   .search-type {
     .el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:link {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #fff;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #fff;
-        color: #fff;
-      }
+      // border: 1px solid #436382;
+      // color: #fff;
+      // &:link {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      // }
+      // &:visited {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      //   background-color: transparent !important;
+      // }
+      // &:hover {
+      //   background-color: #041c25;
+      //   border: 1px solid #01aef1;
+      //   color: #01aef1;
+      // }
+      // &:active {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      // }
     }
   }
   .task-btn-box {
     text-align: center;
     .el-link {
-      color: #fff;
+      // color: #fff;
     }
     // span {
     //   display: inline-block;
@@ -437,7 +440,7 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 .white-space {
   overflow: hidden;

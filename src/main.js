@@ -8,14 +8,18 @@ import VueLogger from 'vuejs-logger'
 
 // import 'element-ui/lib/theme-chalk/index.css' // 默认主题
 // import "../static/css/theme-green/index.css"; // 浅绿色主题
-import '../static/css/aibms-theme/index.css' // aibms主题
-import '../static/css/aibms-theme/conmmon.css' // aibms主题公共css
+// import '../static/css/aibms-theme/index.css' // aibms主题
+// import '../static/css/aibms-theme/conmmon.css' // aibms主题公共css
+import '../static/css/theme-opacity/index.css'
+import '../static/css/theme-opacity/conmmon.css'
 import './assets/comcss/icon.css'
 import './assets/comcss/main.css'
 import './assets/comcss/common.css' // 公共的button样式
 // 引入阿里图标库中shepherd项目图标
 import '../static/fonticon/icon-sets/iconfont.css'
 import '../static/css/main.css'
+
+import './assets/theme-base.scss'
 
 // 全局引入iconfont组件
 import IconSvg from '@/components/IconFont'

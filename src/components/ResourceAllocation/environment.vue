@@ -10,7 +10,7 @@
   margin: 10px;
   line-height: 400px;
   text-align: center;
-  border: 1px solid #fff;
+  border: 1px solid #436382;
   background: #fff;
 }
 </style>

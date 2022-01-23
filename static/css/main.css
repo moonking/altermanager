@@ -23,19 +23,20 @@ a {
 
 .content-box {
   position: absolute;
-  left: 180px;
+  left: 307px;
   right: 0;
-  top: 72px;
+  top: 86px;
   bottom: 0;
   -webkit-transition: left 0.3s ease-in-out;
   transition: left 0.3s ease-in-out;
-  background: none;
+  background: #25344E;
+  border-radius: 36px 0px 0px 0px;
 }
 
 .content {
   width: auto;
   height: 100%;
-  padding: 10px;
+  padding: 28px 32px;
   overflow-y: auto;
   box-sizing: border-box;
   position: relative;

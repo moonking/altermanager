@@ -5,7 +5,7 @@
       :inline="true"
       ref="dateFrom"
       :model="dateModel"
-      label-width="100px"
+      label-width="160px"
     >
       <el-form-item
         style="width: 100%"
@@ -55,9 +55,9 @@
     </el-form>
     <p
       v-if="dateModel.daterange.length && dateModel.endTime.length"
-      class="tips"
+      class="tips font24 font-color"
     >
-      <i class="el-icon-warning" />
+      <icon-svg icon-class="tips" />
       <!-- 提示信息：{{ mainHost }}等主机，在{{ startDay }}至{{ endDay }}，对{{
         alarmType
       }}类型，取消告警通知。 -->
@@ -199,10 +199,10 @@ export default {
 
 <style scoped>
 .select-content {
-  margin: 50px 20px 20px;
+  margin: 50px 0 20px;
 }
 .tips {
-  color: #fff;
+  /* color: #fff; */
   margin-bottom: 92px;
 }
 </style>

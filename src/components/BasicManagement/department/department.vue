@@ -15,14 +15,14 @@
       <el-form-item class="item-right margin-zero">
         <el-button
           icon="el-icon-refresh"
-          class="search-el-button"
+          class="search-icon search-btn"
           @click="getDeptTree"
           >刷新</el-button
         >
         <el-button
           type="primary"
           icon="el-icon-plus"
-          class="margin-left-btn"
+          class="common-btn add-btn"
           @click="newDepartment"
           >新增</el-button
         >
@@ -108,7 +108,7 @@
       :title="deptDialogTitle"
     >
       <el-form :model="form" :rules="formRules" ref="form">
-        <el-form-item label="部门名称" label-width="120px" prop="name">
+        <el-form-item label="部门名称" label-width="160px" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item
@@ -131,7 +131,7 @@
         </el-form-item>
         <el-form-item
           label="部门负责人"
-          label-width="120px"
+          label-width="160px"
           prop="masterUserId"
         >
           <user-selector
@@ -141,23 +141,23 @@
             :single="true"
           ></user-selector>
         </el-form-item>
-        <el-form-item label="中文简称" label-width="120px" prop="shortName">
+        <el-form-item label="中文简称" label-width="160px" prop="shortName">
           <el-input v-model="form.shortName" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="英文简称" label-width="120px" prop="enShortName">
+        <el-form-item label="英文简称" label-width="160px" prop="enShortName">
           <el-input v-model="form.enShortName" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="备注" label-width="120px" prop="remarks">
+        <el-form-item label="备注" label-width="160px" prop="remarks">
           <el-input tyep="textarea" v-model="form.remarks" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="是否启用" label-width="120px" prop="useable">
+        <el-form-item label="是否启用" label-width="160px" prop="useable">
           <el-switch v-model="form.useable" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+        <el-button class="save-btn common-btn" @click="handleSubmit">确 定</el-button>
 
-        <el-button class="nomal-button" @click="deptInfoDialogVisible = false"
+        <el-button class="cancel-button" @click="deptInfoDialogVisible = false"
           >取 消</el-button
         >
       </div>
@@ -179,8 +179,8 @@
         该操作会同时删除该改部门下所有子部门，确定要删除吗？
       </span>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="deleteConfirmDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmDeleteDept">确 定</el-button>
+        <el-button class="cancel-button" @click="deleteConfirmDialogVisible = false">取 消</el-button>
+        <el-button class="save-btn common-btn" @click="confirmDeleteDept">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 分页功能 -->
@@ -594,7 +594,7 @@ export default {
 .item-right {
   margin: 0 !important;
   .search-el-button {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     &:hover {
       border: 1px solid #01aef1;
@@ -627,5 +627,8 @@ export default {
 .block {
   margin-top: 20px;
   position: relative;
+}
+.dialog-footer{
+  font-size:0;
 }
 </style>

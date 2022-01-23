@@ -33,41 +33,39 @@
 <!--        <el-form-item>-->
 <!--          <el-checkbox v-model="formInline.radio">在线</el-checkbox>-->
 <!--        </el-form-item>-->
-        <el-form-item style="margin-left: 30px">
+        <!-- <el-form-item style="margin-left: 30px"> -->
           <!-- <i class="el-icon-menu" style="font-size:30px" @click="formChange"></i>
           <i class="el-icon-tickets" style="font-size:30px" @click="tableChange"></i>-->
-          <ul class="tablist">
-            <li :class="{ active: shows == 1 }" @click="formChange">名片</li>
-            <li :class="{ active: shows == 2 }" @click="tableChange">列表</li>
-          </ul>
-        </el-form-item>
+        <!-- </el-form-item> -->
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
           <el-button
             icon="el-icon-search"
-            class="common-btn-style search-el-button"
+            class="search-icon search-btn"
             @click="onSearchBtn"
             >查找</el-button
           >
         </el-form-item>
         <el-form-item>
           <el-button
-            type="primary"
             icon="el-icon-plus"
-            class="common-btn-style margin-left-btn"
+            class="common-btn add-btn"
             @click.prevent="addUserBtn"
             >新增</el-button
           >
         </el-form-item>
       </el-form>
     </div>
+    <div class="tab-wrap t-box">
+      <el-button :class="listForm?'save-btn common-btn':'cancel-button'" @click="formChange">名片</el-button>
+      <el-button :class="listTable?'save-btn common-btn':'cancel-button'" @click="tableChange">列表</el-button>
+    </div>
     <!-- 表单 -->
     <div v-if="listForm">
       <div v-if="haveListData">
-        <el-row :gutter="20" class="card-main">
-          <el-col
-            :span="6"
+        <div class="card-main">
+          <div
             class="userContainer"
             v-for="(item, index) in userDataList"
             :key="index"
@@ -80,44 +78,14 @@
                 </div>
                 <div class="databox">
                   <ul class="ullist">
-                    <li class="editicon">
+                    <!-- <li class="editicon"> -->
                       <!-- <span style="margin-left:50px">{{item.name}}</span> -->
-                      <el-dropdown class="user-name" trigger="click">
-                        <span class="el-dropdown-link">
-                          <i class="el-icon-edit-outline"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                          <div
-                            @click="showDetail(item.userId)"
-                            style="width: 100%; height: 100%"
-                          >
-                            <el-dropdown-item divided>
-                              <span>查看详情</span>
-                            </el-dropdown-item>
-                          </div>
-                          <div
-                            @click="changeDate(item.userId)"
-                            style="width: 100%; height: 100%"
-                          >
-                            <el-dropdown-item divided>
-                              <span>修改信息</span>
-                            </el-dropdown-item>
-                          </div>
-                          <div
-                            @click="open2(item.userId)"
-                            style="width: 100%; height: 100%"
-                          >
-                            <el-dropdown-item divided command="loginout">
-                              <span>删除该用户</span>
-                            </el-dropdown-item>
-                          </div>
-                        </el-dropdown-menu>
-                      </el-dropdown>
-                    </li>
+                      
+                    <!-- </li> -->
                     <li class="userli clear-fix">
                       <icon-svg
                         icon-class="dizhi"
-                        class="user-icon white-svg-icon"
+                        class="user-icon"
                       />
                       <!-- <img class="svg-img" src="/static/img/task/telphone.svg" alt="" /> -->
                       <span class="text-overflow user-content-font">{{
@@ -127,7 +95,7 @@
                     <li class="userli clear-fix">
                       <icon-svg
                         icon-class="telphone"
-                        class="user-icon white-svg-icon"
+                        class="user-icon"
                       />
                       <span class="text-overflow user-content-font">{{
                         item.telephone
@@ -136,7 +104,7 @@
                     <li class="userli clear-fix">
                       <icon-svg
                         icon-class="shouji"
-                        class="user-icon white-svg-icon"
+                        class="user-icon"
                       />
                       <span class="text-overflow user-content-font">{{
                         item.mobile
@@ -156,21 +124,52 @@
               </div>-->
               <div class="systempermissions">
                 <div class="systype">角色:</div>
-                <div>
-                  <ul>
-                    <li
+                <!-- <div> -->
+                  <p>
+                    <span
                       v-for="(item, index) in item.roleList"
                       :key="index"
                       class="limitbg"
                     >
                       {{ item.name }}
-                    </li>
-                  </ul>
-                </div>
+                    </span>
+                  </p>
+                  <el-dropdown class="user-name" trigger="click">
+                    <span class="el-dropdown-link">
+                      <i class="el-icon-edit-outline"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <div
+                        @click="showDetail(item.userId)"
+                        style="width: 100%; height: 100%"
+                      >
+                        <el-dropdown-item divided>
+                          <span>查看详情</span>
+                        </el-dropdown-item>
+                      </div>
+                      <div
+                        @click="changeDate(item.userId)"
+                        style="width: 100%; height: 100%"
+                      >
+                        <el-dropdown-item divided>
+                          <span>修改信息</span>
+                        </el-dropdown-item>
+                      </div>
+                      <div
+                        @click="open2(item.userId)"
+                        style="width: 100%; height: 100%"
+                      >
+                        <el-dropdown-item divided command="loginout">
+                          <span>删除该用户</span>
+                        </el-dropdown-item>
+                      </div>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                <!-- </div> -->
               </div>
             </div>
-          </el-col>
-        </el-row>
+          </div>
+        </div>
       </div>
       <div v-if="noHaveListData" style="color: #909399; margin-top: 20px">
         <p style="text-align: center">暂无数据</p>
@@ -181,9 +180,7 @@
     <div class="table-area">
       <el-table
         :data="userDataList"
-        style="background: #fff"
         stripe
-        :header-cell-style="{ background: '#f5f5f5' }"
         v-if="listTable"
       >
         <el-table-column prop="loginName" label="用户名" />
@@ -201,7 +198,7 @@
                   content="查看详情"
                   placement="top-start"
                 >
-                  <icon-svg icon-class="chakan" class="whiteness-icon-color" />
+                  <icon-svg icon-class="chakan" class="svg-font-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="changeDate(scope.row.userId)">
@@ -211,7 +208,7 @@
                   content="编辑"
                   placement="top-start"
                 >
-                  <icon-svg icon-class="bianji" class="whiteness-icon-color" />
+                  <icon-svg icon-class="bianji" class="svg-font-color" />
                 </el-tooltip>
               </span>
               <span class="special" @click="open2(scope.row.userId)">
@@ -221,7 +218,7 @@
                   content="删除"
                   placement="top-start"
                 >
-                  <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+                  <icon-svg icon-class="shanchu" class="svg-font-color" />
                 </el-tooltip>
               </span>
             </div>
@@ -254,7 +251,7 @@
           </el-select>
         </div>
       </div>
-      <el-form ref="form" :model="form" label-width="100px">
+      <el-form ref="form" :model="form" label-width="160px">
         <el-form-item label="用户名：">
           <el-input disabled="disabled" v-model="detailData.loginName" />
         </el-form-item>
@@ -291,7 +288,7 @@
         <el-form-item label=" 职位：">
           <el-input disabled="disabled" v-model="detailData.position" />
         </el-form-item>
-        <el-form-item label="默认用户：" prop="defaultUser">
+        <el-form-item label="默认用户：" prop="defaultUser" class="lh68">
           <el-switch
             size="large"
             v-model="detailData.defaultUser"
@@ -303,7 +300,7 @@
           <span
             v-for="(item, index) in detailData.roleList"
             :key="index"
-            class="roleSpan"
+            class="font24 font-color lh68"
             >{{ item.name }}</span
           >
         </el-form-item>
@@ -347,7 +344,7 @@
       </transition>
       <el-form
         ref="form2"
-        label-width="100px"
+        label-width="140px"
         :rules="rules2"
         :model="changeData"
       >
@@ -389,7 +386,7 @@
         <el-form-item label=" 职位：" prop="position">
           <el-input v-model="changeData.position" />
         </el-form-item>
-        <el-form-item label="默认用户：" prop="defaultUser">
+        <el-form-item label="默认用户：" prop="defaultUser" class="lh68">
           <el-switch
             size="large"
             v-model="changeData.defaultUser"
@@ -411,11 +408,11 @@
       <div class="text-center">
         <el-button
           :loading="editLoading"
-          type="primary"
+          class="common-btn save-btn"
           @click="changeUserClicke(changeData.userId)"
           >确认修改</el-button
         >
-        <el-button class="nomal-button" @click="editInformation = false"
+        <el-button class="cancel-button" @click="editInformation = false"
           >取消</el-button
         >
       </div>
@@ -454,7 +451,7 @@
       </transition>
       <el-form
         ref="form"
-        label-width="100px"
+        label-width="140px"
         :model="addUserList"
         :rules="rules"
       >
@@ -518,7 +515,7 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="默认用户：" prop="defaultUser">
+          <el-form-item label="默认用户：" prop="defaultUser" class="lh68">
             <el-switch
               size="large"
               v-model="addUserList.defaultUser"
@@ -543,11 +540,11 @@
       <div class="text-center">
         <el-button
           :loading="editLoading"
-          type="primary"
+          class="common-btn save-btn"
           @click="addUserClicke()"
           >确认新增</el-button
         >
-        <el-button class="nomal-button" @click="noAddUser">取消</el-button>
+        <el-button class="cancel-button" @click="noAddUser">取消</el-button>
       </div>
     </el-dialog>
     <!--  -->
@@ -1157,24 +1154,27 @@ export default {
       border: 1px solid #ccc;
     }
   }
-
+  .tab-wrap {
+    padding: 20px;
+  }
   .tablist {
-    width: 135px;
+    // width: 135px;
     height: 32px;
     text-align: center;
     color: #0066ff;
     li {
-      list-style: none;
-      float: left;
-      font-size: 16px;
-      width: 40px;
-      height: 32px;
-      line-height: 32px;
-      border: 1px solid #0066ff;
-      padding-left: 10px;
-      padding-right: 10px;
-      margin-top: 3px;
-      cursor: pointer;
+      border:none;
+      // list-style: none;
+      // float: left;
+      // font-size: 16px;
+      // width: 40px;
+      // height: 32px;
+      // line-height: 32px;
+      // border: 1px solid #0066ff;
+      // padding-left: 10px;
+      // padding-right: 10px;
+      // margin-top: 3px;
+      // cursor: pointer;
       /* background-color: #fff; */
       /* color:#0066ff !important; */
     }
@@ -1204,14 +1204,22 @@ export default {
   }
   .card-main {
     padding: 0 20px;
+    display:flex;
+    flex-wrap:wrap;
   }
   .userContainer > div {
-    font-size: 14px;
-    border: 1px solid #eee;
+    // font-size: 14px;
+    // border: 1px solid #eee;
     margin: 0 0 20px 0;
-    border-radius: 4px;
-    box-shadow: 0 5px 10px 0 #eee;
-
+    // border-radius: 4px;
+    // box-shadow: 0 5px 10px 0 #eee;
+    .el-icon-edit-outline{
+      font-size:30px;
+      color: #BFF3FF;
+    }
+    .user-name{
+      padding-right: 16px;
+    }
     .information {
       border-bottom: 1px solid #d3d3d3;
       height: 126px;
@@ -1268,6 +1276,8 @@ export default {
               float: right;
               /* margin-right: 5px; */
               margin-top: -6px;
+              
+              
             }
           }
 
@@ -1301,29 +1311,47 @@ export default {
     }
 
     .systempermissions {
+      width: 100%;
+      margin-top:40px;
+      display:flex;
+      align-items:center;
       height: 80px;
+      font-size:24px;
       // padding: 0 10px 10px;
       padding: 0px 5px 15px 5px;
+      box-sizing:border-box;
       // float: left;
       /* margin-right: 5px; */
       // margin-top: -6px;
       .systype {
+        width: 80px;
         margin-left: 4px;
         margin-top: 6px;
       }
-
+      p{
+        width: 240px;
+        // display:flex;
+        // flex:1;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        white-space:nowrap;
+      }
       ul {
+        display:flex;
+        flex:1;
+        text-overflow:ellipsis;
+        overflow:hidden;
         li {
-          float: left;
+          // float: left;
           list-style: none;
           height: 30px;
           line-height: 30px;
-          margin: 4px;
-          color: #a3a3a3;
-          background-color: #e9e9e9;
-          border-radius: 5px;
-          padding-left: 5px;
-          padding-right: 5px;
+          // margin: 4px;
+          // color: #a3a3a3;
+          // background-color: #e9e9e9;
+          // border-radius: 5px;
+          // padding-left: 5px;
+          // padding-right: 5px;
         }
       }
     }
@@ -1344,15 +1372,22 @@ export default {
       border-radius: 100%;
       border: 1px solid #ccc;
     }
-
+    .state{
+      span{
+        font-size:20px;
+      }
+    }
     .kip {
       position: absolute;
       bottom: 10px;
-      left: 52%;
+      color: #00E5FF;
+      left: 56%;
+      font-size:24px;
       z-index: 9999;
       border-radius: 100%;
       border: 1px solid #ccc;
       border: none;
+      cursor:pointer;
     }
 
     .disinlne {
@@ -1432,12 +1467,12 @@ export default {
     span {
       display: inline-block;
       background: #fff;
-      border: 1px solid #0066ff;
+      // border: 1px solid #0066ff;
       line-height: 24px;
       padding: 0 4px;
       border-radius: 5px;
-      color: #0066ff;
-      font-size: 14px;
+      color: #BFF3FF;
+      font-size: 20px;
       margin-right: 12px;
       cursor: pointer;
       &.special {
@@ -1496,12 +1531,12 @@ export default {
 }
 .search-inline-btn {
   margin: 0;
-  width: 230px;
+  // width: 230px;
   vertical-align: middle;
 }
 .search-inline-btn {
   .search-el-button {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     &:hover {
       border: 1px solid #01aef1;
@@ -1522,5 +1557,39 @@ export default {
 }
 .text-center {
   text-align: center;
+  font-size:0;
+}
+.lh68{
+  /deep/{
+    .el-switch.is-checked .el-switch__core{
+      background: #00E5FF;
+      border-color: #00E5FF;
+    }
+    .el-form-item__content{
+      line-height:68px;
+    }
+  }
+}
+.el-radio{
+  line-height: 68px;
+  font-size:20px;
+  /deep/{
+    .el-radio__inner{
+      width: 28px;
+      height: 28px;
+    }
+    .el-radio__label{
+      font-size:20px;
+      color: #BFF3FF;
+    }
+    .el-radio__input.is-checked .el-radio__inner::after{
+      width: 10px;
+      height: 10px;
+    }
+    .el-radio__input.is-checked .el-radio__inner{
+      background: #00E5FF;
+      border-color: #00E5FF;
+    }
+  }
 }
 </style>

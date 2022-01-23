@@ -48,7 +48,7 @@
       <el-table-column
         v-if="!readOnly"
         type="selection"
-        width="55"
+        width="60"
         :selectable="checkSelectable"
       />
       <!-- <el-table-column prop="name" label="业务系统" /> -->
@@ -362,9 +362,9 @@ export default {
 }
 .search-icon {
   color: #fff;
-  border: 1px solid #fff;
+  border: 1px solid #436382;
   &:hover {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     background: transparent;
   }
@@ -373,7 +373,7 @@ export default {
     background: transparent;
   }
   &:active {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     background: transparent;
     color: #fff;
   }

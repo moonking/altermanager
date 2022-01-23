@@ -686,7 +686,7 @@ export default {
   position: relative;
 }
 .canvas .window {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     /* box-shadow: 2px 2px 19px #aaa;
     -o-box-shadow: 2px 2px 19px #aaa;
     -webkit-box-shadow: 2px 2px 19px #aaa;

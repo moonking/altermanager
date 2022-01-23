@@ -288,10 +288,10 @@ export default {
   cursor: default;
 }
 .cancle-button {
-  border: 1px solid #fff;
+  border: 1px solid #436382;
   color: #fff;
   &:hover {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     background: transparent;
   }
@@ -300,7 +300,7 @@ export default {
     background: transparent;
   }
   &:active {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     background: transparent;
     color: #fff;
   }

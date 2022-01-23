@@ -1,13 +1,13 @@
 <template>
-  <div class="header">
+  <div class="header" :class="{'header-collapse': collapse}">
     <!-- 折叠按钮 -->
     <!-- <div class="collapse-btn" >
     <div class="collapse-btn" @click="collapseChage"> </div>
       <i class="el-icon-menu" />
     </div> -->
-    <div class="logo">
+    <!-- <div class="logo">
       <img src="../../assets/aia-logo.png" />
-    </div>
+    </div> -->
     <ul class="mian_tab">
       <li
         v-for="(item, index) in tabData"
@@ -50,11 +50,8 @@
         </div>
  -->
         <el-badge v-model="alternum" class="bl-item"  >
-          <el-button type="warning"
-          icon="el-icon-bell"
-          circle
-          @click ="routeToDetail"
-          ></el-button>
+          <div class="btn el-icon-bell" @click ="routeToDetail" ></div>
+
         </el-badge>
 
    <!--     <el-badge :value="alternum" :max="99" class="item">
@@ -92,7 +89,7 @@
         :visible="dialogFormVisible"
         size="tiny"
         :before-close="handleDialogClose"
-        width="450px"
+        width="600px"
       >
         <div class="headportraitbox">
           <img :src="currentPic" alt />
@@ -111,7 +108,7 @@
             </li>
           </ul>
         </transition>
-        <el-form ref="form" label-width="100px">
+        <el-form ref="form" label-width="140px">
           <el-form-item label="真实姓名：">
             <el-input
               v-model="personalData.name"
@@ -135,15 +132,17 @@
             <el-input v-model="personalData.email"></el-input>
           </el-form-item>
           <el-form-item>
+          <div class="font0">
             <el-button
-              type="primary"
+              class="common-btn save-btn"
               :loading="editLoading"
               @click="changeImformationBtn(personalData.userId)"
               >确认修改</el-button
             >
-            <el-button type="primary" @click="dialogFormVisible = false"
+            <el-button class="cancel-button" @click="dialogFormVisible = false"
               >取消</el-button
             >
+            </div>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -153,9 +152,9 @@
         :visible="ChangePassword"
         size="tiny"
         :before-close="handleDialogClose"
-        width="450px"
+        width="600px"
       >
-        <el-form ref="form" :model="password" label-width="100px">
+        <el-form ref="form" :model="password" label-width="140px">
           <el-form-item label="原密码：" class="password-input">
             <el-input
               v-model="password.oldPwd"
@@ -193,16 +192,17 @@
               />
             </span>
           </el-form-item>
-          <el-form-item>
+          <el-form-item >
+          <div class="font0">
             <el-button
-              type="primary"
+              class="common-btn save-btn"
               :loading="editLoading"
               @click="changePasswordClick()"
               >确认修改</el-button
             >
-            <el-button type="primary" @click="ChangePasswordCancle()"
+            <el-button class="cancel-button" @click="ChangePasswordCancle()"
               >取消</el-button
-            >
+            ></div>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -753,10 +753,15 @@ body {
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  height: 72px;
+  height: 86px;
   font-size: 22px;
-  color: #fff;
-  background: #10101d99;
+  color: #BFF3FF;
+  padding-left: 340px;
+  box-sizing: border-box;
+  /* background: #10101d99; */
+}
+.header-collapse{
+  padding-left:98px;
 }
 .logo {
   height: 72px;
@@ -794,12 +799,13 @@ body {
 
 .header-right {
   float: right;
-  width: 12%;
+  width: 27%;
 }
 
 .header-user-con {
   display: flex;
-  height: 72px;
+  justify-content: flex-end;
+  height: 86px;
   align-items: center;
 }
 
@@ -822,6 +828,12 @@ body {
  position: relative;
  right: 5px;
 }
+.bl-item .btn{
+  font-size: 40px;
+  color: #00E5FF;
+  cursor: pointer;
+
+}
 .btn-bell-badge {
   position: absolute;
   right: 0;
@@ -830,21 +842,22 @@ body {
   height: 10px;
   border-radius: 4px;
   background: #f56c6c;
-  color: #fff;
+  color: #BFF3FF;
 }
 
 .btn-bell .el-icon-bell {
-  color: #fff;
+  color: #BFF3FF;
   height: 15px;
   width: 15px;
 }
 
 .user-name {
   margin-left: 10px;
+  font-size:20px;
 }
 
 .user-avator {
-  margin-left: 15px;
+  margin-left: 40px;
 }
 
 .user-avator img {
@@ -855,7 +868,7 @@ body {
 }
 
 .el-dropdown-link {
-  color: #fff;
+  color: #BFF3FF;
   cursor: pointer;
 }
 
@@ -866,7 +879,7 @@ body {
 .mian_tab {
   list-style: none;
   display: inline-block;
-  line-height: 72px;
+  line-height: 86px;
   width: 73%;
   white-space: nowrap;
   overflow-x: auto;
@@ -875,14 +888,14 @@ body {
 
 .mian_tab li {
   float: left;
-  padding-right: 1.3rem;
-  font-size: 1rem;
+  padding-right: 55px;
+  font-size: 28px;
 
   cursor: pointer;
 }
 
 .active-nav {
-  color: #0066ff;
+  color: #0092AB;
 }
 
 .fade-enter-active,

@@ -2,9 +2,9 @@
   <div class="aia-content">
    <div class="wrapper-pannel">
 
-    <el-form :model="configData" ref="configData" >
-
-      <el-form-item label="7*24小时常规配置"></el-form-item>
+    <el-form :model="configData" ref="configData" label-width="140px"  left-position="right">
+       <h3>7*24小时常规配置</h3>
+      <!-- <el-form-item label=""></el-form-item> -->
       <el-form-item prop="timezone" label="时间区间">
         <el-time-select placeholder="起始时间" v-model="configData.startTime" :picker-options="{
           start: '00:00',
@@ -21,11 +21,11 @@
       </el-form-item>
 
       <el-form-item label="告警方式">
-        <el-checkbox v-model="configData.email">邮件</el-checkbox>
-        <el-checkbox v-model="configData.sms">短信</el-checkbox>
+        <el-checkbox class="lh68" v-model="configData.email">邮件</el-checkbox>
+        <el-checkbox class="lh68" v-model="configData.sms">短信</el-checkbox>
       </el-form-item>
 
-    <el-form-item label="特殊时间周期设置:       (该周期为静默期,不发送任何告警通知)"></el-form-item>
+    <div class="font24 font-color" style="margin-top:-10px;margin-bottom:10px;">特殊时间周期设置:       (该周期为静默期,不发送任何告警通知)</div>
 
       <el-form-item
       v-for="(timelist,index) in configData.timelists"
@@ -44,8 +44,13 @@
           value-format="yyyy-MM-dd HH:mm:ss"
          placeholder="选择结束日期">
          </el-date-picker>
-         <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button>
-         <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button>
+         <i class="el-icon-circle-plus-outline add-icon-btn" @click="addList" />
+          <i
+              class="el-icon-remove-outline add-icon-btn"
+              @click.prevent="removeList(timelist)"
+            />
+         <!-- <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button> -->
+         <!-- <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button> -->
       </el-form-item>
 
       <el-form-item>
@@ -56,7 +61,7 @@
           <!-- <el-button @click.stop="next" style="margin-right: 100px" type="primary" v-if="active === 0"
             >下一步</el-button
           > -->
-          <el-button @click="save" style="margin-right: 100px" type="primary"
+          <el-button @click="save" class="save-btn common-btn" 
             >保存</el-button
           >
           <el-button @click="cancel"  class="cancel-button"
@@ -173,36 +178,75 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+  h3 {
+      position: relative;
+      margin-bottom:20px;
+      font-size: 28px;
+      font-weight: 500;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 10px;
+      color: #BFF3FF;
+      span {
+        margin-left: 5px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #BFF3FF;
+        font-weight: normal;
+        .check-interface {
+          width: 1.3em;
+          height: 1.3em;
+          font-size: 24px;
+          vertical-align: middle;
+          margin-right: 2px;
+        }
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
+      }
+    }
   .wrapper-pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .operation-button {
       margin-top: 12px;
       text-align: center;
-      .el-button {
-        margin-right: 12px;
-      }
-      .cancel-button {
-        color: #fff;
-        border: 1px solid #fff;
-        &:hover {
-          border: 1px solid #fff;
-          color: #fff;
-          background: transparent;
-        }
-        &:focus {
-          color: #fff;
-          background: transparent;
-        }
-        &:active {
-          border: 1px solid #fff;
-          background: transparent;
-          color: #fff;
-        }
-      }
+      font-size:0;
+      // .el-button {
+      //   margin-right: 12px;
+      // }
+      // .cancel-button {
+      //   color: #fff;
+      //   border: 1px solid #436382;
+      //   &:hover {
+      //     border: 1px solid #436382;
+      //     color: #fff;
+      //     background: transparent;
+      //   }
+      //   &:focus {
+      //     color: #fff;
+      //     background: transparent;
+      //   }
+      //   &:active {
+      //     border: 1px solid #436382;
+      //     background: transparent;
+      //     color: #fff;
+      //   }
+      // }
     }
   }
+}
+.add-icon-btn{
+  margin-top: 0;
 }
 </style>

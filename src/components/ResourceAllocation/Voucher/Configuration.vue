@@ -43,7 +43,7 @@
       :header-cell-style="{background:'#f5f5f5'}"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="60" align="center" />
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="userName" label="用户名" />
       <el-table-column label="凭证类型">

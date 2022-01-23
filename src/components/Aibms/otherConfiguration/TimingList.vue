@@ -8,23 +8,22 @@
               v-model="search.name"
               placeholder="请输入发布任务名称"
               sortable
-              style="width: 200px"
+              style="width: 250px"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item style="float: right">
+          <el-form-item class="item-right overHideMargin">
             <el-button
-              type="primary"
               icon="el-icon-plus"
-              class="common-btn-style margin-left-btn"
+              class="common-btn save-btn"
               @click.prevent="addTask"
               >新增</el-button
             >
           </el-form-item>
-          <el-form-item class="item-right overHideMargin">
+          <el-form-item class="item-right">
             <el-button
               icon="el-icon-search"
-              class="common-btn-style search-button"
+              class="search-btn"
               @click="searchTask"
               >查找</el-button
             >
@@ -33,7 +32,7 @@
       </div>
         <el-table
           stripe
-          height="82%"
+          height="74%"
           @row-click="readJob"
           class="data-list"
           :data="tableData"
@@ -62,6 +61,7 @@
               <div class="task-btn-box">
                 <el-link
                   :underline="false"
+                  class="el-icon-edit-outline"
                   @click.stop="
                     editJob(
                       scope.row.iD,
@@ -69,10 +69,11 @@
                       scope.row.applyStatus
                     )
                   "
-                  >编辑</el-link
+                  ></el-link
                 >
                 <el-link
                   :underline="false"
+                  class="el-icon-close"
                   @click.stop="
                     scope.row.conflict !== 'building' &&
                       deleteJob(
@@ -500,7 +501,7 @@ export default {
   display: inline-block;
 }
 .el-link {
-  color: #fff;
+  // color: #fff;
 }
 /* .task-btn-box span {
   display: inline-block;
@@ -570,25 +571,26 @@ export default {
   color: #67c23a;
 }
 .overHideMargin {
-  .el-button {
-    border: 1px solid #fff;
-    color: #fff;
-    &:hover {
-      border: 1px solid #01aef1;
-      color: #01aef1;
-      background-color: #041c25;
-    }
-    &:focus {
-      border: 1px solid #01aef1;
-      color: #01aef1;
-      background-color: #041c25;
-    }
-    &:active {
-      background-color: #041c25;
-      border: 1px solid #01aef1;
-      color: #01aef1;
-    }
-  }
+  margin-left: 20px;
+  // .el-button {
+  //   border: 1px solid #436382;
+  //   color: #fff;
+  //   &:hover {
+  //     border: 1px solid #01aef1;
+  //     color: #01aef1;
+  //     background-color: #041c25;
+  //   }
+  //   &:focus {
+  //     border: 1px solid #01aef1;
+  //     color: #01aef1;
+  //     background-color: #041c25;
+  //   }
+  //   &:active {
+  //     background-color: #041c25;
+  //     border: 1px solid #01aef1;
+  //     color: #01aef1;
+  //   }
+  // }
 }
 .demo-form-inline /deep/ .overHideMargin {
   margin-right: 0 !important;

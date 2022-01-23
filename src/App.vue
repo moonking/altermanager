@@ -8,7 +8,7 @@
 </template>
 <style>
 /* @import "../static/css/color-dark.css";     深色主题 */
-@import '../static/css/theme-green/color-green.css';
+/* @import '../static/css/theme-green/color-green.css'; */
 /* @import "./assets/font-awesome/css/font-awesome.min.css"; */
 /*浅绿色主题*/
 </style>
@@ -247,13 +247,14 @@ export default {
 #app {
   color: #585858;
   font-family: 'PingFang SC';
+  background-color: #142037;
 }
 .el-submenu__title:hover {
-  background-color: #00a8e8 !important;
+  /* background-color: #00a8e8 !important; */
 }
 .el-submenu__title:focus,
 .el-submenu__title:hover {
-  background-color: #00a8e8 !important;
+  /* background-color: #00a8e8 !important; */
 }
 
 ul li {

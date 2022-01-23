@@ -6,7 +6,7 @@
         <el-form
           :model="form"
           :label-position="labelPosition"
-          label-width="100px"
+          label-width="140px"
           :rules="rules"
           :inline="true"
           ref="form"
@@ -40,7 +40,7 @@
             class="domains-form"
           >
             <el-form-item
-              label="描述"
+              label="描述："
               :prop="'domains.' + index + '.desc'"
               :rules="{
                 required: true,
@@ -96,28 +96,28 @@
               />
             </el-form-item>
             <i
-              class="el-icon-circle-plus-outline"
+              class="el-icon-circle-plus-outline add-icon-btn"
               v-if="!readOnly"
               @click="addDomain"
             />
             <i
-              class="el-icon-remove-outline"
+              class="el-icon-remove-outline add-icon-btn"
               v-if="!readOnly"
               @click.prevent="removeDomain(domain)"
             />
           </div>
-          <el-form-item  class="footer-form">
+          <div  class="footer-form">
             <el-button
               v-if="!readOnly"
               type="primary"
+              class="save-btn common-btn"
               @click.stop="handleSave"
-              style="margin-right: 100px"
               >保存</el-button
             >
-            <el-button @click="handleCancel" class="cancle-button"
+            <el-button @click="handleCancel" class="cancel-button"
               >取消</el-button
             >
-          </el-form-item>
+          </div>
         </el-form>
       </div>
       <!-- 删除提示 -->
@@ -125,19 +125,20 @@
         center
         title="删除提示"
         :visible.sync="confirmDeleteDialogVisible"
-        width="25%"
+        width="500px"
+        class="common-dialog"
       >
         <div style="text-align: center">
           <i class="el-icon-warning" /> 确认删除？
         </div>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer" class="dialog-footer common-dailog-footer">
           <el-button
             size="medium"
-            class="nomal-button"
+            class="cancel-button"
             @click="confirmDeleteDialogVisible = false"
             >取消</el-button
           >
-          <el-button size="medium" type="primary" @click="confirmDelete"
+          <el-button size="medium" class="save-btn common-btn"  @click="confirmDelete"
             >确定</el-button
           >
         </div>
@@ -360,18 +361,21 @@ export default {
   padding: 10px;
   .content {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px;
     overflow: visible;
     .form-area {
       margin: 10px;
       position: relative;
       .footer-form {
+        font-size: 0;
+        margin-top: 90px;
         width: 100%;
         text-align: center;
       }
       & /deep/ .el-textarea__inner {
-        min-height: 40px !important;
+        min-height: 68px !important;
+        font-size: 20px;
       }
       &
         /deep/
@@ -383,10 +387,12 @@ export default {
       }
       .domains-form {
         i {
-          color: #fff;
-          font-size: 24px;
-          transform: translateY(8px);
-          cursor: pointer;
+          // margin-top: 10px;
+          // color: #00E5FF;
+          // font-size: 46px;
+          // vertical-align: middle;
+          // cursor: pointer;
+          // font-weight: 100;
         }
       }
       .label-class {
@@ -410,50 +416,33 @@ export default {
     }
     h3 {
       position: relative;
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 500;
       height: 24px;
-      line-height: 24px;
+      line-height: 40px;
       margin-left: 10px;
-      color: #fff;
+      color: #BFF3FF;
       span {
         margin-left: 5px;
         font-size: 14px;
-        color: #00a8e8;
+        color: #00E5FF;
         cursor: pointer;
       }
       &:before {
         content: '';
         position: absolute;
         z-index: 1;
-        left: -20px;
-        top: -3px;
-        width: 8px;
-        border-radius: 4px;
-        height: 30px;
-        background: #00a8e8;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
       }
     }
     .footer-area {
+      margin-top: 90px;
       padding-left: 30px;
-    }
-    .cancle-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:hover {
-        border: 1px solid #fff;
-        color: #fff;
-        background: transparent;
-      }
-      &:focus {
-        color: #fff;
-        background: transparent;
-      }
-      &:active {
-        border: 1px solid #fff;
-        background: transparent;
-        color: #fff;
-      }
     }
   }
 }

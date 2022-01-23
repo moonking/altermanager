@@ -13,62 +13,65 @@
 </el-row>
 <el-row>
 
-          <div class="schart-box">
+          <div class="schart-box" v-show="altersum.length !=  0">
+          <div class="schart" ref="altersum"></div>
            <!-- <div class="content-title">告警通知汇总（来源）</div> -->
-           <schart class="schart" canvasId="pie" :data="altersum" type="pie" :options="altersumOptions"></schart>
+
+           <!-- <schart class="schart" canvasId="pie" :data="altersum" type="pie" :options="altersumOptions"></schart> -->
            </div>
 
-
-
-       <div class="schart-box">
+       <div class="schart-box" v-show="levelsum.length !=  0">
+       <div class="schart" ref="levelsum"></div>
 <!--       <div class="content-title">告警通知汇总（级别）</div> -->
-       <schart class="schart" canvasId="ring" :data="levelsum" type="ring" :options="levelsumOptions"></schart>
+          <!-- <schart class="schart" canvasId="ring" :data="levelsum" type="ring" :options="levelsumOptions"></schart> -->
        </div>
 
-
        <div class="schart-box" v-if="prometheusdata01.length != 0" >
+        <div class="schart" ref="prometheusdata01"></div>
            <!-- <div class="content-title">Prometheus</div> -->
-           <schart class="schart" canvasId="prometheusdata01" :data="prometheusdata01" type="pie" :options="Prometheus01" ></schart>
+           <!-- <schart class="schart" canvasId="prometheusdata01" :data="prometheusdata01" type="pie" :options="Prometheus01" ></schart> -->
        </div>
        <div class="schart-box" v-if="prometheusdata02.length != 0">
        <!-- <div class="content-title">Prometheus</div> -->
-       <schart class="schart" canvasId="prometheusdata02" :data="prometheusdata02" type="ring" :options="Prometheus02"></schart>
+       <div class="schart" ref="prometheusdata02"></div>
+       <!-- <schart class="schart" canvasId="prometheusdata02" :data="prometheusdata02" type="ring" :options="Prometheus02"></schart> -->
        </div>
-
-
 
 </el-row>
 
 <el-row>
        <div class="schart-box" v-if="dtdata01.length != 0">
+       <div class="schart" ref="dtdata01"></div>
            <!-- <div class="content-title">DT</div> -->
-           <schart class="schart" canvasId="dtdata01" :data="dtdata01" type="pie" :options="Dt01"></schart>
+           <!-- <schart class="schart" canvasId="dtdata01" :data="dtdata01" type="pie" :options="Dt01"></schart> -->
        </div>
        <div class="schart-box"v-if="dtdata02.length != 0">
+       <div class="schart" ref="dtdata02"></div>
        <!-- <div class="content-title">DT</div> -->
-       <schart class="schart" canvasId="dtdata02" :data="dtdata02" type="ring" :options="Dt02"></schart>
+       <!-- <schart class="schart" canvasId="dtdata02" :data="dtdata02" type="ring" :options="Dt02"></schart> -->
        </div>
 
-
-
        <div class="schart-box" v-if="splunkdata01.length != 0">
+       <div class="schart" ref="splunkdata01"></div>
            <!-- <div class="content-title">Splunk</div> -->
-           <schart class="schart" canvasId="splunkdata01" :data="splunkdata01" type="pie" :options="splunk01"></schart>
+           <!-- <schart class="schart" canvasId="splunkdata01" :data="splunkdata01" type="pie" :options="splunk01"></schart> -->
        </div>
        <div class="schart-box" v-if="splunkdata02.length != 0">
        <!-- <div class="content-title">Splunk</div> -->
-       <schart class="schart" canvasId="splunkdata02" :data="splunkdata02" type="ring" :options="splunk02"></schart>
+       <div class="schart" ref="splunkdata02"></div>
+       <!-- <schart class="schart" canvasId="splunkdata02" :data="splunkdata02" type="ring" :options="splunk02"></schart> -->
        </div>
 </el-row>
 
-
        <div class="schart-box" v-if="bpcdata01.length != 0">
            <!-- <div class="content-title">Splunk</div> -->
-           <schart class="schart" canvasId="bpcdata01" :data="bpcdata01" type="pie" :options="bpc01"></schart>
+           <div class="schart" ref="bpcdata01"></div>
+           <!-- <schart class="schart" canvasId="bpcdata01" :data="bpcdata01" type="pie" :options="bpc01"></schart> -->
        </div>
        <div class="schart-box" v-if="bpcdata02.length != 0">
+       <div class="schart" ref="bpcdata02"></div>
        <!-- <div class="content-title">Splunk</div> -->
-       <schart class="schart" canvasId="bpcdata02" :data="bpcdata02" type="ring" :options="bpc02"></schart>
+       <!-- <schart class="schart" canvasId="bpcdata02" :data="bpcdata02" type="ring" :options="bpc02"></schart> -->
        </div>
 
 </div>
@@ -82,7 +85,7 @@ export default {
     Schart
   },
   data: () => ({
-    levelsum : [
+    levelsum: [
       // { name: 'Error', value: 1141 },
       // { name: 'Warning', value: 1499 },
       // { name: 'Information', value: 2260 }
@@ -112,101 +115,100 @@ export default {
     dtdata02: [],
     splunkdata01: [],
     splunkdata02: [],
-    bpcdata01:[],
+    bpcdata01: [],
     bpcdata02: [],
-
 
     Prometheus01: {
       title: 'Prometheus 告警分类汇总Top5',
-      bgColor: '#203a48',
+      bgColor:'rgba(255,255,255,0)',
       titleColor: '#ffffff',
       legendColor: '#ffffff',
       radius: 120,
-      colorList:['#5500ff','#00aa7f','#55ffff','#00aaff','#ffaa00']
+      colorList: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00']
     },
 
     Prometheus02: {
-     title: 'Prometheus 告警对象汇总Top5',
-     bgColor: '#203a48',
-     titleColor: '#ffffff',
-     legendColor: '#b0ddff',
-     radius: 120,
-     innerRadius: 80,
-     colorList:['#ff0000','#ffff00','#00ff00']
-    },
-    Dt01: {
-      title: 'DT 告警分类汇总Top5',
-      bgColor: '#203a48',
-      titleColor: '#ffffff',
-      legendColor: '#ffffff',
-      radius: 120,
-      colorList:['#5500ff','#00aa7f','#55ffff','#00aaff','#ffaa00']
-    },
-
-    Dt02: {
-     title: 'DT 告警对象汇总Top5',
-     bgColor: '#203a48',
-     titleColor: '#ffffff',
-     legendColor: '#b0ddff',
-     radius: 120,
-     innerRadius: 80,
-     colorList:['#ff0000','#ffff00','#00ff00']
-    },
-
-    splunk01: {
-      title: 'Splunk 告警分类汇总Top5',
-      bgColor: '#203a48',
-      titleColor: '#ffffff',
-      legendColor: '#ffffff',
-      radius: 120,
-      colorList:['#5500ff','#00aa7f','#55ffff','#00aaff','#ffaa00']
-    },
-
-    splunk02: {
-     title: 'Splunk 告警对象汇总Top5',
-     bgColor: '#203a48',
-     titleColor: '#ffffff',
-     legendColor: '#b0ddff',
-     radius: 120,
-     innerRadius: 80,
-     colorList:['#ff0000','#ffff00','#00ff00']
-    },
-
-    bpc01: {
-      title: 'BPC 告警分类汇总Top5',
-      bgColor: '#203a48',
-      titleColor: '#ffffff',
-      legendColor: '#ffffff',
-      radius: 120,
-      colorList:['#5500ff','#00aa7f','#55ffff','#00aaff','#ffaa00']
-    },
-
-    bpc02: {
-     title: 'BPC 告警对象汇总Top5',
-     bgColor: '#203a48',
-     titleColor: '#ffffff',
-     legendColor: '#b0ddff',
-     radius: 120,
-     innerRadius: 80,
-     colorList:['#ff0000','#ffff00','#00ff00']
-    },
-
-    altersumOptions: {
-      title: '告警通知汇总（来源）',
-      bgColor: '#203a48',
-      titleColor: '#ffffff',
-      legendColor: '#ffffff',
-      radius: 120,
-      colorList:['#5500ff','#00aa7f','#55ffff','#00aaff','#ffaa00']
-    },
-    levelsumOptions : {
-      title: '告警通知汇总（级别）',
-      bgColor: '#203a48',
+      title: 'Prometheus 告警对象汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
       titleColor: '#ffffff',
       legendColor: '#b0ddff',
       radius: 120,
       innerRadius: 80,
-      colorList:['#00ff7f','#ffff00','#ff0000']
+      colorList: ['#ff0000', '#ffff00', '#00ff00']
+    },
+    Dt01: {
+      title: 'DT 告警分类汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#ffffff',
+      radius: 120,
+      colorList: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00']
+    },
+
+    Dt02: {
+      title: 'DT 告警对象汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#b0ddff',
+      radius: 120,
+      innerRadius: 80,
+      colorList: ['#ff0000', '#ffff00', '#00ff00']
+    },
+
+    splunk01: {
+      title: 'Splunk 告警分类汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#ffffff',
+      radius: 120,
+      colorList: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00']
+    },
+
+    splunk02: {
+      title: 'Splunk 告警对象汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#b0ddff',
+      radius: 120,
+      innerRadius: 80,
+      colorList: ['#ff0000', '#ffff00', '#00ff00']
+    },
+
+    bpc01: {
+      title: 'BPC 告警分类汇总Top5',
+      bgColor:'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#ffffff',
+      radius: 120,
+      colorList: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00']
+    },
+
+    bpc02: {
+      title: 'BPC 告警对象汇总Top5',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#b0ddff',
+      radius: 120,
+      innerRadius: 80,
+      colorList: ['#ff0000', '#ffff00', '#00ff00']
+    },
+
+    altersumOptions: {
+      title: '告警通知汇总（来源）',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#DAF8FF',
+      legendColor: '#ffffff',
+      radius: 120,
+      colorList: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00']
+    },
+    levelsumOptions: {
+      title: '告警通知汇总（级别）',
+      bgColor: 'rgba(255,255,255,0)',
+      titleColor: '#ffffff',
+      legendColor: '#b0ddff',
+      radius: 120,
+      innerRadius: 80,
+      colorList: ['#00ff7f', '#ffff00', '#ff0000']
     },
     sourcedata: [
       {
@@ -230,130 +232,279 @@ export default {
       source: 1
     },
 
-    datatest : [
+    datatest: [
       {
-      name: "host1",
-      value: 1000
-    },
-    {
-      name: "host2",
-      value: 999
-    },
-    {
-      name:"host3",
-      value:1005
-    }
+        name: 'host1',
+        value: 1000
+      },
+      {
+        name: 'host2',
+        value: 999
+      },
+      {
+        name: 'host3',
+        value: 1005
+      }
     ]
 
   }),
   created() {
     // console.log(this.datatest.sort(function(a,b){return a.value - b.value}))
     this.getSumdata(this.sourceForm.source)
-
   },
   methods: {
 
-  changetime(){
-    console.log(this.sourceForm.source)
-    this.getSumdata(this.sourceForm.source)
-  },
-// 排序返回指定数目的从大到小
-  sortValue(data,num){
-     const result = data.sort(function(a,b){return b.value - a.value})
-     if (result.length > num) {
-        return result.slice(0,num)
-     } else{
+    changetime() {
+      console.log(this.sourceForm.source)
+      this.getSumdata(this.sourceForm.source)
+    },
+    // 排序返回指定数目的从大到小
+    sortValue(data, num) {
+      const result = data.sort(function(a, b) { return b.value - a.value })
+      if (result.length > num) {
+        return result.slice(0, num)
+      } else {
         return result
-     }
+      }
+    },
+    getEchartsOptions(data){
+      return {
+        color: data.color,
+            title: {
+              text: data.title,
+              padding: [17, 40],
+              textStyle: {
+                fontSize: 32,
+                color: '#DAF8FF',
+              }
+            },
+            legend: {
+              y: 580,
+              icon: 'circle',
+              textStyle: {
+                color: '#EDF9FB',
+                fontSize: 20
+              }
+            },
+            series : [
+              {
+                  name: data.title,
+                  type: 'pie',    // 设置图表类型为饼图
+                  radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                  data: data.data
+              }
+          ]
+      }
+    },
+    // 查询统计数据 ,param :time  单位为天 （1天为1 ）
 
-  },
+    getSumdata(time) {
+      axios.getSumData(time).then(res => {
+        if (res.data.success) {
+          console.log(res.data)
+          let altersum = []
+          let levelsum = []
+          let prometheusdata01 = []
+          let prometheusdata02 = []
+          let dtdata01 = []
+          let dtdata02 = []
+          let splunkdata01 = []
+          let splunkdata02 = []
+          let bpcdata01 = []
+          let bpcdata02 = []
+          res.data.data.forEach(function(data, index) {
+            altersum.push({name: data.name, value: Number(data.total)})
 
-// 查询统计数据 ,param :time  单位为天 （1天为1 ）
+            if (data.name == 'Prometheus') {
+              data.category.forEach(function(data, index) {
+                prometheusdata01.push({name: data.name, value: Number(data.value)})
+              })
+              data.object.forEach(function(data, index) {
+                prometheusdata02.push({name: data.name, value: Number(data.value)})
+              })
+            }
 
- getSumdata(time){
-  axios.getSumData(time).then(res => {
-    if (res.data.success) {
-      console.log (res.data)
-      let altersum =[]
-      let levelsum =[]
-      let prometheusdata01 = []
-      let prometheusdata02 = []
-      let dtdata01 = []
-      let dtdata02 =  []
-      let splunkdata01 =[]
-      let splunkdata02 = []
-      let bpcdata01 = []
-      let bpcdata02 = []
-      res.data.data.forEach(function(data,index){
-        altersum.push({name:data.name,value: Number(data.total)})
+            if (data.name == 'Dynatrace') {
+              data.category.forEach(function(data, index) {
+                dtdata01.push({name: data.name, value: Number(data.value)})
+              })
+              data.object.forEach(function(data, index) {
+                dtdata02.push({name: data.name, value: Number(data.value)})
+              })
+            }
 
-        if (data.name =="Prometheus"){
-          data.category.forEach(function(data,index){
-            prometheusdata01.push({name:data.name,value: Number(data.value)})
+            if (data.name == 'BPC') {
+              data.category.forEach(function(data, index) {
+                bpcdata01.push({name: data.name, value: Number(data.value)})
+              })
+              data.object.forEach(function(data, index) {
+                bpcdata02.push({name: data.name, value: Number(data.value)})
+              })
+            }
+
+            if (data.name == 'Splunk') {
+              data.category.forEach(function(data, index) {
+                splunkdata01.push({name: data.name, value: Number(data.value)})
+              })
+              data.object.forEach(function(data, index) {
+                splunkdata02.push({name: data.name, value: Number(data.value)})
+              })
+            }
           })
-          data.object.forEach(function(data,index){
-            prometheusdata02.push({name:data.name,value: Number(data.value)})
-          })
+          this.altersum = altersum
+          this.prometheusdata01 = this.sortValue(prometheusdata01, 5)
+          this.prometheusdata02 = this.sortValue(prometheusdata02, 5)
+          this.dtdata01 = this.sortValue(dtdata01, 5)
+          this.dtdata02 = this.sortValue(dtdata02, 5)
+          this.splunkdata01 = this.sortValue(splunkdata01, 5)
+          this.splunkdata02 = this.sortValue(splunkdata02, 5)
+          this.bpcdata01 = this.sortValue(bpcdata01, 5)
+          this.bpcdata02 = this.sortValue(bpcdata02, 5)
 
-        }
-
-        if (data.name =="Dynatrace"){
-          data.category.forEach(function(data,index){
-            dtdata01.push({name:data.name,value: Number(data.value)})
+          
+          let myChart = this.$echarts.init(this.$refs.altersum)
+          let myChart2 = this.$echarts.init(this.$refs.levelsum)
+          myChart.setOption(
+            this.getEchartsOptions({
+              color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+              title: '告警通知汇总（来源）',
+              data: this.altersum
+            })
+          )
+          myChart2.setOption(
+            this.getEchartsOptions({
+              color: ['#00ff7f', '#ffff00', '#ff0000'],
+              title: '告警通知汇总（级别）',
+              data: this.levelsum
+            })
+          )
+              
+          let myChart3 = null
+          this.$nextTick(() => {
+            if(this.$refs.prometheusdata01) {
+              myChart3 = this.$echarts.init(this.$refs.prometheusdata01)
+              myChart3.setOption(
+                this.getEchartsOptions({
+                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  title: 'Prometheus 告警分类汇总Top5',
+                  data: this.prometheusdata01
+                })
+              )
+            }
           })
-          data.object.forEach(function(data,index){
-            dtdata02.push({name:data.name,value: Number(data.value)})
-          })
+          let myChart4 = null
+          this.$nextTick(() => {
+            if(this.$refs.prometheusdata02) {
+              myChart4 = this.$echarts.init(this.$refs.prometheusdata02)
 
-        }
-
-        if (data.name =="BPC"){
-          data.category.forEach(function(data,index){
-            bpcdata01.push({name:data.name,value: Number(data.value)})
+              myChart4.setOption(
+                this.getEchartsOptions({
+                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  title: 'Prometheus 告警对象汇总Top5',
+                  data: this.prometheusdata02
+                })
+              )
+            }
           })
-          data.object.forEach(function(data,index){
-            bpcdata02.push({name:data.name,value: Number(data.value)})
-          })
+          let myChart5 = null
+          this.$nextTick(() => {
+            if(this.$refs.dtdata01) {
+              myChart5 = this.$echarts.init(this.$refs.dtdata01)
 
-        }
-
-        if (data.name =="Splunk"){
-          data.category.forEach(function(data,index){
-            splunkdata01.push({name:data.name,value: Number(data.value)})
+              myChart5.setOption(
+                this.getEchartsOptions({
+                  color:  ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  title: 'DT 告警分类汇总Top5',
+                  data: this.dtdata01
+                })
+              )
+            }
           })
-          data.object.forEach(function(data,index){
-            splunkdata02.push({name:data.name,value: Number(data.value)})
-          })
+          let myChart6 = null
+          this.$nextTick(() => {
+            if(this.$refs.dtdata02) {
+              myChart6 = this.$echarts.init(this.$refs.dtdata02)
 
+              myChart6.setOption(
+                this.getEchartsOptions({
+                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  title: 'DT 告警对象汇总Top5',
+                  data: this.dtdata02
+                })
+              )
+            }
+          })
+          let myChart7 = null
+          this.$nextTick(() => {
+            if(this.$refs.splunkdata01) {
+              myChart7 = this.$echarts.init(this.$refs.splunkdata01)
+
+              myChart7.setOption(
+                this.getEchartsOptions({
+                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  title: 'Splunk 告警分类汇总Top5',
+                  data: this.splunkdata01
+                })
+              )
+            }
+          })
+          let myChart8 = null
+          this.$nextTick(() => {
+            if(this.$refs.splunkdata02) {
+              myChart8 = this.$echarts.init(this.$refs.splunkdata02)
+
+              myChart8.setOption(
+                this.getEchartsOptions({
+                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  title: 'Splunk 告警对象汇总Top5',
+                  data: this.splunkdata02
+                })
+              )
+            }
+          })
+          let myChart9 = null
+          this.$nextTick(() => {
+            if(this.$refs.bpcdata01) {
+              myChart9 = this.$echarts.init(this.$refs.bpcdata01)
+
+              myChart9.setOption(
+                this.getEchartsOptions({
+                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  title: 'BPC 告警分类汇总Top5',
+                  data: this.bpcdata01
+                })
+              )
+            }
+          })
+          let myChart10 = null
+          this.$nextTick(() => {
+            if(this.$refs.bpcdata02) {
+              myChart10 = this.$echarts.init(this.$refs.bpcdata02)
+
+              myChart10.setOption(
+                this.getEchartsOptions({
+                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  title: 'BPC 告警对象汇总Top5',
+                  data: this.bpcdata02
+                })
+              )
+            }
+          })
+          
         }
       })
-      this.altersum = altersum
-      this.prometheusdata01 = this.sortValue(prometheusdata01,5)
-      this.prometheusdata02 = this.sortValue(prometheusdata02,5)
-      this.dtdata01 = this.sortValue(dtdata01,5)
-      this.dtdata02 = this.sortValue(dtdata02,5)
-      this.splunkdata01 = this.sortValue(splunkdata01,5)
-      this.splunkdata02 = this.sortValue(splunkdata02,5)
-      this.bpcdata01 = this.sortValue(bpcdata01,5)
-      this.bpcdata02 = this.sortValue(bpcdata02,5)
-    }
 
-
-  })
-
-  axios.getleveSumData(time).then(res =>{
-    let levelsum = []
-    if (res.data.success) {
-      console.log (res.data)
-      res.data.data.level.forEach(function(data,index){
-        levelsum.push({name:data.name,value: Number(data.value)})
+      axios.getleveSumData(time).then(res => {
+        let levelsum = []
+        if (res.data.success) {
+          console.log(res.data)
+          res.data.data.level && res.data.data.level.forEach(function(data, index) {
+            levelsum.push({name: data.name, value: Number(data.value)})
+          })
+        }
+        this.levelsum = levelsum
       })
     }
-    this.levelsum = levelsum
-  })
- }
-
-
 
   }
 }
@@ -368,14 +519,14 @@ export default {
   box-sizing: border-box;
   .search-type {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -385,7 +536,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
@@ -452,11 +603,13 @@ export default {
 <style scoped>
 .schart-box{
     display: inline-block;
-    margin: 20px;
+    margin: 18px;
 }
     .schart{
-        width: 500px;
-        height: 400px;
+        width: 660px;
+        height: 640px;
+        background: url("~@/assets/static-bg.png") no-repeat;
+        background-size: contain;
     }
     .content-title{
         clear: both;

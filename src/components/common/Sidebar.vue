@@ -1,5 +1,9 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" :class="{'sidebar-collapse':collapse}">
+    <div class="logo">
+      <img src="../../assets/aia-logo2.png" />
+    </div>
+    <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :default-active="onRoutes($route.fullPath)"
       class="sidebar-el-menu"
@@ -16,7 +20,7 @@
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title" id="submenu">
                 <i class="sidebar-icon icon-caizhitihuan"></i>
-                <span slot="title" style="color: #fff" id="parentmenu">{{
+                <span slot="title" style="color: #BFF3FF" id="parentmenu">{{
                   item.name
                 }}</span>
               </template>
@@ -66,7 +70,7 @@
             <el-submenu :index="item.href" :key="item.href">
               <template slot="title">
                 <i class="sidebar-icon icon-dashujuzhichi"></i>
-                <span slot="title" style="color: #fff">{{ item.name }}</span>
+                <span slot="title" style="color: #BFF3FF">{{ item.name }}</span>
               </template>
               <template v-for="subItem in item.children">
                 <!--<el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">-->
@@ -102,7 +106,7 @@
             <el-submenu :index="item.index" :key="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color: #fff">{{ item.title }}</span>
+                <span slot="title" style="color: #BFF3FF">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
                 <el-submenu
@@ -140,7 +144,7 @@
             >
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span slot="title" style="color: #fff">{{ item.title }}</span>
+                <span slot="title" style="color: #BFF3FF">{{ item.title }}</span>
               </template>
               <template v-for="subItem in item.subs">
                 <el-submenu
@@ -178,6 +182,7 @@
         </template>
       </template>
     </el-menu>
+    </el-scrollbar>
     <!-- <p style="margin-left:10px ;" v-if="!collapse">版本：Shepherd2.13.01</p> -->
   </div>
 </template>
@@ -580,16 +585,26 @@ export default {
 @import '../../../static/fonticon/font_sideBar/iconfont.css';
 .sidebar {
   display: block;
-  min-width: 180px;
+  width: 287px;
   position: absolute;
   left: 0;
-  top: 72px;
+  top: 0;
   bottom: 0;
-  /* background: rgba(4, 28, 37, 0.4); */
+  background: #25344E;
+}
+.logo{
+  height: 160px;
+  line-height: 170px;
+  text-align: center;
+}
+.logo img{
+  width: 57px;
+  vertical-align:middle;
+  display: inline-block;
 }
 .el-menu {
   border-right: 1px solid transparent;
-  background-color: rgba(4, 28, 37, 0.4);
+  /* background-color: rgba(4, 28, 37, 0.4); */
 }
 .sidebar > ul {
   height: 100%;
@@ -604,50 +619,54 @@ export default {
   margin-right: 3px;
 }
 .sidebar ul li.childermenu.is-active {
-  color: #ffffff;
+  color: #BFF3FF;
 }
 .sidebar ul li.el-menu-item.childermenu {
-  color: #e8e8e8;
+  color: #BFF3FF;
 }
 .sidebar ul li.el-menu-item.childermenu.is-active .second-icon {
-  border-color: #fff;
+  border-color: #BFF3FF;
 }
 .sidebar ul li.el-menu-item.childermenu.is-active {
-  background: #00a8e8;
-  color: #fff;
+  /* background: #00a8e8; */
+  /* color: #fff; */
 }
 .sidebar ul li.el-menu-item.is-active {
-  background: #00a8e8;
-  color: #fff;
+  /* background: #00a8e8; */
+  color: #BFF3FF;
 }
 .childermenu:hover {
-  color: #fff !important;
+  color: #BFF3FF !important;
 }
 .childermenu:hover .second-icon {
-  border-color: #fff;
+  border-color: #BFF3FF;
 }
 #parentmenu:hover {
-  color: #fff !important;
-  background: #00a8e8 !important;
+  color: #BFF3FF !important;
+  /* background: #00a8e8 !important; */
 }
 .el-submenu .el-menu-item {
-  padding-left: 58px !important;
+  padding-left: 105px !important;
 }
 .el-submenu__title {
   padding: 0 !important;
 }
 .el-submenu__title:hover {
-  background-color: #00a8e8 !important;
+  /* background-color: #00a8e8 !important; */
 }
 .el-submenu__title:focus,
 .el-submenu__title:hover {
-  background-color: #00a8e8 !important;
+  /* background-color: #00a8e8 !important; */
 }
 .nav-sub-icon {
-  color: #fff;
+  color: #BFF3FF;
   font-size: 16px;
 }
 .el-menu--popup {
   background-color: #041c25e6 !important;
+}
+.sidebar-icon{
+  font-size: 38px;
+  color: #BFF3FF;
 }
 </style>

@@ -1332,7 +1332,7 @@ export default {
 }
 .overHideMargin {
   .search-el-button.el-button {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     &:hover {
       border: 1px solid #01aef1;

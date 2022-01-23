@@ -30,7 +30,7 @@
               :value="item.value"
             >
               <icon-svg
-                style="font-size: 18px; vertical-align: sub"
+                style="font-size: 18px;"
                 icon-class="bj"
                 :class="item.value | iconLevelFilter"
               />
@@ -52,13 +52,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item class="search-rule">
-          <el-button icon="el-icon-search" @click="search">搜索</el-button>
-        </el-form-item>
+
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
+        <el-form-item class="search-rule">
+          <el-button icon="el-icon-search" class="search-icon search-btn" @click="search">搜索</el-button>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addRule"
+          <el-button type="primary" class="common-btn add-btn" icon="el-icon-plus" @click="addRule"
             >新增</el-button
           >
         </el-form-item>
@@ -71,7 +72,7 @@
       :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="ruleDeatil"
       style="width: 100%"
-      height="82%"
+      height="74%"
     >
       <el-table-column prop="name" label="规则名称" />
       <el-table-column prop="level" label="级别">
@@ -79,7 +80,7 @@
           <div class="img">
             <icon-svg
               icon-class="bj"
-              style="font-size: 18px; vertical-align: sub; margin-left: 10px"
+              style="font-size: 18px; margin-left: 10px"
               :class="scope.row.level | iconLevelFilter"
             />
             <span>{{ scope.row.level | LevelFilter }}</span>
@@ -94,25 +95,32 @@
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="rule-box" @click.stop="openRule(scope.row)">
-            <el-switch
+            <!-- <el-switch
               size="large"
               v-model="scope.row.enabledState"
               :active-value="1"
               :inactive-value="0"
-            ></el-switch>
+            ></el-switch> -->
+            <icon-svg
+              icon-class="open"
+              style="font-size: 24px; margin-left: 10px;vertical-align: middle;"
+              :style="{color: scope.row.enabledState == 1?'#00E5FF':'#434C5D'}"
+            />
           </div>
           <div class="task-btn-box">
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-edit-outline"
               @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+              ></el-link
             >
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-close"
               @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+              ></el-link
             >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
@@ -342,7 +350,7 @@ export default {
     openRule(scope) {
       let params = {
         ID: scope.iD,
-        enabledState: scope.enabledState ? '1' : '0'
+        enabledState: scope.enabledState ? '0' : '1'
       };
       axios.alarmRuleEnabled(params).then(res => {
         if (res.data.code === 200) {
@@ -387,28 +395,28 @@ export default {
   padding: 10px 10px;
   box-sizing: border-box;
   .search-rule {
-    .el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:link {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #fff;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-    }
+    // .el-button {
+    //   border: 1px solid #436382;
+    //   color: #fff;
+    //   &:link {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    //   &:visited {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //     background-color: transparent !important;
+    //   }
+    //   &:hover {
+    //     background-color: #041c25;
+    //     border: 1px solid #01aef1;
+    //     color: #01aef1;
+    //   }
+    //   &:active {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    // }
   }
   .img {
     img {
@@ -424,7 +432,7 @@ export default {
     text-align: center;
     display: inline-block;
     .el-link {
-      color: #fff;
+      // color: #fff;
     }
     // span {
     //   display: inline-block;
@@ -496,6 +504,6 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>

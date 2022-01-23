@@ -30,18 +30,18 @@
             />
           </el-select>
         </el-form-item>
+      </el-form>
+      <el-form :inline="true" class="search-inline-btn">
         <el-form-item class="search-source">
           <el-button
             icon="el-icon-search"
-            class="search-icon"
+            class="search-icon search-btn"
             @click.stop="search"
             >搜索</el-button
           >
         </el-form-item>
-      </el-form>
-      <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addSource"
+          <el-button type="primary" class="common-btn add-btn" icon="el-icon-plus" @click="addSource"
             >新增</el-button
           >
         </el-form-item>
@@ -52,24 +52,16 @@
       :data="tableData"
       stripe
       style="width: 100%"
-      height="82%"
+      height="74%"
       @row-click="sourceDetail"
     >
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="platform" label="来源" />
       <el-table-column prop="address" label="地址" show-overflow-tooltip />
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="status" label="状态" >
         <template v-slot="scope">
           <div>
-            <i
-              :class="
-                scope.row.status === '1' ? 'el-icon-success' : 'el-icon-error'
-              "
-              :style="{
-                color: scope.row.status === '1' ? 'green' : 'red',
-                fontSize: '20px',
-              }"
-            ></i>
+            <icon-svg :icon-class="scope.row.status === '1' ?'success': 'error'" :class="scope.row.status === '1' ?'icon-success':'icon-error'"></icon-svg>
           </div>
         </template>
       </el-table-column>
@@ -79,14 +71,16 @@
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-edit-outline"
               @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+              ></el-link
             >
             <el-link
               type="primary"
               :underline="false"
               @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+              class="el-icon-close"
+              ></el-link
             >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
@@ -326,32 +320,32 @@ export default {
   box-sizing: border-box;
   .search-source {
     .el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:link {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #fff;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #fff;
-        color: #fff;
-      }
+      // border: 1px solid #436382;
+      // color: #fff;
+      // &:link {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      // }
+      // &:visited {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      //   background-color: transparent !important;
+      // }
+      // &:hover {
+      //   background-color: #041c25;
+      //   border: 1px solid #01aef1;
+      //   color: #01aef1;
+      // }
+      // &:active {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      // }
     }
   }
   .task-btn-box {
     text-align: center;
     .el-link {
-      color: #fff;
+      // color: #fff;
     }
     // span {
     //   display: inline-block;
@@ -399,7 +393,7 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>
 <style>

@@ -15,7 +15,8 @@
       <el-table-column prop="status" label="服务状态">
         <template v-slot="scope">
           <div>
-            <i
+           <icon-svg :icon-class="scope.row.status === 'UP' ?'success': 'error'" :class="scope.row.status === 'UP' ?'icon-success':'icon-error'"></icon-svg>
+            <!-- <i
               :class="
                 scope.row.status === 'UP' ? 'el-icon-success' : 'el-icon-error'
               "
@@ -23,7 +24,7 @@
                 color: scope.row.status === 'UP' ? 'green' : 'red',
                 fontSize: '20px',
               }"
-            ></i>
+            ></i> -->
           </div>
         </template>
       </el-table-column>
@@ -286,14 +287,14 @@ export default {
   box-sizing: border-box;
   .search-source {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -303,7 +304,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }

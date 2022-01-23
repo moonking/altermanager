@@ -265,14 +265,14 @@ export default {
   box-sizing: border-box;
   .search-form {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -282,7 +282,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }

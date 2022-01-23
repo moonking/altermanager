@@ -5,7 +5,7 @@
       @click="openController = !openController"
     >
       <div class="item-block-title-mark"></div>
-      <span class="item-block-title-font" style="color: #fff">
+      <span class="item-block-title-font">
         {{
           status === 'read'
             ? '查看定时任务'
@@ -50,7 +50,7 @@
           </el-select>
         </el-form-item>
       </el-form> -->
-      <el-form label-width="140px">
+      <el-form label-width="180px">
         <el-form-item label="任务名称：">
           <el-input
             :disabled="status === 'read' || taskType === '2'"
@@ -91,9 +91,9 @@
             v-model="radio"
             :disabled="status === 'read' || taskType === '2'"
           >
-            <el-radio :label="1">周期性任务</el-radio>
-            <el-radio :label="2">一次性任务</el-radio>
-            <el-radio :label="3">间隔性任务</el-radio>
+            <el-radio class="lh68" :label="1">周期性任务</el-radio>
+            <el-radio class="lh68" :label="2">一次性任务</el-radio>
+            <el-radio class="lh68" :label="3">间隔性任务</el-radio>
           </el-radio-group>
         </el-form-item>
         <form label-width="140px" v-if="radio === 1">
@@ -107,7 +107,7 @@
               :picker-options="startPickOptions"
               placeholder="开始日期（yyyy-MM-dd）"
             ></el-date-picker>
-            <span>至</span>
+            <span class="font24 font-color">至</span>
             <el-date-picker
               v-model="endDate"
               type="date"
@@ -175,14 +175,14 @@
               value-format="HH:mm"
               v-model="rangTime"
               placeholder="HH:mm"
+              :style="{ width: '460px' }"
             ></el-time-picker>
           </el-form-item>
           <el-form-item>
-            <div class="icon-tip">
-              <icon-svg icon-class="jinggao" class="gray-icon-color" />
-              <div class="cont-tip">
-                <span>若不填写执行时间，系统将会默认在00：00执行</span>
-              </div>
+            <div class="font24 font-color">
+              <icon-svg icon-class="tips" />
+              <span>若不填写执行时间，系统将会默认在00：00执行</span>
+              <!-- <icon-svg icon-class="jinggao" class="gray-icon-color" /> -->
             </div>
           </el-form-item>
           <el-form-item class="result-str">{{ str }}</el-form-item>
@@ -198,6 +198,7 @@
               clearable
               @clear="handleClearDate(3)"
               placeholder="选择日期"
+              :style="{ width: '230px' }"
             ></el-date-picker>
             <el-time-picker
               class="date-item"
@@ -210,6 +211,7 @@
               }"
               value-format="HH:mm"
               placeholder="选择时间"
+              :style="{ width: '230px' }"
             ></el-time-picker>
           </el-form-item>
           <el-form-item class="result-str">{{ onceStr }}</el-form-item>
@@ -222,7 +224,7 @@
           ref="intervalForm"
           style="margin-left: 20px"
         >
-          <el-form-item class="result-str" style="margin-left: 120px">
+          <el-form-item style="margin-left: 160px">
             <!-- 从
               <el-input v-model="intervalForm.startTime" type="number" style="width: 100px" @input="maxLimit"></el-input>
               <el-select style="width: 100px" v-model="intervalForm.timeType">
@@ -231,11 +233,11 @@
                 <el-option label="小时" value="3"></el-option>
               </el-select>
               开始， -->
-            每
+            <span class="font24 font-color" > 每</span>
             <el-input
               v-model="intervalForm.interval"
               type="number"
-              style="width: 100px"
+              style="width: 300px"
               min="0"
               max="59"
               :disabled="status === 'read'"
@@ -245,7 +247,8 @@
                 <el-option label="分钟" value="2"></el-option>
                 <el-option label="小时" value="3"></el-option>
               </el-select> -->
-            分钟执行一次
+               <span class="font24 font-color" >分钟执行一次</span>
+            
           </el-form-item>
           <el-form-item
             v-if="showKeepAlert"
@@ -304,9 +307,8 @@
     </div>
     <div class="footer-area">
       <el-button
-        type="primary"
+        class="save-btn common-btn"
         v-if="status !== 'read'"
-        style="margin-right: 100px"
         @click.stop="confirmCrontab"
         >保存</el-button
       >
@@ -1529,6 +1531,9 @@ export default {
 .display-box {
   display: flex;
   flex-direction: row;
+  .el-select{
+    width: 460px;
+  }
 }
 .select-item {
   width: 170px;
@@ -1574,7 +1579,7 @@ export default {
 }
 .cronPage {
   padding: 0 0 30px;
-  background-color: rgba(4, 28, 37, 0.3);
+  // background-color: rgba(4, 28, 37, 0.3);
   margin: 10px;
 }
 .headtitle {
@@ -1594,23 +1599,24 @@ export default {
 }
 .footer-area {
   text-align: center;
-  .cancel-button {
-    color: #fff;
-    border: 1px solid #fff;
-    &:hover {
-      border: 1px solid #fff;
-      color: #fff;
-      background: transparent;
-    }
-    &:focus {
-      color: #fff;
-      background: transparent;
-    }
-    &:active {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
-    }
-  }
+  font-size:0;
+  // .cancel-button {
+  //   color: #fff;
+  //   border: 1px solid #436382;
+  //   &:hover {
+  //     border: 1px solid #436382;
+  //     color: #fff;
+  //     background: transparent;
+  //   }
+  //   &:focus {
+  //     color: #fff;
+  //     background: transparent;
+  //   }
+  //   &:active {
+  //     border: 1px solid #436382;
+  //     background: transparent;
+  //     color: #fff;
+  //   }
+  // }
 }
 </style>

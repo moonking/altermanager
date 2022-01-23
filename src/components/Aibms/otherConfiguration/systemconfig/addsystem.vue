@@ -1,10 +1,10 @@
 <template>
   <div class="aia-content">
    <div class="wrapper-pannel">
-
+  <h3>编辑业务系统</h3>
     <el-form  ref="configData" >
 
-      <el-form-item label="编辑业务系统"></el-form-item>
+      <!-- <el-form-item label="编辑业务系统"></el-form-item> -->
 
         <el-input type="textarea"
         :rows="10"
@@ -15,8 +15,8 @@
 
     </el-form>
     </div>
-
-    <el-button @click="save" style="margin-right: 100px" type="primary"
+  <div style="font-size:0;">
+    <el-button @click="save" class="common-btn save-btn"
       >提交</el-button
     >
     <el-button @click="reset"  class="cancel-button"
@@ -25,6 +25,7 @@
     <el-button @click="cancel"  class="cancel-button"
       >返回</el-button
     >
+    </div>
   </div>
 </template>
 
@@ -96,9 +97,36 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+   h3 {
+      position: relative;
+      font-size: 28px;
+      font-weight: 500;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 10px;
+      color: #BFF3FF;
+      span {
+        margin-left: 5px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #BFF3FF;
+        font-weight: normal;
+      }
+      &:before {
+         content: '';
+        position: absolute;
+        z-index: 1;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
+      }
+    }
   .wrapper-pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .operation-button {
@@ -109,9 +137,9 @@ export default {
       }
       .cancel-button {
         color: #fff;
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         &:hover {
-          border: 1px solid #fff;
+          border: 1px solid #436382;
           color: #fff;
           background: transparent;
         }
@@ -120,7 +148,7 @@ export default {
           background: transparent;
         }
         &:active {
-          border: 1px solid #fff;
+          border: 1px solid #436382;
           background: transparent;
           color: #fff;
         }

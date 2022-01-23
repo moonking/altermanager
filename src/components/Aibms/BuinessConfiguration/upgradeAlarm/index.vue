@@ -19,15 +19,16 @@
             style="width: 200px"
           />
         </el-form-item>
-        <el-form-item class="search-source">
-          <el-button icon="el-icon-search" @click.stop="search">搜索</el-button>
-        </el-form-item>
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
+        <el-form-item class="search-source">
+          <el-button icon="el-icon-search" class="search-icon search-btn" @click.stop="search">搜索</el-button>
+        </el-form-item>
         <el-form-item>
           <el-button
             type="primary"
             icon="el-icon-plus"
+            class="common-btn add-btn"
             @click="addXClassification"
             >新增</el-button
           >
@@ -36,7 +37,7 @@
     </div>
     <!-- 表格数据 -->
     <el-table
-      height="82%"
+      height="74%"
       @row-click="alarmDetail"
       :data="tableData"
       stripe
@@ -56,14 +57,16 @@
             <el-link
               type="primary"
               :underline="false"
+              class="el-icon-edit-outline"
               @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+              ></el-link
             >
             <el-link
               type="primary"
               :underline="false"
               @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+              class="el-icon-close"
+              ></el-link
             >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
@@ -264,28 +267,28 @@ export default {
   padding: 10px;
   box-sizing: border-box;
   .search-source {
-    .el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:link {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #fff;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-    }
+      // .el-button {
+      //   border: 1px solid #436382;
+      //   color: #fff;
+      //   &:link {
+      //     border: 1px solid #436382;
+      //     color: #fff;
+      //   }
+      //   &:visited {
+      //     border: 1px solid #436382;
+      //     color: #fff;
+      //     background-color: transparent !important;
+      //   }
+      //   &:hover {
+      //     background-color: #041c25;
+      //     border: 1px solid #01aef1;
+      //     color: #01aef1;
+      //   }
+      //   &:active {
+      //     border: 1px solid #436382;
+      //     color: #fff;
+      //   }
+      // }
   }
   .el-table thead tr th {
     background: rgb(245, 245, 245) !important;
@@ -293,7 +296,7 @@ export default {
   .task-btn-box {
     text-align: center;
     .el-link {
-      color: #fff;
+      // color: #fff;
     }
     // span {
     //   display: inline-block;
@@ -340,6 +343,6 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>

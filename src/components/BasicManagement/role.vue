@@ -26,7 +26,7 @@
      <el-form-item class="item-right">
        <el-button
          icon="el-icon-search"
-         class="common-btn-style search-el-button"
+          class="search-icon search-btn"
          @click="getRoleLsit(1)"
          >查找</el-button
        >
@@ -34,14 +34,14 @@
          <el-button
            type="primary"
            icon="el-icon-plus"
-           class="common-btn-style margin-left-btn"
+           class="common-btn add-btn"
            >新增</el-button
          >
        </router-link>
      </el-form-item>
     </el-form>
     <!-- 表格 -->
-    <el-table :data="roleListData" stripe height="84%" style="padding: 0 20px">
+    <el-table :data="roleListData" stripe height="74%" style="padding: 0 20px">
       <el-table-column prop="name" label="角色名称" />
 <!--      <el-table-column prop="sysName" label="所属系统" />-->
 <!--      <el-table-column prop="description" label="角色说明" show-overflow-tooltip />-->
@@ -57,7 +57,7 @@
                 content="查看用户"
                 placement="top-start"
               >
-                <icon-svg icon-class="chakan" class="whiteness-icon-color" />
+                <icon-svg icon-class="chakan" class="svg-font-color" />
               </el-tooltip>
             </span>
             <span class="special" @click="shouwAddUser(scope.row.roleId)">
@@ -67,7 +67,7 @@
                 content="添加用户"
                 placement="top-start"
               >
-                <icon-svg icon-class="jia" class="whiteness-icon-color" />
+                <icon-svg icon-class="jia" class="svg-font-color" />
               </el-tooltip>
             </span>
             <span class="special" @click="deleteRoleUser(scope.row.roleId)">
@@ -77,7 +77,7 @@
                 content="删除用户"
                 placement="top-start"
               >
-                <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+                <icon-svg icon-class="shanchu" class="svg-font-color" />
               </el-tooltip>
             </span>
           </div>
@@ -96,7 +96,7 @@
                content="查看"
                placement="top-start"
              >
-               <icon-svg icon-class="chakan" class="whiteness-icon-color" />
+               <icon-svg icon-class="chakan" class="svg-font-color" />
              </el-tooltip>
            </span>
            <span
@@ -109,7 +109,7 @@
                content="编辑"
                placement="top-start"
              >
-               <icon-svg icon-class="bianji" class="whiteness-icon-color" />
+               <icon-svg icon-class="bianji" class="svg-font-color" />
              </el-tooltip>
            </span>
            <span class="special" @click="deletUser(scope.row.roleId)">
@@ -119,7 +119,7 @@
                content="删除"
                placement="top-start"
              >
-               <icon-svg icon-class="shanchu" class="whiteness-icon-color" />
+               <icon-svg icon-class="shanchu" class="svg-font-color" />
              </el-tooltip>
            </span>
          </div>
@@ -1280,14 +1280,14 @@ export default {
   .item-right {
     margin: 0 !important;
     .search-el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -1297,7 +1297,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
@@ -1334,12 +1334,12 @@ export default {
     span {
       display: inline-block;
       background: #fff;
-      border: 1px solid #0066ff;
+      // border: 1px solid #0066ff;
       line-height: 24px;
       padding: 0 4px;
       border-radius: 5px;
-      color: #0066ff;
-      font-size: 14px;
+      color: #BFF3FF;
+      font-size: 20px;
       margin-right: 12px;
       cursor: pointer;
 

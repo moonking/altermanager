@@ -227,14 +227,14 @@ export default {
   border: none;
   .turn-back {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -244,7 +244,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
@@ -275,7 +275,7 @@ export default {
           margin: 5px 10px;
           padding: 0 16px;
           border-radius: 20px;
-          border: 1px solid #fff;
+          border: 1px solid #436382;
           color: #fff;
           line-height: 30px;
           cursor: pointer;

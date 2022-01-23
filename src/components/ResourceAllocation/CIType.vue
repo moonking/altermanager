@@ -2588,7 +2588,7 @@ export default {
         margin-right: 20px;
       }
       .search-el-button {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         &:hover {
           border: 1px solid #01aef1;
@@ -2747,7 +2747,7 @@ export default {
               height: 40px;
               cursor: pointer;
               /* border: 1px solid rgba(22, 155, 213, 1); */
-              border: 1px solid #fff;
+              border: 1px solid #436382;
             }
             .font-styles {
               text-align: center;

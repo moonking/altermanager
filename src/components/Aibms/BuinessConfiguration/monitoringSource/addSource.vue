@@ -6,7 +6,7 @@
         <el-form
           :model="form"
           :label-position="labelPosition"
-          label-width="100px"
+          label-width="120px"
           :rules="rules"
           ref="form"
         >
@@ -88,7 +88,7 @@
         <el-form
           :model="InterfaceForm"
           ref="InterfaceForm"
-          label-width="100px"
+          label-width="120px"
           id="api-items"
           class="interface-form"
         >
@@ -109,7 +109,7 @@
                   :disabled="$route.query.status === 'read'"
                   v-model="domain.method"
                   placeholder="请求方式"
-                  style="width: 130px; margin-right: 16px"
+                  style="width: 160px; margin-right: 16px"
                 >
                   <el-option
                     :label="method.label"
@@ -124,7 +124,7 @@
                   :disabled="$route.query.status === 'read'"
                   v-model="domain.type"
                   placeholder="接口类型"
-                  style="width: 130px"
+                  style="width: 240px"
                 >
                   <el-option
                     :label="type.label"
@@ -154,15 +154,15 @@
             />
             <!-- 操作icon -->
             <span v-if="!loadingStatus">
-              <i class="el-icon-circle-plus-outline" @click="addDomain" />
+              <i class="el-icon-circle-plus-outline add-icon-btn" @click="addDomain" />
               <i
-                class="el-icon-remove-outline"
+                class="el-icon-remove-outline add-icon-btn"
                 @click.prevent="removeDomain(domain)"
               />
             </span>
             <i
               v-if="rightOrError"
-              class="el-icon-warning-outline white-color"
+              class="el-icon-warning-outline add-icon-btn"
               @click="getInterFaceDetail(domain.url)"
             />
           </el-form-item>
@@ -171,9 +171,9 @@
       <div class="footer-area">
         <el-button
           type="primary"
+          class="save-btn common-btn"
           v-if="$route.query.status !== 'read'"
           @click.stop="handleSave"
-          style="margin-right: 100px"
           >保存</el-button
         >
         <el-button @click="handleCancel" class="cancel-button">取消</el-button>
@@ -183,16 +183,17 @@
         center
         title="删除提示"
         :visible.sync="confirmDeleteDialogVisible"
-        width="25%"
+        width="500px"
+        class="common-dialog"
       >
         <div style="text-align: center">
           <i class="el-icon-warning" /> 确认删除？
         </div>
-        <div slot="footer" class="dialog-footer">
-          <el-button size="medium" @click="confirmDeleteDialogVisible = false"
+        <div slot="footer" class="dialog-footer common-dailog-footer">
+          <el-button size="medium" class="cancel-button" @click="confirmDeleteDialogVisible = false"
             >取消</el-button
           >
-          <el-button size="medium" type="primary" @click="confirmDelete"
+          <el-button size="medium" class="save-btn common-btn" type="primary" @click="confirmDelete"
             >确定</el-button
           >
         </div>
@@ -638,7 +639,7 @@ export default {
   padding: 10px;
   .content {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px;
     overflow: visible;
     .form-area {
@@ -646,7 +647,7 @@ export default {
       .interface-form {
         position: relative;
         .interface-input {
-          width: 632px;
+          width: 680px;
           margin-right: 10px;
           & /deep/ .el-input__inner {
             padding-right: 45px !important;
@@ -659,10 +660,13 @@ export default {
           transform: translateY(-50%);
         }
         i {
-          color: #fff;
-          font-size: 24px;
-          vertical-align: middle;
-          cursor: pointer;
+          // margin-top: 10px;
+          // color: #00E5FF;
+          // font-size: 46px;
+          // vertical-align: middle;
+          // cursor: pointer;
+          // font-weight: 100;
+
         }
         .el-icon-loading {
           top: 25%;
@@ -678,19 +682,22 @@ export default {
     }
     h3 {
       position: relative;
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 500;
-      height: 24px;
-      line-height: 24px;
+      height: 40px;
+      line-height: 40px;
       margin-left: 10px;
-      color: #fff;
+      color: #BFF3FF;
       span {
         margin-left: 5px;
-        font-size: 14px;
+        font-size: 24px;
         cursor: pointer;
+        color: #BFF3FF;
+        font-weight: normal;
         .check-interface {
           width: 1.3em;
           height: 1.3em;
+          font-size: 24px;
           vertical-align: middle;
           margin-right: 2px;
         }
@@ -699,34 +706,46 @@ export default {
         content: '';
         position: absolute;
         z-index: 1;
-        left: -20px;
-        top: -3px;
-        width: 8px;
-        border-radius: 4px;
-        height: 30px;
-        background: #00a8e8;
+        left: -30px;
+        top: 10px;
+        width: 18px;
+        border-radius: 9px;
+        height: 18px;
+        background: #00E5FF;
       }
     }
     .footer-area {
+      margin-top: 90px;
       text-align: center;
-      .cancel-button {
-        border: 1px solid #fff;
-        color: #fff;
-        &:hover {
-          border: 1px solid #fff;
-          color: #fff;
-          background: transparent;
-        }
-        &:focus {
-          color: #fff;
-          background: transparent;
-        }
-        &:active {
-          border: 1px solid #fff;
-          background: transparent;
-          color: #fff;
-        }
-      }
+      font-size: 0;
+      // .save-btn{
+      //   width: 148px;
+      //   height: 68px;
+      // }
+      // .cancel-button {
+      //   margin-left: 0;
+      //   width: 148px;
+      //   height: 68px;
+      //   color: #0092AB;
+      //   font-size: 24px;
+      //   background: rgba(2, 32, 55, 0.5);
+      //   border-radius: 5px;
+      //   border: 2px solid #436382;
+      //   &:hover {
+      //     border: 1px solid #436382;
+      //     color: #fff;
+      //     background: transparent;
+      //   }
+      //   &:focus {
+      //     color: #fff;
+      //     background: transparent;
+      //   }
+      //   &:active {
+      //     border: 1px solid #436382;
+      //     background: transparent;
+      //     color: #fff;
+      //   }
+      // }
     }
   }
 }

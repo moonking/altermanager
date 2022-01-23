@@ -37,7 +37,7 @@
       </el-form>
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item>
-          <el-button type="primary" icon="el-icon-plus" @click="addRule"
+          <el-button class="save-btn common-btn" icon="el-icon-plus" @click="addRule"
             >新增</el-button
           >
         </el-form-item>
@@ -50,7 +50,7 @@
       :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="maintainDeatil"
       style="width: 100%"
-      height="82%"
+      height="74%"
     >
       <el-table-column label="告警来源">
         <template v-slot="scope">
@@ -71,14 +71,19 @@
       <el-table-column align="center" prop="operation" label="操作">
         <template v-slot="scope">
           <div class="rule-box" @click.stop="openRule(scope.row)">
-            <el-switch size="large" v-model="scope.row.status" />
+            <!-- <el-switch size="large" v-model="scope.row.status" /> -->
+            <icon-svg
+              icon-class="open"
+              style="font-size: 24px; margin-left: 10px;vertical-align: middle;"
+              :style="{color: scope.row.status == 1?'#00E5FF':'#434C5D'}"
+            />
           </div>
           <div class="task-btn-box">
-            <el-link :underline="false" @click.stop="handleEdit(scope.row)"
-              >编辑</el-link
+            <el-link :underline="false" class="el-icon-edit-outline" @click.stop="handleEdit(scope.row)"
+              ></el-link
             >
-            <el-link :underline="false" @click.stop="handleDelete(scope.row)"
-              >删除</el-link
+            <el-link :underline="false" class="el-icon-close" @click.stop="handleDelete(scope.row)"
+              ></el-link
             >
             <!-- <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
               <span class="special" @click.stop="handleEdit(scope.row)">
@@ -238,7 +243,7 @@ export default {
     openRule(scope) {
       const params = {
         id: scope.id,
-        status: scope.status
+        status: scope.status == 1?0:1
       }
       axios.editMaintenance(params).then(res => {
         if (res.data.success) {
@@ -317,14 +322,14 @@ export default {
   box-sizing: border-box;
   .search-rule {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -334,7 +339,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }
@@ -353,7 +358,7 @@ export default {
     text-align: center;
     display: inline-block;
     .el-link {
-      color: #fff;
+      // color: #fff;
     }
     span {
       display: inline-block;
@@ -425,6 +430,6 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>

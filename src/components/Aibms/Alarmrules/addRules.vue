@@ -12,7 +12,7 @@
         class="content-form"
         ref="typesForm"
         :model="typesForm"
-        label-width="100px"
+        label-width="160px"
         :rules="typesFormRules"
       >
         <el-form-item label="名称：" prop="rulesName">
@@ -43,10 +43,69 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择分类：" prop="type">
-          <span class="tips cursor" v-if="classList.length === 0"
-            >请先选择标签</span
-          >
-          <el-row v-else :gutter="20">
+          <span class="font24 font-color cursor lh68" v-if="classList.length === 0"
+            ><icon-svg
+                style="font-size: 18px; vertical-align: middle"
+                icon-class="tips"
+              />
+            请先选择标签</span>
+
+            <el-select class="custom-select-box" v-else style="width: 632px" v-model="typesForm.type" multiple>
+              <el-option v-show="false" 
+              v-for="item in classList" 
+              :label="item.name"
+              :value="item.code"
+              :key="item.code"></el-option>
+              <div class="custom-select-body">
+                <el-row>
+                  <el-col>
+                    <el-checkbox
+                      :disabled="status === 'read'"
+                      :indeterminate="isIndeterminate"
+                      v-model="checkAll"
+                      @change="handleCheckAllChange"
+                      >全选</el-checkbox
+                    >
+                  </el-col>
+                  
+                  <el-col :span="20">
+                    <el-checkbox-group
+                      class="el-checkcolor"
+                      v-model="typesForm.type"
+                      @change="handlecheckedClassChange"
+                    >
+                      <el-checkbox
+
+                        v-for="item in classList"
+                        :disabled="
+                          status === 'read' ||
+                          (status !== 'read' &&
+                            item.belongRule &&
+                            !isOwner(item.code))
+                        "
+                        :label="item.code"
+                        :key="item.code"
+                        >{{ item.name }}</el-checkbox
+                      >
+                    </el-checkbox-group>
+                  </el-col>
+                </el-row>
+                <!-- 分页 -->
+                <el-pagination
+                  v-if="totalSize"
+                  :current-page.sync="page.current"
+                  :page-size.sync="page.size"
+                  :page-sizes="[10, 20, 30, 50]"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="totalSize"
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                />
+              </div>
+            </el-select>
+
+        
+          <!-- <el-row v-else :gutter="20">
             <el-col :span="2">
               <el-checkbox
                 :disabled="status === 'read'"
@@ -77,9 +136,9 @@
                 >
               </el-checkbox-group>
             </el-col>
-          </el-row>
+          </el-row> -->
           <!-- 分页 -->
-          <el-pagination
+          <!-- <el-pagination
             v-if="totalSize"
             :current-page.sync="page.current"
             :page-size.sync="page.size"
@@ -88,7 +147,7 @@
             :total="totalSize"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-          />
+          /> -->
         </el-form-item>
       </el-form>
       <el-form
@@ -96,7 +155,7 @@
         class="content-form"
         ref="rulesForm"
         :model="rulesForm"
-        label-width="100px"
+        label-width="160px"
         :rules="rulesFormRules"
       >
         <el-form-item label="级别：" prop="level">
@@ -172,14 +231,14 @@
       <div class="op-btns">
         <el-button
           type="primary"
-          style="margin-right: 100px"
+          class="save-btn common-btn"
           v-if="active === 1"
           @click="isActive(0)"
           >上一步</el-button
         >
         <el-button
           type="primary"
-          style="margin-right: 100px"
+          class="save-btn common-btn"
           v-if="active !== 1"
           @click="isActive(1)"
           >下一步</el-button
@@ -188,7 +247,7 @@
           type="primary"
           v-if="active === 1 && status !== 'read'"
           @click="saveAlarm"
-          style="margin-right: 100px"
+          class="save-btn common-btn"
           >保存</el-button
         >
         <el-button @click="cancel" class="cancel-button">取消</el-button>
@@ -200,13 +259,14 @@
         :visible.sync="tipsDialog"
         width="90%"
         :before-close="handleDialogClose"
+        :show-close="false"
       >
         <el-form
           class="tips-form"
-          label-width="124px"
+          label-width="210px"
           :model="tipsForm"
           ref="tipsForm"
-          label-position="left"
+          label-position="right"
         >
           <el-form-item label="方式：">
             <el-radio-group v-model="tipsForm.mode" @change="changeNotice">
@@ -308,7 +368,7 @@
               <!-- 选择通知人员分页 -->
               <el-pagination
                 v-if="item.tipsTotalSize"
-                background
+                
                 :current-page.sync="item.tipsPage.current"
                 :page-size.sync="item.tipsPage.size"
                 :page-sizes="[10, 20, 30]"
@@ -331,7 +391,7 @@
             :inline="true"
             v-for="(item, index) in customFromList"
             :model="item"
-            label-width="124px"
+            label-width="150px"
             :key="item.id"
           >
             <el-form-item prop="name" label="人员名称：">
@@ -344,7 +404,7 @@
                 style="width: 180px"
               />
             </el-form-item>
-            <el-form-item label="通知方式：" label-width="82px">
+            <el-form-item label="通知方式：" label-width="138px">
               <el-select
                 :disabled="status === 'read'"
                 clearable
@@ -364,7 +424,7 @@
               prop="phone"
               label="手机号码："
               v-if="item.checkList.includes('message')"
-              label-width="94px"
+              label-width="160px"
             >
               <el-input
                 maxlength="11"
@@ -379,7 +439,7 @@
               prop="email"
               label="邮件地址："
               v-if="item.checkList.includes('email')"
-              label-width="94px"
+              label-width="160px"
             >
               <el-input
                 :disabled="status === 'read'"
@@ -390,13 +450,13 @@
               />
             </el-form-item>
             <span class="more-span" v-if="status !== 'read'">
-              <i class="el-icon-circle-plus-outline" @click="addCustom" />
-              <i class="el-icon-remove-outline" @click="removeCustom(index)" />
+              <i class="el-icon-circle-plus-outline add-icon-btn" @click="addCustom" />
+              <i class="el-icon-remove-outline add-icon-btn" @click="removeCustom(index)" />
             </span>
           </el-form>
         </div>
         <div class="op-btns">
-          <el-button type="primary" @click="saveTips">确定</el-button>
+          <el-button type="primary"  class="save-btn common-btn" @click="saveTips">确定</el-button>
           <el-button @click="handleDialogClose" class="cancel-button"
             >取消</el-button
           >
@@ -1466,7 +1526,7 @@ export default {
       this.chooseLabel();
     },
     // 表格每页数量
-    handleSizeChange() {
+    handleSizeChange(e) {
       this.page.current = 1;
       // this.hisClassAllList();
       this.chooseLabel();
@@ -1502,11 +1562,11 @@ export default {
 .aia-content {
   position: relative;
   width: 100%;
-  padding: 10px 10px;
+  // padding: 10px 10px;
   box-sizing: border-box;
   .wrapper_pannel {
     width: 100%;
-    background-color: rgba(4, 28, 37, 0.3);
+    // background-color: rgba(4, 28, 37, 0.3);
     padding: 10px 0 60px;
     overflow: visible;
     .custom-tips-form {
@@ -1517,8 +1577,8 @@ export default {
         .more-span {
           line-height: 40px;
           i {
-            color: #00a8e8;
-            font-size: 24px;
+            // color: #00a8e8;
+            // font-size: 24px;
             vertical-align: middle;
             cursor: pointer;
           }
@@ -1536,39 +1596,42 @@ export default {
         color: #999;
       }
       .notice {
-        color: #409eff;
-        width: 120px;
+        line-height:68px;
+        font-size: 20px;
+        color: #BFF3FF;
+        width: 160px;
         cursor: pointer;
         span {
-          font-size: 12px;
+          font-size: 20px;
         }
       }
     }
     .steps-alert {
-      width: 40%;
-      margin: 30px   ;
+      width: 50%;
+      // margin: 30px   ;
     }
     .op-btns {
       text-align: center;
+      font-size: 0;
     }
   }
   .cancel-button {
-    border: 1px solid #fff;
-    color: #fff;
-    &:hover {
-      border: 1px solid #fff;
-      color: #fff;
-      background: transparent;
-    }
-    &:focus {
-      color: #fff;
-      background: transparent;
-    }
-    &:active {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
-    }
+    // border: 1px solid #436382;
+    // color: #fff;
+    // &:hover {
+    //   border: 1px solid #436382;
+    //   color: #fff;
+    //   background: transparent;
+    // }
+    // &:focus {
+    //   color: #fff;
+    //   background: transparent;
+    // }
+    // &:active {
+    //   border: 1px solid #436382;
+    //   background: transparent;
+    //   color: #fff;
+    // }
   }
 }
 .s1-color {
@@ -1593,7 +1656,7 @@ export default {
 }
 .aia-content /deep/ .el-dialog__header {
   padding: 20px 20px 10px;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #436382;
 }
 .wrapper-title {
   font-size: 18px;
@@ -1606,12 +1669,30 @@ export default {
   padding: 2px 5px;
   color: #303133;
   font-weight: bold;
-  margin-left: 22%;
+  text-align: right;
+  // margin-left: 22%;
 }
 .el-pagination /deep/ .el-input__inner {
   border: 1px solid #dcdfe6 !important;
 }
 
+.tips-dialog{
+background: rgba(0,0,0,.4);
+  /deep/{
+    .el-dialog{
+      background: #25344E !important;
+    }
+    
+  }
+  .el-form-item{
+    /deep/{
+      .el-form-item__content{
+        line-height: 68px;
+      }
+    }
+  }
+  
+}
 </style>
 
 <style lang="scss" >

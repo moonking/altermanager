@@ -8,7 +8,7 @@
     <el-table
       :data="tableData"
       stripe
-      height="82%"
+      height="86%"
       :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
     >
@@ -153,14 +153,14 @@ export default {
   box-sizing: border-box;
   .search-type {
     .el-button {
-      border: 1px solid #fff;
+      border: 1px solid #436382;
       color: #fff;
       &:link {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
       &:visited {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
         background-color: transparent !important;
       }
@@ -170,7 +170,7 @@ export default {
         color: #01aef1;
       }
       &:active {
-        border: 1px solid #fff;
+        border: 1px solid #436382;
         color: #fff;
       }
     }

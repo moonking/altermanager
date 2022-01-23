@@ -37,7 +37,7 @@
             v-model="alarmModel.origin"
             clearable
             placeholder="请选择来源"
-            style="width: 150px"
+            style="width: 200px"
           >
             <el-option
               v-for="item in originList"
@@ -53,7 +53,7 @@
             v-model="alarmModel.alterlevel"
             clearable
             placeholder="请选择告警级别"
-            style="width: 150px"
+            style="width: 200px"
           >
             <el-option
               v-for="item in alterlevelList"
@@ -90,19 +90,6 @@
             style="width: 350px"
           />
         </el-form-item>
-        <el-form-item class="search-button">
-          <el-button @click="batchHandle" class="search-icon"
-            >批量处理</el-button
-          >
-        </el-form-item>
-
-        </el-form-item>
-       <el-form-item class="search-button">
-          <el-button @click="readAll" class="search-icon"
-            >全部标记为已读</el-button
-          >
-        </el-form-item>
-
         <el-form-item>
           <el-input
             v-model="alarmModel.keywords"
@@ -111,12 +98,18 @@
             clearable
           ></el-input>
         </el-form-item>
-
-      </el-form>
-
-      <el-form :inline="true" class="search-inline-btn">
+         <el-form-item class="search-button">
+          <el-button @click="batchHandle" class="search-btn"
+            >批量处理</el-button
+          >
+        </el-form-item>
         <el-form-item class="search-button">
-          <el-button icon="el-icon-search" @click="search" class="search-icon"
+          <el-button @click="readAll" class="search-btn"
+            >全部标记为已读</el-button
+          >
+        </el-form-item>
+        <el-form-item class="search-button">
+          <el-button icon="el-icon-search" @click="search" class="search-btn"
             >搜索</el-button
           >
         </el-form-item>
@@ -129,11 +122,11 @@
       :data="tableData"
       @row-click="noticeDetail"
       style="width: 100%"
-      height="82%"
+      height="74%"
       @select="choose"
       @select-all="choose"
     >
-      <el-table-column type="selection" :selectable="checkSelection" width="55">
+      <el-table-column type="selection" :selectable="checkSelection" width="60">
       </el-table-column>
       <el-table-column
         prop="level"
@@ -524,11 +517,9 @@ export default {
     },
     // 时间分割
     splitDate() {
-        this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
-        this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''
-
+      this.startTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[0])) : ''
+      this.endTime = this.alarmModel.alarmDate != null ? this.dateFormat(new Date(this.alarmModel.alarmDate[1])) : ''
     },
-
 
     // 分页
     handleCurrentChange() {
@@ -580,28 +571,28 @@ export default {
   padding: 10px 10px;
   box-sizing: border-box;
   .search-button {
-    .el-button {
-      border: 1px solid #fff;
-      color: #fff;
-      &:link {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #fff;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #fff;
-        color: #fff;
-      }
-    }
+    // .el-button {
+    //   border: 1px solid #436382;
+    //   color: #fff;
+    //   &:link {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    //   &:visited {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //     background-color: transparent !important;
+    //   }
+    //   &:hover {
+    //     background-color: #041c25;
+    //     border: 1px solid #01aef1;
+    //     color: #01aef1;
+    //   }
+    //   &:active {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    // }
   }
   .el-link {
     color: #fff !important;
@@ -618,7 +609,7 @@ export default {
     display: none;
   }
   .search-icon {
-    border: 1px solid #fff;
+    border: 1px solid #436382;
     color: #fff;
     &:hover {
       background: #0066ff;
@@ -670,7 +661,7 @@ export default {
   flex: 1;
 }
 .search-inline-btn {
-  width: 100px;
+  /* width: 100px; */
 }
 </style>
 <style>
