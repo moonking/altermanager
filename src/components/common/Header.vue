@@ -59,7 +59,7 @@
         </el-badge> -->
         <!-- 用户头像 -->
         <div class="user-avator">
-          <img :src="imgSrc" />
+          <img src="../../assets/user.png" />
           <!-- {{this.$store.state.userPhoto}} -->
         </div>
 

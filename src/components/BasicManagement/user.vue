@@ -73,19 +73,19 @@
             <div>
               <div class="information">
                 <div class="imgbox cantainerheader">
-                  <img :src="item.photo" alt />
+                  <img src="../../assets/user.png" alt />
                   <div class="spanbox">{{ item.name }}</div>
                 </div>
                 <div class="databox">
                   <ul class="ullist">
                     <!-- <li class="editicon"> -->
                       <!-- <span style="margin-left:50px">{{item.name}}</span> -->
-                      
+
                     <!-- </li> -->
                     <li class="userli clear-fix">
                       <icon-svg
-                        icon-class="dizhi"
-                        class="user-icon"
+                        icon-class="user"
+                        class="svg-font-color"
                       />
                       <!-- <img class="svg-img" src="/static/img/task/telphone.svg" alt="" /> -->
                       <span class="text-overflow user-content-font">{{
@@ -94,8 +94,8 @@
                     </li>
                     <li class="userli clear-fix">
                       <icon-svg
-                        icon-class="telphone"
-                        class="user-icon"
+                        icon-class="concat"
+                        class="svg-font-color"
                       />
                       <span class="text-overflow user-content-font">{{
                         item.telephone
@@ -103,8 +103,8 @@
                     </li>
                     <li class="userli clear-fix">
                       <icon-svg
-                        icon-class="shouji"
-                        class="user-icon"
+                        icon-class="phone"
+                        class="svg-font-color"
                       />
                       <span class="text-overflow user-content-font">{{
                         item.mobile
@@ -1231,6 +1231,7 @@ export default {
         text-align: center;
         padding: 20px;
         padding-top: 20px;
+        padding-right:40px;
 
         img {
           height: 52px;
@@ -1276,8 +1277,7 @@ export default {
               float: right;
               /* margin-right: 5px; */
               margin-top: -6px;
-              
-              
+
             }
           }
 
@@ -1288,20 +1288,24 @@ export default {
             overflow: hidden;
             /* padding-right: -10px; */
             margin-right: -15px;
+            display: flex;
+            align-items: center;
+            font-size: 24px;
             span,
             img {
-              display: block;
-              float: left;
+              // display: block;
+              // float: left;
             }
           }
         }
 
         span {
+          font-size:20px;
           /* position: absolute;
           top: 50%; */
           vertical-align: middle;
           margin-left: 15px;
-          margin-bottom: 10px;
+          // margin-bottom: 10px;
         }
       }
 

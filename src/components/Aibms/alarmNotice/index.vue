@@ -37,7 +37,7 @@
             v-model="alarmModel.origin"
             clearable
             placeholder="请选择来源"
-            style="width: 200px"
+            style="width: 274px"
           >
             <el-option
               v-for="item in originList"
@@ -53,7 +53,7 @@
             v-model="alarmModel.alterlevel"
             clearable
             placeholder="请选择告警级别"
-            style="width: 200px"
+            style="width: 274px"
           >
             <el-option
               v-for="item in alterlevelList"
@@ -87,14 +87,14 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             @change="splitDate"
-            style="width: 350px"
+            style="width: 500px"
           />
         </el-form-item>
         <el-form-item>
           <el-input
             v-model="alarmModel.keywords"
             placeholder="关键字查询"
-            style="width: 200px"
+            style="width: 180px"
             clearable
           ></el-input>
         </el-form-item>
@@ -165,7 +165,7 @@
         show-overflow-tooltip
       />
       <el-table-column prop="alarmType" label="类型" show-overflow-tooltip />
-      <el-table-column prop="startTime" label="告警时间" width="230" show-overflow-tooltip />
+      <el-table-column prop="startTime" label="告警时间" width="260" show-overflow-tooltip />
       <el-table-column label="状态" width="90" >
         <template v-slot="scope">
           <span>{{ scope.row.status === '1' ? '已收到' : '未读' }}</span>

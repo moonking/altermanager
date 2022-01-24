@@ -2,7 +2,7 @@
   <div class="aia-content">
 
   <el-row>
-          <el-select  v-model="sourceForm.source" style="float: right;" @change="changetime">
+          <el-select  v-model="sourceForm.source" @change="changetime">
             <el-option v-for="item in sourcedata"
                     :key="item.id"
                     :label="item.label"
@@ -20,7 +20,7 @@
            <!-- <schart class="schart" canvasId="pie" :data="altersum" type="pie" :options="altersumOptions"></schart> -->
            </div>
 
-       <div class="schart-box" v-show="levelsum.length !=  0">
+       <div class="schart-box special-charts" v-show="levelsum.length !=  0">
        <div class="schart" ref="levelsum"></div>
 <!--       <div class="content-title">告警通知汇总（级别）</div> -->
           <!-- <schart class="schart" canvasId="ring" :data="levelsum" type="ring" :options="levelsumOptions"></schart> -->
@@ -120,7 +120,7 @@ export default {
 
     Prometheus01: {
       title: 'Prometheus 告警分类汇总Top5',
-      bgColor:'rgba(255,255,255,0)',
+      bgColor: 'rgba(255,255,255,0)',
       titleColor: '#ffffff',
       legendColor: '#ffffff',
       radius: 120,
@@ -176,7 +176,7 @@ export default {
 
     bpc01: {
       title: 'BPC 告警分类汇总Top5',
-      bgColor:'rgba(255,255,255,0)',
+      bgColor: 'rgba(255,255,255,0)',
       titleColor: '#ffffff',
       legendColor: '#ffffff',
       radius: 120,
@@ -267,33 +267,33 @@ export default {
         return result
       }
     },
-    getEchartsOptions(data){
+    getEchartsOptions(data) {
       return {
         color: data.color,
-            title: {
-              text: data.title,
-              padding: [17, 40],
-              textStyle: {
-                fontSize: 32,
-                color: '#DAF8FF',
-              }
-            },
-            legend: {
-              y: 580,
-              icon: 'circle',
-              textStyle: {
-                color: '#EDF9FB',
-                fontSize: 20
-              }
-            },
-            series : [
-              {
-                  name: data.title,
-                  type: 'pie',    // 设置图表类型为饼图
-                  radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
-                  data: data.data
-              }
-          ]
+        title: {
+          text: data.title,
+          padding: [17, 40],
+          textStyle: {
+            fontSize: 32,
+            color: '#DAF8FF'
+          }
+        },
+        legend: {
+          y: 580,
+          icon: 'circle',
+          textStyle: {
+            color: '#EDF9FB',
+            fontSize: 20
+          }
+        },
+        series: [
+          {
+            name: data.title,
+            type: 'pie', // 设置图表类型为饼图
+            radius: '55%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+            data: data.data
+          }
+        ]
       }
     },
     // 查询统计数据 ,param :time  单位为天 （1天为1 ）
@@ -361,9 +361,8 @@ export default {
           this.bpcdata01 = this.sortValue(bpcdata01, 5)
           this.bpcdata02 = this.sortValue(bpcdata02, 5)
 
-          
           let myChart = this.$echarts.init(this.$refs.altersum)
-          let myChart2 = this.$echarts.init(this.$refs.levelsum)
+
           myChart.setOption(
             this.getEchartsOptions({
               color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
@@ -371,17 +370,10 @@ export default {
               data: this.altersum
             })
           )
-          myChart2.setOption(
-            this.getEchartsOptions({
-              color: ['#00ff7f', '#ffff00', '#ff0000'],
-              title: '告警通知汇总（级别）',
-              data: this.levelsum
-            })
-          )
-              
+
           let myChart3 = null
           this.$nextTick(() => {
-            if(this.$refs.prometheusdata01) {
+            if (this.$refs.prometheusdata01) {
               myChart3 = this.$echarts.init(this.$refs.prometheusdata01)
               myChart3.setOption(
                 this.getEchartsOptions({
@@ -394,7 +386,7 @@ export default {
           })
           let myChart4 = null
           this.$nextTick(() => {
-            if(this.$refs.prometheusdata02) {
+            if (this.$refs.prometheusdata02) {
               myChart4 = this.$echarts.init(this.$refs.prometheusdata02)
 
               myChart4.setOption(
@@ -408,12 +400,12 @@ export default {
           })
           let myChart5 = null
           this.$nextTick(() => {
-            if(this.$refs.dtdata01) {
+            if (this.$refs.dtdata01) {
               myChart5 = this.$echarts.init(this.$refs.dtdata01)
 
               myChart5.setOption(
                 this.getEchartsOptions({
-                  color:  ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
                   title: 'DT 告警分类汇总Top5',
                   data: this.dtdata01
                 })
@@ -422,7 +414,7 @@ export default {
           })
           let myChart6 = null
           this.$nextTick(() => {
-            if(this.$refs.dtdata02) {
+            if (this.$refs.dtdata02) {
               myChart6 = this.$echarts.init(this.$refs.dtdata02)
 
               myChart6.setOption(
@@ -436,7 +428,7 @@ export default {
           })
           let myChart7 = null
           this.$nextTick(() => {
-            if(this.$refs.splunkdata01) {
+            if (this.$refs.splunkdata01) {
               myChart7 = this.$echarts.init(this.$refs.splunkdata01)
 
               myChart7.setOption(
@@ -450,7 +442,7 @@ export default {
           })
           let myChart8 = null
           this.$nextTick(() => {
-            if(this.$refs.splunkdata02) {
+            if (this.$refs.splunkdata02) {
               myChart8 = this.$echarts.init(this.$refs.splunkdata02)
 
               myChart8.setOption(
@@ -464,7 +456,7 @@ export default {
           })
           let myChart9 = null
           this.$nextTick(() => {
-            if(this.$refs.bpcdata01) {
+            if (this.$refs.bpcdata01) {
               myChart9 = this.$echarts.init(this.$refs.bpcdata01)
 
               myChart9.setOption(
@@ -478,7 +470,7 @@ export default {
           })
           let myChart10 = null
           this.$nextTick(() => {
-            if(this.$refs.bpcdata02) {
+            if (this.$refs.bpcdata02) {
               myChart10 = this.$echarts.init(this.$refs.bpcdata02)
 
               myChart10.setOption(
@@ -490,7 +482,6 @@ export default {
               )
             }
           })
-          
         }
       })
 
@@ -503,6 +494,47 @@ export default {
           })
         }
         this.levelsum = levelsum
+        let myChart2 = this.$echarts.init(this.$refs.levelsum)
+        let chartsData2 = this.levelsum.reduce((acc, cur) => {
+          console.log(cur.value, 88888)
+          return acc + (+cur.value)
+        }, 0)
+        myChart2.setOption({
+          ...this.getEchartsOptions({
+            color: [{
+              type: 'linear',
+              x: 0.5,
+              y: 0.5,
+              r: 0.5,
+              colorStops: [{
+                offset: 0, color: '#064368' // 0% 处的颜色
+              }, {
+                offset: 1, color: '#022037' // 100% 处的颜色
+              }],
+              global: false // 缺省为 false
+            },
+            '#304074', '#08E3F6', 'transparent'],
+            title: '告警通知汇总（级别）'
+          }),
+          label: {
+            color: '#DAF8FF',
+            borderColor: '#DAF8FF'
+          },
+          series: [
+            {
+              name: '告警通知汇总（级别）',
+              type: 'pie', // 设置图表类型为饼图
+              startAngle: 230,
+              radius: ['35%', '60%'], // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+              data: [...this.levelsum, {
+                value: chartsData2 * 0.3,
+                name: '',
+                tooltip: {formatter: function(a) { return '' }},
+                itemStyle: {color: 'transparent'}
+              }]
+            }
+          ]
+        })
       })
     }
 
@@ -580,6 +612,19 @@ export default {
       margin-bottom: 10px;
       color: #fff;
     }
+  }
+}
+.special-charts{
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute;
+    top:240px;
+    left: 250px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(#243C84,#041138);
   }
 }
 </style>

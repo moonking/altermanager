@@ -54,7 +54,7 @@
 .nomal-button:hover,.nomal-button:focus, .nomal-button:active,
 .aibms-role .el-dropdown .el-button:hover,
 .aibms-role .el-dropdown .el-button:focus,
-.aibms-role .el-dropdown .el-button:active {   
+.aibms-role .el-dropdown .el-button:active {
     border: 1px solid #fff!important;
     color: #fff!important;
     background: transparent!important;
@@ -126,8 +126,8 @@
     /* border: 1px solid #fff!important; */
 }
 .aibms-role .task-btn-box span:hover {
-    background: #00A8E8!important;
-    border: 1px solid #00A8E8!important;
+    /* background: #00A8E8!important; */
+    /* border: 1px solid #00A8E8!important; */
 }
 /* 权限管理 */
 .aibms-permissions .el-row .custom-box-title {
@@ -222,7 +222,7 @@
 /* 自动化运维 */
 .aibms-auto .key-item.actives {
     background: #00A8E8!important;
-    border: 1px solid #00A8E8!important; 
+    border: 1px solid #00A8E8!important;
 }
 .aibms-auto .key-item {
     background: transparent!important;

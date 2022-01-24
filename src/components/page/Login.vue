@@ -8,7 +8,7 @@
       <el-form
         ref="form"
         :model="form"
-        label-width="70px"
+        label-width="120px"
         style="padding: 15px 40px 0 15px"
       >
         <el-form-item label="用户名">
@@ -32,7 +32,7 @@
           />
         </el-form-item>
         <el-form-item label="登录方式">
-          <el-radio-group v-model="form.loginType">
+          <el-radio-group class="login-type" v-model="form.loginType">
             <el-radio :label="'0'">普通登录</el-radio>
             <el-radio :label="'1'">LDAP登录</el-radio>
           </el-radio-group>
@@ -46,7 +46,7 @@
       </p>
       <div class="login-btn">
         <el-button
-          style="background: #0066ff; color: #fff"
+          class="common-btn save-btn"
           @click="submitForm()"
           >登录</el-button
         >
@@ -217,7 +217,7 @@ export default {
   text-align: center;
   font-size: 20px;
   color: #0066ff;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #022037;
   padding: 10px 0;
 }
 
@@ -225,10 +225,10 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 400px;
-  margin: -190px 0 0 -175px;
+  width: 600px;
+  margin: -190px 0 0 -230px;
   border-radius: 5px;
-  background: rgba(80, 80, 80, 0.6);
+  background: #25344E;
   overflow: hidden;
 }
 
@@ -242,7 +242,7 @@ export default {
 
 .login-btn button {
   width: 50%;
-  height: 36px;
+  /* height: 36px; */
   margin-bottom: 20px;
 }
 
@@ -263,6 +263,16 @@ export default {
   vertical-align: middle;
 }
 .title-text {
-  color: #fff;
+  color: #BFF3FF;
+}
+</style>
+<style scoped lang="scss">
+.login-type{
+  line-height: 68px;
+  /deep/ {
+    .el-radio{
+      vertical-align: middle;
+    }
+  }
 }
 </style>

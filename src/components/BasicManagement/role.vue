@@ -1339,7 +1339,7 @@ export default {
       padding: 0 4px;
       border-radius: 5px;
       color: #BFF3FF;
-      font-size: 20px;
+      font-size: 24px;
       margin-right: 12px;
       cursor: pointer;
 
@@ -1350,7 +1350,7 @@ export default {
         margin-bottom: -6px;
       }
       &.special:hover {
-        background: #0066ff;
+        // background: #0066ff;
       }
     }
   }

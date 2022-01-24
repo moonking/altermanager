@@ -34,8 +34,13 @@
               value-format="yyyy-MM-dd HH:mm:ss"
              placeholder="选择结束日期">
              </el-date-picker>
-             <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button>
-             <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button>
+             <i class="el-icon-circle-plus-outline add-icon-btn" @click="addList" />
+          <i
+              class="el-icon-remove-outline add-icon-btn"
+              @click.prevent="removeList(timelist)"
+            />
+             <!-- <el-button @click="addList() "  type="primary" icon="el-icon-plus"></el-button> -->
+             <!-- <el-button @click.prevent="removeList(timelist)" type="danger" icon="el-icon-delete"></el-button> -->
           </el-form-item>
 
           <el-form-item>
@@ -46,7 +51,7 @@
               <!-- <el-button @click.stop="next" style="margin-right: 100px" type="primary" v-if="active === 0"
                 >下一步</el-button
               > -->
-              <el-button @click="saveSystemConfig" style="margin-right: 100px" type="primary"
+              <el-button @click="saveSystemConfig" class="common-btn save-btn" type="primary"
                 >提交</el-button
               >
             </div>
@@ -408,7 +413,7 @@ export default {
       //   status: scope.status
       // }
       console.log(scope)
-      axios.systemStatusSwitch(scope.code, scope.status == 1?0:1).then(res => {
+      axios.systemStatusSwitch(scope.code, scope.status == 1 ? 0 : 1).then(res => {
         if (res.data.success) {
           scope.status = !scope.status
           this.$notify({
@@ -640,5 +645,8 @@ export default {
 }
 .notify-item:last-child {
   margin-bottom: 0;
+}
+.add-icon-btn{
+  margin-top: 0;
 }
 </style>
