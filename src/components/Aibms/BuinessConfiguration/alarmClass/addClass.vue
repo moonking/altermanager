@@ -381,9 +381,9 @@ export default {
         /deep/
         .el-radio-button__orig-radio:disabled:checked
         + .el-radio-button__inner {
-        background-color: #00a8e8;
-        border: 1px solid #00a8e8;
-        color: #fff;
+        // background-color: #00a8e8;
+        // border: 1px solid #00a8e8;
+        // color: #fff;
       }
       .domains-form {
         i {
@@ -408,9 +408,9 @@ export default {
           cursor: pointer;
         }
         .active-class {
-          background: #00a8e8;
-          border: 1px solid #00a8e8;
-          color: #fff;
+          // background: #00a8e8;
+          // border: 1px solid #00a8e8;
+          // color: #fff;
         }
       }
     }

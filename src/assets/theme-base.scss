@@ -241,6 +241,11 @@ $border-color: #00E5FF;
     padding: 12px 25px;
     font-size: 24px;
   }
+  .el-radio-button__orig-radio:disabled:not(:checked)+ .el-radio-button__inner{
+    color: $font-color;
+    background-color:rgba(4,28,37, .7);
+    border: 1px solid #436382;
+  }
   .el-radio-button__orig-radio:checked + .el-radio-button__inner{
     @extend %common-btn;
     box-sizing: border-box;
