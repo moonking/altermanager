@@ -22,7 +22,8 @@
             clearable
             maxlength="20"
             placeholder="请输入名称"
-            :style="{ width: '632px' }"
+            :style="{ width: '90%' }"
+            id="getWidth"
           />
         </el-form-item>
         <el-form-item label="选择标签：" prop="label">
@@ -32,7 +33,7 @@
             clearable
             v-model="typesForm.label"
             placeholder="请选择标签"
-            :style="{ width: '632px' }"
+            :style="{ width: '90%' }"
           >
             <el-option
               v-for="item in labelList"
@@ -49,60 +50,63 @@
                 icon-class="tips"
               />
             请先选择标签</span>
-
-            <el-select class="custom-select-box" v-else style="width: 632px" v-model="typesForm.type" multiple>
-              <el-option v-show="false" 
-              v-for="item in classList" 
-              :label="item.name"
-              :value="item.code"
-              :key="item.code"></el-option>
-              <div class="custom-select-body">
-                <el-row>
-                  <el-col>
-                    <el-checkbox
-                      :disabled="status === 'read'"
-                      :indeterminate="isIndeterminate"
-                      v-model="checkAll"
-                      @change="handleCheckAllChange"
-                      >全选</el-checkbox
-                    >
-                  </el-col>
-                  
-                  <el-col :span="20">
-                    <el-checkbox-group
-                      class="el-checkcolor"
-                      v-model="typesForm.type"
-                      @change="handlecheckedClassChange"
-                    >
+            <el-popover
+              v-else
+              placement="top"
+              title="标题"
+              trigger="click">
+                <div class="custom-select-body" ref="customSelectBody" :style="{width: width}">
+                  <el-scrollbar wrap-class="scrollbar-wrapper" style="height:400px;">
+                  <el-row>
+                    <el-col :span="24" style="margin-bottom:20px;">
                       <el-checkbox
-
-                        v-for="item in classList"
-                        :disabled="
-                          status === 'read' ||
-                          (status !== 'read' &&
-                            item.belongRule &&
-                            !isOwner(item.code))
-                        "
-                        :label="item.code"
-                        :key="item.code"
-                        >{{ item.name }}</el-checkbox
+                        :disabled="status === 'read'"
+                        :indeterminate="isIndeterminate"
+                        v-model="checkAll"
+                        @change="handleCheckAllChange"
+                        >全选</el-checkbox
                       >
-                    </el-checkbox-group>
-                  </el-col>
-                </el-row>
-                <!-- 分页 -->
-                <el-pagination
-                  v-if="totalSize"
-                  :current-page.sync="page.current"
-                  :page-size.sync="page.size"
-                  :page-sizes="[10, 20, 30, 50]"
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="totalSize"
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                />
+                    </el-col>
+                    
+                    <el-col :span="24">
+                      <el-checkbox-group
+                        class="el-checkcolor"
+                        v-model="typesForm.type"
+                        @change="handlecheckedClassChange"
+                      >
+                        <el-checkbox
+
+                          v-for="item in classList"
+                          :disabled="
+                            status === 'read' ||
+                            (status !== 'read' &&
+                              item.belongRule &&
+                              !isOwner(item.code))
+                          "
+                          :label="item.code"
+                          :key="item.code"
+                          >{{ item.name }}</el-checkbox
+                        >
+                      </el-checkbox-group>
+                    </el-col>
+                  </el-row>
+                  </el-scrollbar>
+                  <!-- 分页 -->
+                  <el-pagination
+                    v-if="totalSize"
+                    :current-page.sync="page.current"
+                    :page-size.sync="page.size"
+                    :page-sizes="[10, 20, 30, 50]"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="totalSize"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                  />
+                </div>
+              <div class="custom-select" slot="reference">
+                <i class="el-icon-arrow-down"></i>
               </div>
-            </el-select>
+            </el-popover>
 
         
           <!-- <el-row v-else :gutter="20">
@@ -614,7 +618,8 @@ export default {
       classAllList: [],
       noticeId: 0,
       TemporaryAdd: [], // 临时添加的通知人员
-      TemporaryCancel: [] // 临时取消的通知人员
+      TemporaryCancel: [], // 临时取消的通知人员
+      width: 'auto'
     };
   },
   filters: {
@@ -637,6 +642,10 @@ export default {
   },
   created() {
     this.init();
+  },
+  mounted() {
+    let a = document.getElementById('getWidth').clientWidth
+    this.width = a+'px'
   },
   methods: {
     // 数据加载
@@ -1673,7 +1682,7 @@ export default {
   // margin-left: 22%;
 }
 .el-pagination /deep/ .el-input__inner {
-  border: 1px solid #dcdfe6 !important;
+  // border: 1px solid #dcdfe6 !important;
 }
 
 .tips-dialog{

@@ -232,6 +232,10 @@ $border-color: #00E5FF;
     color: $font-color;
     line-height: 40px;
   }
+  .el-icon-circle-close,
+  .el-icon-circle-check{
+    display:none;
+  }
 }
 
 .el-radio-group{
@@ -526,15 +530,35 @@ $border-color: #00E5FF;
 .el-time-panel__btn.confirm{
   color: $border-color;
 }
+.custom-select{
+  display:flex;
+  justify-content: flex-end;
+  align-items:center;
+  padding-left: 15px;
+  padding-right:4px;
+  width:90%;
+  height:68px;
+  line-height: 66px;
+  font-size:20px;
+  color: $font-color;
+  background: rgba(4, 28, 37, .4)!important;
+  border:1px solid #436382;
+  box-sizing:border-box;
+  i{
+    font-size:28px;
+  }
+}
 .custom-select-body{
   padding: 30px;
-  width: 632px;
+  width:800px;
+  max-width: 100%;
   font-size:20px;
+  background: #25344E;
   border:1px solid #436382;
   .el-checkbox{
-    margin-right: 0;
+    margin-right: 10px;
     margin-bottom: 40px;
-    min-width: 48%;
+    min-width: 390px;
   }
   .el-checkcolor .el-checkbox__input.is-disabled+.el-checkbox__label{
     color: rgba($font-color, .5)
@@ -559,7 +583,7 @@ $border-color: #00E5FF;
   color: $font-color;
   vertical-align:middle;
 }
-.el-checkbox__inner{
+.el-checkbox__inner,.el-checkbox__input.is-disabled.is-checked .el-checkbox__inner{
   width: 28px;
   height: 28px;
   border: 1px solid #00E5FF;
