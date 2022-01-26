@@ -37,7 +37,7 @@
             v-model="alarmModel.origin"
             clearable
             placeholder="请选择来源"
-            style="width: 150px"
+            class="w274"
           >
             <el-option
               v-for="item in originList"
@@ -87,18 +87,18 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             @change="splitDate"
-            style="width: 350px"
+            style="width: 500px"
           />
         </el-form-item>
         <el-form-item class="search-button">
-          <el-button @click="batchHandle" class="common-btn add-btn"
+          <el-button @click="batchHandle" class="search-btn"
             >批量处理</el-button
           >
         </el-form-item>
 
         </el-form-item>
        <el-form-item class="search-button">
-          <el-button @click="readAll" class="common-btn add-btn"
+          <el-button @click="readAll" class="search-btn"
             >全部标记为已读</el-button
           >
         </el-form-item>
@@ -116,7 +116,7 @@
 
       <el-form :inline="true" class="search-inline-btn">
         <el-form-item class="search-button">
-          <el-button icon="el-icon-search" @click="search" class="common-btn add-btn"
+          <el-button icon="el-icon-search" @click="search" class="search-btn"
             >搜索</el-button
           >
         </el-form-item>
@@ -133,7 +133,7 @@
       @select="choose"
       @select-all="choose"
     >
-      <el-table-column type="selection" :selectable="checkSelection" width="55">
+      <el-table-column type="selection" :selectable="checkSelection" width="80">
       </el-table-column>
       <el-table-column
         prop="level"
@@ -168,12 +168,11 @@
       <el-table-column
         prop="alarmAddress"
         label="告警对象"
-        min-width="80%"
         show-overflow-tooltip
       />
       <el-table-column prop="alarmType" label="类型" show-overflow-tooltip />
       <el-table-column prop="startTime" label="告警时间" width="230" show-overflow-tooltip />
-      <el-table-column label="状态" width="90" >
+      <el-table-column label="状态" width="130" >
         <template v-slot="scope">
           <span>{{ scope.row.status === '1' ? '已收到' : '未读' }}</span>
         </template>
@@ -580,28 +579,28 @@ export default {
   padding: 10px 10px;
   box-sizing: border-box;
   .search-button {
-    .el-button {
-      border: 1px solid #436382;
-      color: #fff;
-      &:link {
-        border: 1px solid #436382;
-        color: #fff;
-      }
-      &:visited {
-        border: 1px solid #436382;
-        color: #fff;
-        background-color: transparent !important;
-      }
-      &:hover {
-        background-color: #041c25;
-        border: 1px solid #01aef1;
-        color: #01aef1;
-      }
-      &:active {
-        border: 1px solid #436382;
-        color: #fff;
-      }
-    }
+    // .el-button {
+    //   border: 1px solid #436382;
+    //   color: #fff;
+    //   &:link {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    //   &:visited {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //     background-color: transparent !important;
+    //   }
+    //   &:hover {
+    //     background-color: #041c25;
+    //     border: 1px solid #01aef1;
+    //     color: #01aef1;
+    //   }
+    //   &:active {
+    //     border: 1px solid #436382;
+    //     color: #fff;
+    //   }
+    // }
   }
   .el-link {
     color: #fff !important;

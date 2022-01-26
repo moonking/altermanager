@@ -1,7 +1,7 @@
 <template>
   <div class="aia-content">
    <div class="wrapper-pannel">
-  <h3>编辑业务系统</h3>
+    <h3>编辑业务系统</h3>
     <el-form  ref="configData" >
 
       <!-- <el-form-item label="编辑业务系统"></el-form-item> -->
@@ -97,33 +97,13 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-   h3 {
-      position: relative;
-      font-size: 28px;
-      font-weight: 500;
-      height: 40px;
-      line-height: 40px;
-      margin-left: 10px;
-      color: #BFF3FF;
-      span {
-        margin-left: 5px;
-        font-size: 24px;
-        cursor: pointer;
-        color: #BFF3FF;
-        font-weight: normal;
-      }
-      &:before {
-         content: '';
-        position: absolute;
-        z-index: 1;
-        left: -30px;
-        top: 10px;
-        width: 18px;
-        border-radius: 9px;
-        height: 18px;
-        background: #00E5FF;
-      }
-    }
+  h3{
+    margin-bottom:20px;
+    font-size: 28px;
+    font-weight: 500;
+    color: #BFF3FF;
+    line-height: 40px;
+  }
   .wrapper-pannel {
     width: 100%;
     // background-color: rgba(4, 28, 37, 0.3);
@@ -136,22 +116,22 @@ export default {
         margin-right: 12px;
       }
       .cancel-button {
-        color: #fff;
-        border: 1px solid #436382;
-        &:hover {
-          border: 1px solid #436382;
-          color: #fff;
-          background: transparent;
-        }
-        &:focus {
-          color: #fff;
-          background: transparent;
-        }
-        &:active {
-          border: 1px solid #436382;
-          background: transparent;
-          color: #fff;
-        }
+        // color: #fff;
+        // border: 1px solid #436382;
+        // &:hover {
+        //   border: 1px solid #436382;
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:focus {
+        //   color: #fff;
+        //   background: transparent;
+        // }
+        // &:active {
+        //   border: 1px solid #436382;
+        //   background: transparent;
+        //   color: #fff;
+        // }
       }
     }
   }

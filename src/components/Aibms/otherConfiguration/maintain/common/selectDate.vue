@@ -2,13 +2,12 @@
   <div class="select-content">
     <!-- 筛选 -->
     <el-form
-      :inline="true"
       ref="dateFrom"
       :model="dateModel"
       label-width="160px"
+      style="width: 80%"
     >
       <el-form-item
-        style="width: 100%"
         label="时间周期："
         prop="daterange"
         :rules="[{ required: true, message: '时间范围不能为空' }]"
@@ -24,11 +23,11 @@
         />
       </el-form-item>
       <el-form-item
-        style="width: 100%"
         label="维护时间："
         prop="timePicker"
         :rules="[{ required: true, message: '时间范围不能为空' }]"
       >
+      <div style="font-size:0;">
         <el-time-select
           placeholder="起始时间"
           v-model="dateModel.startTime"
@@ -51,6 +50,7 @@
           @change="getPpickerTime"
         >
         </el-time-select>
+        </div>
       </el-form-item>
     </el-form>
     <p
@@ -204,5 +204,13 @@ export default {
 .tips {
   /* color: #fff; */
   margin-bottom: 92px;
+}
+</style>
+<style lang="scss" scope>
+.el-date-editor.el-input{
+  width: 49%;
+  &+.el-date-editor.el-input{
+    margin-left: 2%;
+  }
 }
 </style>

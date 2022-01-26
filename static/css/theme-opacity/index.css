@@ -31151,8 +31151,9 @@ body {
   vertical-align: top; }
 
 .el-form--inline .el-form-item__label {
-  float: none;
-  display: inline-block; }
+  /* float: none; */
+  /* display: inline-block;  */
+}
 
 .el-form--inline .el-form-item__content {
   display: inline-block;

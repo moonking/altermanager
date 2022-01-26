@@ -62,7 +62,7 @@
       @selection-change="handleSelectionChange"
       :header-cell-style="{ background: '#f5f5f5' }"
     >
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="80" align="center" />
       <el-table-column label="CI类型-属性">
         <template slot-scope="scope">
           <div v-html="scope.row.fromAttrLabel"></div>

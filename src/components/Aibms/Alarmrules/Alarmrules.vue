@@ -14,7 +14,7 @@
             v-model="searchFrom.rulesName"
             clearable
             placeholder="请输入规则名称"
-            style="width: 200px"
+            class="w366"
           />
         </el-form-item>
         <el-form-item>
@@ -22,6 +22,7 @@
             v-model="searchFrom.level"
             clearable
             placeholder="请选择级别"
+            class="w366"
           >
             <el-option
               v-for="item in levelList"
@@ -43,6 +44,7 @@
             clearable
             v-model="searchFrom.label"
             placeholder="请选择标签"
+            class="w366"
           >
             <el-option
               v-for="item in labelList"

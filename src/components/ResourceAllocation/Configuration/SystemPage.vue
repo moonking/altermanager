@@ -250,7 +250,7 @@
       >
         <el-table-column
           type="selection"
-          width="55"
+          width="80"
           :selectable="checkSelectable"
         >
         </el-table-column>

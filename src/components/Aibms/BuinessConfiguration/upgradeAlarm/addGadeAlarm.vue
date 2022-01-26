@@ -90,7 +90,7 @@
             >
             <span class="match-type" v-else>匹配类型</span>
           </h4>
-          <ul>
+          <ul v-show="checkedAlarmList.length>0">
             <li v-for="(item, index) in checkedAlarmList" :key="index">
               <span>{{ item }}</span>
             </li>
@@ -101,6 +101,9 @@
           title="选择告警分类"
           :visible.sync="dialogFormVisible"
           center
+          width="75%"
+          class="custom-dialog"
+          :show-close="false"
         >
           <el-form :model="alarmModel" ref="classForm" :inline="true">
             <el-form-item>
@@ -109,12 +112,12 @@
                 clearable
                 :fetch-suggestions="querySearch"
                 :trigger-on-focus="false"
-                class="inline-input"
+                class="inline-input w366"
                 placeholder="请输入告警分类"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button class="search-btn" icon="el-icon-search" @click="search"
+            <el-form-item style="float:right;">
+              <el-button class="save-btn common-btn" icon="el-icon-search" @click="search"
                 >搜索</el-button
               >
             </el-form-item>
@@ -141,11 +144,10 @@
               </el-checkbox-group>
               <!-- 分页 -->
               <el-pagination
-                background
                 v-if="totalSize"
                 :current-page.sync="page.current"
                 :page-size.sync="page.size"
-                layout="total, prev, pager, next, jumper"
+                layout="total, sizes, prev, pager, next, jumper"
                 :total="totalSize"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -513,6 +515,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.custom-dialog{
+  /deep/{
+    .el-dialog__header{
+      padding-top:27px;
+      height:85px;
+      text-align:left;
+      border-bottom:1px solid #436382;
+      box-sizing:border-box;
+    }
+  }
+}
 .add-source {
   padding: 10px;
   .content {
@@ -548,29 +561,34 @@ export default {
           color: #00cde8;
         }
         ul {
-          margin: 20px auto;
-          width: 1000px;
+          display:inline-block;
+          padding: 20px 20px;
+          margin-top:24px;
+          // margin: 20px auto;
+          min-width: 287px;
+          background: rgba(0, 146, 171, 0.25);
+          border-radius: 10px;
           li {
-            display: inline-block;
-            margin-bottom: 20px;
-            width: 20%;
-            height: 34px;
-            line-height: 34px;
-            padding: 0 25px;
-            box-sizing: border-box;
+            // display: inline-block;
+            // margin-bottom: 20px;
+            // width: 20%;
+            // height: 34px;
+            // line-height: 34px;
+            // padding: 0 25px;
+            // box-sizing: border-box;
             span {
-              width: 100%;
-              display: inline-block;
-              background: #00a8e8;
-              border-radius: 20px;
-              text-align: center;
-              color: #fff;
+              font-size: 24px;
+              font-weight: 500;
+              line-height: 40px;
+              color:#BFF3FF;
             }
           }
         }
       }
       .el-checkbox {
-        min-width: 19%;
+        margin-bottom: 20px;
+        min-width: 23%;
+        box-sizing:border-box;
       }
     }
     h3 {

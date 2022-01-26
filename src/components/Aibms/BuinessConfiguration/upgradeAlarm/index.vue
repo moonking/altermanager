@@ -8,7 +8,7 @@
             v-model="alarmModel.name"
             clearable
             placeholder="请输入名称"
-            style="width: 200px"
+            class="w366"
           />
         </el-form-item>
         <el-form-item>
@@ -16,7 +16,7 @@
             v-model="alarmModel.classification"
             clearable
             placeholder="请输入告警分类"
-            style="width: 200px"
+            class="w366"
           />
         </el-form-item>
       </el-form>

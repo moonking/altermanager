@@ -48,7 +48,7 @@
       <el-table-column
         v-if="!readOnly"
         type="selection"
-        width="60"
+        width="80"
         :selectable="checkSelectable"
       />
       <!-- <el-table-column prop="name" label="业务系统" /> -->

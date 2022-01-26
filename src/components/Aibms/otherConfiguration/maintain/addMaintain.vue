@@ -10,9 +10,9 @@
       v-show="active === 1"
     /> -->
     <div class="wrapper-pannel">
-      <el-form :model="sourceForm" :rules="ruleForm" ref="sourceForm" label-width="160px">
+      <el-form :model="sourceForm" :rules="ruleForm" ref="sourceForm" label-width="160px" style="width: 80%">
         <el-form-item style="width: 100%" label="告警来源：" prop="source">
-          <el-select  v-model="sourceForm.source" placeholder="请选择告警来源">
+          <el-select  v-model="sourceForm.source" placeholder="请选择告警来源" style="width: 100%">
             <el-option v-for="item in sourcedata"
                     :key="item.id"
                     :label="item.label"

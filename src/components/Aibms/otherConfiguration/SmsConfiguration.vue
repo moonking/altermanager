@@ -20,9 +20,9 @@
             :model="msgForm"
             label-width="160px"
             ref="smsForm"
-            inline
             label-position="right"
             :rules="msgFormRules"
+            style="width: 80%"
           >
             <el-form-item label="URL：" prop="apiUrl" style="display: block">
               <el-input
@@ -30,7 +30,6 @@
                 v-model.trim="msgForm.apiUrl"
                 @blur="checkUrl"
                 placeholder="请输入URL"
-                :style="{ width: '500px' }"
               />
             </el-form-item>
             <el-form-item
@@ -42,7 +41,7 @@
                 v-model="msgForm.noticeType"
                 clearable
                 placeholder="请选择模板"
-                :style="{ width: '200px' }"
+                :style="{ width: '100%' }"
                 @change="chooseType"
               >
                 <el-option
@@ -106,6 +105,7 @@
               ref="configform"
               label-position="right"
               :rules="configFormRules"
+              style="width: 80%"
             >
               <el-form-item label="变量：">
                 <div class="button-var">
@@ -133,6 +133,7 @@
                     "
                     :inputH="8"
                     :textContent.sync="MsgText"
+                    class="textarea-wrap"
                   />
                 </div>
               </el-form-item>

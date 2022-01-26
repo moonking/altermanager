@@ -20,6 +20,12 @@ $border-color: #00E5FF;
   color: $font-color !important;
   fill: $font-color !important;
 }
+.w366{
+  width: 366px;
+}
+.w274{
+  width: 274px;
+}
 .lh68{
   line-height: 68px;
 }
@@ -116,13 +122,18 @@ $border-color: #00E5FF;
   }
 }
 .el-textarea{
+  
   font-size: 20px;
   &.is-disabled .el-textarea__inner{
     border-color: #436382;
   }
   .el-textarea__inner{
+    padding: 20px;
     &:hover,&:focus{
       border-color: #0092AB;
+    }
+    &::-webkit-input-placeholder{
+      color: $font-color;
     }
   }
 }
@@ -154,7 +165,7 @@ $border-color: #00E5FF;
   @extend %common-btn;
 }
 .search-btn{
-  // width: 148px;
+  min-width: 148px;
   height: 68px;
   font-weight: 500;
   font-size: 24px;
@@ -162,21 +173,34 @@ $border-color: #00E5FF;
   background: rgba(2, 32, 55, 0.5);
   border-radius: 5px;
   border: 2px solid #436382;
+  [class*="el-icon-"] + span{
+    margin-left:20px;
+  }
 }
 .add-btn{
-  // width: 148px;
+  min-width: 148px;
   height: 68px;
   box-sizing: border-box;
   &:hover{
     @extend %common-btn;
   }
+  [class*="el-icon-"] + span{
+    margin-left:20px;
+  }
 }
-
 .el-table{
   font-size: 22px !important;
   thead{
     background: none!important;
     font-size: 24px !important;
+  }
+  td:first-child .cell:first-child,thead tr th:first-child .cell{
+    padding-left: 50px;
+  }
+  .el-table-column--selection{
+    &:first-child .cell,&.el-table__cell:first-child .cell{
+      padding-left: 30px;
+    }
   }
   thead tr th{
     background-color: rgba(2, 32, 55, 0.5) !important;
@@ -377,6 +401,12 @@ $border-color: #00E5FF;
   .el-input-number__increase:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled), .el-input-number__decrease:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled){
     border-color: #0092AB;
   }
+  &.is-disabled .el-input-number__increase, .el-input-number.is-disabled .el-input-number__decrease{
+    border-color: #436382;
+  }
+  &.is-disabled .el-input-number__decrease, .el-input-number.is-disabled .el-input-number__decrease{
+    border-color: #436382;
+  }
 }
 
 .item-block-title{
@@ -488,6 +518,9 @@ $border-color: #00E5FF;
     }
 }
 .el-date-editor{
+  &.is-disabled,&.is-disabled:hover{
+    border-color:#436382
+  }
   .el-range-input{
     font-size: 20px;
     color:$font-color;
@@ -502,6 +535,15 @@ $border-color: #00E5FF;
  .el-range__icon,.el-range__close-icon{
     font-size: 20px;
     color: $font-color;
+  }
+  .el-input__inner{
+    padding-left: 58px;
+  }
+  .el-input__prefix{
+    left: 24px;
+  }
+  .el-range__icon{
+    padding-left:19px;
   }
 }
 .time-select-item:hover{
@@ -645,4 +687,9 @@ $border-color: #00E5FF;
 }
 .el-menu-item:hover, .el-menu-item:focus{
   background-color: #0092AB;
+}
+.textarea-wrap.temp{
+  .text-input.el-textarea{
+    width: 100%;
+  }
 }

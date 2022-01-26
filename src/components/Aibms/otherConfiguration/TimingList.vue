@@ -8,7 +8,7 @@
               v-model="search.name"
               placeholder="请输入发布任务名称"
               sortable
-              style="width: 250px"
+              class="w366"
               clearable
             ></el-input>
           </el-form-item>

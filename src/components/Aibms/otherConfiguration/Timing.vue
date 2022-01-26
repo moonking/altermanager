@@ -55,7 +55,7 @@
           <el-input
             :disabled="status === 'read' || taskType === '2'"
             v-model="name"
-            :style="{ width: '460px' }"
+            :style="{ width: '724px' }"
           ></el-input>
         </el-form-item>
         <el-form-item label="发起地址：">
@@ -63,7 +63,7 @@
             :disabled="status === 'read' || taskType === '2'"
             v-model="url"
             @blur="getUrl"
-            :style="{ width: '460px' }"
+            :style="{ width: '724px' }"
           ></el-input>
           <el-select
             v-if="relation"
@@ -99,6 +99,7 @@
         <form label-width="140px" v-if="radio === 1">
           <el-form-item label="选择周期范围：">
             <el-date-picker
+              style="width: 549px;margin-right:40px;"
               v-model="startDate"
               type="date"
               :disabled="status === 'read'"
@@ -107,8 +108,9 @@
               :picker-options="startPickOptions"
               placeholder="开始日期（yyyy-MM-dd）"
             ></el-date-picker>
-            <span class="font24 font-color">至</span>
+            <!-- <span class="font24 font-color">至</span> -->
             <el-date-picker
+            style="width: 549px"
               v-model="endDate"
               type="date"
               :disabled="status === 'read'"
@@ -127,6 +129,7 @@
                 :disabled="status === 'read'"
                 clearable
                 @clear="handleClearType"
+                style="width: 724px"
               >
                 <el-option label="按周执行" value="1"></el-option>
                 <el-option label="按日执行" value="2"></el-option>
@@ -139,6 +142,7 @@
                 v-model="rangWeek"
                 :disabled="status === 'read'"
                 placeholder="请输入星期几（1-7）,多选格式: 1,2,3"
+                style="width: 400px;"
               ></el-input>
               <el-input
                 class="input-item"
@@ -175,7 +179,7 @@
               value-format="HH:mm"
               v-model="rangTime"
               placeholder="HH:mm"
-              :style="{ width: '460px' }"
+              :style="{ width: '549px' }"
             ></el-time-picker>
           </el-form-item>
           <el-form-item>
@@ -185,7 +189,11 @@
               <!-- <icon-svg icon-class="jinggao" class="gray-icon-color" /> -->
             </div>
           </el-form-item>
-          <el-form-item class="result-str">{{ str }}</el-form-item>
+          <el-form-item class="result-str">
+          <span class="font24 font-color">
+            {{ str }}
+            </span>
+          </el-form-item>
         </form>
         <form label-width="140" v-if="radio === 2">
           <el-form-item>
@@ -198,7 +206,7 @@
               clearable
               @clear="handleClearDate(3)"
               placeholder="选择日期"
-              :style="{ width: '230px' }"
+              :style="{ width: '549px' }"
             ></el-date-picker>
             <el-time-picker
               class="date-item"
@@ -211,10 +219,12 @@
               }"
               value-format="HH:mm"
               placeholder="选择时间"
-              :style="{ width: '230px' }"
+              :style="{ width: '549px' }"
             ></el-time-picker>
           </el-form-item>
-          <el-form-item class="result-str">{{ onceStr }}</el-form-item>
+          <el-form-item class="result-str">
+            <span class="font24 font-color">{{ onceStr }}</span>
+          </el-form-item>
         </form>
         <el-form
           :model="intervalForm"
@@ -237,7 +247,7 @@
             <el-input
               v-model="intervalForm.interval"
               type="number"
-              style="width: 300px"
+              style="width: 400px"
               min="0"
               max="59"
               :disabled="status === 'read'"

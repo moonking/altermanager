@@ -83,7 +83,7 @@
           </div>
         </template>
       </el-table-column>
-     <el-table-column label="角色操作" width="200px" align="center">
+     <el-table-column label="角色操作" width="240px" align="center">
        <template slot-scope="scope">
          <div class="task-btn-box">
            <span
@@ -145,7 +145,7 @@
           <el-input v-model="rolePosition"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="lookFor()">查询</el-button>
+          <el-button class="common-btn save-btn" @click="lookFor()">查询</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="userData" style="width: 100%">
@@ -175,6 +175,7 @@
       size="tiny"
       :before-close="handleDialogClose"
       title="添加用户"
+      width="1000px"
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item>
@@ -187,10 +188,10 @@
           <el-input v-model="addRolePosition" />
         </el-form-item>
         <el-form-item>
-          <el-button class="nomal-button" @click="addLookFor">查询</el-button>
+          <el-button class="search-btn" @click="addLookFor">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addAllRole">批量添加</el-button>
+          <el-button class="commont-btn save-btn" @click="addAllRole">批量添加</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -202,7 +203,7 @@
         @select-all="addSelectedAll"
         @select="addSelectedRows"
       >
-        <el-table-column type="selection" />
+        <el-table-column type="selection" width="80" />
         <el-table-column label="真实姓名" prop="name">
           <!--<template slot-scope="scope">{{ scope.row.date }}</template>-->
         </el-table-column>
@@ -213,6 +214,7 @@
             <el-button
               type="text"
               size="mini"
+              class="font24"
               @click="addroleUser(scope.row.userId)"
               >添加</el-button
             >
@@ -404,7 +406,7 @@
     >
       <el-tabs v-model="editActiveName" @tab-click="handleClick" width="500px">
         <el-tab-pane label="修改基本信息" name="first">
-          <el-form ref="form" :model="roleNameViewData" label-width="100px">
+          <el-form ref="form" :model="roleNameViewData" label-width="140px">
             <el-form-item label="角色名称：">
               <el-input
                 v-model="roleNameViewData.name"
@@ -430,11 +432,11 @@
           <div class="txtcenter">
             <el-button
               :loading="editLoading"
-              type="primary"
+              class="save-btn common-btn"
               @click="clickBtnChange(roleNameViewData.roleId)"
               >确认修改</el-button
             >
-            <el-button type="primary" @click="editView = false">取消</el-button>
+            <el-button class="cancel-button" @click="editView = false">取消</el-button>
           </div>
         </el-tab-pane>
         <el-tab-pane label="修改权限信息" name="second">
@@ -490,11 +492,11 @@
           <div class="txtcenter mgt-20">
             <el-button
               :loading="editLoading"
-              type="primary"
+              class="common-btn save-btn"
               @click="clickBtnChange(roleNameViewData.roleId)"
               >确认修改</el-button
             >
-            <el-button type="primary" @click="editView = false">取消</el-button>
+            <el-button class="cancel-button" @click="editView = false">取消</el-button>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -1304,6 +1306,7 @@ export default {
   }
 
   .txtcenter {
+    font-size:0;
     text-align: center;
   }
   .mgt-20 {
@@ -1329,6 +1332,7 @@ export default {
     text-align: center;
 
     .special {
+      margin-right: 2px;
       cursor: pointer;
     }
     span {

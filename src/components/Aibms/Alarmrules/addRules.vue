@@ -326,7 +326,7 @@
                   align="center"
                   type="selection"
                   :selectable="checkboxT"
-                  width="55"
+                  width="80"
                 ></el-table-column>
                 <el-table-column
                   align="center"
@@ -353,7 +353,7 @@
                   label="部门-职位"
                   show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column align="center" label="通知方式" width="165">
+                <el-table-column align="center" label="通知方式" width="300">
                   <template slot-scope="scope">
                     <el-checkbox-group
                       v-model="scope.row.checkList"

@@ -3,42 +3,42 @@
   
    <div class="wrapper-pannel">
    <h3>新增业务系统</h3>
-    <el-form :model="configData" ref="configData" label-width="160px" label-position="right">
+    <el-form :model="configData" ref="configData" label-width="160px" label-position="right"  style="width:96%">
 
       <!-- <el-form-item label="新增业务系统"></el-form-item> -->
 
           <el-form-item prop="appname" label="业务系统名称">
-<el-col :span="10">
-        <el-input v-model="configData.appname"></el-input>
-</el-col>
+<!-- <el-col :span="10"> -->
+        <el-input v-model="configData.appname" style="width: 70%"></el-input>
+<!-- </el-col> -->
            </el-form-item>
 
       <el-form-item prop="ipaddress" label="IP地址">
-<el-col :span="10">
-        <el-input v-model="configData.ipaddress"></el-input>
-</el-col>
+<!-- <el-col :span="10"> -->
+        <el-input v-model="configData.ipaddress" style="width: 70%">></el-input>
+<!-- </el-col> -->
       </el-form-item>
 
       <el-form-item prop="hostname" label="主机名">
-        <el-col :span="10">
-        <el-input v-model="configData.hostname"></el-input>
-        </el-col>
+        <!-- <el-col :span="10"> -->
+        <el-input v-model="configData.hostname" style="width: 70%">></el-input>
+        <!-- </el-col> -->
       </el-form-item>
 
       <el-form-item prop="timelevel" label="运维级别">
-        <el-col :span="10">
+        <!-- <el-col :span="10"> -->
         <!-- <el-input v-model="configData.timelevel"></el-input> -->
-          <el-select v-model="configData.timelevel" placeholder="请选择" style="width: 100%">
+          <el-select v-model="configData.timelevel" placeholder="请选择" style="width: 70%">
             <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"></el-option>
           </el-select>
-        </el-col>
+        <!-- </el-col> -->
       </el-form-item>
-  <!-- <h3>特殊时间周期设置</h3> -->
-       <div class="font24 font-color" style="margin-top:-10px;margin-bottom:10px;">特殊时间周期设置</div>
+  <h3>特殊时间周期设置</h3>
+       <!-- <div class="font24 font-color" style="margin-top:-10px;margin-bottom:10px;">特殊时间周期设置</div> -->
       <el-form-item
       v-for="(timelist,index) in configData.timelists"
       :label="'时间周期' + String(Number(index)+1)"
@@ -47,14 +47,18 @@
           v-model="timelist.startTime"
           type="datetime"
           value-format="yyyy-MM-dd HH:mm:ss"
-         placeholder="选择开始日期">
+         placeholder="选择开始日期"
+         style="width: 43%">
+         >
          </el-date-picker>
 
          <el-date-picker
           v-model="timelist.endTime"
           type="datetime"
           value-format="yyyy-MM-dd HH:mm:ss"
-         placeholder="选择结束日期">
+         placeholder="选择结束日期"
+         style="width: 43%">
+         >
          </el-date-picker>
             <i class="el-icon-circle-plus-outline add-icon-btn" @click="addList" />
             <i

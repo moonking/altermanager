@@ -3,7 +3,7 @@
     <div class="search-bar t-box-between">
       <div class="t-box">
         <div class="search-inline-input">
-          <el-input v-model="searchText" placeholder="模糊搜索"  @change=search></el-input>
+          <el-input v-model="searchText" placeholder="模糊搜索" class="w274" @change=search></el-input>
 
         </div>
 
@@ -611,7 +611,7 @@ export default {
   width: 100px;
 }
 .search-inline-input {
-  width: 200px;
+  /* width: 200px; */
 }
 </style>
 <style>

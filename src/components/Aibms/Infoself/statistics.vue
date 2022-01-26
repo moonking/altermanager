@@ -2,7 +2,7 @@
   <div class="aia-content">
 
   <el-row>
-          <el-select  v-model="sourceForm.source" @change="changetime">
+          <el-select class="w366" v-model="sourceForm.source" @change="changetime">
             <el-option v-for="item in sourcedata"
                     :key="item.id"
                     :label="item.label"

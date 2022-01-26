@@ -14,14 +14,13 @@
             clearable
             :fetch-suggestions="querySearch"
             :trigger-on-focus="false"
-            style="width: 200px"
-            class="inline-input"
+            class="inline-input w366"
             placeholder="请输入告警分类"
           />
         </el-form-item>
         <el-form-item>
           <el-select
-            style="width: 200px"
+            class="w366"
             v-model="alarmModel.sourceValue"
             clearable
             placeholder="请选择来源"

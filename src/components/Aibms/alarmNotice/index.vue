@@ -37,7 +37,7 @@
             v-model="alarmModel.origin"
             clearable
             placeholder="请选择来源"
-            style="width: 274px"
+            class="w274"
           >
             <el-option
               v-for="item in originList"
@@ -53,7 +53,7 @@
             v-model="alarmModel.alterlevel"
             clearable
             placeholder="请选择告警级别"
-            style="width: 274px"
+            class="w274"
           >
             <el-option
               v-for="item in alterlevelList"

@@ -13,7 +13,7 @@
             v-model="sourceModel.webAdress"
             clearable
             placeholder="请输入地址"
-            style="width: 200px"
+            class="w366"
           />
         </el-form-item>
         <el-form-item>
@@ -21,6 +21,7 @@
             v-model="sourceModel.sourceValue"
             clearable
             placeholder="请选择来源"
+            class="w366"
           >
             <el-option
               v-for="item in source"
