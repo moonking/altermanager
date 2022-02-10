@@ -291,7 +291,10 @@ export default {
             name: data.title,
             type: 'pie', // 设置图表类型为饼图
             radius: '55%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
-            data: data.data
+            data: data.data,
+            label: {
+              formatter: '{b} : {c} ({d}%)'
+            }
           }
         ]
       }
@@ -530,8 +533,14 @@ export default {
                 value: chartsData2 * 0.3,
                 name: '',
                 tooltip: {formatter: function(a) { return '' }},
-                itemStyle: {color: 'transparent'}
-              }]
+                itemStyle: {color: 'transparent'},
+                label: {
+                  show: false
+                }
+              }],
+              label: {
+                formatter: '{b} : {c} ({d}%)'
+              }
             }
           ]
         })
