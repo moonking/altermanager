@@ -368,7 +368,7 @@ export default {
 
           myChart.setOption(
             this.getEchartsOptions({
-              color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+              color: ['#00E5FF', '#4D80D9', '#1D2452 ', '#4AB3D 3', '#304074'],
               title: '告警通知汇总（来源）',
               data: this.altersum
             })
@@ -380,7 +380,7 @@ export default {
               myChart3 = this.$echarts.init(this.$refs.prometheusdata01)
               myChart3.setOption(
                 this.getEchartsOptions({
-                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'Prometheus 告警分类汇总Top5',
                   data: this.prometheusdata01
                 })
@@ -394,7 +394,7 @@ export default {
 
               myChart4.setOption(
                 this.getEchartsOptions({
-                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'Prometheus 告警对象汇总Top5',
                   data: this.prometheusdata02
                 })
@@ -408,7 +408,7 @@ export default {
 
               myChart5.setOption(
                 this.getEchartsOptions({
-                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'DT 告警分类汇总Top5',
                   data: this.dtdata01
                 })
@@ -422,7 +422,7 @@ export default {
 
               myChart6.setOption(
                 this.getEchartsOptions({
-                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'DT 告警对象汇总Top5',
                   data: this.dtdata02
                 })
@@ -436,7 +436,7 @@ export default {
 
               myChart7.setOption(
                 this.getEchartsOptions({
-                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'Splunk 告警分类汇总Top5',
                   data: this.splunkdata01
                 })
@@ -450,7 +450,7 @@ export default {
 
               myChart8.setOption(
                 this.getEchartsOptions({
-                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'Splunk 告警对象汇总Top5',
                   data: this.splunkdata02
                 })
@@ -464,7 +464,7 @@ export default {
 
               myChart9.setOption(
                 this.getEchartsOptions({
-                  color: ['#5500ff', '#00aa7f', '#55ffff', '#00aaff', '#ffaa00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'BPC 告警分类汇总Top5',
                   data: this.bpcdata01
                 })
@@ -478,7 +478,7 @@ export default {
 
               myChart10.setOption(
                 this.getEchartsOptions({
-                  color: ['#ff0000', '#ffff00', '#00ff00'],
+                  color: ['#00E5FF', '#4D80D9', '#1D2452', '#4AB3D3', '#304074'],
                   title: 'BPC 告警对象汇总Top5',
                   data: this.bpcdata02
                 })
