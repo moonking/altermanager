@@ -274,7 +274,7 @@
         @select-all="delSelectedAll"
         @select="selectedRows"
       >
-        <el-table-column type="selection" />
+        <el-table-column type="selection" width="80" />
         <el-table-column label="真实姓名" prop="name">
           <!--<template slot-scope="scope">{{ scope.row.date }}</template>-->
         </el-table-column>

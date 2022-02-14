@@ -368,7 +368,7 @@ export default {
 
           myChart.setOption(
             this.getEchartsOptions({
-              color: ['#00E5FF', '#4D80D9', '#1D2452 ', '#4AB3D 3', '#304074'],
+              color: ['#00E5FF', '#4D80D9', '#1D2452 ', '#4AB3D3', '#304074'],
               title: '告警通知汇总（来源）',
               data: this.altersum
             })
