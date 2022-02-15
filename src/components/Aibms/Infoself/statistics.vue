@@ -11,8 +11,8 @@
             </el-option>
           </el-select>
 </el-row>
-<el-row>
-
+<el-row class="chart-wrap">
+    <el-row>
           <div class="schart-box" v-show="altersum.length !=  0">
           <div class="schart" ref="altersum"></div>
            <!-- <div class="content-title">告警通知汇总（来源）</div> -->
@@ -25,7 +25,8 @@
 <!--       <div class="content-title">告警通知汇总（级别）</div> -->
           <!-- <schart class="schart" canvasId="ring" :data="levelsum" type="ring" :options="levelsumOptions"></schart> -->
        </div>
-
+      </el-row>
+      <el-row>
        <div class="schart-box" v-if="prometheusdata01.length != 0" >
         <div class="schart" ref="prometheusdata01"></div>
            <!-- <div class="content-title">Prometheus</div> -->
@@ -36,10 +37,10 @@
        <div class="schart" ref="prometheusdata02"></div>
        <!-- <schart class="schart" canvasId="prometheusdata02" :data="prometheusdata02" type="ring" :options="Prometheus02"></schart> -->
        </div>
-
-</el-row>
-
-<el-row>
+      </el-row>
+      </el-row>
+      <el-row class="chart-wrap">
+    <el-row>
        <div class="schart-box" v-if="dtdata01.length != 0">
        <div class="schart" ref="dtdata01"></div>
            <!-- <div class="content-title">DT</div> -->
@@ -50,7 +51,8 @@
        <!-- <div class="content-title">DT</div> -->
        <!-- <schart class="schart" canvasId="dtdata02" :data="dtdata02" type="ring" :options="Dt02"></schart> -->
        </div>
-
+      </el-row>
+      <el-row>
        <div class="schart-box" v-if="splunkdata01.length != 0">
        <div class="schart" ref="splunkdata01"></div>
            <!-- <div class="content-title">Splunk</div> -->
@@ -61,7 +63,9 @@
        <div class="schart" ref="splunkdata02"></div>
        <!-- <schart class="schart" canvasId="splunkdata02" :data="splunkdata02" type="ring" :options="splunk02"></schart> -->
        </div>
-</el-row>
+       </el-row>
+       </el-row>
+      <el-row>
 
        <div class="schart-box" v-if="bpcdata01.length != 0">
            <!-- <div class="content-title">Splunk</div> -->
@@ -73,7 +77,8 @@
        <!-- <div class="content-title">Splunk</div> -->
        <!-- <schart class="schart" canvasId="bpcdata02" :data="bpcdata02" type="ring" :options="bpc02"></schart> -->
        </div>
-
+      </el-row>
+      </div>
 </div>
 </template>
 
@@ -675,5 +680,8 @@ export default {
         color: #1f2f3d;
         text-align: center;
     }
-
+.chart-wrap{
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
