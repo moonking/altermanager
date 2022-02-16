@@ -126,7 +126,7 @@
       @select="choose"
       @select-all="choose"
     >
-      <el-table-column type="selection" :selectable="checkSelection" width="60">
+      <el-table-column type="selection" :selectable="checkSelection" width="80">
       </el-table-column>
       <el-table-column
         prop="level"

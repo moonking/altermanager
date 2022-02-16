@@ -171,7 +171,7 @@
         show-overflow-tooltip
       />
       <el-table-column prop="alarmType" label="类型" show-overflow-tooltip />
-      <el-table-column prop="startTime" label="告警时间" width="230" show-overflow-tooltip />
+      <el-table-column prop="startTime" label="告警时间" width="260" show-overflow-tooltip />
       <el-table-column label="状态" width="130" >
         <template v-slot="scope">
           <span>{{ scope.row.status === '1' ? '已收到' : '未读' }}</span>

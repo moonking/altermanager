@@ -85,7 +85,7 @@
       @select="choose"
       @select-all="choose"
     >
-      <el-table-column align="center" type="selection" width="60">
+      <el-table-column align="center" type="selection" width="80">
       </el-table-column>
 
       <el-table-column align="center" prop="appname" label="业务系统名称" >
