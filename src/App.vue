@@ -244,6 +244,9 @@ export default {
 }
 </script>
 <style>
+body{
+  zoom: 0.5;
+}
 #app {
   color: #585858;
   font-family: 'PingFang SC';
