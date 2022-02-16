@@ -298,7 +298,13 @@ export default {
             radius: '55%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
             data: data.data,
             label: {
-              formatter: '{b} : {c} ({d}%)'
+              formatter: '{c} ({d}%)',
+              color: '#BFF3FF'
+            },
+            labelLine: {
+              lineStyle: {
+                color: '#BFF3FF'
+              }
             }
           }
         ]
@@ -542,10 +548,19 @@ export default {
                 itemStyle: {color: 'transparent'},
                 label: {
                   show: false
+                },
+                labelLine: {
+                  show: false
                 }
               }],
               label: {
-                formatter: '{b} : {c} ({d}%)'
+                formatter: '{c} ({d}%)',
+                color: '#BFF3FF'
+              },
+              labelLine: {
+                lineStyle: {
+                  color: '#BFF3FF'
+                }
               }
             }
           ]
