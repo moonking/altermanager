@@ -121,6 +121,9 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+let ow = document.body.clientWidth;
+Vue.prototype.$scale = (ow / 1920) * 0.75
+console.log(Vue.prototype.$scale, ow, 999)
 const app = new Vue({
   router,
   store,

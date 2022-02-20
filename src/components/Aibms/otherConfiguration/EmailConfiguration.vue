@@ -30,6 +30,7 @@
                 clearable
                 v-model.trim="emailForm.ip"
                 placeholder="请输入IP"
+                style="width:1100px"
               />
             </el-form-item>
             <el-form-item label="端口：" prop="port">
@@ -38,6 +39,7 @@
                 clearable
                 v-model.trim="emailForm.port"
                 placeholder="请输入端口"
+                style="width:1100px"
               />
             </el-form-item>
             <el-form-item label="邮箱：" prop="accountNumber">
@@ -45,6 +47,7 @@
                 clearable
                 v-model.trim="emailForm.accountNumber"
                 placeholder="请输入账号"
+                style="width:1100px"
               />
             </el-form-item>
             <el-form-item
@@ -56,8 +59,9 @@
                 v-model="emailForm.noticeType"
                 clearable
                 placeholder="请选择模板"
-                :style="{ width: '100%' }"
+                :style="{ width: '1100px' }"
                 @change="chooseType"
+                :popper-append-to-body="false"
               >
                 <el-option
                   v-for="item in typeList"
@@ -131,6 +135,7 @@
                     :inputH="3"
                     :textContent.sync="ThemeText"
                     class="textarea-wrap"
+                    style="width:1100px"
                   />
                 </div>
               </el-form-item>
@@ -147,6 +152,7 @@
                     :inputH="8"
                     :textContent.sync="ContentText"
                     class="textarea-wrap"
+                    style="width:1100px"
                   />
                 </div>
               </el-form-item>

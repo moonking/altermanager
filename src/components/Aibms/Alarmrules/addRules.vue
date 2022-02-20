@@ -22,7 +22,7 @@
             clearable
             maxlength="20"
             placeholder="请输入名称"
-            :style="{ width: '90%' }"
+            style="width:900px"
             id="getWidth"
           />
         </el-form-item>
@@ -33,7 +33,8 @@
             clearable
             v-model="typesForm.label"
             placeholder="请选择标签"
-            :style="{ width: '90%' }"
+            :style="{ width: '900px' }"
+            :popper-append-to-body="false"
           >
             <el-option
               v-for="item in labelList"
@@ -52,6 +53,8 @@
             请先选择标签</span>
             <el-popover
               v-else
+              :popper-options="{boundariesElement: 'body'}"
+              popper-class="custom-popper-class"
               placement="top"
               title="标题"
               trigger="click">
@@ -67,7 +70,7 @@
                         >全选</el-checkbox
                       >
                     </el-col>
-                    
+
                     <el-col :span="24">
                       <el-checkbox-group
                         class="el-checkcolor"
@@ -103,12 +106,10 @@
                     @current-change="handleCurrentChange"
                   />
                 </div>
-              <div class="custom-select" slot="reference">
+              <div class="custom-select" slot="reference" style="width: 900px">
                 <i class="el-icon-arrow-down"></i>
               </div>
             </el-popover>
-
-        
           <!-- <el-row v-else :gutter="20">
             <el-col :span="2">
               <el-checkbox
@@ -372,7 +373,7 @@
               <!-- 选择通知人员分页 -->
               <el-pagination
                 v-if="item.tipsTotalSize"
-                
+
                 :current-page.sync="item.tipsPage.current"
                 :page-size.sync="item.tipsPage.size"
                 :page-sizes="[10, 20, 30]"
@@ -645,7 +646,7 @@ export default {
   },
   mounted() {
     let a = document.getElementById('getWidth').clientWidth
-    this.width = a+'px'
+    this.width = a + 'px'
   },
   methods: {
     // 数据加载
@@ -1691,7 +1692,7 @@ background: rgba(0,0,0,.4);
     .el-dialog{
       background: #25344E !important;
     }
-    
+
   }
   .el-form-item{
     /deep/{
@@ -1700,7 +1701,7 @@ background: rgba(0,0,0,.4);
       }
     }
   }
-  
+
 }
 </style>
 
@@ -1713,5 +1714,4 @@ background: rgba(0,0,0,.4);
          color: #55aaff;
          }
    }
-
 </style>

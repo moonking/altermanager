@@ -23,6 +23,7 @@
             clearable
             placeholder="请选择级别"
             class="w366"
+            :popper-append-to-body="false"
           >
             <el-option
               v-for="item in levelList"
@@ -45,6 +46,7 @@
             v-model="searchFrom.label"
             placeholder="请选择标签"
             class="w366"
+            :popper-append-to-body="false"
           >
             <el-option
               v-for="item in labelList"
@@ -74,7 +76,7 @@
       :header-cell-style="{ background: '#f5f5f5' }"
       @row-click="ruleDeatil"
       style="width: 100%"
-      height="74%"
+      height="86%"
     >
       <el-table-column prop="name" label="规则名称" />
       <el-table-column prop="level" label="级别">
@@ -148,10 +150,10 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize && totalSize > 10"
+      v-if="totalSize && totalSize > 12"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
-      :page-sizes="[10, 20, 30]"
+      :page-sizes="[12, 20, 30]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalSize"
       @size-change="handleSizeChange"
@@ -208,7 +210,7 @@ export default {
     },
     page: {
       current: 1,
-      size: 10
+      size: 12
     },
     totalSize: 0,
     currentDeleteItemId: -1,

@@ -232,7 +232,7 @@
       :visible="DetailDate"
       size="tiny"
       :before-close="handleDialogClose"
-      width="570px"
+      width="640px"
     >
       <div class="headportraitbox">
         <img :src="detailData.photo" alt />
@@ -243,6 +243,7 @@
             style="width: 100px"
             disabled="disabled"
             clearable
+            :popper-append-to-body="false"
           >
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
@@ -312,7 +313,7 @@
       :visible="editInformation"
       size="tiny"
       :before-close="handleDialogClose3"
-      width="570px"
+      width="640px"
     >
       <div class="headportraitbox">
         <img :src="editCurrentPic" alt />
@@ -323,6 +324,7 @@
             v-model="changeData.userStatus"
             style="width: 100px"
             clearable
+            :popper-append-to-body="false"
           >
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
@@ -344,7 +346,7 @@
       </transition>
       <el-form
         ref="form2"
-        label-width="140px"
+        label-width="160px"
         :rules="rules2"
         :model="changeData"
       >
@@ -423,14 +425,14 @@
       :visible="addUser"
       size="tiny"
       :before-close="handleDialogClose2"
-      width="570px"
+      width="640px"
     >
       <div class="headportraitbox">
         <img :src="currentPic" alt />
         <i class="el-icon-edit kip" @click="togglebox"></i>
         <div class="state" style="float: right; margin-right: 10px">
           <span>状态：</span>
-          <el-select v-model="addUserList.userStatus" style="width: 100px">
+          <el-select v-model="addUserList.userStatus" style="width: 100px" :popper-append-to-body="false">
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
             <el-option label="锁定" value="2"></el-option>
@@ -451,7 +453,7 @@
       </transition>
       <el-form
         ref="form"
-        label-width="140px"
+        label-width="160px"
         :model="addUserList"
         :rules="rules"
       >

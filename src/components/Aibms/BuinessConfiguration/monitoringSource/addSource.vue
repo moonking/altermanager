@@ -185,6 +185,7 @@
         :visible.sync="confirmDeleteDialogVisible"
         width="500px"
         class="common-dialog"
+        :style="{zoom: 1/this.$scale, mozTransform: `scale(${1/this.$scale})`}"
       >
         <div style="text-align: center">
           <i class="el-icon-warning" /> 确认删除？

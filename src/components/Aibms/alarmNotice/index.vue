@@ -122,7 +122,7 @@
       :data="tableData"
       @row-click="noticeDetail"
       style="width: 100%"
-      height="74%"
+      height="86%"
       @select="choose"
       @select-all="choose"
     >
@@ -192,10 +192,10 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize && totalSize > 10"
+      v-if="totalSize && totalSize > 12"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
-      :page-sizes="[10, 20, 30]"
+      :page-sizes="[12, 20, 30]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalSize"
       @size-change="handleSizeChange"
@@ -307,7 +307,7 @@ export default {
     totalSize: 0,
     page: {
       current: 1,
-      size: 10
+      size: 12
     },
     startTime: '',
     endTime: '',

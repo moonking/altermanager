@@ -1,5 +1,5 @@
 <template>
-  <div class="header" :class="{'header-collapse': collapse}">
+  <div class="header">
     <!-- 折叠按钮 -->
     <!-- <div class="collapse-btn" >
     <div class="collapse-btn" @click="collapseChage"> </div>

@@ -38,6 +38,7 @@
               :disabled="readOnly"
               style="width: 150px"
               placeholder="请选择"
+              :popper-append-to-body="false"
             >
               <el-option
                 v-for="item in rulesType"
@@ -63,6 +64,7 @@
               :disabled="readOnly"
               style="width: 150px"
               placeholder="请选择"
+              :popper-append-to-body="false"
             >
               <el-option
                 v-for="item in levelList"

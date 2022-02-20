@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%">
+    <el-dialog center title="删除提示" :visible.sync="confirmDeleteDialogVisible" width="25%" :style="{zoom: 1/this.$scale, mozTransform: `scale(${1/this.$scale})`}">
       <div style="text-align: center">
         <i class="el-icon-warning" /> 确认删除？
       </div>

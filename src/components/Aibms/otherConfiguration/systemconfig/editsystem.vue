@@ -1,6 +1,6 @@
 <template>
   <div class="aia-content">
-  
+
    <div class="wrapper-pannel">
    <h3>新增业务系统</h3>
     <el-form :model="configData" ref="configData" label-width="160px" label-position="right"  style="width:96%">
@@ -9,26 +9,26 @@
 
           <el-form-item prop="appname" label="业务系统名称">
 <!-- <el-col :span="10"> -->
-        <el-input v-model="configData.appname" style="width: 70%"></el-input>
+        <el-input v-model="configData.appname" style="width: 1100px"></el-input>
 <!-- </el-col> -->
            </el-form-item>
 
       <el-form-item prop="ipaddress" label="IP地址">
 <!-- <el-col :span="10"> -->
-        <el-input v-model="configData.ipaddress" style="width: 70%">></el-input>
+        <el-input v-model="configData.ipaddress" style="width: 1100px">></el-input>
 <!-- </el-col> -->
       </el-form-item>
 
       <el-form-item prop="hostname" label="主机名">
         <!-- <el-col :span="10"> -->
-        <el-input v-model="configData.hostname" style="width: 70%">></el-input>
+        <el-input v-model="configData.hostname" style="width: 1100px">></el-input>
         <!-- </el-col> -->
       </el-form-item>
 
       <el-form-item prop="timelevel" label="运维级别">
         <!-- <el-col :span="10"> -->
         <!-- <el-input v-model="configData.timelevel"></el-input> -->
-          <el-select v-model="configData.timelevel" placeholder="请选择" style="width: 70%">
+          <el-select v-model="configData.timelevel" placeholder="请选择" style="width: 1100px" :popper-append-to-body="false">
             <el-option
             v-for="item in options"
             :key="item.value"
@@ -48,7 +48,7 @@
           type="datetime"
           value-format="yyyy-MM-dd HH:mm:ss"
          placeholder="选择开始日期"
-         style="width: 43%">
+         style="width: 500px">
          >
          </el-date-picker>
 
@@ -57,7 +57,7 @@
           type="datetime"
           value-format="yyyy-MM-dd HH:mm:ss"
          placeholder="选择结束日期"
-         style="width: 43%">
+         style="width: 500px">
          >
          </el-date-picker>
             <i class="el-icon-circle-plus-outline add-icon-btn" @click="addList" />

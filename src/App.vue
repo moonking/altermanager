@@ -49,6 +49,7 @@ export default {
     this.alarmInform()
   },
   mounted() {
+    this.changeSize()
     // this.$nextTick(() => {
     //   this.alarmInform()
     // })
@@ -57,8 +58,18 @@ export default {
         this.alarmInform()
       }, 10000)
     })
+    window.onresize = () => {
+      this.changeSize()
+    }
   },
   methods: {
+    changeSize() {
+      let wrap = document.body || document.documentElement
+      wrap.style.zoom = this.$scale
+
+      wrap.style.mozTransform = 'scale(' + this.$scale + ')'
+      wrap.style.transformOrigin = 'center top'
+    },
     reload() {
       this.isRouterAlive = false
       this.$nextTick(function () {
@@ -245,7 +256,7 @@ export default {
 </script>
 <style>
 body{
-  zoom: 0.5;
+  /* zoom: 0.5; */
 }
 #app {
   color: #585858;

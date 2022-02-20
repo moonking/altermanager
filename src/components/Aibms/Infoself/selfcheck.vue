@@ -7,7 +7,7 @@
       :data="tableData"
       stripe
       style="width: 100%"
-      height="82%"
+      height="93%"
     >
       <el-table-column prop="name" label="服务名称" />
       <el-table-column prop="platform" label="类型" />
@@ -32,10 +32,10 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize && totalSize > 10"
+      v-if="totalSize && totalSize > 15"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
-      :page-sizes="[10, 20, 30]"
+      :page-sizes="[15, 20, 30]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalSize"
       @size-change="handleSizeChange"
@@ -48,6 +48,7 @@
       title="删除提示"
       :visible.sync="confirmDeleteDialogVisible"
       width="25%"
+      :style="{zoom: 1/this.$scale, mozTransform: `scale(${1/this.$scale})`}"
     >
       <div style="text-align: center">
         <i class="el-icon-warning" /> 确认删除？
@@ -124,7 +125,7 @@ export default {
     currentDeleteItemId: -1,
     page: {
       current: 1,
-      size: 10
+      size: 15
     },
     totalSize: 0,
     callNum: 0

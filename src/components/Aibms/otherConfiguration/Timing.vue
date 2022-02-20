@@ -72,6 +72,7 @@
             placeholder="请选择类型"
             :disabled="status === 'read'"
             @change="getUrlRelation()"
+            :popper-append-to-body="false"
           >
             <el-option label="day" value="day"></el-option>
             <el-option label="hour" value="hour"></el-option>
@@ -130,6 +131,7 @@
                 clearable
                 @clear="handleClearType"
                 style="width: 724px"
+                :popper-append-to-body="false"
               >
                 <el-option label="按周执行" value="1"></el-option>
                 <el-option label="按日执行" value="2"></el-option>
@@ -258,7 +260,7 @@
                 <el-option label="小时" value="3"></el-option>
               </el-select> -->
                <span class="font24 font-color" >分钟执行一次</span>
-            
+
           </el-form-item>
           <el-form-item
             v-if="showKeepAlert"

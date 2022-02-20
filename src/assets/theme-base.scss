@@ -468,7 +468,7 @@ $border-color: #00E5FF;
     border-bottom-color: #436382;
   }
   .el-date-table{
-    font-size:14px;
+    font-size:20px;
   }
   .el-date-table td.today span{
     color: #00E5FF;
@@ -499,6 +499,9 @@ $border-color: #00E5FF;
   }
   .el-date-table td.current:not(.disabled) span{
     background-color: rgba($border-color, .4);
+  }
+  .el-button{
+    font-size: 16px;
   }
 }
 .el-picker-panel{
@@ -692,4 +695,16 @@ $border-color: #00E5FF;
   .text-input.el-textarea{
     width: 100%;
   }
+}
+.el-dialog__close.el-icon.el-icon-close{
+  font-size: 40px;
+}
+.el-tree__empty-block .el-tree__empty-text{
+  font-size: 24px;
+}
+.el-tooltip__popper{
+  font-size: 20px;
+}
+.el-dropdown-menu__item{
+  font-size: 18px;
 }

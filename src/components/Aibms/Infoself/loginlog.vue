@@ -8,7 +8,7 @@
     <el-table
       :data="tableData"
       stripe
-      height="86%"
+      height="93%"
       :header-cell-style="{ background: '#f5f5f5' }"
       style="width: 100%"
     >
@@ -39,10 +39,10 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      v-if="totalSize && totalSize > 10"
+      v-if="totalSize && totalSize > 15"
       :current-page.sync="page.current"
       :page-size.sync="page.size"
-      :page-sizes="[10, 20, 30]"
+      :page-sizes="[15, 20, 30]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalSize"
       @size-change="handleSizeChange"
@@ -64,7 +64,7 @@ export default {
     tableData: [],
     page: {
       current: 1,
-      size: 10
+      size: 15
     },
     totalSize: 0,
     confirmDeleteDialogVisible: false,
