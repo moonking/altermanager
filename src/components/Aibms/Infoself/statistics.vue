@@ -274,13 +274,14 @@ export default {
           {
             name: data.title,
             type: 'pie', // 设置图表类型为饼图
-            radius: '50%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+            radius: '40%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
             center: ['50%', '45%'],
             data: data.data,
             label: {
               formatter: '{c} ({d}%)',
               color: '#BFF3FF',
-              fontSize: 16 * this.$scale
+              fontSize: 16 * this.$scale,
+              overflow: 'truncate'
             },
             labelLine: {
               length: 10,
@@ -559,7 +560,7 @@ export default {
                     name: '告警通知汇总（级别）',
                     type: 'pie', // 设置图表类型为饼图
                     startAngle: 230,
-                    radius: ['35%', '60%'], // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                    radius: ['35%', '50%'], // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
                     center: ['50%', '50%'],
                     data: [
                       ...this.levelsum,

@@ -95,8 +95,6 @@
             >批量处理</el-button
           >
         </el-form-item>
-
-        </el-form-item>
        <el-form-item class="search-button">
           <el-button @click="readAll" class="search-btn"
             >全部标记为已读</el-button
@@ -109,6 +107,7 @@
             placeholder="关键字查询"
             style="width: 200px"
             clearable
+            class="common-input"
           ></el-input>
         </el-form-item>
 

@@ -6,7 +6,7 @@ $border-color: #00E5FF;
   border-radius: 5px;
   border: 2px solid;
   border-image: linear-gradient(90deg, rgba(0, 229, 255, 1), rgba(32, 56, 79, 1), rgba(0, 229, 255, 1)) 2 2;
-} 
+}
 .font0{
   font-size: 0;
 }
@@ -51,7 +51,7 @@ $border-color: #00E5FF;
     font-size: 28px;
     padding-left: 38px !important;
     height: 78px;
-    line-height: 78px; 
+    line-height: 78px;
   }
   .el-submenu__icon-arrow{
     font-size: 28px;
@@ -74,7 +74,7 @@ $border-color: #00E5FF;
   box-sizing:border-box;
 }
 .sidebar .sidebar-el-menu li.el-menu-item{
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .el-dropdown-menu__item{
@@ -99,7 +99,11 @@ $border-color: #00E5FF;
   line-height: 68px;
   font-size: 24px;
 }
-
+.common-input{
+  .el-input__inner{
+    font-size: 24px;
+  }
+}
 .el-input{
   .el-input__suffix,.el-input__icon{
     font-size: 24px;
@@ -122,7 +126,7 @@ $border-color: #00E5FF;
   }
 }
 .el-textarea{
-  
+
   font-size: 20px;
   &.is-disabled .el-textarea__inner{
     border-color: #436382;
@@ -358,7 +362,7 @@ $border-color: #00E5FF;
   .el-step__icon{
     width: 46px;
     height: 46px;
-    font-size: 28px;  
+    font-size: 28px;
     font-weight: 500;
     color: $font-color;
     background: rgba(0, 146, 171, 0.25);
@@ -410,7 +414,7 @@ $border-color: #00E5FF;
 }
 
 .item-block-title{
-  
+
   .item-block-title-mark {
     width: 18px;
     border-radius: 9px;
@@ -608,7 +612,7 @@ $border-color: #00E5FF;
   .el-checkcolor .el-checkbox__input.is-disabled+.el-checkbox__label{
     color: rgba($font-color, .5)
   }
-  
+
 }
 .el-select{
   .el-tag{
@@ -663,7 +667,7 @@ $border-color: #00E5FF;
   background: url('./user-bg.png') no-repeat;
   background-size:contain;
   >div{
-    padding-top: 70px;  
+    padding-top: 70px;
     font-size:20px;
     color: $font-color;
     border:none;

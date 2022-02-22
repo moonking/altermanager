@@ -92,6 +92,7 @@
         </el-form-item>
         <el-form-item>
           <el-input
+            class="common-input"
             v-model="alarmModel.keywords"
             placeholder="关键字查询"
             style="width: 180px"
