@@ -235,6 +235,12 @@ export default {
     // console.log(this.datatest.sort(function(a,b){return a.value - b.value}))
     this.getSumdata(this.sourceForm.source);
   },
+  mounted() {
+    window.addEventListener('resize', this.resize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resize)
+  },
   methods: {
     changetime() {
       console.log(this.sourceForm.source);
@@ -274,7 +280,7 @@ export default {
           {
             name: data.title,
             type: 'pie', // 设置图表类型为饼图
-            radius: '40%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+            radius: '45%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
             center: ['50%', '45%'],
             data: data.data,
             label: {
@@ -371,7 +377,7 @@ export default {
           this.bpcdata01 = this.sortValue(bpcdata01, 5);
           this.bpcdata02 = this.sortValue(bpcdata02, 5);
 
-          let myChart = null;
+          // let myChart = null;
           let colorArray = [
             '#00E5FF',
             '#4D80D9',
@@ -382,8 +388,8 @@ export default {
           // 如果需要修改颜色，替换该处的颜色值
           this.$nextTick(() => {
             if (this.$refs.altersumer) {
-              myChart = this.$echarts.init(this.$refs.altersumer);
-              myChart.setOption(
+              this.myChart = this.$echarts.init(this.$refs.altersumer);
+              this.myChart.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: '告警通知汇总（来源）',
@@ -392,11 +398,11 @@ export default {
               );
             }
           });
-          let myChart3 = null;
+          // let myChart3 = null;
           this.$nextTick(() => {
             if (this.$refs.prometheusdata01) {
-              myChart3 = this.$echarts.init(this.$refs.prometheusdata01);
-              myChart3.setOption(
+              this.myChart3 = this.$echarts.init(this.$refs.prometheusdata01);
+              this.myChart3.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'Prometheus 告警分类汇总Top5',
@@ -405,12 +411,12 @@ export default {
               );
             }
           });
-          let myChart4 = null;
+          // let myChart4 = null;
           this.$nextTick(() => {
             if (this.$refs.prometheusdata02) {
-              myChart4 = this.$echarts.init(this.$refs.prometheusdata02);
+              this.myChart4 = this.$echarts.init(this.$refs.prometheusdata02);
 
-              myChart4.setOption(
+              this.myChart4.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'Prometheus 告警对象汇总Top5',
@@ -419,12 +425,12 @@ export default {
               );
             }
           });
-          let myChart5 = null;
+          // let myChart5 = null;
           this.$nextTick(() => {
             if (this.$refs.dtdata01) {
-              myChart5 = this.$echarts.init(this.$refs.dtdata01);
+              this.myChart5 = this.$echarts.init(this.$refs.dtdata01);
 
-              myChart5.setOption(
+              this.myChart5.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'DT 告警分类汇总Top5',
@@ -433,12 +439,12 @@ export default {
               );
             }
           });
-          let myChart6 = null;
+          // let myChart6 = null;
           this.$nextTick(() => {
             if (this.$refs.dtdata02) {
-              myChart6 = this.$echarts.init(this.$refs.dtdata02);
+              this.myChart6 = this.$echarts.init(this.$refs.dtdata02);
 
-              myChart6.setOption(
+              this.myChart6.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'DT 告警对象汇总Top5',
@@ -447,12 +453,12 @@ export default {
               );
             }
           });
-          let myChart7 = null;
+          // let myChart7 = null;
           this.$nextTick(() => {
             if (this.$refs.splunkdata01) {
-              myChart7 = this.$echarts.init(this.$refs.splunkdata01);
+              this.myChart7 = this.$echarts.init(this.$refs.splunkdata01);
 
-              myChart7.setOption(
+              this.myChart7.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'Splunk 告警分类汇总Top5',
@@ -461,12 +467,12 @@ export default {
               );
             }
           });
-          let myChart8 = null;
+          // let myChart8 = null;
           this.$nextTick(() => {
             if (this.$refs.splunkdata02) {
-              myChart8 = this.$echarts.init(this.$refs.splunkdata02);
+              this.myChart8 = this.$echarts.init(this.$refs.splunkdata02);
 
-              myChart8.setOption(
+              this.myChart8.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'Splunk 告警对象汇总Top5',
@@ -475,12 +481,12 @@ export default {
               );
             }
           });
-          let myChart9 = null;
+          // let myChart9 = null;
           this.$nextTick(() => {
             if (this.$refs.bpcdata01) {
-              myChart9 = this.$echarts.init(this.$refs.bpcdata01);
+              this.myChart9 = this.$echarts.init(this.$refs.bpcdata01);
 
-              myChart9.setOption(
+              this.myChart9.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'BPC 告警分类汇总Top5',
@@ -489,12 +495,12 @@ export default {
               );
             }
           });
-          let myChart10 = null;
+          // let myChart10 = null;
           this.$nextTick(() => {
             if (this.$refs.bpcdata02) {
-              myChart10 = this.$echarts.init(this.$refs.bpcdata02);
+              this.myChart10 = this.$echarts.init(this.$refs.bpcdata02);
 
-              myChart10.setOption(
+              this.myChart10.setOption(
                 this.getEchartsOptions({
                   color: colorArray,
                   title: 'BPC 告警对象汇总Top5',
@@ -516,16 +522,16 @@ export default {
             });
         }
         this.levelsum = levelsum;
-        let myChart2 = null
+        // let myChart2 = null
         this.$nextTick(() => {
           setTimeout(() => {
             if (this.$refs.levelsum2) {
-              myChart2 = this.$echarts.init(this.$refs.levelsum2);
+              this.myChart2 = this.$echarts.init(this.$refs.levelsum2);
               let chartsData2 = this.levelsum.reduce((acc, cur) => {
                 console.log(cur.value, 88888);
                 return acc + +cur.value;
               }, 0);
-              myChart2.setOption({
+              this.myChart2.setOption({
                 ...this.getEchartsOptions({
                   color: [
                     {
@@ -560,7 +566,7 @@ export default {
                     name: '告警通知汇总（级别）',
                     type: 'pie', // 设置图表类型为饼图
                     startAngle: 230,
-                    radius: ['35%', '50%'], // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                    radius: ['35%', '52%'], // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
                     center: ['50%', '50%'],
                     data: [
                       ...this.levelsum,
@@ -638,6 +644,18 @@ export default {
           }, 100)
         })
       });
+    },
+    resize() {
+      this.myChart && this.myChart.resize()
+      this.myChart2 && this.myChart2.resize()
+      this.myChart3 && this.myChart3.resize()
+      this.myChart4 && this.myChart4.resize()
+      this.myChart5 && this.myChart5.resize()
+      this.myChart6 && this.myChart6.resize()
+      this.myChart7 && this.myChart7.resize()
+      this.myChart8 && this.myChart8.resize()
+      this.myChart9 && this.myChart9.resize()
+      this.myChart10 && this.myChart10.resize()
     }
   }
 };
