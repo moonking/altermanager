@@ -221,21 +221,21 @@ export default {
         name: 'host3',
         value: 1005
       }
-    ]
-  }),
-  computed: {
-    zoom() {
-      return {
-        zoom: 1 / this.$scale,
-        mozTransform: `scale(${1 / this.$scale})`
-      }
+    ],
+    zoom: {
+      zoom: 1 / this.$scale,
+      mozTransform: `scale(${1 / this.$scale})`
     }
-  },
+  }),
   created() {
     // console.log(this.datatest.sort(function(a,b){return a.value - b.value}))
     this.getSumdata(this.sourceForm.source);
   },
   mounted() {
+    this.zoom = {
+      zoom: 1 / this.$scale,
+      mozTransform: `scale(${1 / this.$scale})`
+    }
     window.addEventListener('resize', this.resize)
   },
   beforeDestroy() {
@@ -257,24 +257,29 @@ export default {
         return result;
       }
     },
+    getSize() {
+      return document.documentElement.clientWidth / 1920 * 0.75
+    },
     getEchartsOptions(data) {
       return {
         color: data.color,
         title: {
           text: data.title,
-          padding: [10, 40],
+          padding: [18 * this.getSize(), 20 * this.getSize()],
           textStyle: {
-            fontSize: 24 * this.$scale,
+            fontSize: 24 * this.getSize(),
             color: '#DAF8FF'
           }
         },
         legend: {
           bottom: 5,
+          height: 40,
           icon: 'circle',
           textStyle: {
             color: '#EDF9FB',
-            fontSize: 10 * this.$scale
-          }
+            fontSize: 14 * this.getSize()
+          },
+          itemHeight: 14 * this.getSize()
         },
         series: [
           {
@@ -286,7 +291,7 @@ export default {
             label: {
               formatter: '{c} ({d}%)',
               color: '#BFF3FF',
-              fontSize: 16 * this.$scale,
+              fontSize: 16 * this.getSize(),
               overflow: 'truncate'
             },
             labelLine: {
@@ -531,6 +536,7 @@ export default {
                 console.log(cur.value, 88888);
                 return acc + +cur.value;
               }, 0);
+              console.log(this.$refs.levelsum2, 88888);
               this.myChart2.setOption({
                 ...this.getEchartsOptions({
                   color: [
@@ -590,7 +596,7 @@ export default {
                     label: {
                       formatter: '{c} ({d}%)',
                       color: '#BFF3FF',
-                      fontSize: 16 * this.$scale
+                      fontSize: 16 * this.getSize()
                     },
                     labelLine: {
                       length: 10,
@@ -656,6 +662,8 @@ export default {
       this.myChart8 && this.myChart8.resize()
       this.myChart9 && this.myChart9.resize()
       this.myChart10 && this.myChart10.resize()
+      this.getSumdata(this.sourceForm.source);
+      // location.reload()
     }
   }
 };
